@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('./partials/head') %>
+  <style>
+    #new-films-upload .recent-product-img {
+      width: 54px;
+      height: 70px;
+      border-radius: 6px;
+    }
+
+    #new-films-upload .recent-product-img img {
+      width: 100%;
+      height: 100%;
+      padding: 1px;
+      border-radius: 6px;
+    }
+
+    #new-user-register .recent-product-img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+    }
+
+    #new-user-register .recent-product-img img {
+      width: 100%;
+      height: 100%;
+      padding: 2px;
+      border-radius: 50%;
+    }
+
+    .modal-content {
+      background-image: radial-gradient(circle at 17% 1%, rgba(198, 198, 198, .03) 0, rgba(198, 198, 198, .03) 50%, rgba(42, 42, 42, .03) 50%, rgba(42, 42, 42, .03) 100%), radial-gradient(circle at 8% 81%, rgba(253, 253, 253, .03) 0, rgba(253, 253, 253, .03) 50%, rgba(36, 36, 36, .03) 50%, rgba(36, 36, 36, .03) 100%), radial-gradient(circle at 83% 29%, rgba(164, 164, 164, .03) 0, rgba(164, 164, 164, .03) 50%, rgba(60, 60, 60, .03) 50%, rgba(60, 60, 60, .03) 100%), radial-gradient(circle at 96% 62%, rgba(170, 170, 170, .03) 0, rgba(170, 170, 170, .03) 50%, rgba(169, 169, 169, .03) 50%, rgba(169, 169, 169, .03) 100%), linear-gradient(338deg, #028DD5, #05AC51);
+    }
+  </style>
+</head>
+
+<body class="bg-theme bg-theme13">
+  <!--wrapper-->
+  <div class="wrapper">
+    <!--sidebar wrapper -->
+    <%- include('./partials/sidebar') %>
+    <!--end sidebar wrapper -->
+    <!--start header -->
+    <%- include('./partials/header') %>
+    <!--end header -->
+    <!--start page wrapper -->
+    <div class="page-wrapper">
+      <div class="page-content">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4">
+          <div class="col">
+            <div class="card radius-10">
+              <div class="card-body">
+                <div class="d-flex align-items-center">
+                  <div>
+                    <p class="mb-0">Total Films</p>
+                    <h4 class="my-1"><%=totalCount.film%></h4>
+                  </div>
+                  <div class="ms-auto font-35 text-white">
+                    <i class="bx bx-movie"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card radius-10">
+              <div class="card-body">
+                <div class="d-flex align-items-center">
+                  <div>
+                    <p class="mb-0">Total Episodes</p>
+                    <h4 class="my-1"><%=totalCount.episode%></h4>
+                  </div>
+                  <div class="ms-auto font-35 text-white">
+                    <i class="bx bx-archive"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card radius-10">
+              <div class="card-body">
+                <div class="d-flex align-items-center">
+                  <div>
+                    <p class="mb-0">Total Members</p>
+                    <h4 class="my-1"><%=totalCount.user%></h4>
+                  </div>
+                  <div class="ms-auto font-35 text-white">
+                    <i class="lni lni-users"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card radius-10">
+              <div class="card-body">
+                <div class="d-flex align-items-center">
+                  <div>
+                    <p class="mb-0">Total Follow</p>
+                    <h4 class="my-1">85M</h4>
+                  </div>
+                  <div class="ms-auto font-35 text-white">
+                    <i class="bx bx-rss"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--end row-->
+        <div class="row">
+          <div class="col-12 col-xl-6 d-flex">
+            <div class="card radius-10">
+              <div class="card-body">
+                <div class="d-flex align-items-center">
+                  <div>
+                    <h5 class="mb-0">New Films Upload</h5>
+                  </div>
+                  <div class="font-22 ms-auto">
+                    <i class="bx bx-dots-horizontal-rounded"></i>
+                  </div>
+                </div>
+                <hr />
+                <div class="table-responsive">
+                  <table id="new-films-upload" class="table align-middle mb-0">
+                    <thead class="table-light">
+                      <tr>
+                        <th>ID</th>
+                        <th>Film</th>
+                        <th>Upload By</th>
+                        <th>Date</th>
+                        <th>Public</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% for(const film of films) { %>
+                      <tr>
+                        <td>#<%=film.film_id%></td>
+                        <td>
+                          <div class="d-flex align-items-center">
+                            <div class="recent-product-img">
+                              <img src="<%=film.film_img%>" alt="" />
+                            </div>
+                            <div class="ms-2">
+                              <h6 class="mb-1 font-14">
+                                <%=film.film_originalname%> - (<%=film.film_year%>)
+                              </h6>
+                            </div>
+                          </div>
+                        </td>
+                        <td>Quoc Thinh</td>
+                        <td>
+                          <% if(film.updatedAt instanceof Date) { %>
+                          <%=film.updatedAt.toISOString().substring(0, 10)%>
+                          <% } else {%>
+                          NaN
+                          <% } %>
+                        </td>
+                        <td>
+                          <div class="badge rounded-pill text-white bg-gradient-kyoto p-2 text-uppercase px-3">
+                            <i class="bx bx-shield-x align-middle me-1"></i>Pending
+                          </div>
+                        </td>
+                        <td>
+                          <div class="d-flex order-actions">
+                            <a href="javascript:;" class="text-primary"><i class="bx bx-show"></i></a>
+                            <a href="javascript:;" class="text-warning ms-1" data-bs-toggle="modal" data-bs-target="#editFilmModal"><i class="bx bxs-edit"></i></a>
+                            <a type="button" href="javascript:;" class="text-danger ms-1" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                              <i class="bx bxs-trash"></i>
+                            </a>
+                          </div>
+                        </td>
+                      </tr>
+                      <% } %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-xl-6 d-flex">
+            <div class="card radius-10">
+              <div class="card-body">
+                <div class="d-flex align-items-center">
+                  <div>
+                    <h5 class="mb-0">New User Register</h5>
+                  </div>
+                  <div class="font-22 ms-auto">
+                    <i class="bx bx-dots-horizontal-rounded"></i>
+                  </div>
+                </div>
+                <hr />
+                <div class="table-responsive">
+                  <table id="new-user-register" class="table align-middle mb-0">
+                    <thead class="table-light">
+                      <tr>
+                        <th>ID</th>
+                        <th>User</th>
+                        <th>Mail</th>
+                        <th>Membership</th>
+                        <th>Created</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% for(const user of users) { %>
+                      <tr>
+                        <td>#<%=user.user_id%></td>
+                        <td>
+                          <div class="d-flex align-items-center">
+                            <div class="recent-product-img">
+                              <img src="<%=user.user_avatar%>" alt="" />
+                            </div>
+                            <div class="ms-2">
+                              <h6 class="mb-1 font-14"><%=user.user_name%></h6>
+                            </div>
+                          </div>
+                        </td>
+                        <td><%=user.user_mail%></td>
+                        <td>
+                          <% if (user.user_level === 0) { %>
+                          <span class="badge text-white bg-gradient-lush text-uppercase px-3">Admin</span>
+                          <% } else { %>
+                          <span class="badge text-white bg-gradient-kyoto text-uppercase px-3">Member</span>
+                          <% } %>
+                        </td>
+                        <td>
+                          <% if (user.createdAt instanceof Date) { %>
+                          <%=user.createdAt.toISOString().substring(0, 10)%>
+                          <% } else {%>
+                          NaN
+                          <% } %>
+                        </td>
+                        <td>
+                          <% if (user.user_status === 1) { %>
+                          <div class="badge rounded-pill text-white bg-gradient-blues p-2 text-uppercase px-3">
+                            <i class="bx bx-check-shield align-middle me-1"></i>Active
+                          </div>
+                          <% } else if (user.user_status === 2) { %>
+                          <div class="badge rounded-pill text-white bg-gradient-kyoto p-2 text-uppercase px-3">
+                            <i class="bx bx-shield-x align-middle me-1"></i>Pending
+                          </div>
+                          <% } else if (user.user_status === 0) { %>
+                          <div class="badge rounded-pill text-white bg-gradient-burning p-2 text-uppercase px-3">
+                            <i class="bx bx-shield-x align-middle me-1"></i>Banned
+                          </div>
+                          <% } %>
+                        </td>
+                        <td>
+                          <div class="d-flex order-actions">
+                            <a href="javascript:;" class="text-white"><i class="bx bx-detail"></i></a>
+                            <a href="javascript:;" class="text-warning ms-1" data-bs-toggle="modal" data-bs-target="#editMemberModal">
+                              <i class="bx bxs-edit"></i>
+                            </a>
+                            <a href="javascript:;" class="text-danger ms-1" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                              <i class="bx bxs-trash"></i>
+                            </a>
+                          </div>
+                        </td>
+                      </tr>
+                      <% } %>
+                      <!-- <tr>
+                        <td>#1</td>
+                        <td>
+                          <div class="d-flex align-items-center">
+                            <div class="recent-product-img">
+                              <img src="http://vcap.vn/public/admin/img/avatar04.png" alt="" />
+                            </div>
+                            <div class="ms-2">
+                              <h6 class="mb-1 font-14">quocthinh</h6>
+                            </div>
+                          </div>
+                        </td>
+                        <td>majquocthjnh@gmail.com</td>
+                        <td><span class="badge text-white bg-gradient-lush text-uppercase px-3">Admin</span></td>
+                        <td>12 Jul 2020</td>
+                        <td>
+                          <div class="badge rounded-pill text-white bg-gradient-kyoto p-2 text-uppercase px-3">
+                            <i class="bx bx-shield-x align-middle me-1"></i>Pending
+                          </div>
+                        </td>
+                        <td>
+                          <div class="d-flex order-actions">
+                            <a href="javascript:;" class="text-white"><i class="bx bx-detail"></i></a>
+                            <a href="javascript:;" class="text-warning ms-1" data-bs-toggle="modal" data-bs-target="#editMemberModal">
+                              <i class="bx bxs-edit"></i>
+                            </a>
+                            <a href="javascript:;" class="text-danger ms-1" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                              <i class="bx bxs-trash"></i>
+                            </a>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>#2</td>
+                        <td>
+                          <div class="d-flex align-items-center">
+                            <div class="recent-product-img">
+                              <img src="http://vcap.vn/public/admin/img/avatar5.png" alt="" />
+                            </div>
+                            <div class="ms-2">
+                              <h6 class="mb-1 font-14">giabao</h6>
+                            </div>
+                          </div>
+                        </td>
+                        <td>giabao2k3@gmail.com</td>
+                        <td><span class="badge text-white bg-gradient-kyoto text-uppercase px-3">Member</span> </td>
+                        <td>6 Jul 2021</td>
+                        <td>
+                          <div class="badge rounded-pill text-white bg-gradient-blues p-2 text-uppercase px-3">
+                            <i class="bx bx-check-shield align-middle me-1"></i>Active
+                          </div>
+                        </td>
+                        <td>
+                          <div class="d-flex order-actions">
+                            <a href="javascript:;" class="text-white"><i class="bx bx-detail"></i></a>
+                            <a href="javascript:;" class="text-warning ms-1" data-bs-toggle="modal" data-bs-target="#editMemberModal">
+                              <i class="bx bxs-edit"></i>
+                            </a>
+                            <a href="javascript:;" class="text-danger ms-1" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                              <i class="bx bxs-trash"></i>
+                            </a>
+                          </div>
+                        </td>
+                      </tr> -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modals -->
+      <!-- Delete Modals -->
+      <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="deleteModalLabel">Delete Film</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">Are you sure you want delete this film?</div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary text-white bg-gradient-burning">Delete</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Edit Film Modals -->
+      <div class="modal fade" id="editFilmModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Edit Film</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="card">
+                <div class="card-body">
+                  <form class="row g-3">
+                    <div class="col-12 mb-3">
+                      <label class="form-check-label" for="re-up">Re Up</label>
+                      <input class="form-check-input" type="radio" name="re-up" id="re-up">
+                    </div>
+                    <hr>
+                    <div class="col-12 mb-3">
+                      <label class="form-label">Name:</label>
+                      <input type="text" class="form-control" name="name" placeholder="Film's Name">
+                    </div>
+                    <div class="col-12 mb-3">
+                      <label class="form-label">Original Name:</label>
+                      <input type="text" class="form-control" name="original-name" placeholder="Film's Original Name">
+                    </div>
+                    <div class="col-12 mb-3">
+                      <label class="form-label">Status:</label>
+                      <input type="text" class="form-control" name="status" placeholder="Film's Status">
+                    </div>
+                    <div class="col-12 mb-3">
+                      <label class="form-label">Image:</label>
+                      <div class="input-group">
+                        <input type="url" class="form-control" name="image" placeholder="http://example.com/images/img-film.jpg">
+                        <input type="file" accept="image/*" class="form-control" name="upload-image" id="upload-image" style="display: none;">
+                        <label class="input-group-text" for="upload-image"><i class="bx bx-upload"></i></label>
+                        <labels class="input-group-text">Upload</labels>
+                      </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <label class="form-label">Image Banner:</label>
+                      <div class="input-group">
+                        <input type="url" class="form-control" name="image-banner" placeholder="http://example.com/images/imgbn-film.jpg">
+                        <input type="file" accept="image/*" class="form-control" name="upload-image-banner" id="upload-image-banner" style="display: none;">
+                        <label class="input-group-text" for="upload-image-banner"><i class="bx bx-upload"></i></label>
+                        <label class="input-group-text">Upload</label>
+                      </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <label class="form-label">Categories:</label>
+                      <select class="multiple-select" name="categories[]" data-placeholder="Choose anything" multiple="multiple">
+                        <option value="Hành Động" selected>Hành Động</option>
+                        <option value="Viễn Tưởng">Viễn Tưởng</option>
+                        <option value="Chiến Tranh">Chiến Tranh</option>
+                        <option value="Hình Sự">Hình Sự</option>
+                        <option value="Phiêu Lưu" selected>Phiêu Lưu</option>
+                      </select>
+                      <!-- <div class="input-group">
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" name="categories[]" type="checkbox" value="">
+                          <label class="form-check-label">Hanh dong</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" name="categories[]" type="checkbox" value="">
+                          <label class="form-check-label">Vien tuong</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" name="categories[]" type="checkbox" value="">
+                          <label class="form-check-label">Hai huoc</label>
+                        </div>
+
+                      </div> -->
+                    </div>
+                    <div class="col-12 mb-3">
+                      <label class="form-label">Countries:</label>
+                      <select class="multiple-select" name="countries[]" data-placeholder="Choose anything" multiple="multiple">
+                        <option value="Mỹ" selected>Mỹ</option>
+                        <option value=Nhật Bản Tưởng">Nhật Bản</option>
+                        <option value="Hàn Quốc">Hàn Quốc</option>
+                        <option value="Anh">Anh</option>
+                        <option value="Trung Quốc" selected>Trung Quốc</option>
+                      </select>
+                      <!-- <div class="input-group">
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" name="countries[]" type="checkbox" value="">
+                          <label class="form-check-label">My</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" name="countries[]" type="checkbox" value="">
+                          <label class="form-check-label">Nhat Ban</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" name="countries[]" type="checkbox" value="">
+                          <label class="form-check-label">Trung Quoc</label>
+                        </div>
+
+                      </div> -->
+                    </div>
+                    <div class="col-12 mb-3">
+                      <label class="form-label">Trailer:</label>
+                      <input type="url" class="form-control" name="trailer" placeholder="Trailer" value="">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label class="form-label">Film's Duration:</label>
+                      <input class="form-control" name="duration" placeholder="Film's Duration" value="">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label class="form-label">Film's Quality:</label>
+                      <input class="form-control" name="quality" placeholder="Film's Quality" value="">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label class="form-label">Release Date:</label>
+                      <input class="form-control" placeholder="Release Date">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label class="form-label">Imdb Point:</label>
+                      <input class="form-control" name="imdb" placeholder="Imdb Point" value="">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label class="form-label">Movie's Language:</label>
+                      <select class="form-control" name="language">
+                        <option selected value="Vietsub">Vietsub</option>
+                        <option value="Thuyết Minh">Thuyết Minh</option>
+                        <option value="Lồng Tiếng">Lồng Tiếng</option>
+                        <option value="Vietsub + Thuyết Minh">Vietsub + Thuyết Minh</option>
+                        <option value="Vietsub + Lồng Tiếng">Vietsub + Lồng Tiếng</option>
+                        <option value="TM + LT">TM + LT</option>
+                        <option value="Nosub">Nosub</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label class="form-label">Movie/Serie?:</label>
+                      <select class="form-control" name="type-film">
+                        <option selected="" value="movie">Movie</option>
+                        <option value="serie-full">Serie Full</option>
+                        <option value="serie-not-full">Serie Not Full</option>
+                        <option value="film-trailer">Film Trailer</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label class="form-label">Cinema?:</label>
+                      <select class="form-control" name="is-cinema">
+                        <option selected="" value="0">No</option>
+                        <option value="1">Yes</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label class="form-label">Film Hot?:</label>
+                      <select class="form-control" name="is-film-hot">
+                        <option selected="" value="0">No</option>
+                        <option value="1">Yes</option>
+                      </select>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <label class="form-label">Message:</label>
+                      <input class="form-control" placeholder="Message">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label class="form-label">Film's Description:</label>
+                      <textarea class="form-control" rows="5" name="description-film" placeholder="Film's Description"></textarea>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label class="form-label">Film's Content:</label>
+                      <textarea class="form-control" rows="5" name="content-film" placeholder="Film's Content"></textarea>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label class="form-label">Tags:</label>
+                      <input type="text" class="form-control" name="tags" data-role="tagsinput" placeholder="Tags" value="liên minh công lý: phiên bản của zack snyder,zack snyder’s justice league">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label class="form-label">Slug:</label>
+                      <input class="form-control" name="slug" placeholder="Slug" value="">
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary text-white bg-gradient-blues" style="border-color: #fff;">Save changes</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Edit Modals -->
+      <div class="modal fade" id="editMemberModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Edit Member</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="card">
+                <div class="card-body">
+                  <form class="row g-3">
+                    <div class="col-md-6 mb-3">
+                      <label class="form-label">User Name:</label>
+                      <input type="text" class="form-control" name="user-name" placeholder="User Name">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label class="form-label">Mail:</label>
+                      <input type="email" class="form-control" name="user-email" placeholder="Mail">
+                    </div>
+                    <div class="col-md-5 mb-3">
+                      <label class="form-label">Address Avatar:</label>
+                      <input type="text" class="form-control" name="user-avatar" placeholder="Address Avatar">
+                    </div>
+                    <div class="col-md-5 mb-3">
+                      <label class="form-label">Reset Password:</label>
+                      <input type="text" class="form-control" name="user-password" placeholder="Reset Password">
+                    </div>
+                    <div class="col-md-2 mb-3">
+                      <label class="form-label">Membership:</label>
+                      <select class="form-control" name="user-level">
+                        <option selected value="admin">Admin</option>
+                        <option value="member">Member</option>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary text-white bg-gradient-blues" style="border-color: #fff;">Save changes</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!--end page wrapper -->
+    <!--start overlay-->
+    <div class="overlay toggle-icon"></div>
+    <!--end overlay-->
+    <!--Start Back To Top Button--><a href="javaScript:;" class="back-to-top"><i class="bx bxs-up-arrow-alt"></i></a>
+    <!--End Back To Top Button-->
+    <footer class="page-footer">
+      <p class="mb-0">Copyright © 2021. All right reserved.</p>
+    </footer>
+  </div>
+  <!--end wrapper-->
+  <!-- Start Javascript Import -->
+  <%- include('./partials/javascript-import') %>
+  <script>
+    $('.multiple-select').select2({
+      theme: 'bootstrap4',
+      width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+      placeholder: $(this).data('placeholder'),
+      allowClear: Boolean($(this).data('allow-clear')),
+    });
+  </script>
+  <!-- End Javascript Import -->
+</body>
+
+</html>

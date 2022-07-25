@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('./partials/head') %>
+</head>
+
+<body class="bg-theme bg-theme13">
+  <!--wrapper-->
+  <div class="wrapper">
+    <!--sidebar wrapper -->
+    <%- include('./partials/sidebar') %>
+    <!--end sidebar wrapper -->
+    <!--start header -->
+    <%- include('./partials/header') %>
+    <!--end header -->
+    <!--start page wrapper -->
+    <div class="page-wrapper">
+      <div class="page-content">
+        <!--breadcrumb-->
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+          <div class="breadcrumb-title pe-3">Configuration</div>
+          <div class="ps-3">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item">
+                  <a href="javascript:;"><i class="bx bx-home-alt"></i></a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                  Configuration
+                </li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+        <!--end breadcrumb-->
+        <div class="row row-cols-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1">
+          <div class="col">
+            <div class="card">
+              <div class="card-body">
+                <ul class="nav nav-tabs" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <a class="nav-link active" data-bs-toggle="tab" href="#configsite" role="tab" aria-selected="true">
+                      <div class="d-flex align-items-center">
+                        <div class="tab-icon">
+                          <i class="bx bx-slider font-18 me-1"></i>
+                        </div>
+                        <div class="tab-title">Site</div>
+                      </div>
+                    </a>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <a class="nav-link" data-bs-toggle="tab" href="#configcache" role="tab" aria-selected="false">
+                      <div class="d-flex align-items-center">
+                        <div class="tab-icon">
+                          <i class="bx bx-data font-18 me-1"></i>
+                        </div>
+                        <div class="tab-title">Cache</div>
+                      </div>
+                    </a>
+                  </li>
+                </ul>
+                <div class="tab-content py-3">
+                  <div class="tab-pane fade show active" id="configsite" role="tabpanel">
+                    <div class="card">
+                      <div class="card-body">
+                        <h6 class="mb-0 text-uppercase">
+                          Configuration Site
+                        </h6>
+                        <hr />
+                        <form id="form-config">
+                          <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">Website Title:</label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" name="web_title" placeholder="Website Title" value="<%=config.config_web_title%>" />
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">Website Url:</label>
+                            <div class="col-sm-10">
+                              <input type="url" class="form-control" name="web_url" placeholder="Website Link" value="<%=config.config_web_url%>" />
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">Website Description:</label>
+                            <div class="col-sm-10">
+                              <textarea class="form-control" name="web_description" placeholder="Web Description"><%=config.config_web_description%></textarea>
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">Website Keys:</label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" name="web_keys" placeholder="Web Keys" data-role="tagsinput" value="<%=config.config_web_keyword%>" />
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">Website Servers:</label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" name="web_servers" data-role="tagsinput" placeholder="Website Servers" value="<%=config.config_web_servers%>">
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">Website Tags:</label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" name="web_tags" data-role="tagsinput" placeholder="Web Tags" value="<%=config.config_web_tags%>" />
+                            </div>
+                          </div>
+                          <hr />
+                          <div class="col-12">
+                            <button class="btn btn-light btn-save-config" style="float: right" type="button">Save</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="configcache" role="tabpanel">
+                    <div class="card">
+                      <div class="card-body">
+                        <h6 class="mb-0 text-uppercase">
+                          Configuration Cache
+                        </h6>
+                        <hr />
+                        <form id="form-cache-time">
+                          <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Set Time Reset Cache:</label>
+                            <div class="col-sm-4 row">
+                              <input type="text" class="form-control mb-3" name="cache_num" placeholder="Number" value="10" />
+                            </div>
+                            <div class="col-sm-5 row">
+                              <select class="form-select mb-3" name="cache_unit" aria-label=".form-select-sm example">
+                                <option value="m">Minute</option>
+                                <option value="h">Hour</option>
+                                <option value="d" selected>Day</option>
+                              </select>
+                            </div>
+                          </div>
+                          <hr />
+                          <div class="col-12">
+                            <button class="btn btn-light btn-save-cache" style="float: right" type="button">Save</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--end row-->
+      </div>
+    </div>
+    <!--end page wrapper -->
+    <!--start overlay-->
+    <div class="overlay toggle-icon"></div>
+    <!--end overlay-->
+    <!--Start Back To Top Button-->
+    <a href="javaScript:;" class="back-to-top"><i class="bx bxs-up-arrow-alt"></i></a>
+    <!--End Back To Top Button-->
+    <footer class="page-footer">
+      <p class="mb-0">Copyright © 2021. All right reserved.</p>
+    </footer>
+  </div>
+  <!--end wrapper-->
+  <!-- Start Javascript Import -->
+  <%- include('./partials/javascript-import') %>
+  <script>
+    const formConfig = document.querySelector('#form-config');
+    const formCacheTime = document.querySelector('#form-cache-time');
+    const btnSaveConfig = document.querySelector('.btn-save-config');
+    const btnSaveCache = document.querySelector('.btn-save-cache');
+
+    btnSaveConfig.onclick = function() {
+      const dataForm = Object.fromEntries(new FormData(formConfig));
+      $.ajax({
+        type: 'PATCH',
+        url: '/admin/configuration/update',
+        data: dataForm,
+      }).done(() => {
+        location.reload();
+      })
+    };
+
+    btnSaveCache.onclick = function() {
+      const dataForm = Object.fromEntries(new FormData(formCacheTime));
+      let timeCache;
+      switch (dataForm.cache_unit) {
+        case 'm':
+          timeCache = parseInt(dataForm.cache_num) * 60 * 1000;
+          break;
+        case 'h':
+          timeCache = parseInt(dataForm.cache_num) * 60 * 60 * 1000;
+          break;
+        case 'd':
+          timeCache = parseInt(dataForm.cache_num) * 24 * 60 * 60 * 1000;
+          break;
+      }
+      console.log(timeCache);
+      $.ajax({
+        type: 'PATCH',
+        url: '/admin/configuration/update',
+        data: { timecache: timeCache },
+      }).done((res)=>{
+        // location.reload();
+        console.log(res);
+      });
+    }
+  </script>
+  <!-- End Javascript Import -->
+</body>
+
+</html>

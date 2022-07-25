@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('./partials/head') %>
+  <style>
+    .modal-content {
+      background-image: radial-gradient(circle at 17% 1%, rgba(198, 198, 198, .03) 0, rgba(198, 198, 198, .03) 50%, rgba(42, 42, 42, .03) 50%, rgba(42, 42, 42, .03) 100%), radial-gradient(circle at 8% 81%, rgba(253, 253, 253, .03) 0, rgba(253, 253, 253, .03) 50%, rgba(36, 36, 36, .03) 50%, rgba(36, 36, 36, .03) 100%), radial-gradient(circle at 83% 29%, rgba(164, 164, 164, .03) 0, rgba(164, 164, 164, .03) 50%, rgba(60, 60, 60, .03) 50%, rgba(60, 60, 60, .03) 100%), radial-gradient(circle at 96% 62%, rgba(170, 170, 170, .03) 0, rgba(170, 170, 170, .03) 50%, rgba(169, 169, 169, .03) 50%, rgba(169, 169, 169, .03) 100%), linear-gradient(338deg, #028DD5, #05AC51);
+    }
+
+    .rotate {
+      animation: rotation 2s infinite linear;
+    }
+
+    @keyframes rotation {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(359deg);
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-theme bg-theme13">
+  <!--wrapper-->
+  <div class="wrapper">
+    <!--sidebar wrapper -->
+    <%- include('./partials/sidebar') %>
+    <!--end sidebar wrapper -->
+    <!--start header -->
+    <%- include('./partials/header') %>
+    <!--end header -->
+    <!--start page wrapper -->
+    <div class="page-wrapper">
+      <div class="page-content">
+        <!--breadcrumb-->
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+          <div class="breadcrumb-title pe-3">Films</div>
+          <div class="ps-3">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item">
+                  <a href="javascript:;"><i class="bx bx-home-alt"></i></a>
+                </li>
+                <li class="breadcrumb-item" aria-current="page">Films</li>
+                <li class="breadcrumb-item active" aria-current="page">
+                  Add Film
+                </li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+        <!--end breadcrumb-->
+        <div class="card">
+          <div class="card-body">
+            <form method="POST" action="./create" class="row g-3">
+              <div class="col-12 mb-3">
+                <label class="form-label">Name:</label>
+                <input type="text" class="form-control" name="name" placeholder="Film's Name" required>
+              </div>
+              <div class="col-12 mb-3">
+                <label class="form-label">Original Name:</label>
+                <input type="text" class="form-control" name="original_name" placeholder="Film's Original Name" required>
+              </div>
+              <div class="col-12 mb-3">
+                <label class="form-label">Status:</label>
+                <input type="text" class="form-control" name="status" placeholder="Film's Status" required>
+              </div>
+              <div class="col-12 mb-3">
+                <label class="form-label">Image:</label>
+                <div class="input-group">
+                  <input type="url" class="form-control" name="image" placeholder="http://example.com/images/img-film.jpg" required>
+                  <input type="file" accept="image/*" class="form-control" id="upload_image" style="display: none;">
+                  <label class="input-group-text" for="upload_image"><i class="bx bx-image-add"></i></label>
+                  <label class="input-group-text btn-upload-img"><i class="me-2 bx bx-cloud-upload"></i>Upload</label>
+                </div>
+              </div>
+              <div class="col-12 mb-3">
+                <label class="form-label">Image Banner:</label>
+                <div class="input-group">
+                  <input type="url" class="form-control" name="image_banner" placeholder="http://example.com/images/img-banner-film.jpg" required>
+                  <input type="file" accept="image/*" class="form-control" id="upload_image_banner" style="display: none;">
+                  <label class="input-group-text" for="upload_image_banner"><i class="bx bx-image-add"></i></label>
+                  <label class="input-group-text btn-upload-img"><i class="me-2 bx bx-cloud-upload"></i>Upload</label>
+                </div>
+              </div>
+              <div class="col-12 mb-3">
+                <label class="form-label">Image Canonical:</label>
+                <div class="input-group">
+                  <input type="url" class="form-control" name="image_canonical" placeholder="http://example.com/images/img-canonical-film.jpg">
+                  <input type="file" accept="image/*" class="form-control" id="upload_image_canonical" style="display: none;">
+                  <label class="input-group-text" for="upload_image_canonical"><i class="bx bx-image-add"></i></label>
+                  <label class="input-group-text btn-upload-img"><i class="me-2 bx bx-cloud-upload"></i>Upload</label>
+                </div>
+              </div>
+              <div class="col-12 mb-3">
+                <label class="form-label">Categories:</label>
+                <select class="multiple-select" name="categories[]" data-placeholder="Choose Categories" multiple="multiple" required>
+                  <% for (const category of categories) { %>
+                  <option value="<%=category.category_id%>"><%=category.category_name%></option>
+                  <% } %>
+                </select>
+              </div>
+              <div class="col-12 mb-3">
+                <label class="form-label">Countries:</label>
+                <select class="multiple-select" name="countries[]" data-placeholder="Choose Countries" multiple="multiple" required>
+                  <% for (const country of countries) { %>
+                  <option value="<%=country.country_id%>"><%=country.country_name%></option>
+                  <% } %>
+                </select>
+              </div>
+              <div class="col-12 mb-3">
+                <label class="form-label">Trailer:</label>
+                <input type="url" class="form-control" name="trailer" placeholder="Trailer" value="">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Film's Duration:</label>
+                <input class="form-control" name="duration" placeholder="Film's Duration" value="">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Film's Quality:</label>
+                <input class="form-control" name="quality" placeholder="Film's Quality" value="" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Release Date:</label>
+                <input class="form-control" name="year" placeholder="Release Date" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Imdb Point:</label>
+                <input class="form-control" name="imdb" placeholder="Imdb Point" value="">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Movie's Language:</label>
+                <select class="form-control" name="language" required>
+                  <option selected value="Vietsub">Vietsub</option>
+                  <option value="Thuyết Minh">Thuyết Minh</option>
+                  <option value="Lồng Tiếng">Lồng Tiếng</option>
+                  <option value="Vietsub + Thuyết Minh">Vietsub + Thuyết Minh</option>
+                  <option value="Vietsub + Lồng Tiếng">Vietsub + Lồng Tiếng</option>
+                  <option value="TM + LT">TM + LT</option>
+                  <option value="Nosub">Nosub</option>
+                </select>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Movie/Serie?:</label>
+                <select class="form-control" name="type_film" required>
+                  <option selected="" value="movie">Movie</option>
+                  <option value="serie_full">Serie Full</option>
+                  <option value="serie_not_full">Serie Not Full</option>
+                  <option value="film_trailer">Film Trailer</option>
+                </select>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Cinema?:</label>
+                <select class="form-control" name="is_cinema">
+                  <option selected="" value="0">No</option>
+                  <option value="1">Yes</option>
+                </select>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Film Hot?:</label>
+                <select class="form-control" name="is_film_hot">
+                  <option selected="" value="0">No</option>
+                  <option value="1">Yes</option>
+                </select>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Film Canonical?:</label>
+                <select class="form-control" name="is_film_canonical">
+                  <option selected="" value="0">No</option>
+                  <option value="1">Yes</option>
+                </select>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Message:</label>
+                <input class="form-control" name="message_film" placeholder="Message">
+              </div>
+              <div class="col-12 mb-3">
+                <label class="form-label">Film's Description:</label>
+                <textarea class="form-control" rows="3" name="description_film" placeholder="Film's Description" required></textarea>
+              </div>
+              <div class="col-12 mb-3">
+                <label class="form-label">Film's Info:</label>
+                <textarea class="form-control" rows="5" name="info_film" id="info_film" placeholder="Film's Info" required></textarea>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Tags:</label>
+                <input type="text" class="form-control" name="tags" data-role="tagsinput" placeholder="Tags" value="">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Slug:</label>
+                <input class="form-control" name="slug" placeholder="Slug (Auto Create)" value="">
+              </div>
+              <input name="user_id" value="<%= user.user_id %>" style="display: none;">
+              <hr>
+              <div class="col-12 mb-3">
+                <button type="submit" class="btn btn-primary text-white bg-gradient-blues" style="border-color: #fff;float: right;">Create</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--end page wrapper -->
+    <!--start overlay-->
+    <div class="overlay toggle-icon"></div>
+    <!--end overlay-->
+    <!--Start Back To Top Button-->
+    <a href="javaScript:;" class="back-to-top"><i class="bx bxs-up-arrow-alt"></i></a>
+    <!--End Back To Top Button-->
+    <footer class="page-footer">
+      <p class="mb-0">Copyright © 2021. All right reserved.</p>
+    </footer>
+  </div>
+  <!--end wrapper-->
+  <!-- Start Javascript Import -->
+  <%- include('./partials/javascript-import') %>
+  <script src="//cdn.ckeditor.com/4.19.0/standard/ckeditor.js"></script>
+  <script>
+    CKEDITOR.replace('info_film');
+
+
+    $('.multiple-select').select2({
+      theme: 'bootstrap4',
+      width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+      placeholder: $(this).data('placeholder'),
+      // placeholder: $(this).attributes.placeholder.textContent,
+      allowClear: Boolean($(this).data('allow-clear')),
+    });
+
+
+    function imgurUpload(img) {
+      const API_URL = 'https://api.imgur.com/3/image';
+      const CLIENT_ID = 'aca6d2502f5bfd8';
+
+      const formData = new FormData();
+      formData.append('image', img);
+
+      const config = {
+        async: false,
+        cache: false,
+        contentType: false,
+        processData: false,
+        url: API_URL,
+        type: "POST",
+        headers: {
+          Authorization: 'Client-ID ' + CLIENT_ID,
+          Accept: 'application/json',
+        },
+        data: formData,
+      }
+
+      return $.ajax(config);
+    }
+
+    // Upload Images with Imgur API
+    document.querySelectorAll('input[type=file][accept="image/*"]').forEach(inputEl => {
+      const inputGroup = inputEl.parentElement;
+      const inputUrlEl = inputGroup.querySelector('input[type=url]');
+      const btnUpload = inputGroup.querySelector('.btn-upload-img');
+
+      inputEl.onchange = function(e) {
+        e.target.previousElementSibling.value = e.target.files[0].name;
+      };
+
+      btnUpload.onclick = async function() {
+        const pattern = /(http)?s?:?(\/\/[^"']*\.(?:png|jpg|jpeg|gif|png|svg))/;
+
+        if (pattern.test(inputUrlEl.value)) {
+          const res = await imgurUpload(inputUrlEl.value);
+          inputUrlEl.value = res.data.link;
+        } else if (inputEl.files.length !== 0) {
+          const res = await imgurUpload(inputEl.files[0]);
+          inputUrlEl.value = res.data.link;
+        }
+
+      }
+    });
+
+
+  </script>
+  <!-- End Javascript Import -->
+</body>
+
+</html>
