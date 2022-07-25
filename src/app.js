@@ -3,8 +3,7 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
 const path = require('path');
-const handlebars = require('express-handlebars');
-const morgan = require('morgan');
+// const morgan = require('morgan');
 const cookieParser = require("cookie-parser");
 
 
