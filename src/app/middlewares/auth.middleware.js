@@ -26,6 +26,9 @@ function authRequire(req, res, next) {
 		});
 }
 
+const auth = (req, res, next) => {};
+
 module.exports = {
 	authRequire,
+	auth,
 };
