@@ -437,8 +437,7 @@
 
     // ImgUr upload function
     function imgurUpload(img) {
-      const API_URL = 'https://api.imgur.com/3/image';
-      const CLIENT_ID = 'aca6d2502f5bfd8';
+      const API_URL = 'https://tame-red-clownfish-tutu.cyclic.app/image';
 
       const formData = new FormData();
       formData.append('image', img);
@@ -450,10 +449,6 @@
         processData: false,
         url: API_URL,
         type: "POST",
-        headers: {
-          Authorization: 'Client-ID ' + CLIENT_ID,
-          Accept: 'application/json',
-        },
         data: formData,
       }
 
