@@ -2,7 +2,7 @@ const Films = require('../../models/film.models');
 const Categories = require('../../models/category.models');
 const Countries = require('../../models/country.models');
 const Users = require('../../models/user.models');
-const ajaxFilmsUtil = require('../../../util/ajaxFilms.util');
+const ajaxFilmsUtil = require('../../utils/ajaxFilms.util');
 
 // [POST] admin/films/datatables_ajax
 const ajaxDatatablesFilms = async (req, res) => {

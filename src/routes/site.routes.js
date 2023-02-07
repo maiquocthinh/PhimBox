@@ -1,9 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-const siteController = require('../app/controllers/site.controller');
+const siteController = require('../controllers/site');
 
-
-router.get('/', siteController.index);
+router.get('/', siteController.home);
 
 module.exports = router;

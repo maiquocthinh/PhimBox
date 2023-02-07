@@ -1,9 +1,11 @@
 const { Router } = require('express');
 const router = Router();
-const authMiddleware = require('../../app/middlewares/auth.middleware');
-const configurationController = require('../../app/controllers/admin/configuration.controller');
+const authMiddleware = require('../../middlewares/auth.middleware');
+const configurationController = require('../../controllers/admin/configuration.controller');
 
-router.get('/', authMiddleware.authRequire, configurationController.configuration);
+// API
 router.patch('/update', authMiddleware.authRequire, configurationController.configurationUpdate);
+// PAGE
+router.get('/', authMiddleware.authRequire, configurationController.configuration);
 
 module.exports = router;

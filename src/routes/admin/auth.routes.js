@@ -1,10 +1,12 @@
 const { Router } = require('express');
 const router = Router();
-const authMiddleware = require('../../app/middlewares/auth.middleware');
-const authController = require('../../app/controllers/admin/auth.controller');
+const authMiddleware = require('../../middlewares/auth.middleware');
+const authController = require('../../controllers/admin/auth.controller');
 
-router.get('/login', authMiddleware.authRequire, authController.login);
+// API
 router.post('/login', authController.loginHandler);
 router.get('/logout', authController.logout);
+// PAGE
+router.get('/login', authMiddleware.authRequire, authController.login);
 
 module.exports = router;

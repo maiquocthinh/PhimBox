@@ -1,18 +1,20 @@
 const { Router } = require('express');
 const router = Router();
-const authMiddleware = require('../../app/middlewares/auth.middleware');
-const createFilmMiddleware = require('../../app/middlewares/handleCreateFilm.middleware');
-const filmsController = require('../../app/controllers/admin/films.controller');
+const authMiddleware = require('../../middlewares/auth.middleware');
+const createFilmMiddleware = require('../../middlewares/handleCreateFilm.middleware');
+const filmsController = require('../../controllers/admin/films.controller');
 
+// API
 router.post('/datatables_ajax', authMiddleware.authRequire, filmsController.ajaxDatatablesFilms);
-router.get('/', authMiddleware.authRequire, filmsController.allFilms);
-router.get('/add', authMiddleware.authRequire, filmsController.addFilm);
 router.post('/create', authMiddleware.authRequire, createFilmMiddleware.handeDataPost, filmsController.createFilm);
 router.get('/read/:id', authMiddleware.authRequire, filmsController.readFilm);
 router.put('/update/:id', authMiddleware.authRequire, createFilmMiddleware.handeDataPost, filmsController.updateFilm);
 router.delete('/delete/:id', authMiddleware.authRequire, filmsController.deleteFilm);
 router.patch('/restore/:id', authMiddleware.authRequire, filmsController.restoreFilm);
 router.delete('/destroy/:id', authMiddleware.authRequire, filmsController.destroyFilm);
+// PAGE
+router.get('/', authMiddleware.authRequire, filmsController.allFilms);
+router.get('/add', authMiddleware.authRequire, filmsController.addFilm);
 router.get('/movies', authMiddleware.authRequire, filmsController.filmsMovies);
 router.get('/series', authMiddleware.authRequire, filmsController.filmsSeries);
 router.get('/cartoon-anime', authMiddleware.authRequire, filmsController.filmsCartoonAnime);

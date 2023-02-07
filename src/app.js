@@ -5,16 +5,16 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
-const PORT = process.env.PORT || 8000;
-
 const routes = require('./routes');
-const db = require('./config/db/index.db');
+const db = require('./config/db.config');
+
+const PORT = process.env.PORT || 8000;
 
 // Connect Database
 db.connect();
 
 // Set Static
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../public')));
 
 // middlewares
 app.use(express.urlencoded({ extended: true }));
@@ -27,7 +27,7 @@ app.use(cookieParser());
 
 // Template engine
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'resources', 'views'));
+app.set('views', path.join(__dirname, 'views'));
 
 // Init Routes
 routes(app);

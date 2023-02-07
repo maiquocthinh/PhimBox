@@ -1,9 +1,9 @@
 const { Router } = require('express');
 const router = Router();
-const authMiddleware = require('../../app/middlewares/auth.middleware');
-const membersController = require('../../app/controllers/admin/members.controller');
+const authMiddleware = require('../../middlewares/auth.middleware');
+const membersController = require('../../controllers/admin/members.controller');
 
-router.get('/', authMiddleware.authRequire, membersController.allMembers);
+// API
 router.post('/datatables_ajax', authMiddleware.authRequire, membersController.ajaxDatatablesUsers);
 router.post('/create', authMiddleware.authRequire, membersController.createMember);
 router.get('/read/:id', authMiddleware.authRequire, membersController.readMember);
@@ -11,6 +11,8 @@ router.patch('/update/:id', authMiddleware.authRequire, membersController.update
 router.delete('/delete/:id', authMiddleware.authRequire, membersController.deleteMember);
 router.patch('/restore/:id', authMiddleware.authRequire, membersController.restoreMember);
 router.delete('/destroy/:id', authMiddleware.authRequire, membersController.destroyMember);
+// PAGE
+router.get('/', authMiddleware.authRequire, membersController.allMembers);
 router.get('/trash', authMiddleware.authRequire, membersController.membersTrash);
 
 module.exports = router;

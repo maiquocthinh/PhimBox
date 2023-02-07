@@ -1,6 +1,6 @@
 const User = require('../models/user.models');
 
-function authRequire(req, res, next) {
+const authRequire = (req, res, next) => {
 	if (!req.cookies._id) {
 		if (req.route.path !== '/login') {
 			return res.redirect('/admin/login');
@@ -24,7 +24,7 @@ function authRequire(req, res, next) {
 				next();
 			}
 		});
-}
+};
 
 const auth = (req, res, next) => {};
 
