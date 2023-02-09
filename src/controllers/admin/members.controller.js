@@ -1,5 +1,7 @@
 const Users = require('../../models/user.models');
 
+// ###### API ######
+
 // [POST] admin/members/datatables_ajax
 const ajaxDatatablesUsers = async (req, res) => {
 	const draw = req.body.draw;
@@ -75,14 +77,6 @@ const ajaxDatatablesUsers = async (req, res) => {
 	});
 };
 
-// [GET] admin/members
-const allMembers = (req, res) => {
-	res.render('admin/members', {
-		user: { ...req.user._doc },
-		ajaxType: '',
-	});
-};
-
 // [POST] admin/members/create
 const createMember = (req, res) => {
 	const user = new Users(req.body);
@@ -149,10 +143,20 @@ const destroyMember = (req, res) => {
 		});
 };
 
+// ###### PAGE ######
+
+// [GET] admin/members
+const allMembers = (req, res) => {
+	res.render('admin/members', {
+		user: req.session.user,
+		ajaxType: '',
+	});
+};
+
 // [GET] admin/members/trash
 const membersTrash = (req, res) => {
 	res.render('admin/membersTrash', {
-		user: { ...req.user._doc },
+		user: req.session.user,
 		ajaxType: 'trash',
 	});
 };

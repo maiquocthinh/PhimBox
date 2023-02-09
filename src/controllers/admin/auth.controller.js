@@ -1,4 +1,51 @@
 const Users = require('../../models/user.models');
+const { validateEmail } = require('../../utils');
+
+// ###### API ######
+
+// [POST] admin/login
+const loginHandler = async (req, res) => {
+	const { email, password, remember } = req.body;
+
+	if (!email || !password)
+		return res.status(400).render('admin/login', {
+			messageError: 'You must enter all fields.',
+		});
+
+	if (!validateEmail(email))
+		return res.status(400).render('admin/login', {
+			messageError: 'The email is invalid.',
+		});
+
+	try {
+		const user = await Users.findOne({ user_mail: email });
+
+		if (!user)
+			return res.status(400).render('admin/login', {
+				messageError: 'The email is not registered in our system.',
+			});
+
+		if (password !== user.user_pass)
+			return res.status(400).render('admin/login', {
+				messageError: 'The password is incorrect.',
+			});
+
+		user.user_pass = undefined;
+		req.session.user = user;
+		if (remember) req.session.cookie.maxAge = 1000 * 60 * 60 * 24 * 7;
+		res.redirect('/admin/dashboard');
+	} catch (error) {
+		res.status(500).json({ error: error.message });
+	}
+};
+
+// [DELETE] admin/logout
+const logoutHandler = (req, res) => {
+	req.session.destroy();
+	res.status(200).json({ msg: 'logout success.' });
+};
+
+// ###### PAGE ######
 
 // [GET] admin/login
 const login = (req, res) => {
@@ -7,28 +54,4 @@ const login = (req, res) => {
 	});
 };
 
-// [POST] admin/login
-const loginHandler = (req, res) => {
-	Users.findOne({ user_mail: req.body.user_mail })
-		.then((data) => {
-			if (req.body.password !== data.user_pass) {
-				res.render('admin/login', {
-					messageError: 'Mail or Password Wrong !!!',
-				});
-				return;
-			}
-			res.cookie('_id', data._id.toString(), { maxAge: 3 * 3600 * 1000 });
-			res.redirect('/admin/dashboard');
-		})
-		.catch((error) => {
-			res.status(500).json({ error: error.message });
-		});
-};
-
-// [GET] admin/logout
-const logout = (req, res) => {
-	res.clearCookie('_id');
-	res.redirect('./login');
-};
-
-module.exports = { login, loginHandler, logout };
+module.exports = { login, loginHandler, logoutHandler };

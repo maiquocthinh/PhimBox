@@ -38,7 +38,7 @@
                     <h5 class="mb-5 mt-2 text-white">User Login</h5>
                   </div>
                   <hr>
-                  <% if(messageError) { %> 
+                  <% if(messageError) { %>
                   <div class="alert border-0 border-start border-5 border-warning alert-dismissible fade show py-2">
                     <div class="d-flex align-items-center">
                       <div class="font-35 text-warning"><i class="bx bx-info-square"></i>
@@ -50,7 +50,7 @@
                     </div>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                   </div>
-                  <% } %> 
+                  <% } %>
                   <div class="form-body">
                     <form method="POST" class="row g-3">
                       <div class="col-12">
@@ -74,12 +74,12 @@
                           <button type="button" class="input-group-text bg-transparent" style="outline:none;"><i class='bx bx-hide'></i></button>
                         </div>
                       </div>
-                      <!-- <div class="col-md-6">
+                      <div class="col-md-6">
                         <div class="form-check form-switch">
-                          <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
+                          <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" name="remember">
                           <label class="form-check-label" for="flexSwitchCheckChecked">Remember Me</label>
                         </div>
-                      </div> -->
+                      </div>
                       <div class="col-12">
                         <div class="d-grid">
                           <button type="submit" class="btn btn-light"><i class="bx bxs-lock-open"></i>Sign in</button>
@@ -106,7 +106,7 @@
   <script src="assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js"></script>
   <!--Password show & hide js -->
   <script>
-    $(document).ready(function() {
+            $(document).ready(function () {
       $("#show_hide_password button").on('click', function (event) {
         event.preventDefault();
         if ($('#show_hide_password input').attr("type") == "text") {

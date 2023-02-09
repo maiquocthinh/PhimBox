@@ -1,5 +1,7 @@
 const Countries = require('../../models/country.models');
 
+// ###### API ######
+
 // [POST] admin/countries/datatables_ajax
 const ajaxDatatablesCountries = async (req, res) => {
 	const draw = req.body.draw;
@@ -59,14 +61,6 @@ const ajaxDatatablesCountries = async (req, res) => {
 			]);
 			return arrDataCountries;
 		}, []),
-	});
-};
-
-// [GET] admin/countries
-const allCountries = (req, res) => {
-	res.render('admin/countries', {
-		user: { ...req.user._doc },
-		ajaxType: '',
 	});
 };
 
@@ -147,10 +141,20 @@ const destroyCountry = (req, res) => {
 		});
 };
 
+// ###### PAGE ######
+
+// [GET] admin/countries
+const allCountries = (req, res) => {
+	res.render('admin/countries', {
+		user: req.session.user,
+		ajaxType: '',
+	});
+};
+
 // [GET] admin/countries/trash
 const countriesTrash = (req, res) => {
 	res.render('admin/countriesTrash', {
-		user: { ...req.user._doc },
+		user: req.session.user,
 		ajaxType: 'trash',
 	});
 };

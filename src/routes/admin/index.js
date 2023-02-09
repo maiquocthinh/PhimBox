@@ -38,6 +38,6 @@ router.use('/members', membersRoutes);
 router.use('/configuration', configurationRoutes);
 
 // admin home
-router.get('/', authMiddleware.authRequire, adminController.admin);
+router.get('/', authMiddleware.auth, adminController.admin);
 
 module.exports = router;

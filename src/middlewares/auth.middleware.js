@@ -26,7 +26,15 @@ const authRequire = (req, res, next) => {
 		});
 };
 
-const auth = (req, res, next) => {};
+const auth = async (req, res, next) => {
+	const { user } = req.session;
+
+	if (user) {
+		const _user = await User.findOne({ user_email: user.user_email });
+		if (_user) next();
+		else res.redirect('/admin/login');
+	} else res.redirect('/admin/login');
+};
 
 module.exports = {
 	authRequire,

@@ -4,6 +4,6 @@ const authMiddleware = require('../../middlewares/auth.middleware');
 const profileController = require('../../controllers/admin/profile.controller');
 
 // PAGE
-router.get('/profile', authMiddleware.authRequire, profileController.profile);
+router.get('/profile', authMiddleware.auth, profileController.profile);
 
 module.exports = router;

@@ -1,7 +1,7 @@
 // [GET] admin/profile
 const profile = (req, res) => {
 	res.render('admin/profile', {
-		user: { ...req.user._doc },
+		user: req.session.user,
 	});
 };
 

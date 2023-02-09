@@ -4,6 +4,8 @@ const Countries = require('../../models/country.models');
 const Users = require('../../models/user.models');
 const ajaxFilmsUtil = require('../../utils/ajaxFilms.util');
 
+// ###### API ######
+
 // [POST] admin/films/datatables_ajax
 const ajaxDatatablesFilms = async (req, res) => {
 	try {
@@ -123,36 +125,6 @@ const ajaxDatatablesFilms = async (req, res) => {
 				]);
 				return arrDataFilms;
 			}, []),
-		});
-	} catch (error) {
-		res.status(500).json({ error: error.message });
-	}
-};
-
-// [GET] admin/films
-const allFilms = async (req, res) => {
-	try {
-		const categories = (await Categories.find({}, { category_slug: 0, _id: 0 })).reduce(
-			(categories, currentCategory) => {
-				categories.push(currentCategory._doc);
-				return categories;
-			},
-			[],
-		);
-		const countries = (await Countries.find({}, { country_slug: 0, _id: 0 })).reduce(
-			(countries, currentCountry) => {
-				countries.push(currentCountry._doc);
-				return countries;
-			},
-			[],
-		);
-
-		res.render('admin/films', {
-			user: { ...req.user._doc },
-			title: '',
-			ajaxType: '',
-			categories,
-			countries,
 		});
 	} catch (error) {
 		res.status(500).json({ error: error.message });
@@ -281,6 +253,8 @@ const destroyFilm = (req, res) => {
 		});
 };
 
+// ###### PAGE ######
+
 // [GET] admin/films/add
 const addFilm = async (req, res) => {
 	try {
@@ -300,7 +274,37 @@ const addFilm = async (req, res) => {
 		);
 
 		res.render('admin/addFilm', {
-			user: { ...req.user._doc },
+			user: req.session.user,
+			categories,
+			countries,
+		});
+	} catch (error) {
+		res.status(500).json({ error: error.message });
+	}
+};
+
+// [GET] admin/films
+const allFilms = async (req, res) => {
+	try {
+		const categories = (await Categories.find({}, { category_slug: 0, _id: 0 })).reduce(
+			(categories, currentCategory) => {
+				categories.push(currentCategory._doc);
+				return categories;
+			},
+			[],
+		);
+		const countries = (await Countries.find({}, { country_slug: 0, _id: 0 })).reduce(
+			(countries, currentCountry) => {
+				countries.push(currentCountry._doc);
+				return countries;
+			},
+			[],
+		);
+
+		res.render('admin/films', {
+			user: req.session.user,
+			title: '',
+			ajaxType: '',
 			categories,
 			countries,
 		});
@@ -328,7 +332,7 @@ const filmsMovies = async (req, res) => {
 		);
 
 		res.render('admin/films', {
-			user: { ...req.user._doc },
+			user: req.session.user,
 			title: 'Movies',
 			ajaxType: 'movies',
 			categories,
@@ -358,7 +362,7 @@ const filmsSeries = async (req, res) => {
 		);
 
 		res.render('admin/films', {
-			user: { ...req.user._doc },
+			user: req.session.user,
 			title: 'Series',
 			ajaxType: 'series',
 			categories,
@@ -388,7 +392,7 @@ const filmsCartoonAnime = async (req, res) => {
 		);
 
 		res.render('admin/films', {
-			user: { ...req.user._doc },
+			user: req.session.user,
 			title: 'Cartoon & Anime',
 			ajaxType: 'cartoon_anime',
 			categories,
@@ -418,7 +422,7 @@ const filmsCinema = async (req, res) => {
 		);
 
 		res.render('admin/films', {
-			user: { ...req.user._doc },
+			user: req.session.user,
 			title: 'Cinema',
 			ajaxType: 'cinema',
 			categories,
@@ -448,7 +452,7 @@ const filmsHot = async (req, res) => {
 		);
 
 		res.render('admin/films', {
-			user: { ...req.user._doc },
+			user: req.session.user,
 			title: 'Film Hot',
 			ajaxType: 'film_hot',
 			categories,
@@ -478,7 +482,7 @@ const filmsTrailer = async (req, res) => {
 		);
 
 		res.render('admin/films', {
-			user: { ...req.user._doc },
+			user: req.session.user,
 			title: 'Trailer',
 			ajaxType: 'film_trailer',
 			categories,
@@ -508,7 +512,7 @@ const filmsNotEp = async (req, res) => {
 		);
 
 		res.render('admin/films', {
-			user: { ...req.user._doc },
+			user: req.session.user,
 			title: "Haven't Episode",
 			ajaxType: 'not_ep',
 			categories,
@@ -538,7 +542,7 @@ const filmsError = async (req, res) => {
 		);
 
 		res.render('admin/films', {
-			user: { ...req.user._doc },
+			user: req.session.user,
 			title: 'Error',
 			ajaxType: '',
 			categories,
@@ -552,7 +556,7 @@ const filmsError = async (req, res) => {
 // [GET] admin/films/trash
 const filmsTrash = (req, res) => {
 	res.render('admin/filmsTrash', {
-		user: { ...req.user._doc },
+		user: req.session.user,
 	});
 };
 

@@ -5,24 +5,24 @@ const createFilmMiddleware = require('../../middlewares/handleCreateFilm.middlew
 const filmsController = require('../../controllers/admin/films.controller');
 
 // API
-router.post('/datatables_ajax', authMiddleware.authRequire, filmsController.ajaxDatatablesFilms);
-router.post('/create', authMiddleware.authRequire, createFilmMiddleware.handeDataPost, filmsController.createFilm);
-router.get('/read/:id', authMiddleware.authRequire, filmsController.readFilm);
-router.put('/update/:id', authMiddleware.authRequire, createFilmMiddleware.handeDataPost, filmsController.updateFilm);
-router.delete('/delete/:id', authMiddleware.authRequire, filmsController.deleteFilm);
-router.patch('/restore/:id', authMiddleware.authRequire, filmsController.restoreFilm);
-router.delete('/destroy/:id', authMiddleware.authRequire, filmsController.destroyFilm);
+router.post('/datatables_ajax', authMiddleware.auth, filmsController.ajaxDatatablesFilms);
+router.post('/create', authMiddleware.auth, createFilmMiddleware.handeDataPost, filmsController.createFilm);
+router.get('/read/:id', authMiddleware.auth, filmsController.readFilm);
+router.put('/update/:id', authMiddleware.auth, createFilmMiddleware.handeDataPost, filmsController.updateFilm);
+router.delete('/delete/:id', authMiddleware.auth, filmsController.deleteFilm);
+router.patch('/restore/:id', authMiddleware.auth, filmsController.restoreFilm);
+router.delete('/destroy/:id', authMiddleware.auth, filmsController.destroyFilm);
 // PAGE
-router.get('/', authMiddleware.authRequire, filmsController.allFilms);
-router.get('/add', authMiddleware.authRequire, filmsController.addFilm);
-router.get('/movies', authMiddleware.authRequire, filmsController.filmsMovies);
-router.get('/series', authMiddleware.authRequire, filmsController.filmsSeries);
-router.get('/cartoon-anime', authMiddleware.authRequire, filmsController.filmsCartoonAnime);
-router.get('/cinema', authMiddleware.authRequire, filmsController.filmsCinema);
-router.get('/hot', authMiddleware.authRequire, filmsController.filmsHot);
-router.get('/trailer', authMiddleware.authRequire, filmsController.filmsTrailer);
-router.get('/no-episode', authMiddleware.authRequire, filmsController.filmsNotEp);
-router.get('/error', authMiddleware.authRequire, filmsController.filmsError);
-router.get('/trash', authMiddleware.authRequire, filmsController.filmsTrash);
+router.get('/', authMiddleware.auth, filmsController.allFilms);
+router.get('/add', authMiddleware.auth, filmsController.addFilm);
+router.get('/movies', authMiddleware.auth, filmsController.filmsMovies);
+router.get('/series', authMiddleware.auth, filmsController.filmsSeries);
+router.get('/cartoon-anime', authMiddleware.auth, filmsController.filmsCartoonAnime);
+router.get('/cinema', authMiddleware.auth, filmsController.filmsCinema);
+router.get('/hot', authMiddleware.auth, filmsController.filmsHot);
+router.get('/trailer', authMiddleware.auth, filmsController.filmsTrailer);
+router.get('/no-episode', authMiddleware.auth, filmsController.filmsNotEp);
+router.get('/error', authMiddleware.auth, filmsController.filmsError);
+router.get('/trash', authMiddleware.auth, filmsController.filmsTrash);
 
 module.exports = router;

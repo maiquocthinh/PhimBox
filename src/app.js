@@ -1,8 +1,9 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-// const morgan = require("morgan");
 const cookieParser = require('cookie-parser');
+const session = require('express-session');
+// const morgan = require("morgan");
 require('dotenv').config();
 
 const routes = require('./routes');
@@ -17,6 +18,17 @@ db.connect();
 app.use(express.static(path.join(__dirname, '../public')));
 
 // middlewares
+app.use(
+	session({
+		secret: process.env.SESSION_SECRET,
+		resave: true,
+		saveUninitialized: false,
+		cookie: {
+			httpOnly: true,
+			maxAge: 60 * 60 * 1000,
+		},
+	}),
+);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());

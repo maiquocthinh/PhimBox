@@ -61,8 +61,8 @@
                     <% } else { %> 
                     <span class="badge text-white bg-gradient-blues text-uppercase px-3 mb-2">Poster</span>
                     <% } %> 
-                    <p class="font-size-sm mb-1">Created At: <%=user.createdAt.toISOString().substring(0, 10)%></p>
-                    <p class="font-size-sm mb-4">Updated At: <%=user.updatedAt.toISOString().substring(0, 10)%></p>
+                    <p class="font-size-sm mb-1">Created At: <%=user.createdAt.substring(0, 10)%></p>
+                    <p class="font-size-sm mb-4">Updated At: <%=user.updatedAt.substring(0, 10)%></p>
                     <button class="btn btn-light" style="font-size:0.8rem;"><i class="bx bx-box me-1"></i>Box Film</button>
                     <button class="btn btn-light" style="font-size:0.8rem;"><i class="bx bx-comment-detail me-1"></i>Recent Comment</button>
                   </div>

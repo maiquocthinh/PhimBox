@@ -1,21 +1,9 @@
 const Configurations = require('../../models/configuration.models');
 
-// [GET] admin/configuration
-const configuration = (req, res) => {
-	Configurations.findOne()
-		.then((config) => {
-			res.render('admin/configuration', {
-				user: { ...req.user._doc },
-				config: { ...config._doc },
-			});
-		})
-		.catch((error) => {
-			res.status(500).json(error);
-		});
-};
+// ###### API ######
 
 // [PATCH] admin/configuration/update
-const configurationUpdate = (req, res, next) => {
+const configurationUpdate = (req, res) => {
 	Configurations.updateOne(
 		{},
 		{
@@ -30,6 +18,22 @@ const configurationUpdate = (req, res, next) => {
 	)
 		.then(() => {
 			res.status(200).json({ message: 'Update Configurations Success' });
+		})
+		.catch((error) => {
+			res.status(500).json(error);
+		});
+};
+
+// ###### PAGE ######
+
+// [GET] admin/configuration
+const configuration = (req, res) => {
+	Configurations.findOne()
+		.then((config) => {
+			res.render('admin/configuration', {
+				user: req.session.user,
+				config: { ...config._doc },
+			});
 		})
 		.catch((error) => {
 			res.status(500).json(error);

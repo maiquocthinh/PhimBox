@@ -1,5 +1,7 @@
 const Categories = require('../../models/category.models');
 
+// ###### API ######
+
 // [POST] admin/categories/datatables_ajax
 const ajaxDatatablesCategories = async (req, res) => {
 	const draw = req.body.draw;
@@ -59,14 +61,6 @@ const ajaxDatatablesCategories = async (req, res) => {
 			]);
 			return arrDataCategories;
 		}, []),
-	});
-};
-
-// [GET] admin/categories
-const allCategories = (req, res) => {
-	res.render('admin/categories', {
-		user: { ...req.user._doc },
-		ajaxType: '',
 	});
 };
 
@@ -146,10 +140,20 @@ const destroyCategory = (req, res) => {
 		});
 };
 
+// ###### PAGE ######
+
+// [GET] admin/categories
+const allCategories = (req, res) => {
+	res.render('admin/categories', {
+		user: req.session.user,
+		ajaxType: '',
+	});
+};
+
 // [GET] admin/categories/trash
 const categoriesTrash = (req, res) => {
 	res.render('admin/categoriesTrash', {
-		user: { ...req.user._doc },
+		user: req.session.user,
 		ajaxType: 'trash',
 	});
 };

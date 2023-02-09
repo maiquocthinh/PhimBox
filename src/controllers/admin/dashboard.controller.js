@@ -4,6 +4,8 @@ const Episodes = require('../../models/episode.models');
 
 // [GET] admin/dashboard
 const dashboard = (req, res) => {
+	const { user } = req.session;
+
 	Promise.all([
 		Users.countDocuments({}),
 		Films.countDocuments({}),
@@ -39,7 +41,7 @@ const dashboard = (req, res) => {
 			}, []);
 
 			res.render('admin/dashboard', {
-				user: { ...req.user._doc },
+				user,
 				totalCount,
 				films,
 				users,
