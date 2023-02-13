@@ -3,6 +3,8 @@ const app = express();
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const RedisStore = require('connect-redis')(session);
+const { createClient } = require('redis');
 // const morgan = require("morgan");
 require('dotenv').config();
 
@@ -18,8 +20,14 @@ db.connect();
 app.use(express.static(path.join(__dirname, '../public')));
 
 // middlewares
+const redisClient = createClient({
+	host: process.env.REDIS_HOSTNAME,
+	port: process.env.REDIS_PORT,
+	password: process.env.REDIS_PASSWORD,
+});
 app.use(
 	session({
+		store: new RedisStore({ client: redisClient }),
 		secret: process.env.SESSION_SECRET,
 		resave: false,
 		saveUninitialized: true,
