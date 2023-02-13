@@ -27,6 +27,24 @@ File: app.css
 */
 
 @import url(https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap);
+
+
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-button {
+    width: 0;
+    height: 0;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #FFF;
+    background-color: #ffffff59;
+}
+
 body {
     font-size: 14px;
     letter-spacing: .5px;
@@ -53,7 +71,7 @@ a {
     background: rgb(0 0 0 / 15%);
     border-right: 1px solid rgb(255 255 255 / 15%);
     z-index: 11;
-    box-shadow: 0 .3rem .8rem rgba(0, 0, 0, .12)!important;
+    box-shadow: 0 .3rem .8rem rgba(0, 0, 0, .12) !important;
     transition: all .2s ease-out
 }
 
@@ -98,7 +116,7 @@ a {
     background: rgb(0 0 0 / 15%);
     border-bottom: 1px solid rgb(255 255 255 / 15%);
     z-index: 10;
-    box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075)!important
+    box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important
 }
 
 .topbar .navbar {
@@ -271,48 +289,62 @@ a {
     .wrapper.toggled.sidebar-hovered .sidebar-wrapper {
         background-color: #171717;
     }
+
     .wrapper.toggled.sidebar-hovered .sidebar-header {
         background-color: #171717;
         border-bottom: 1px solid rgba(255, 255, 255, 0.12);
     }
+
     .wrapper.toggled:not(.sidebar-hovered) .sidebar-wrapper .sidebar-header .logo-text {
         display: none
     }
+
     .wrapper.toggled:not(.sidebar-hovered) .sidebar-wrapper {
         width: 70px
     }
+
     .wrapper.toggled:not(.sidebar-hovered) .sidebar-wrapper .sidebar-header {
         width: 70px
     }
+
     .wrapper.toggled:not(.sidebar-hovered) .sidebar-wrapper .sidebar-header .toggle-icon {
         display: none
     }
+
     .wrapper.toggled:not(.sidebar-hovered) .sidebar-wrapper .sidebar-header {
         justify-content: center
     }
+
     .wrapper.toggled:not(.sidebar-hovered) .sidebar-wrapper .sidebar-header {
         width: 70px
     }
+
     .wrapper.toggled:not(.sidebar-hovered) .sidebar-wrapper .metismenu a {
         justify-content: center
     }
+
     .wrapper.toggled:not(.sidebar-hovered) .sidebar-wrapper .metismenu .menu-title {
         display: none
     }
+
     .wrapper.toggled:not(.sidebar-hovered) .sidebar-wrapper .metismenu li ul {
         display: none
     }
+
     .wrapper.toggled:not(.sidebar-hovered) .sidebar-wrapper .metismenu li.menu-label {
         display: none
     }
+
     .wrapper.toggled:not(.sidebar-hovered) .sidebar-wrapper .metismenu .has-arrow:after {
         display: none
     }
+
     .email-toggle-btn {
-        display: none!important
+        display: none !important
     }
+
     .chat-toggle-btn {
-        display: none!important
+        display: none !important
     }
 }
 
@@ -616,7 +648,7 @@ a {
 }
 
 .right-15 {
-    right: 15px!important
+    right: 15px !important
 }
 
 .font-13 {
@@ -878,14 +910,16 @@ a {
 
 @media print {
     .invoice {
-        font-size: 11px!important;
-        overflow: hidden!important
+        font-size: 11px !important;
+        overflow: hidden !important
     }
+
     .invoice footer {
         position: absolute;
         bottom: 10px;
         page-break-after: always
     }
+
     .invoice>div:last-child {
         page-break-before: always
     }
@@ -1380,12 +1414,12 @@ a {
 }
 
 .nav-search input.form-control::placeholder {
-    opacity: .5!important;
-    color: #fff!important
+    opacity: .5 !important;
+    color: #fff !important
 }
 
 .nav-search input.form-control::-ms-input-placeholder {
-    color: #fff!important
+    color: #fff !important
 }
 
 .round-pagination.pagination .page-item:first-child .page-link {
@@ -1399,59 +1433,59 @@ a {
 }
 
 .bg-light-primary {
-    background-color: rgb(13 110 253 / .11)!important
+    background-color: rgb(13 110 253 / .11) !important
 }
 
 .bg-light-success {
-    background-color: rgb(23 160 14 / .11)!important
+    background-color: rgb(23 160 14 / .11) !important
 }
 
 .bg-light-danger {
-    background-color: rgb(244 17 39 / .11)!important
+    background-color: rgb(244 17 39 / .11) !important
 }
 
 .bg-light-warning {
-    background-color: rgb(255 193 7 / .11)!important
+    background-color: rgb(255 193 7 / .11) !important
 }
 
 .bg-light-info {
-    background-color: rgb(13 202 240 / 18%)!important
+    background-color: rgb(13 202 240 / 18%) !important
 }
 
 .bg-light-white-2 {
-    background-color: rgba(255, 255, 255, 0.70)!important
+    background-color: rgba(255, 255, 255, 0.70) !important
 }
 
 .bg-light-white-3 {
-    background-color: rgba(255, 255, 255, 0.55)!important
+    background-color: rgba(255, 255, 255, 0.55) !important
 }
 
 .bg-light-white-4 {
-    background-color: rgba(255, 255, 255, 0.25)!important
+    background-color: rgba(255, 255, 255, 0.25) !important
 }
 
 .bg-gradient-cosmic {
-    background: linear-gradient(to right, #8e2de2, #4a00e0)!important
+    background: linear-gradient(to right, #8e2de2, #4a00e0) !important
 }
 
 .bg-gradient-burning {
-    background: linear-gradient(to right, #ff416c, #ff4b2b)!important
+    background: linear-gradient(to right, #ff416c, #ff4b2b) !important
 }
 
 .bg-gradient-lush {
-    background: linear-gradient(to right, #56ab2f, #a8e063)!important
+    background: linear-gradient(to right, #56ab2f, #a8e063) !important
 }
 
 .bg-gradient-kyoto {
-    background: linear-gradient(to right, #f7971e, #ffd200)!important
+    background: linear-gradient(to right, #f7971e, #ffd200) !important
 }
 
 .bg-gradient-blues {
-    background: linear-gradient(to right, #56ccf2, #2f80ed)!important
+    background: linear-gradient(to right, #56ccf2, #2f80ed) !important
 }
 
 .bg-gradient-moonlit {
-    background: linear-gradient(to right, #0f2027, #203a43, #2c5364)!important
+    background: linear-gradient(to right, #0f2027, #203a43, #2c5364) !important
 }
 
 .split-bg-primary {
@@ -1485,19 +1519,19 @@ a {
 }
 
 .bg-facebook {
-    background-color: #3b5998!important
+    background-color: #3b5998 !important
 }
 
 .bg-twitter {
-    background-color: #55acee!important
+    background-color: #55acee !important
 }
 
 .bg-google {
-    background-color: #e52d27!important
+    background-color: #e52d27 !important
 }
 
 .bg-linkedin {
-    background-color: #0976b4!important
+    background-color: #0976b4 !important
 }
 
 body.bg-theme2 {
@@ -1546,7 +1580,7 @@ body.bg-theme2 {
     text-align: center;
     border-radius: 50%;
     margin: 5px;
-    box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075)!important
+    box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important
 }
 
 .bg-login {
@@ -1664,8 +1698,8 @@ body.bg-theme2 {
 }
 
 input::placeholder {
-    color: #fff!important;
-    opacity: .3!important
+    color: #fff !important;
+    opacity: .3 !important
 }
 
 .card-group {
@@ -1937,6 +1971,7 @@ input::placeholder {
         transform: translate3d(0, 6px, 0);
         opacity: 0
     }
+
     to {
         -webkit-transform: translate3d(0, 0, 0);
         transform: translate3d(0, 0, 0);
@@ -1950,6 +1985,7 @@ input::placeholder {
         transform: translate3d(0, 6px, 0);
         opacity: 0
     }
+
     to {
         -webkit-transform: translate3d(0, 0, 0);
         transform: translate3d(0, 0, 0);
@@ -2172,6 +2208,7 @@ body.bg-theme13 {
     .email-header {
         height: auto
     }
+
     .email-content {
         padding: 100px 0 0 0
     }
@@ -2179,31 +2216,39 @@ body.bg-theme13 {
 
 @media screen and (max-width: 1024px) {
     .topbar {
-        left: 0!important
+        left: 0 !important
     }
+
     .mobile-search-icon {
         display: block
     }
+
     .mobile-toggle-menu {
         display: block
     }
+
     .sidebar-wrapper {
         background: #171717;
         left: -300px;
         box-shadow: none
     }
+
     .sidebar-header {
         background: #171717;
     }
+
     .page-wrapper {
         margin-left: 0
     }
+
     .page-footer {
         left: 0
     }
+
     .search-bar {
         display: none
     }
+
     .full-search-bar {
         display: flex;
         align-items: center;
@@ -2215,27 +2260,34 @@ body.bg-theme13 {
         height: 60px;
         padding: 0 1.4rem
     }
+
     .search-bar-box {
         width: 100%
     }
+
     .search-close {
         display: block
     }
+
     .search-show {
         left: 15px;
         right: auto
     }
+
     .search-control {
         background-color: rgb(0 0 0 / 60%);
         border: 1px solid rgb(242 239 239 / 15%);
         padding-left: 2.5rem
     }
+
     .wrapper.toggled .sidebar-wrapper {
         left: 0
     }
+
     .wrapper.toggled .page-wrapper {
         margin-left: 0
     }
+
     .wrapper.toggled .overlay {
         position: fixed;
         top: 0;
@@ -2249,33 +2301,42 @@ body.bg-theme13 {
         cursor: move;
         transition: all .2s ease-out
     }
+
     .error-404 {
         height: auto;
         padding: 6rem 1rem
     }
+
     .chat-header {
         border-top-left-radius: 0.25rem;
     }
+
     .chat-footer {
         border-bottom-left-radius: 0.25rem;
     }
+
     .chat-sidebar {
         left: -370px;
     }
+
     .chat-content {
         margin-left: 0px;
     }
+
     .chat-header {
         left: 0px;
     }
+
     .chat-footer {
         left: 0px;
     }
+
     /* chat toggled css */
     .chat-toggled .chat-sidebar {
         left: 0px;
         background: #343a40;
     }
+
     .chat-toggled .overlay {
         position: absolute;
         top: 0;
@@ -2289,23 +2350,29 @@ body.bg-theme13 {
         cursor: move;
         transition: all .3s ease-out;
     }
+
     .email-header {
         border-top-left-radius: 0.25rem;
     }
+
     .email-sidebar {
         left: -280px;
         background: #343a40;
     }
+
     .email-content {
         margin-left: 0px;
     }
+
     .email-header {
         left: 0px;
     }
+
     /* email toggled */
     .email-toggled .email-sidebar {
         left: 0px;
     }
+
     .email-toggled .overlay {
         position: absolute;
         top: 0;
@@ -2327,14 +2394,17 @@ body.bg-theme13 {
         margin-top: 6rem;
         margin-bottom: 2rem
     }
+
     .authentication-reset-password {
         height: auto;
         padding: 2rem 1rem
     }
+
     .authentication-lock-screen {
         height: auto;
         padding: 2rem 1rem
     }
+
     .compose-mail-popup {
         width: auto;
         position: fixed;
@@ -2348,6 +2418,7 @@ body.bg-theme13 {
     .user-box .user-info {
         display: none
     }
+
     .authentication-forgot {
         height: auto;
         padding: 2.5rem 1rem
@@ -2358,15 +2429,18 @@ body.bg-theme13 {
     .topbar .navbar .dropdown-menu::after {
         display: none
     }
+
     .topbar .navbar .dropdown {
-        position: static!important
+        position: static !important
     }
+
     .topbar .navbar .dropdown-menu {
-        width: 100%!important
+        width: 100% !important
     }
 }
 
 @media screen and (max-width: 520px) {
+
     .chat-footer-menu,
     .chat-top-header-menu {
         display: none

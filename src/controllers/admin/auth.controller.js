@@ -1,3 +1,4 @@
+const { Store } = require('express-session');
 const Users = require('../../models/user.models');
 const { validateEmail } = require('../../utils');
 
@@ -41,8 +42,10 @@ const loginHandler = async (req, res) => {
 
 // [DELETE] admin/logout
 const logoutHandler = (req, res) => {
-	req.session.destroy();
-	res.status(200).json({ msg: 'logout success.' });
+	req.session.destroy((err) => {
+		if (err) return res.status(500).json({ msg: err.message });
+		return res.status(200).json({ msg: 'logout success.' });
+	});
 };
 
 // ###### PAGE ######

@@ -167,8 +167,7 @@ $(function () {
 });
 
 // do logout
-
-const logoutBtn = document.getElementById('logoutBtn');
+const logoutBtn = document.getElementById('logout-btn');
 if (logoutBtn)
 	logoutBtn.addEventListener('click', (e) => {
 		e.preventDefault();
@@ -178,3 +177,177 @@ if (logoutBtn)
 			if (res.ok) window.location.pathname = '/admin/login';
 		});
 	});
+
+// ImgUr upload function
+function imgurUpload(img) {
+	const API_URL = 'https://tame-red-clownfish-tutu.cyclic.app/image';
+
+	const formData = new FormData();
+	formData.append('image', img);
+
+	const config = {
+		async: false,
+		cache: false,
+		contentType: false,
+		processData: false,
+		url: API_URL,
+		type: 'POST',
+		data: formData,
+	};
+
+	return $.ajax(config);
+}
+
+// Upload Images with Imgur API
+document.querySelectorAll('#form-info-film input[type=file][accept="image/*"]').forEach((inputEl) => {
+	const inputGroup = inputEl.parentElement;
+	const inputUrlEl = inputGroup.querySelector('input[type=url]');
+	const btnUpload = inputGroup.querySelector('.btn-upload-img');
+
+	inputEl.onchange = function (e) {
+		inputUrlEl.value = e.target.files[0].name;
+	};
+
+	btnUpload.onclick = async function () {
+		const pattern = /(http)?s?:?(\/\/[^"']*\.(?:png|jpg|jpeg|gif|png|svg))/;
+
+		if (pattern.test(inputUrlEl.value)) {
+			const res = await imgurUpload(inputUrlEl.value);
+			inputUrlEl.value = res.data.link;
+		} else if (inputEl.files.length !== 0) {
+			const res = await imgurUpload(inputEl.files[0]);
+			inputUrlEl.value = res.data.link;
+		}
+	};
+});
+
+// Get data film and fill this data to form edit
+async function fillDataFilmToForm(id) {
+	const film = await $.ajax({ url: '/admin/films/read/' + id, type: 'GET' });
+	const formEdit = document.getElementById('form-info-film');
+	if (formEdit) {
+		formEdit.querySelector('input[name="name"]').value = film.name;
+		formEdit.querySelector('input[name="original_name"]').value = film.originalName;
+		formEdit.querySelector('select[name="status"]').value = film.status;
+		formEdit.querySelector('select[name="viewable"]').value = film.viewable ? 1 : '';
+		formEdit.querySelector('input[name="poster"]').value = film.poster;
+		formEdit.querySelector('input[name="backdrops"]').value = film.backdrops;
+		formEdit.querySelector('input[name="backdrops_canonical"]').value = film.backdropsCanonical;
+		formEdit.querySelector('input[name="logo"]').value = film.logo;
+		$('.multiple-select[name="categories[]"]').val(film.category).change();
+		$('.multiple-select[name="countries[]"]').val(film.country).change();
+		formEdit.querySelector('input[name="trailer"]').value = film.trailer;
+		formEdit.querySelector('input[name="duration"]').value = film.duration;
+		formEdit.querySelector('input[name="quality"]').value = film.quality;
+		formEdit.querySelector('input[name="year"]').value = film.year;
+		formEdit.querySelector('input[name="imdb"]').value = film.imdb;
+		formEdit.querySelector('select[name="language"]').value = film.language;
+		formEdit.querySelector('select[name="type"]').value = film.type;
+		formEdit.querySelector('select[name="in_cinema"]').value = film.inCinema ? 1 : '';
+		formEdit.querySelector('select[name="recommend"]').value = film.recommend ? 1 : '';
+		formEdit.querySelector('select[name="canonical"]').value = film.canonical ? 1 : '';
+		formEdit.querySelector('input[name="notify"]').value = film.notify;
+		formEdit.querySelector('textarea[name="description"]').value = film.description;
+		CKEDITOR.instances['info_film'].setData(film.info);
+		$('input[name="tags"]').tagsinput('removeAll');
+		film.tag.forEach((tag) => $('input[name="tags"]').tagsinput('add', tag));
+		formEdit.querySelector('input[name="slug"]').value = film.slug;
+		formEdit.querySelector('input[name="film_id"]').value = film._id.toString();
+	}
+}
+
+// Handle submit update
+const saveBtn = document.querySelector('#editModal .modal-footer .btn-save');
+if (saveBtn)
+	saveBtn.onclick = function () {
+		const formEdit = document.querySelector('#editModal form');
+		const filmId = formEdit.querySelector('input[name="film_id"]').value;
+		const dataForm = Object.fromEntries(new FormData(formEdit));
+		dataForm.info = CKEDITOR.instances['info_film'].getData();
+		dataForm['categories[]'] = $('#editModal form .multiple-select[name="categories[]"]')
+			.select2('data')
+			.reduce((categories, category) => {
+				categories.push(category.id);
+				return categories;
+			}, []);
+		dataForm['countries[]'] = $('#editModal form .multiple-select[name="countries[]"]')
+			.select2('data')
+			.reduce((countries, country) => {
+				countries.push(country.id);
+				return countries;
+			}, []);
+		$.ajax({
+			type: 'PUT',
+			url: '/admin/films/update/' + filmId,
+			data: dataForm,
+		}).done(() => {
+			$('#editModal').modal('hide');
+			dataTable.ajax.reload(null, false);
+		});
+	};
+
+// Fill name, id of film to modal delete
+function fillDataToDeleteForm(nameFilm, idFilm) {
+	document.querySelector('#permanently-text').classList.add('d-none');
+	document.querySelector('#film-name-text').textContent = nameFilm;
+	document.querySelector('#deleteModal .modal-footer .btn-delete').onclick = function () {
+		$.ajax({
+			type: 'DELETE',
+			url: '/admin/films/delete/' + idFilm,
+		}).done(() => {
+			$('#deleteModal').modal('hide');
+			dataTable.ajax.reload(null, false);
+		});
+	};
+}
+
+// Fill name, id of film to modal delete permanently
+function fillDataToDeletePermanentlyForm(nameFilm, idFilm) {
+	document.querySelector('#permanently-text').classList.remove('d-none');
+	document.querySelector('#film-name-text').textContent = nameFilm;
+	document.querySelector('#deleteModal .modal-footer .btn-delete').onclick = function () {
+		$.ajax({
+			type: 'DELETE',
+			url: '/admin/films/destroy/' + idFilm,
+		}).done(() => {
+			$('#deleteModal').modal('hide');
+			dataTable.ajax.reload(null, false);
+		});
+	};
+}
+
+// Handle restore film
+function restoreFilm(idFilm) {
+	$.ajax({
+		type: 'PATCH',
+		url: '/admin/films/restore/' + idFilm,
+	}).done(() => {
+		dataTable.ajax.reload(null, false);
+	});
+}
+
+// Filter form
+const filterForm = document.getElementById('tableFilmsFilterForm');
+if (filterForm) {
+	const { 6: btnReset, 7: btnFilter } = filterForm;
+	btnReset.onclick = function () {
+		window.location.pathname = '/admin/films';
+	};
+	btnFilter.onclick = function () {
+		const { 0: status, 1: type, 2: category, 3: country, 4: info, 5: deleted } = filterForm;
+
+		const params = {
+			deleted: deleted.value,
+			status: status.value,
+			type: type.value,
+			category: category.value,
+			country: country.value,
+			info: info.value,
+		};
+
+		let paramsStr = '?';
+		for (const key in params) if (Object.hasOwnProperty.call(params, key)) paramsStr += `${key}=${params[key]}&`;
+
+		dataTable.ajax.url('/admin/films/datatables_ajax/' + paramsStr).load();
+	};
+}

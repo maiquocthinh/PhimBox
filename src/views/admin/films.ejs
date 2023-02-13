@@ -64,6 +64,120 @@
         <!--end breadcrumb-->
         <div class="card">
           <div class="card-body">
+            <div id="tableFilmsTop" class="mb-3">
+              <button class="btn btn-outline-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFilter"
+                aria-expanded="false" aria-controls="collapseFilter">
+                <i class="bx bx-filter-alt"></i>
+                <span>Filter</span>
+              </button>
+              <a href="/admin/films/add" class="btn btn-outline-light" type="button">
+                <i class="bx bx-plus-circle"></i>
+                <span>New Film</span>
+              </a>
+              <div class="collapse mt-2" id="collapseFilter">
+                <div class="card card-body">
+                  <form id="tableFilmsFilterForm">
+                    <div class="row row-cols-auto g-3">
+                      <div class="col" style="min-width:150px;">
+                        <label for="filter_status"
+                          class="badge bg-light text-white font-13 fw-light w-100 mb-1 d-flex align-items-center gap-1">
+                          <i class="bx bx-folder-open font-18"></i>
+                          Status
+                        </label>
+                        <select class="form-control filter-select" id="filter_status" name="filter_status" required>
+                          <option selected value="">--All--</option>
+                          <option value="complete">Complete</option>
+                          <option value="ongoing">Ongoing</option>
+                          <option value="trailer">Trailer</option>
+                        </select>
+                      </div>
+                      <div class="col" style="min-width:150px;">
+                        <label for="filter_type"
+                          class="badge bg-light text-white font-13 fw-light w-100 mb-1 d-flex align-items-center gap-1">
+                          <i class="bx bx-folder-open font-18"></i>
+                          Type
+                        </label>
+                        <select class="form-control filter-select" id="filter_type" name="filter_type" required>
+                          <option selected value="">--All--</option>
+                          <option value="series">Series</option>
+                          <option value="movies">Movies</option>
+                          <option value="shownInCinema">Shown In Cinema</option>
+                          <option value="recommend">Recommend</option>
+                          <option value="canonical">Canonical</option>
+                        </select>
+                      </div>
+                      <div class="col" style="min-width:150px;">
+                        <label for="filter_category"
+                          class="badge bg-light text-white font-13 fw-light w-100 mb-1 d-flex align-items-center gap-1">
+                          <i class="bx bx-spreadsheet font-18"></i>
+                          Category
+                        </label>
+                        <select class="form-control filter-select" id="filter_category" name="filter_category" required>
+                          <option selected value="">--All--</option>
+                          <option value="1">Hành Động</option>
+                          <option value="2">Viễn Tưởng</option>
+                          <option value="3">Chiến Tranh</option>
+                          <option value="5">Hình Sự</option>
+                          <option value="6">Phiêu Lưu</option>
+                        </select>
+                      </div>
+                      <div class="col" style="min-width:150px;">
+                        <label for="filter_country"
+                          class="badge bg-light text-white font-13 fw-light w-100 mb-1 d-flex align-items-center gap-1">
+                          <i class="bx bx-globe font-18"></i>
+                          Country
+                        </label>
+                        <select class="form-control filter-select" id="filter_country" name="filter_country" required>
+                          <option selected value="">--All--</option>
+                          <option value="4">Mỹ</option>
+                          <option value="5">Trung Quốc</option>
+                          <option value="6">Nhật Bản</option>
+                          <option value="7">Hàn Quốc</option>
+                          <option value="9">Đài Loan</option>
+                          <option value="10">Úc</option>
+                        </select>
+                      </div>
+                      <div class="col" style="min-width:150px;">
+                        <label for="filter_info"
+                          class="badge bg-light text-white font-13 fw-light w-100 mb-1 d-flex align-items-center gap-1">
+                          <i class="bx bx-info-circle font-18"></i>
+                          Info
+                        </label>
+                        <select class="form-control filter-select" id="filter_info" name="filter_info" required>
+                          <option selected value="">--All--</option>
+                          <option value="missingPoster">Missing Poster</option>
+                          <option value="missingBackdrops">Missing Backdrops</option>
+                          <option value="missingLogo">Missing Logo</option>
+                          <option value="missingTrailer">Missing Trailer</option>
+                          <option value="missingEpisode">Missing Episode</option>
+                        </select>
+                      </div>
+                      <div class="col" style="min-width:150px;">
+                        <label for="filter_deleted"
+                          class="badge bg-light text-white font-13 fw-light w-100 mb-1 d-flex align-items-center gap-1">
+                          <i class="bx bx-trash font-18"></i>
+                          Deleted
+                        </label>
+                        <select class="form-control filter-select" id="filter_deleted" name="filter_deleted" required>
+                          <option selected value="">No</option>
+                          <option value="1">Yes</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="mt-3 d-flex gap-3">
+                        <button type="button" class="btn btn-light flex-grow-1" style="max-width:140px;"><i
+                            class="bx bx-eraser"></i>
+                          Reset</button>
+                        <button type="button" class="btn btn-light flex-grow-1" style="max-width:140px;"><i
+                            class="bx bx-filter"></i>
+                          Filter</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
             <div class="table-responsive">
               <table id="tableFilms" class="table table-striped table-bordered" style="width: 100%">
                 <thead>
@@ -72,10 +186,7 @@
                     <th>Film</th>
                     <th>Categories</th>
                     <th>Episodes</th>
-                    <th>Status</th>
-                    <th>Process</th>
-                    <th>Upload By</th>
-                    <th>Date</th>
+                    <th>Viewable</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -85,10 +196,7 @@
                     <th>Film</th>
                     <th>Categories</th>
                     <th>Episodes</th>
-                    <th>Status</th>
-                    <th>Process</th>
-                    <th>Upload By</th>
-                    <th>Date</th>
+                    <th>Viewable</th>
                     <th>Action</th>
                   </tr>
                 </tfoot>
@@ -97,197 +205,222 @@
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- Modals -->
-      <!-- Delete Modals -->
-      <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="deleteModalLabel">Delete Film</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">Are you sure you want delete film "<span style="font-weight:500;color:#fff;"></span>" ?</div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary text-white bg-gradient-burning btn-delete">Delete</button>
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
+    <!-- Modals -->
+    <!-- Delete Modals -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteModalLabel">Delete Film</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-        </div>
-      </div>
-      <!-- Edit Modals -->
-      <div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-xl modal-dialog-scrollable">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Edit Film</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <div class="card">
-                <div class="card-body">
-                  <form method="POST" action="./create" class="row g-3">
-                    <div class="col-12 mb-3">
-                      <label class="form-label">Name:</label>
-                      <input type="text" class="form-control" name="name" placeholder="Film's Name" required>
+          <div class="modal-body">Are you sure want delete film "<span id="film-name-text"
+              style="font-weight:500;color:#fff;"></span>"<span id="permanently-text" class="d-none text-capitalize">
+              permanently</span>?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary text-white bg-gradient-burning btn-delete">Delete</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+          </div>
+          </div>
+          </div>
+          <!-- Edit Modals -->
+          <div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-fullscreen modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit Film</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="card">
+              <div class="card-body">
+                <form class="row g-3" id="form-info-film">
+                  <div class="col-12 mb-3">
+                    <label class="form-label">Name:</label>
+                    <input type="text" class="form-control" name="name" placeholder="Name" required />
                     </div>
                     <div class="col-12 mb-3">
                       <label class="form-label">Original Name:</label>
-                      <input type="text" class="form-control" name="original_name" placeholder="Film's Original Name" required>
+                    <input type="text" class="form-control" name="original_name" placeholder="Original Name" required />
                     </div>
-                    <div class="col-12 mb-3">
-                      <label class="form-label">Status:</label>
-                      <input type="text" class="form-control" name="status" placeholder="Film's Status" required>
+                  <div class="col-12 col-md-6 mb-3">
+                    <label class="form-label">Status:</label>
+                    <select class="form-select" name="status" placeholder="Status" required>
+                      <option selected value="complete">Complete</option>
+                      <option value="ongoing">Ongoing</option>
+                      <option value="trailer">Trailer</option>
+                    </select>
                     </div>
-                    <div class="col-12 mb-3">
-                      <label class="form-label">Image:</label>
-                      <div class="input-group">
-                        <input type="url" class="form-control" name="image" placeholder="http://example.com/images/img-film.jpg" required>
-                        <input type="file" accept="image/*" class="form-control" id="upload_image" style="display: none;">
-                        <label class="input-group-text" for="upload_image"><i class="bx bx-image-add"></i></label>
-                        <label class="input-group-text btn-upload-img"><i class="me-2 bx bx-cloud-upload"></i>Upload</label>
-                      </div>
-                    </div>
-                    <div class="col-12 mb-3">
-                      <label class="form-label">Image Banner:</label>
-                      <div class="input-group">
-                        <input type="url" class="form-control" name="image_banner" placeholder="http://example.com/images/img-banner-film.jpg" required>
-                        <input type="file" accept="image/*" class="form-control" id="upload_image_banner" style="display: none;">
-                        <label class="input-group-text" for="upload_image_banner"><i class="bx bx-image-add"></i></label>
-                        <label class="input-group-text btn-upload-img"><i class="me-2 bx bx-cloud-upload"></i>Upload</label>
-                      </div>
-                    </div>
-                    <div class="col-12 mb-3">
-                      <label class="form-label">Image Canonical:</label>
-                      <div class="input-group">
-                        <input type="url" class="form-control" name="image_canonical" placeholder="http://example.com/images/img-canonical-film.jpg">
-                        <input type="file" accept="image/*" class="form-control" id="upload_image_canonical" style="display: none;">
-                        <label class="input-group-text" for="upload_image_canonical"><i class="bx bx-image-add"></i></label>
-                        <label class="input-group-text btn-upload-img"><i class="me-2 bx bx-cloud-upload"></i>Upload</label>
-                      </div>
-                    </div>
-                    <div class="col-12 mb-3">
-                      <label class="form-label">Categories:</label>
-                      <select class="multiple-select" name="categories[]" data-placeholder="Choose Categories" multiple="multiple" required>
-                        <% for (const category of categories) { %>
-                        <option value="<%=category.category_id%>"><%=category.category_name%></option>
-                        <% } %>
+                    <div class="col-12 col-md-6 mb-3">
+                      <label class="form-label">Viewable:</label>
+                      <select class="form-select" name="viewable" placeholder="Viewable" required>
+                        <option selected value="1">Public</option>
+                        <option value="">Hidden</option>
                       </select>
+                    </div>
+                    <div class="col-12 mb-3">
+                    <label class="form-label">Poster:</label>
+                    <div class="input-group">
+                      <input type="url" class="form-control" name="poster" placeholder="http://example.com/images/poster-film.jpg" required />
+                      <input type="file" accept="image/*" class="form-control" id="upload_poster" style="display: none" />
+                      <label class="input-group-text" for="upload_poster"><i class="bx bx-image-add"></i></label>
+                      <label class="input-group-text btn-upload-img"><i class="me-2 bx bx-cloud-upload"></i>Upload</label>
+                      </div>
+                      </div>
+                      <div class="col-12 mb-3">
+                    <label class="form-label">Backdrops:</label>
+                    <div class="input-group">
+                      <input type="url" class="form-control" name="backdrops" placeholder="http://example.com/images/backdrops-film.jpg"
+                        required />
+                      <input type="file" accept="image/*" class="form-control" id="upload_backdrops" style="display: none" />
+                      <label class="input-group-text" for="upload_backdrops"><i class="bx bx-image-add"></i></label>
+                      <label class="input-group-text btn-upload-img"><i class="me-2 bx bx-cloud-upload"></i>Upload</label>
+                      </div>
+                      </div>
+                      <div class="col-12 mb-3">
+                    <label class="form-label">Backdrops Canonical:</label>
+                    <div class="input-group">
+                      <input type="url" class="form-control" name="backdrops_canonical"
+                        placeholder="http://example.com/images/backdrops-canonical-film.jpg" />
+                      <input type="file" accept="image/*" class="form-control" id="upload_backdrops_canonical" style="display: none" />
+                      <label class="input-group-text" for="upload_backdrops_canonical"><i class="bx bx-image-add"></i></label>
+                      <label class="input-group-text btn-upload-img"><i class="me-2 bx bx-cloud-upload"></i>Upload</label>
+                      </div>
+                      </div>
+                      <div class="col-12 mb-3">
+                        <label class="form-label">Logo:</label>
+                        <div class="input-group">
+                          <input type="url" class="form-control" name="logo" placeholder="http://example.com/images/logo-film.jpg" />
+                          <input type="file" accept="image/*" class="form-control" id="upload_logo" style="display: none" />
+                          <label class="input-group-text" for="upload_logo"><i class="bx bx-image-add"></i></label>
+                          <label class="input-group-text btn-upload-img"><i class="me-2 bx bx-cloud-upload"></i>Upload</label>
+                        </div>
+                      </div>
+                      <div class="col-12 mb-3">
+                        <label class="form-label">Categories:</label>
+                        <select class="multiple-select" name="categories[]" data-placeholder="Choose Categories" multiple="multiple" required>
+                          <% for (const category of categories) { %>
+                          <option value="<%=category.category_id%>"><%=category.category_name%></option>
+                          <% } %>
+                        </select>
                     </div>
                     <div class="col-12 mb-3">
                       <label class="form-label">Countries:</label>
-                      <select class="multiple-select" name="countries[]" data-placeholder="Choose Countries" multiple="multiple" required>
-                        <% for (const country of countries) { %>
-                        <option value="<%=country.country_id%>"><%=country.country_name%></option>
-                        <% } %>
-                      </select>
+                    <select class="multiple-select" name="countries[]" data-placeholder="Choose Countries" multiple="multiple" required>
+                      <% for (const country of countries) { %>
+                      <option value="<%=country.country_id%>"><%=country.country_name%></option>
+                      <% } %>
+                    </select>
                     </div>
                     <div class="col-12 mb-3">
                       <label class="form-label">Trailer:</label>
-                      <input type="url" class="form-control" name="trailer" placeholder="Trailer" value="">
+                    <input type="url" class="form-control" name="trailer" placeholder="Trailer" value="" />
                     </div>
                     <div class="col-md-6 mb-3">
-                      <label class="form-label">Film's Duration:</label>
-                      <input class="form-control" name="duration" placeholder="Film's Duration" value="">
+                    <label class="form-label">Duration:</label>
+                    <input class="form-control" min="0" name="duration" placeholder="Duration" value="" />
                     </div>
                     <div class="col-md-6 mb-3">
-                      <label class="form-label">Film's Quality:</label>
-                      <input class="form-control" name="quality" placeholder="Film's Quality" value="" required>
+                    <label class="form-label">Quality:</label>
+                    <input class="form-control" name="quality" placeholder="Quality" value="" required />
                     </div>
                     <div class="col-md-6 mb-3">
-                      <label class="form-label">Release Date:</label>
-                      <input class="form-control" name="year" placeholder="Release Date" required>
+                    <label class="form-label">Release:</label>
+                    <input class="form-control" type="number" min="1000" max="2050" name="year" placeholder="Release" required />
                     </div>
                     <div class="col-md-6 mb-3">
-                      <label class="form-label">Imdb Point:</label>
-                      <input class="form-control" name="imdb" placeholder="Imdb Point" value="">
+                    <label class="form-label">Imdb:</label>
+                    <input class="form-control" name="imdb" placeholder="Imdb" value="" />
                     </div>
                     <div class="col-md-6 mb-3">
-                      <label class="form-label">Movie's Language:</label>
-                      <select class="form-control" name="language" required>
-                        <option selected value="Vietsub">Vietsub</option>
-                        <option value="Thuyết Minh">Thuyết Minh</option>
-                        <option value="Lồng Tiếng">Lồng Tiếng</option>
-                        <option value="Vietsub + Thuyết Minh">Vietsub + Thuyết Minh</option>
-                        <option value="Vietsub + Lồng Tiếng">Vietsub + Lồng Tiếng</option>
-                        <option value="TM + LT">TM + LT</option>
-                        <option value="Nosub">Nosub</option>
-                      </select>
+                    <label class="form-label">Language:</label>
+                    <select class="form-select" name="language" required>
+                      <option selected value="Vietsub">Vietsub</option>
+                      <option value="Thuyết Minh">Thuyết Minh</option>
+                      <option value="Lồng Tiếng">Lồng Tiếng</option>
+                      <option value="Vietsub + Thuyết Minh">Vietsub + Thuyết Minh</option>
+                      <option value="Vietsub + Lồng Tiếng">Vietsub + Lồng Tiếng</option>
+                      <option value="TM + LT">TM + LT</option>
+                      <option value="Nosub">Nosub</option>
+                    </select>
                     </div>
                     <div class="col-md-6 mb-3">
-                      <label class="form-label">Movie/Serie?:</label>
-                      <select class="form-control" name="type_film" required>
-                        <option selected="" value="movie">Movie</option>
-                        <option value="serie_full">Serie Full</option>
-                        <option value="serie_not_full">Serie Not Full</option>
-                        <option value="film_trailer">Film Trailer</option>
-                      </select>
+                    <label class="form-label">Type:</label>
+                    <select class="form-select" name="type" required>
+                      <option selected value="movie">Movie</option>
+                      <option value="series">Series</option>
+                      <option value="trailer">Trailer</option>
+                    </select>
                     </div>
                     <div class="col-md-6 mb-3">
-                      <label class="form-label">Cinema?:</label>
-                      <select class="form-control" name="is_cinema">
-                        <option selected="" value="0">No</option>
-                        <option value="1">Yes</option>
-                      </select>
+                    <label class="form-label">In Cinema?:</label>
+                    <select class="form-select" name="in_cinema">
+                      <option selected value="">No</option>
+                      <option value="1">Yes</option>
+                    </select>
                     </div>
                     <div class="col-md-6 mb-3">
-                      <label class="form-label">Film Hot?:</label>
-                      <select class="form-control" name="is_film_hot">
-                        <option selected="" value="0">No</option>
-                        <option value="1">Yes</option>
-                      </select>
+                    <label class="form-label">Recommend?:</label>
+                    <select class="form-select" name="recommend">
+                      <option selected value="">No</option>
+                      <option value="1">Yes</option>
+                    </select>
                     </div>
                     <div class="col-md-6 mb-3">
-                      <label class="form-label">Film Canonical?:</label>
-                      <select class="form-control" name="is_film_canonical">
-                        <option selected="" value="0">No</option>
-                        <option value="1">Yes</option>
-                      </select>
+                    <label class="form-label">Canonical?:</label>
+                    <select class="form-select" name="canonical">
+                      <option selected value="">No</option>
+                      <option value="1">Yes</option>
+                    </select>
                     </div>
                     <div class="col-md-6 mb-3">
-                      <label class="form-label">Message:</label>
-                      <input class="form-control" name="message_film" placeholder="Message">
+                    <label class="form-label">Notify:</label>
+                    <input class="form-control" name="notify" placeholder="Notify" />
                     </div>
                     <div class="col-12 mb-3">
-                      <label class="form-label">Film's Description:</label>
-                      <textarea class="form-control" rows="3" name="description_film" placeholder="Film's Description" required></textarea>
+                    <label class="form-label">Description:</label>
+                    <textarea class="form-control" rows="3" name="description" placeholder="Description" required></textarea>
                     </div>
                     <div class="col-12 mb-3">
-                      <label class="form-label">Film's Info:</label>
-                      <textarea class="form-control" rows="5" name="info_film" id="info_film" placeholder="Film's Info" required></textarea>
+                    <label class="form-label">Info:</label>
+                    <textarea class="form-control" rows="5" name="info" id="info_film" placeholder="Info" required></textarea>
                     </div>
                     <div class="col-md-6 mb-3">
                       <label class="form-label">Tags:</label>
-                      <input type="text" class="form-control" name="tags" data-role="tagsinput" placeholder="Tags" value="">
+                    <input type="text" class="form-control" name="tags" data-role="tagsinput" placeholder="Tags" value="" />
                     </div>
                     <div class="col-md-6 mb-3">
                       <label class="form-label">Slug:</label>
-                      <input class="form-control" name="slug" placeholder="Slug (Auto Create)" value="">
+                    <input class="form-control" name="slug" placeholder="Slug (Auto Create)" value="" />
                     </div>
-                    <input name="user_id" value="<%= user.user_id %>" style="display: none;">
-                    <input name="film_id" value="" style="display: none;">
+                  <input name="film_id" value="" style="display: none;">
                   </form>
-                </div>
-              </div>
+                  </div>
+                  </div>
+                  </div>
+                  <div class="modal-footer">
+            <button type="button" class="btn btn-primary text-white bg-gradient-blues btn-save" style="border-color: #fff;">Save
+              changes</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary text-white bg-gradient-blues btn-save" style="border-color: #fff;">Save changes</button>
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
-          </div>
-        </div>
-      </div>
+            </div>
+            </div>
 
-    </div>
-    <!--end page wrapper -->
-    <!--start overlay-->
-    <div class="overlay toggle-icon"></div>
-    <!--end overlay-->
-    <!--Start Back To Top Button-->
-    <a href="javaScript:;" class="back-to-top"><i class="bx bxs-up-arrow-alt"></i></a>
-    <!--End Back To Top Button-->
-    <footer class="page-footer">
-      <p class="mb-0">Copyright © 2021. All right reserved.</p>
+  </div>
+  <!--end page wrapper -->
+  <!--start overlay-->
+  <div class="overlay toggle-icon"></div>
+  <!--end overlay-->
+  <!--Start Back To Top Button-->
+  <a href="javaScript:;" class="back-to-top"><i class="bx bxs-up-arrow-alt"></i></a>
+  <!--End Back To Top Button-->
+  <footer class="page-footer">
+    <p class="mb-0">Copyright © <%= new Date().getFullYear() %>. All right reserved.</p>
     </footer>
   </div>
   <!--end wrapper-->
@@ -302,183 +435,60 @@
       scrollX: true,
       processing: true,
       serverSide: true,
+      select: {
+        style: 'multi'
+      },
       ajax: {
-        url: '/admin/films/datatables_ajax?type=<%=ajaxType%>',
+        url: '/admin/films/datatables_ajax',
         type: 'POST',
       },
-      columns: [{
-          name: 'film_id'
-        },
-        {
-          name: 'film_originalname'
-        },
-        {
-          name: null
-        },
-        {
-          name: 'film_episodes'
-        },
-        {
-          name: null
-        },
-        {
-          name: null
-        },
-        {
-          name: 'film_uploadby'
-        },
-        {
-          name: 'updatedAt'
-        },
-        {
-          name: null
-        },
+      columns: [
+        { name: 'id' },
+        { name: 'originalName' },
+        { name: null },
+        { name: 'episodes' },
+        { name: null },
+        { name: null },
       ],
       columnDefs: [{
         orderable: false,
-        targets: [2, 4, 5, 8],
+        targets: [2, 4, 5],
       }],
+      language: {
+        processing: '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span><span>  Loading...</span>'
+      }
     });
     $('#tableFilms_filter input').unbind();
-    $('#tableFilms_filter input').bind('keyup', function(e) {
+                      $('#tableFilms_filter input').bind('keyup', function (e) {
       if (e.keyCode == 13) {
         dataTable.search(this.value).draw();
       }
     });
 
 
-    $('.multiple-select').select2({
-      theme: 'bootstrap4',
-      width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-      placeholder: $(this).data('placeholder'),
-      allowClear: Boolean($(this).data('allow-clear')),
-    });
+                      $('.filter-select').select2({
+                        theme: 'bootstrap4',
+                        width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+                        placeholder: $(this).data('placeholder'),
+                        allowClear: Boolean($(this).data('allow-clear')),
+                      dropdownAutoWidth: true,
+                    });
 
+                      $('.single-select').select2({
+                        theme: 'bootstrap4',
+                        width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+                        placeholder: $(this).data('placeholder'),
+                        allowClear: Boolean($(this).data('allow-clear')),
+                      });
 
-    // Get data film and fill this data to form edit
-    async function fillDataFilmToForm(id) {
-      const dataFilm = JSON.parse(
-        await $.ajax({
-          url: '/admin/films/read/' + id,
-          type: 'GET',
-        })
-      );
-      const formEdit = document.querySelector('#editModal form');
-      // console.log(dataFilm);
-      formEdit.querySelector('input[name="name"]').value = dataFilm.film_name;
-      formEdit.querySelector('input[name="original_name"]').value = dataFilm.film_originalname;
-      formEdit.querySelector('input[name="status"]').value = dataFilm.film_status;
-      formEdit.querySelector('input[name="image"]').value = dataFilm.film_img;
-      formEdit.querySelector('input[name="image_banner"]').value = dataFilm.film_imgbn;
-      formEdit.querySelector('input[name="image_canonical"]').value = dataFilm.film_imgbn_canonical;
-      $('.multiple-select[name="categories[]"]').val(dataFilm.film_category).change();
-      $('.multiple-select[name="countries[]"]').val(dataFilm.film_country).change();
-      formEdit.querySelector('input[name="trailer"]').value = dataFilm.film_trailer;
-      formEdit.querySelector('input[name="duration"]').value = dataFilm.film_duration;
-      formEdit.querySelector('input[name="quality"]').value = dataFilm.film_quality;
-      formEdit.querySelector('input[name="year"]').value = dataFilm.film_year;
-      formEdit.querySelector('input[name="imdb"]').value = dataFilm.film_imdb;
-      formEdit.querySelector('select[name="language"]').value = dataFilm.film_language;
-      formEdit.querySelector('select[name="type_film"]').value = dataFilm.film_type;
-      formEdit.querySelector('select[name="is_cinema"]').value = dataFilm.film_cinema ? 1 : 0;
-      formEdit.querySelector('select[name="is_film_hot"]').value = dataFilm.film_hot ? 1 : 0;
-      formEdit.querySelector('select[name="is_film_canonical"]').value = dataFilm.film_canonical ? 1 : 0;
-      formEdit.querySelector('input[name="message_film"]').value = dataFilm.film_message;
-      formEdit.querySelector('textarea[name="description_film"]').value = dataFilm.film_description;
-      CKEDITOR.instances['info_film'].setData(dataFilm.film_info);
-      $('#editModal form input[name="tags"]').tagsinput('removeAll');
-      dataFilm.film_tag.forEach(tag => {
-        $('#editModal form input[name="tags"]').tagsinput('add', tag);
-      });
-      formEdit.querySelector('input[name="slug"]').value = dataFilm.film_slug;
-      formEdit.querySelector('input[name="film_id"]').value = dataFilm._id.toString();
-    }
-
-
-    // Handle submit update
-    const saveBtn = document.querySelector('#editModal .modal-footer .btn-save');
-    saveBtn.onclick = function() {
-      const formEdit = document.querySelector('#editModal form');
-      const filmId = formEdit.querySelector('input[name="film_id"]').value;
-      const dataForm = Object.fromEntries(new FormData(formEdit));
-      dataForm.info_film = CKEDITOR.instances['info_film'].getData();
-      dataForm['categories[]'] = $('#editModal form .multiple-select[name="categories[]"]').select2('data').reduce((categories, categoryItem) => {
-        categories.push(categoryItem.id);
-        return categories;
-      }, []);
-      dataForm['countries[]'] = $('#editModal form .multiple-select[name="countries[]"]').select2('data').reduce((countries, countryItem) => {
-        countries.push(countryItem.id);
-        return countries;
-      }, []);
-      $.ajax({
-        type: 'PUT',
-        url: '/admin/films/update/' + filmId,
-        data: dataForm,
-      }).done(() => {
-        $('#editModal').modal('hide');
-        dataTable.ajax.reload(null,false);
-      });
-    };
-
-
-    // Fill name, id of film to modal delete 
-    function fillDataToDeleteForm(nameFilm,idFilm){
-      document.querySelector('#deleteModal .modal-body span').textContent = nameFilm;
-      document.querySelector('#deleteModal .modal-footer .btn-delete').onclick = function(){
-        $.ajax({
-          type: 'DELETE',
-          url: '/admin/films/delete/'+idFilm,
-        }).done(()=>{
-          $('#deleteModal').modal('hide');
-          dataTable.ajax.reload(null,false);
+        $('.multiple-select').select2({
+          theme: 'bootstrap4',
+          width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+          placeholder: $(this).data('placeholder'),
+          allowClear: Boolean($(this).data('allow-clear')),
         });
-      }
-    }
 
-    // ImgUr upload function
-    function imgurUpload(img) {
-      const API_URL = 'https://tame-red-clownfish-tutu.cyclic.app/image';
 
-      const formData = new FormData();
-      formData.append('image', img);
-
-      const config = {
-        async: false,
-        cache: false,
-        contentType: false,
-        processData: false,
-        url: API_URL,
-        type: "POST",
-        data: formData,
-      }
-
-      return $.ajax(config);
-    }
-
-    // Upload Images with Imgur API
-    document.querySelectorAll('#editModal form input[type=file][accept="image/*"]').forEach(inputEl => {
-      const inputGroup = inputEl.parentElement;
-      const inputUrlEl = inputGroup.querySelector('input[type=url]');
-      const btnUpload = inputGroup.querySelector('.btn-upload-img');
-
-      inputEl.onchange = function(e) {
-        e.target.previousElementSibling.value = e.target.files[0].name;
-      };
-
-      btnUpload.onclick = async function() {
-        const pattern = /(http)?s?:?(\/\/[^"']*\.(?:png|jpg|jpeg|gif|png|svg))/;
-
-        if (pattern.test(inputUrlEl.value)) {
-          const res = await imgurUpload(inputUrlEl.value);
-          inputUrlEl.value = res.data.link;
-        } else if (inputEl.files.length !== 0) {
-          const res = await imgurUpload(inputEl.files[0]);
-          inputUrlEl.value = res.data.link;
-        }
-
-      }
-    });
-  
   </script>
   <!-- End Javascript Import -->
 </body>

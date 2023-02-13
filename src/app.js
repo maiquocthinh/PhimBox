@@ -21,11 +21,11 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.use(
 	session({
 		secret: process.env.SESSION_SECRET,
-		resave: true,
-		saveUninitialized: false,
+		resave: false,
+		saveUninitialized: true,
 		cookie: {
 			httpOnly: true,
-			maxAge: 60 * 60 * 1000,
+			maxAge: 2 * 60 * 60 * 1000,
 		},
 	}),
 );

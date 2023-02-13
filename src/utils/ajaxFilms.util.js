@@ -13,7 +13,7 @@ const arrayToCategories = (arrayCategories, listCategories) => {
 
 const getUserById = (id, listUsers) => {
 	for (const userItem of listUsers) {
-		if (id === userItem.user_id) {
+		if (id === userItem._id.toString()) {
 			return userItem.user_name;
 		}
 	}

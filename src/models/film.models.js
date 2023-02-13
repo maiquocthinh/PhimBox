@@ -1,57 +1,56 @@
 'use strict';
 
 const mongoose = require('mongoose');
-const AutoIncrement = require('mongoose-sequence')(mongoose);
 const slug = require('mongoose-slug-generator');
 const mongooseDelete = require('mongoose-delete');
 const Schema = mongoose.Schema;
 
-const Film = new Schema({
-    // _id: { type: Schema.ObjectId, },
-    film_id: { type: Number, },
-    film_name: { type: String, },
-    film_originalname: { type: String, },
-    film_status: { type: String, },
-    film_img: { type: String, },
-    film_imgbn: { type: String, },
-    film_imgbn_canonical: { type: String, },
-    film_category: { type: Array, },
-    film_country: { type: Array, },
-    film_episodes: { type: Array, },
-    film_trailer: { type: String, },
-    film_duration: { type: String, },
-    film_quality: { type: String, },
-    film_year: { type: Number, },
-    film_imdb: { type: String, },
-    film_language: { type: String, },
-    film_cinema: { type: Boolean, },
-    film_hot: { type: Boolean, },
-    film_canonical: { type: Boolean, },
-    film_type: { type: String, },
-    film_message: { type: String, },
-    film_description: { type: String, },
-    film_info: { type: String, },
-    film_tag: { type: Array, },
-    film_tagascii: { type: Array, },
-    film_slug: { type: String, slug: 'film_name', },
-    film_viewed: { type: Number, },
-    film_uploadby: { type: Number, },
-    film_viewed_d: { type: Number, },
-    film_viewed_w: { type: Number, },
-    film_viewed_m: { type: Number, },
-}, {
-    timestamps: true,
-});
+const Film = new Schema(
+	{
+		id: { type: String },
+		name: { type: String },
+		originalName: { type: String },
+		status: { type: String },
+		viewable: { type: Boolean },
+		poster: { type: String },
+		backdrops: { type: String },
+		backdropsCanonical: { type: String },
+		logo: { type: String },
+		category: { type: Array },
+		country: { type: Array },
+		episodes: { type: Array },
+		trailer: { type: String },
+		duration: { type: String },
+		quality: { type: String },
+		year: { type: Number },
+		imdb: { type: String },
+		language: { type: String },
+		inCinema: { type: String },
+		recommend: { type: String },
+		canonical: { type: String },
+		type: { type: String },
+		notify: { type: String },
+		description: { type: String },
+		info: { type: String },
+		tag: { type: Array },
+		tagAscii: { type: Array },
+		slug: { type: String, slug: 'name' },
+		viewed: { type: Number, default: 0 },
+		viewedDay: { type: Number, default: 0 },
+		viewedWeek: { type: Number, default: 0 },
+		viewedMonth: { type: Number, default: 0 },
+		createdBy: { type: String },
+		updatedBy: { type: String },
+	},
+	{
+		timestamps: true,
+	},
+);
 
-mongoose.plugin(slug);
-Film.plugin(AutoIncrement,{
-    inc_field: 'film_id',
-    start_seq: 1,
+Film.plugin(slug);
+Film.plugin(mongooseDelete, {
+	deletedAt: true,
+	overrideMethods: 'all',
 });
-Film.plugin(mongooseDelete,{
-    deletedAt: true,
-    overrideMethods: 'all',
-});
-
 
 module.exports = mongoose.model('Film', Film);

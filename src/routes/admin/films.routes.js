@@ -15,14 +15,6 @@ router.delete('/destroy/:id', authMiddleware.auth, filmsController.destroyFilm);
 // PAGE
 router.get('/', authMiddleware.auth, filmsController.allFilms);
 router.get('/add', authMiddleware.auth, filmsController.addFilm);
-router.get('/movies', authMiddleware.auth, filmsController.filmsMovies);
-router.get('/series', authMiddleware.auth, filmsController.filmsSeries);
-router.get('/cartoon-anime', authMiddleware.auth, filmsController.filmsCartoonAnime);
-router.get('/cinema', authMiddleware.auth, filmsController.filmsCinema);
-router.get('/hot', authMiddleware.auth, filmsController.filmsHot);
-router.get('/trailer', authMiddleware.auth, filmsController.filmsTrailer);
-router.get('/no-episode', authMiddleware.auth, filmsController.filmsNotEp);
 router.get('/error', authMiddleware.auth, filmsController.filmsError);
-router.get('/trash', authMiddleware.auth, filmsController.filmsTrash);
 
 module.exports = router;
