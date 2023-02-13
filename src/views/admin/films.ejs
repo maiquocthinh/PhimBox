@@ -23,7 +23,27 @@
     }
 
     .modal-content {
-      background-image: radial-gradient(circle at 17% 1%, rgba(198, 198, 198, .03) 0, rgba(198, 198, 198, .03) 50%, rgba(42, 42, 42, .03) 50%, rgba(42, 42, 42, .03) 100%), radial-gradient(circle at 8% 81%, rgba(253, 253, 253, .03) 0, rgba(253, 253, 253, .03) 50%, rgba(36, 36, 36, .03) 50%, rgba(36, 36, 36, .03) 100%), radial-gradient(circle at 83% 29%, rgba(164, 164, 164, .03) 0, rgba(164, 164, 164, .03) 50%, rgba(60, 60, 60, .03) 50%, rgba(60, 60, 60, .03) 100%), radial-gradient(circle at 96% 62%, rgba(170, 170, 170, .03) 0, rgba(170, 170, 170, .03) 50%, rgba(169, 169, 169, .03) 50%, rgba(169, 169, 169, .03) 100%), linear-gradient(338deg, #028DD5, #05AC51);
+      background-image: radial-gradient(circle at 17% 1%,
+      rgba(198, 198, 198, 0.03) 0,
+      rgba(198, 198, 198, 0.03) 50%,
+      rgba(42, 42, 42, 0.03) 50%,
+      rgba(42, 42, 42, 0.03) 100%),
+      radial-gradient(circle at 8% 81%,
+      rgba(253, 253, 253, 0.03) 0,
+      rgba(253, 253, 253, 0.03) 50%,
+      rgba(36, 36, 36, 0.03) 50%,
+      rgba(36, 36, 36, 0.03) 100%),
+      radial-gradient(circle at 83% 29%,
+      rgba(164, 164, 164, 0.03) 0,
+      rgba(164, 164, 164, 0.03) 50%,
+      rgba(60, 60, 60, 0.03) 50%,
+      rgba(60, 60, 60, 0.03) 100%),
+      radial-gradient(circle at 96% 62%,
+      rgba(170, 170, 170, 0.03) 0,
+      rgba(170, 170, 170, 0.03) 50%,
+      rgba(169, 169, 169, 0.03) 50%,
+      rgba(169, 169, 169, 0.03) 100%),
+      linear-gradient(338deg, #028dd5, #05ac51);
     }
   </style>
 </head>
@@ -49,14 +69,7 @@
                 <li class="breadcrumb-item">
                   <a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                 </li>
-                <li class="breadcrumb-item" aria-current="page">Films</li>
-                <li class="breadcrumb-item active" aria-current="page">
-                  <% if(title) {%>
-                  <%= title %>
-                  <% } else { %>
-                  All Films
-                  <% } %>
-                </li>
+                <li class="breadcrumb-item active" aria-current="page">Films</li>
               </ol>
             </nav>
           </div>
@@ -65,8 +78,7 @@
         <div class="card">
           <div class="card-body">
             <div id="tableFilmsTop" class="mb-3">
-              <button class="btn btn-outline-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFilter"
-                aria-expanded="false" aria-controls="collapseFilter">
+              <button class="btn btn-outline-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter">
                 <i class="bx bx-filter-alt"></i>
                 <span>Filter</span>
               </button>
@@ -78,7 +90,7 @@
                 <div class="card card-body">
                   <form id="tableFilmsFilterForm">
                     <div class="row row-cols-auto g-3">
-                      <div class="col" style="min-width:150px;">
+                      <div class="col" style="min-width: 150px">
                         <label for="filter_status"
                           class="badge bg-light text-white font-13 fw-light w-100 mb-1 d-flex align-items-center gap-1">
                           <i class="bx bx-folder-open font-18"></i>
@@ -91,7 +103,7 @@
                           <option value="trailer">Trailer</option>
                         </select>
                       </div>
-                      <div class="col" style="min-width:150px;">
+                      <div class="col" style="min-width: 150px">
                         <label for="filter_type"
                           class="badge bg-light text-white font-13 fw-light w-100 mb-1 d-flex align-items-center gap-1">
                           <i class="bx bx-folder-open font-18"></i>
@@ -106,7 +118,7 @@
                           <option value="canonical">Canonical</option>
                         </select>
                       </div>
-                      <div class="col" style="min-width:150px;">
+                      <div class="col" style="min-width: 150px">
                         <label for="filter_category"
                           class="badge bg-light text-white font-13 fw-light w-100 mb-1 d-flex align-items-center gap-1">
                           <i class="bx bx-spreadsheet font-18"></i>
@@ -121,7 +133,7 @@
                           <option value="6">Phiêu Lưu</option>
                         </select>
                       </div>
-                      <div class="col" style="min-width:150px;">
+                      <div class="col" style="min-width: 150px">
                         <label for="filter_country"
                           class="badge bg-light text-white font-13 fw-light w-100 mb-1 d-flex align-items-center gap-1">
                           <i class="bx bx-globe font-18"></i>
@@ -137,7 +149,7 @@
                           <option value="10">Úc</option>
                         </select>
                       </div>
-                      <div class="col" style="min-width:150px;">
+                      <div class="col" style="min-width: 150px">
                         <label for="filter_info"
                           class="badge bg-light text-white font-13 fw-light w-100 mb-1 d-flex align-items-center gap-1">
                           <i class="bx bx-info-circle font-18"></i>
@@ -152,7 +164,7 @@
                           <option value="missingEpisode">Missing Episode</option>
                         </select>
                       </div>
-                      <div class="col" style="min-width:150px;">
+                      <div class="col" style="min-width: 150px">
                         <label for="filter_deleted"
                           class="badge bg-light text-white font-13 fw-light w-100 mb-1 d-flex align-items-center gap-1">
                           <i class="bx bx-trash font-18"></i>
@@ -166,12 +178,12 @@
                     </div>
                     <div class="row">
                       <div class="mt-3 d-flex gap-3">
-                        <button type="button" class="btn btn-light flex-grow-1" style="max-width:140px;"><i
-                            class="bx bx-eraser"></i>
-                          Reset</button>
-                        <button type="button" class="btn btn-light flex-grow-1" style="max-width:140px;"><i
-                            class="bx bx-filter"></i>
-                          Filter</button>
+                        <button type="button" class="btn btn-light flex-grow-1" style="max-width: 140px">
+                          <i class="bx bx-eraser"></i> Reset
+                        </button>
+                        <button type="button" class="btn btn-light flex-grow-1" style="max-width: 140px">
+                          <i class="bx bx-filter"></i> Filter
+                        </button>
                       </div>
                     </div>
                   </form>
@@ -216,19 +228,20 @@
             <h5 class="modal-title" id="deleteModalLabel">Delete Film</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="modal-body">Are you sure want delete film "<span id="film-name-text"
-              style="font-weight:500;color:#fff;"></span>"<span id="permanently-text" class="d-none text-capitalize">
-              permanently</span>?
+          <div class="modal-body">
+            Are you sure want delete film "<span id="film-name-text" style="font-weight: 500; color: #fff"></span>"<span id="permanently-text" class="d-none text-capitalize"> permanently</span>?
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary text-white bg-gradient-burning btn-delete">Delete</button>
+            <button type="button" class="btn btn-primary text-white bg-gradient-burning btn-delete">
+              Delete
+            </button>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           </div>
-          </div>
-          </div>
-          </div>
-          <!-- Edit Modals -->
-          <div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
+        </div>
+        </div>
+        </div>
+        <!-- Edit Modals -->
+        <div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-fullscreen modal-dialog-scrollable">
         <div class="modal-content">
           <div class="modal-header">
@@ -242,11 +255,11 @@
                   <div class="col-12 mb-3">
                     <label class="form-label">Name:</label>
                     <input type="text" class="form-control" name="name" placeholder="Name" required />
-                    </div>
-                    <div class="col-12 mb-3">
-                      <label class="form-label">Original Name:</label>
+                  </div>
+                  <div class="col-12 mb-3">
+                    <label class="form-label">Original Name:</label>
                     <input type="text" class="form-control" name="original_name" placeholder="Original Name" required />
-                    </div>
+                  </div>
                   <div class="col-12 col-md-6 mb-3">
                     <label class="form-label">Status:</label>
                     <select class="form-select" name="status" placeholder="Status" required>
@@ -254,15 +267,15 @@
                       <option value="ongoing">Ongoing</option>
                       <option value="trailer">Trailer</option>
                     </select>
-                    </div>
-                    <div class="col-12 col-md-6 mb-3">
-                      <label class="form-label">Viewable:</label>
-                      <select class="form-select" name="viewable" placeholder="Viewable" required>
-                        <option selected value="1">Public</option>
-                        <option value="">Hidden</option>
-                      </select>
-                    </div>
-                    <div class="col-12 mb-3">
+                  </div>
+                  <div class="col-12 col-md-6 mb-3">
+                    <label class="form-label">Viewable:</label>
+                    <select class="form-select" name="viewable" placeholder="Viewable" required>
+                      <option selected value="1">Public</option>
+                      <option value="">Hidden</option>
+                    </select>
+                  </div>
+                  <div class="col-12 mb-3">
                     <label class="form-label">Poster:</label>
                     <div class="input-group">
                       <input type="url" class="form-control" name="poster" placeholder="http://example.com/images/poster-film.jpg" required />
@@ -274,8 +287,7 @@
                       <div class="col-12 mb-3">
                     <label class="form-label">Backdrops:</label>
                     <div class="input-group">
-                      <input type="url" class="form-control" name="backdrops" placeholder="http://example.com/images/backdrops-film.jpg"
-                        required />
+                      <input type="url" class="form-control" name="backdrops" placeholder="http://example.com/images/backdrops-film.jpg" required />
                       <input type="file" accept="image/*" class="form-control" id="upload_backdrops" style="display: none" />
                       <label class="input-group-text" for="upload_backdrops"><i class="bx bx-image-add"></i></label>
                       <label class="input-group-text btn-upload-img"><i class="me-2 bx bx-cloud-upload"></i>Upload</label>
@@ -294,49 +306,53 @@
                       <div class="col-12 mb-3">
                         <label class="form-label">Logo:</label>
                         <div class="input-group">
-                          <input type="url" class="form-control" name="logo" placeholder="http://example.com/images/logo-film.jpg" />
-                          <input type="file" accept="image/*" class="form-control" id="upload_logo" style="display: none" />
-                          <label class="input-group-text" for="upload_logo"><i class="bx bx-image-add"></i></label>
-                          <label class="input-group-text btn-upload-img"><i class="me-2 bx bx-cloud-upload"></i>Upload</label>
-                        </div>
+                      <input type="url" class="form-control" name="logo" placeholder="http://example.com/images/logo-film.jpg" />
+                      <input type="file" accept="image/*" class="form-control" id="upload_logo" style="display: none" />
+                      <label class="input-group-text" for="upload_logo"><i class="bx bx-image-add"></i></label>
+                      <label class="input-group-text btn-upload-img"><i class="me-2 bx bx-cloud-upload"></i>Upload</label>
+                      </div>
                       </div>
                       <div class="col-12 mb-3">
                         <label class="form-label">Categories:</label>
-                        <select class="multiple-select" name="categories[]" data-placeholder="Choose Categories" multiple="multiple" required>
-                          <% for (const category of categories) { %>
-                          <option value="<%=category.category_id%>"><%=category.category_name%></option>
-                          <% } %>
-                        </select>
-                    </div>
-                    <div class="col-12 mb-3">
-                      <label class="form-label">Countries:</label>
+                    <select class="multiple-select" name="categories[]" data-placeholder="Choose Categories" multiple="multiple" required>
+                      <% for (const category of categories) { %>
+                      <option value="<%=category.category_id%>">
+                        <%=category.category_name%>
+                      </option>
+                      <% } %>
+                      </select>
+                      </div>
+                      <div class="col-12 mb-3">
+                        <label class="form-label">Countries:</label>
                     <select class="multiple-select" name="countries[]" data-placeholder="Choose Countries" multiple="multiple" required>
                       <% for (const country of countries) { %>
-                      <option value="<%=country.country_id%>"><%=country.country_name%></option>
+                      <option value="<%=country.country_id%>">
+                        <%=country.country_name%>
+                      </option>
                       <% } %>
                     </select>
-                    </div>
-                    <div class="col-12 mb-3">
-                      <label class="form-label">Trailer:</label>
+                  </div>
+                  <div class="col-12 mb-3">
+                    <label class="form-label">Trailer:</label>
                     <input type="url" class="form-control" name="trailer" placeholder="Trailer" value="" />
-                    </div>
-                    <div class="col-md-6 mb-3">
+                  </div>
+                  <div class="col-md-6 mb-3">
                     <label class="form-label">Duration:</label>
                     <input class="form-control" min="0" name="duration" placeholder="Duration" value="" />
-                    </div>
-                    <div class="col-md-6 mb-3">
+                  </div>
+                  <div class="col-md-6 mb-3">
                     <label class="form-label">Quality:</label>
                     <input class="form-control" name="quality" placeholder="Quality" value="" required />
-                    </div>
-                    <div class="col-md-6 mb-3">
+                  </div>
+                  <div class="col-md-6 mb-3">
                     <label class="form-label">Release:</label>
                     <input class="form-control" type="number" min="1000" max="2050" name="year" placeholder="Release" required />
                     </div>
                     <div class="col-md-6 mb-3">
                     <label class="form-label">Imdb:</label>
                     <input class="form-control" name="imdb" placeholder="Imdb" value="" />
-                    </div>
-                    <div class="col-md-6 mb-3">
+                  </div>
+                  <div class="col-md-6 mb-3">
                     <label class="form-label">Language:</label>
                     <select class="form-select" name="language" required>
                       <option selected value="Vietsub">Vietsub</option>
@@ -347,41 +363,41 @@
                       <option value="TM + LT">TM + LT</option>
                       <option value="Nosub">Nosub</option>
                     </select>
-                    </div>
-                    <div class="col-md-6 mb-3">
+                  </div>
+                  <div class="col-md-6 mb-3">
                     <label class="form-label">Type:</label>
                     <select class="form-select" name="type" required>
                       <option selected value="movie">Movie</option>
                       <option value="series">Series</option>
                       <option value="trailer">Trailer</option>
                     </select>
-                    </div>
-                    <div class="col-md-6 mb-3">
+                  </div>
+                  <div class="col-md-6 mb-3">
                     <label class="form-label">In Cinema?:</label>
                     <select class="form-select" name="in_cinema">
                       <option selected value="">No</option>
                       <option value="1">Yes</option>
                     </select>
-                    </div>
-                    <div class="col-md-6 mb-3">
+                  </div>
+                  <div class="col-md-6 mb-3">
                     <label class="form-label">Recommend?:</label>
                     <select class="form-select" name="recommend">
                       <option selected value="">No</option>
                       <option value="1">Yes</option>
                     </select>
-                    </div>
-                    <div class="col-md-6 mb-3">
+                  </div>
+                  <div class="col-md-6 mb-3">
                     <label class="form-label">Canonical?:</label>
                     <select class="form-select" name="canonical">
                       <option selected value="">No</option>
                       <option value="1">Yes</option>
                     </select>
-                    </div>
-                    <div class="col-md-6 mb-3">
+                  </div>
+                  <div class="col-md-6 mb-3">
                     <label class="form-label">Notify:</label>
                     <input class="form-control" name="notify" placeholder="Notify" />
-                    </div>
-                    <div class="col-12 mb-3">
+                  </div>
+                  <div class="col-12 mb-3">
                     <label class="form-label">Description:</label>
                     <textarea class="form-control" rows="3" name="description" placeholder="Description" required></textarea>
                     </div>
@@ -396,21 +412,21 @@
                     <div class="col-md-6 mb-3">
                       <label class="form-label">Slug:</label>
                     <input class="form-control" name="slug" placeholder="Slug (Auto Create)" value="" />
-                    </div>
-                  <input name="film_id" value="" style="display: none;">
+                  </div>
+                  <input name="film_id" value="" style="display: none" />
                   </form>
                   </div>
                   </div>
                   </div>
                   <div class="modal-footer">
-            <button type="button" class="btn btn-primary text-white bg-gradient-blues btn-save" style="border-color: #fff;">Save
-              changes</button>
+            <button type="button" class="btn btn-primary text-white bg-gradient-blues btn-save" style="border-color: #fff">
+              Save changes
+            </button>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-            </div>
-            </div>
-            </div>
-
+          </div>
+          </div>
+          </div>
+          </div>
   </div>
   <!--end page wrapper -->
   <!--start overlay-->
@@ -421,8 +437,7 @@
   <!--End Back To Top Button-->
   <footer class="page-footer">
     <p class="mb-0">Copyright © <%= new Date().getFullYear() %>. All right reserved.</p>
-    </footer>
-  </div>
+  </footer>
   <!--end wrapper-->
   <!-- Start Javascript Import -->
   <%- include('./partials/javascript-import') %>
@@ -430,13 +445,12 @@
   <script>
     CKEDITOR.replace('info_film');
 
-
-    const dataTable = $("#tableFilms").DataTable({
+    const dataTable = $('#tableFilms').DataTable({
       scrollX: true,
       processing: true,
       serverSide: true,
       select: {
-        style: 'multi'
+        style: 'multi',
       },
       ajax: {
         url: '/admin/films/datatables_ajax',
@@ -450,45 +464,44 @@
         { name: null },
         { name: null },
       ],
-      columnDefs: [{
-        orderable: false,
-        targets: [2, 4, 5],
-      }],
+      columnDefs: [
+      {
+      orderable: false,
+      targets: [2, 4, 5],
+        },
+        ],
       language: {
-        processing: '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span><span>  Loading...</span>'
-      }
+        processing:
+        '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span><span> Loading...</span>',
+        },
     });
     $('#tableFilms_filter input').unbind();
-                      $('#tableFilms_filter input').bind('keyup', function (e) {
+    $('#tableFilms_filter input').bind('keyup', function (e) {
       if (e.keyCode == 13) {
         dataTable.search(this.value).draw();
       }
     });
+    $('.filter-select').select2({
+    theme: 'bootstrap4',
+    width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+    placeholder: $(this).data('placeholder'),
+    allowClear: Boolean($(this).data('allow-clear')),
+    dropdownAutoWidth: true,
+    });
 
+    $('.single-select').select2({
+    theme: 'bootstrap4',
+    width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+    placeholder: $(this).data('placeholder'),
+    allowClear: Boolean($(this).data('allow-clear')),
+    });
 
-                      $('.filter-select').select2({
-                        theme: 'bootstrap4',
-                        width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-                        placeholder: $(this).data('placeholder'),
-                        allowClear: Boolean($(this).data('allow-clear')),
-                      dropdownAutoWidth: true,
-                    });
-
-                      $('.single-select').select2({
-                        theme: 'bootstrap4',
-                        width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-                        placeholder: $(this).data('placeholder'),
-                        allowClear: Boolean($(this).data('allow-clear')),
-                      });
-
-        $('.multiple-select').select2({
-          theme: 'bootstrap4',
-          width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-          placeholder: $(this).data('placeholder'),
-          allowClear: Boolean($(this).data('allow-clear')),
-        });
-
-
+    $('.multiple-select').select2({
+    theme: 'bootstrap4',
+    width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+    placeholder: $(this).data('placeholder'),
+    allowClear: Boolean($(this).data('allow-clear')),
+    });
   </script>
   <!-- End Javascript Import -->
 </body>

@@ -13,6 +13,5 @@ router.patch('/restore/:id', authMiddleware.auth, categoriesController.restoreCa
 router.delete('/destroy/:id', authMiddleware.auth, categoriesController.destroyCategory);
 // PAGE
 router.get('/', authMiddleware.auth, categoriesController.allCategories);
-router.get('/trash', authMiddleware.auth, categoriesController.categoriesTrash);
 
 module.exports = router;

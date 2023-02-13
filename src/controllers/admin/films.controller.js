@@ -316,8 +316,6 @@ const allFilms = async (req, res) => {
 
 		res.render('admin/films', {
 			user: req.session.user,
-			title: '',
-			ajaxType: '',
 			categories,
 			countries,
 		});

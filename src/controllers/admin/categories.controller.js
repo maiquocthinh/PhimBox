@@ -1,74 +1,69 @@
+const { nanoid } = require('nanoid');
 const Categories = require('../../models/category.models');
 
 // ###### API ######
 
 // [POST] admin/categories/datatables_ajax
 const ajaxDatatablesCategories = async (req, res) => {
-	const draw = req.body.draw;
-	const start = req.body.start;
-	const length = req.body.length;
-	const columnIndex = req.body.order[0]['column'];
-	const columnName = req.body.columns[columnIndex]['name'];
-	const columnSortOrder = req.body.order[0]['dir'] === 'asc' ? 1 : -1;
-	const searchValue = req.body.search.value;
-	const searchQueryDB = {
-		$or: [{ category_name: new RegExp(searchValue, 'i') }, { category_slug: new RegExp(searchValue, 'i') }],
-	};
+	const { deleted } = req.query;
+	const { columns, order, start, length, search, draw } = req.body;
+	const columnIndex = order[0]['column'];
+	const columnName = columns[columnIndex]['name'];
+	const columnSortOrder = order[0]['dir'] === 'asc' ? 1 : -1;
+	let queryToDB = {};
 
-	let totalCategory;
-	let totalCategoryWithFilter;
-	let dataCategories;
-	if (req.query.type === 'trash') {
-		totalCategory = await Categories.countDocumentsDeleted({});
-		totalCategoryWithFilter = await Categories.countDocumentsDeleted(searchQueryDB);
-		dataCategories = await Categories.findDeleted(searchQueryDB)
-			.skip(start)
-			.limit(length)
-			.sort({ [columnName]: columnSortOrder });
-	} else {
-		totalCategory = await Categories.countDocuments({});
-		totalCategoryWithFilter = await Categories.countDocuments(searchQueryDB);
-		dataCategories = await Categories.find(searchQueryDB)
-			.skip(start)
-			.limit(length)
-			.sort({ [columnName]: columnSortOrder });
-	}
+	if (search.value) queryToDB.name = new RegExp(search.value, 'i');
+
+	const totalCategory = deleted ? await Categories.countDocumentsDeleted({}) : await Categories.countDocuments({});
+	const dataCategories = deleted
+		? await Categories.findDeleted(queryToDB)
+				.skip(start)
+				.limit(length)
+				.sort({ [columnName]: columnSortOrder })
+		: await Categories.find(queryToDB)
+				.skip(start)
+				.limit(length)
+				.sort({ [columnName]: columnSortOrder });
+
+	const data = dataCategories.reduce((arrDataCategories, currentDataCategory) => {
+		arrDataCategories.push([
+			currentDataCategory.id,
+			currentDataCategory.name,
+			currentDataCategory.slug,
+			currentDataCategory.createdAt.toISOString().substring(0, 10),
+			currentDataCategory.updatedAt.toISOString().substring(0, 10),
+			deleted
+				? `<div class="d-flex order-actions">
+					<a href="javascript:;" class="ms-1 btn-restore" onclick="restoreCategory('${currentDataCategory._id.toString()}')"><i class="bx bx-undo"></i></a>
+					<a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeletePermanentlyForm('${
+						currentDataCategory.name
+					}','${currentDataCategory._id.toString()}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>
+				</div>`
+				: `<div class="d-flex order-actions">
+					<a href="javascript:;" class="text-primary"><i class="bx bx-link-external"></i></a>
+					<a href="javascript:;" class="text-warning ms-1" onclick="fillDataToEditForm('${currentDataCategory._id.toString()}')" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bx bxs-edit"></i></a>
+					<a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeleteForm('${
+						currentDataCategory.name
+					}','${currentDataCategory._id.toString()}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>
+				</div>`,
+		]);
+		return arrDataCategories;
+	}, []);
 
 	res.status(200).json({
 		draw,
 		recordsTotal: totalCategory,
-		recordsFiltered: totalCategoryWithFilter,
-		data: dataCategories.reduce((arrDataCategories, currentDataCategory) => {
-			arrDataCategories.push([
-				'#' + currentDataCategory._doc.category_id,
-				currentDataCategory._doc.category_name,
-				currentDataCategory._doc.category_slug,
-				currentDataCategory._doc.updatedAt.toISOString().substring(0, 10),
-				req.query.type === 'trash'
-					? `<div class="d-flex order-actions">
-                        <a href="javascript:;" class="ms-1 btn-restore" onclick="restoreCategory('${currentDataCategory._doc._id.toString()}')"><i class="bx bx-undo"></i></a>
-                        <a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeleteForm('${
-							currentDataCategory._doc.category_name
-						}','${currentDataCategory._doc._id.toString()}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>
-                    </div>`
-					: `<div class="d-flex order-actions">
-                        <a href="javascript:;" class="text-primary"><i class="bx bx-link-external"></i></a>
-                        <a href="javascript:;" class="text-warning ms-1" onclick="fillDataToEditForm('${currentDataCategory._doc._id.toString()}')" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bx bxs-edit"></i></a>
-                        <a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeleteForm('${
-							currentDataCategory._doc.category_name
-						}','${currentDataCategory._doc._id.toString()}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>
-                    </div>`,
-			]);
-			return arrDataCategories;
-		}, []),
+		recordsFiltered: dataCategories.length,
+		data,
 	});
 };
 
 // [POST] admin/categories/create
 const createCategory = (req, res) => {
 	const category = new Categories({
-		category_name: req.body.category_name,
-		category_slug: req.body.slug,
+		id: nanoid(7),
+		name: req.body.name,
+		slug: req.body.slug,
 	});
 	category
 		.save()
@@ -95,8 +90,8 @@ const updateCategory = (req, res) => {
 	Categories.updateOne(
 		{ _id: req.params.id },
 		{
-			category_name: req.body.category_name,
-			category_slug: req.body.slug,
+			name: req.body.name,
+			slug: req.body.slug,
 		},
 	)
 		.then(() => {
@@ -146,15 +141,6 @@ const destroyCategory = (req, res) => {
 const allCategories = (req, res) => {
 	res.render('admin/categories', {
 		user: req.session.user,
-		ajaxType: '',
-	});
-};
-
-// [GET] admin/categories/trash
-const categoriesTrash = (req, res) => {
-	res.render('admin/categoriesTrash', {
-		user: req.session.user,
-		ajaxType: 'trash',
 	});
 };
 
@@ -167,5 +153,4 @@ module.exports = {
 	deleteCategory,
 	restoreCategory,
 	destroyCategory,
-	categoriesTrash,
 };
