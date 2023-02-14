@@ -13,6 +13,5 @@ router.patch('/restore/:id', authMiddleware.auth, countriesController.restoreCou
 router.delete('/destroy/:id', authMiddleware.auth, countriesController.destroyCountry);
 // PAGE
 router.get('/', authMiddleware.auth, countriesController.allCountries);
-router.get('/trash', authMiddleware.auth, countriesController.countriesTrash);
 
 module.exports = router;

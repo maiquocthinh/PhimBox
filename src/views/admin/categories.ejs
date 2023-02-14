@@ -376,13 +376,13 @@
 
 			// Handle restore category
 			function restoreCategory(id) {
-      $.ajax({
-        type: 'PATCH',
-        url: '/admin/categories/restore/' + id,
-      }).done(() => {
-        dataTable.ajax.reload(null, false);
-      });
-    }
+				$.ajax({
+					type: 'PATCH',
+					url: '/admin/categories/restore/' + id,
+				}).done(() => {
+					dataTable.ajax.reload(null, false);
+				});
+			}
 
 			// Handle btn trash onclick
 			const btnTrash = document.getElementById('btn-trash');
