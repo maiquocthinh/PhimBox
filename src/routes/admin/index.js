@@ -10,7 +10,7 @@ const profileRoutes = require('./profile.routes');
 const filmsRoutes = require('./films.routes');
 const categoriesRoutes = require('./categories.routes');
 const countriesRoutes = require('./countries.routes');
-const membersRoutes = require('./members.routes');
+const usersRoutes = require('./users.routes');
 const configurationRoutes = require('./configuration.routes');
 
 // auth
@@ -31,8 +31,8 @@ router.use('/categories', categoriesRoutes);
 
 router.use('/countries', countriesRoutes);
 
-// members
-router.use('/members', membersRoutes);
+// users
+router.use('/users', usersRoutes);
 
 // configs
 router.use('/configuration', configurationRoutes);

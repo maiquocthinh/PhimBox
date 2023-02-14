@@ -33,14 +33,14 @@
       </div>
       <div class="user-box dropdown">
         <a class="d-flex align-items-center nav-link dropdown-toggle dropdown-toggle-nocaret" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          <img src="<%=user.user_avatar%>" class="user-img" alt="user avatar">
+          <img src="<%=user.avatar%>" class="user-img" alt="user avatar">
           <div class="user-info ps-3">
-            <p class="user-name mb-0"><%=user.user_name%></p>
+            <p class="user-name mb-0"><%=user.name%></p>
             <p class="designattion mb-0">
-              <% if (user.user_level==0) {%>
+              <% if (user.level==0) {%>
               Admin
-              <% } else if (user.user_level==1) { %>
-              Poster
+              <% } else if (user.level==1) { %>
+              Mod
               <% } %>
             </p>
           </div>

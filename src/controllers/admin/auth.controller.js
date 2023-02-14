@@ -19,19 +19,18 @@ const loginHandler = async (req, res) => {
 		});
 
 	try {
-		const user = await Users.findOne({ user_mail: email });
-
+		const user = await Users.findOne({ email: email });
 		if (!user)
 			return res.status(400).render('admin/login', {
 				messageError: 'The email is not registered in our system.',
 			});
 
-		if (password !== user.user_pass)
+		if (password !== user.password)
 			return res.status(400).render('admin/login', {
 				messageError: 'The password is incorrect.',
 			});
 
-		user.user_pass = undefined;
+		user.password = undefined;
 		req.session.user = user;
 		if (remember) req.session.cookie.maxAge = 1000 * 60 * 60 * 24 * 7;
 		res.redirect('/admin/dashboard');
