@@ -53,18 +53,20 @@
             <div class="card">
               <div class="card-body">
                 <div class="d-flex flex-column align-items-center text-center">
-                  <img src="<%=user.user_avatar%>" alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
+                  <img src="<%=user.avatar%>" alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
                   <div class="mt-3">
-                    <h4><%=user.user_name%></h4>
-                    <% if(user.user_level === 0) { %> 
+                    <h4><%=user.name%></h4>
+                    <% if(user.level === 0) { %>
                     <span class="badge text-white bg-gradient-lush text-uppercase px-3 mb-2">Admin</span>
-                    <% } else { %> 
+                    <% } else { %>
                     <span class="badge text-white bg-gradient-blues text-uppercase px-3 mb-2">Poster</span>
-                    <% } %> 
+                    <% } %>
                     <p class="font-size-sm mb-1">Created At: <%=user.createdAt.substring(0, 10)%></p>
                     <p class="font-size-sm mb-4">Updated At: <%=user.updatedAt.substring(0, 10)%></p>
-                    <button class="btn btn-light" style="font-size:0.8rem;"><i class="bx bx-box me-1"></i>Box Film</button>
-                    <button class="btn btn-light" style="font-size:0.8rem;"><i class="bx bx-comment-detail me-1"></i>Recent Comment</button>
+                    <button class="btn btn-light" style="font-size:0.8rem;"><i class="bx bx-box me-1"></i>Box
+                      Film</button>
+                    <button class="btn btn-light" style="font-size:0.8rem;"><i
+                        class="bx bx-comment-detail me-1"></i>Recent Comment</button>
                   </div>
                 </div>
               </div>
@@ -73,13 +75,13 @@
           <div class="col-lg-8">
             <div class="card">
               <div class="card-body">
-                <form id="form-info" action="">
+                <form id="form-info">
                   <div class="row mb-3">
                     <div class="col-sm-3">
                       <h6 class="mb-0">User Name</h6>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" name="user_name" value="<%=user.user_name%>" required/>
+                      <input type="text" class="form-control" name="name" value="<%=user.name%>" required />
                     </div>
                   </div>
                   <div class="row mb-3">
@@ -87,7 +89,7 @@
                       <h6 class="mb-0">Email</h6>
                     </div>
                     <div class="col-sm-9">
-                      <input type="email" class="form-control" name="user_email" value="<%=user.user_email%>" required/>
+                      <input type="email" class="form-control" name="email" value="<%=user.email%>" required />
                     </div>
                   </div>
                   <div class="row mb-3">
@@ -95,7 +97,7 @@
                       <h6 class="mb-0">User Avatar</h6>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" name="user_avatar" value="<%=user.user_avatar%>" required/>
+                      <input type="text" class="form-control" name="avatar" value="<%=user.avatar%>" required />
                     </div>
                   </div>
                   <div class="row mb-3">
@@ -103,10 +105,10 @@
                       <h6 class="mb-0">Membership</h6>
                     </div>
                     <div class="col-sm-9">
-                      <select class="form-control" name="user_level" required>
-                        <option <%=user.user_level===0 ? 'selected' : ''%> value="0">Admin</option>
-                        <option <%=user.user_level===1 ? 'selected' : ''%> value="1">Poster</option>
-                        <option <%=user.user_level===2 ? 'selected' : ''%> value="2">Member</option>
+                      <select class="form-control" name="level" required>
+                        <option <%= user.level===0 ? 'selected' : '' %> value="0">Admin</option>
+                        <option <%= user.level===1 ? 'selected' : '' %> value="1">Poster</option>
+                        <option <%= user.level===2 ? 'selected' : '' %> value="2">Member</option>
                       </select>
                     </div>
                   </div>
@@ -122,15 +124,15 @@
             </div>
             <div class="card">
               <div class="card-body">
-                <form id="form-password" action="">
-                    <div class="row mb-3">
+                <form id="form-password">
+                  <div class="row mb-3">
                     <div class="col-sm-3">
                       <h6 class="mb-0">Change Password</h6>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" name="user_pass" required/>
+                      <input type="text" class="form-control" name="password" required />
                     </div>
-                  <input type="text" name="user_id" style="display:none;" value="<%=user._id.toString()%>">
+                    <input type="text" name="user_id" style="display:none;" value="<%=user._id.toString()%>">
                   </div>
                   <div class="row">
                     <div class="col-sm-3"></div>
@@ -164,31 +166,36 @@
     const btnChangeInfo = document.querySelector('.btn-change-info');
     const btnChangePassWord = document.querySelector('.btn-change-password');
 
-    // handle submit change info
-    btnChangeInfo.onclick = function(){
-      const {user_id, ...dataForm} = Object.fromEntries(new FormData(formInfo));
+    // Handle submit change info
+    if (btnChangeInfo) btnChangeInfo.onclick = function () {
+      const {
+        user_id,
+        ...dataForm
+      } = Object.fromEntries(new FormData(formInfo));
       $.ajax({
         type: 'PATCH',
-        url: '/admin/members/update/'+user_id,
+        url: '/admin/users/update/' + user_id,
         data: dataForm,
-      }).done(()=>{
+      }).done(() => {
+        console.log(dataForm, user_id)
         location.reload();
       });
     }
 
-  // handle submit change password
-  btnChangePassWord.onclick = function(){
-      const {user_id, ...dataForm} = Object.fromEntries(new FormData(formPassword));
-      console.log(123);
+    // Handle submit change password
+    if (btnChangePassWord) btnChangePassWord.onclick = function () {
+      const {
+        user_id,
+        ...dataForm
+      } = Object.fromEntries(new FormData(formPassword));
       $.ajax({
         type: 'PATCH',
-        url: '/admin/members/update/'+user_id,
+        url: '/admin/users/update/' + user_id,
         data: dataForm,
-      }).done(()=>{
+      }).done(() => {
         location.reload();
       });
     }
-
   </script>
   <!-- End Javascript Import -->
 </body>

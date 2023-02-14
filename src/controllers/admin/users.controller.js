@@ -117,7 +117,13 @@ const updateUser = (req, res) => {
 			avatar: req.body.avatar,
 		},
 	)
-		.then(() => {
+		.then(async () => {
+			// change user info in current session
+			if (req.session.user._id === req.params.id) {
+				const user = await Users.findById(req.params.id);
+				user.password = undefined;
+				req.session.user = user;
+			}
 			res.status(200).json({ message: 'Update User Success' });
 		})
 		.catch((error) => {
