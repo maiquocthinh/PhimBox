@@ -7,13 +7,13 @@ const configurationUpdate = (req, res) => {
 	Configurations.updateOne(
 		{},
 		{
-			config_web_title: req.body.web_title,
-			config_web_url: req.body.web_url,
-			config_web_description: req.body.web_description,
-			config_web_keyword: req.body.web_keys,
-			config_web_servers: req.body.web_servers,
-			config_web_tags: req.body.web_tags,
-			config_timecache: req.body.timecache,
+			web_title: req.body.web_title,
+			web_url: req.body.web_url,
+			web_description: req.body.web_description,
+			web_keyword: req.body.web_keys,
+			web_servers: req.body.web_servers,
+			web_tags: req.body.web_tags,
+			timecache: req.body.timecache,
 		},
 	)
 		.then(() => {
@@ -30,9 +30,15 @@ const configurationUpdate = (req, res) => {
 const configuration = (req, res) => {
 	Configurations.findOne()
 		.then((config) => {
+			const timecache = config._doc.timecache;
+			console.log(timecache[timecache.length - 1]);
 			res.render('admin/configuration', {
 				user: req.session.user,
-				config: { ...config._doc },
+				config: {
+					...config._doc,
+					timecacheNum: timecache.substr(0, timecache.length - 1),
+					timecacheUnit: timecache[timecache.length - 1],
+				},
 			});
 		})
 		.catch((error) => {
