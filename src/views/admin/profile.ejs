@@ -105,7 +105,7 @@
                       <h6 class="mb-0">Membership</h6>
                     </div>
                     <div class="col-sm-9">
-                      <select class="form-control" name="level" required>
+                      <select class="form-select" name="level" required>
                         <option <%= user.level===0 ? 'selected' : '' %> value="0">Admin</option>
                         <option <%= user.level===1 ? 'selected' : '' %> value="1">Poster</option>
                         <option <%= user.level===2 ? 'selected' : '' %> value="2">Member</option>
@@ -174,9 +174,10 @@
         type: 'PATCH',
         url: '/admin/users/update/' + user_id,
         data: dataForm,
-      }).done(() => {
-        console.log(dataForm, user_id)
-        location.reload();
+      }).done((res) => {
+				notyf.success(res.message);
+      }).fail((res) => {
+				notyf.error(res.message);
       });
     }
 
@@ -190,8 +191,10 @@
         type: 'PATCH',
         url: '/admin/users/update/' + user_id,
         data: dataForm,
-      }).done(() => {
-        location.reload();
+      }).done((res) => {
+				notyf.success(res.message);
+      }).fail((res) => {
+				notyf.error(res.message);
       });
     }
   </script>

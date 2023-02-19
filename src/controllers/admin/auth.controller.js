@@ -8,42 +8,30 @@ const { validateEmail } = require('../../utils');
 const loginHandler = async (req, res) => {
 	const { email, password, remember } = req.body;
 
-	if (!email || !password)
-		return res.status(400).render('admin/login', {
-			messageError: 'You must enter all fields.',
-		});
+	if (!email || !password) return res.status(400).json({ message: 'You must enter all fields.' });
 
-	if (!validateEmail(email))
-		return res.status(400).render('admin/login', {
-			messageError: 'The email is invalid.',
-		});
+	if (!validateEmail(email)) return res.status(400).json({ message: 'The email is invalid.' });
 
 	try {
 		const user = await Users.findOne({ email: email });
-		if (!user)
-			return res.status(400).render('admin/login', {
-				messageError: 'The email is not registered in our system.',
-			});
+		if (!user) return res.status(400).json({ message: 'The email is not registered in our system.' });
 
-		if (password !== user.password)
-			return res.status(400).render('admin/login', {
-				messageError: 'The password is incorrect.',
-			});
+		if (password !== user.password) return res.status(400).json({ message: 'The password is incorrect.' });
 
 		user.password = undefined;
 		req.session.user = user;
 		if (remember) req.session.cookie.maxAge = 1000 * 60 * 60 * 24 * 7;
-		res.redirect('/admin/dashboard');
+		return res.status(200).json({ message: 'Login Success!' });
 	} catch (error) {
-		res.status(500).json({ error: error.message });
+		res.status(500).json({ message: error.message });
 	}
 };
 
 // [DELETE] admin/logout
 const logoutHandler = (req, res) => {
 	req.session.destroy((err) => {
-		if (err) return res.status(500).json({ msg: err.message });
-		return res.status(200).json({ msg: 'logout success.' });
+		if (err) return res.status(500).json({ message: err.message });
+		return res.status(200).json({ message: 'Logout Success.' });
 	});
 };
 

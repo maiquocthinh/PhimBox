@@ -375,25 +375,34 @@
 					formCreate.reset();
 					$('#addModal').modal('hide');
 					dataTable.ajax.reload(null, false);
+					notyf.success(res.message)
+				}).fail((res) => {
+					formCreate.reset();
+					$('#addModal').modal('hide');
+					notyf.error(res.message)
 				});
 			};
 
 			// Fill name, id of country to delete form
 			function fillDataToDeleteForm(name, id) {
-        document.querySelector('#permanently-text').classList.add('d-none');
+				document.querySelector('#permanently-text').classList.add('d-none');
 				document.querySelector('#user-name-text').textContent = name;
 				document.querySelector('#deleteModal .modal-footer .btn-delete').onclick = function () {
 					$.ajax({
 						type: 'DELETE',
 						url: '/admin/users/delete/' + id,
-					}).done(() => {
+					}).done((res) => {
 						$('#deleteModal').modal('hide');
 						dataTable.ajax.reload(null, false);
+						notyf.success(res.message);
+					}).fail((res) => {
+						$('#deleteModal').modal('hide');
+						notyf.error(res.message);
 					});
 				};
 			}
 
-      // Fill name, id of film to modal delete
+			// Fill name, id of film to modal delete
 			function fillDataToDeletePermanentlyForm(name, id) {
 				document.querySelector('#permanently-text').classList.remove('d-none');
 				document.querySelector('#user-name-text').textContent = name;
@@ -401,9 +410,13 @@
 					$.ajax({
 						type: 'DELETE',
 						url: '/admin/users/destroy/' + id,
-					}).done(() => {
+					}).done((res) => {
 						$('#deleteModal').modal('hide');
 						dataTable.ajax.reload(null, false);
+						notyf.success(res.message);
+					}).fail((res) => {
+						$('#deleteModal').modal('hide');
+						notyf.error(res.message);
 					});
 				};
 			}
@@ -432,23 +445,32 @@
 						type: 'PATCH',
 						url: '/admin/users/update/' + userId,
 						data: dataForm,
-					}).done(() => {
+					}).done((res) => {
 						$('#editModal').modal('hide');
 						dataTable.ajax.reload(null, false);
+						notyf.success(res.message);
+					}).fail((res) => {
+						$('#editModal').modal('hide');
+						notyf.error(res.message);
 					});
 				};
 
-      // Hnalde resotre user
-      function restoreUser(id) {
-      $.ajax({
-        type: 'PATCH',
-        url: '/admin/users/restore/' + id,
-      }).done(() => {
-        dataTable.ajax.reload(null, false);
-      });
-    }
+			// Hnalde resotre user
+			function restoreUser(id) {
+				$.ajax({
+					type: 'PATCH',
+					url: '/admin/users/restore/' + id,
+				})
+					.done((res) => {
+						notyf.success(res.message);
+						dataTable.ajax.reload(null, false);
+					})
+					.fail((res) => {
+						notyf.error(res.message);
+					});
+			}
 
-    // Handle btn trash onclick
+			// Handle btn trash onclick
 			const btnTrash = document.getElementById('btn-trash');
 			if (btnTrash)
 				btnTrash.onclick = function () {
@@ -459,7 +481,6 @@
 						? dataTable.ajax.url('/admin/users/datatables_ajax/?deleted=true').load()
 						: dataTable.ajax.url('/admin/users/datatables_ajax/').load();
 				};
-
 		</script>
 		<!-- End Javascript Import -->
 	</body>

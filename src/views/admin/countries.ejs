@@ -297,13 +297,22 @@
 						name: countryName,
 						slug: countrySlug,
 					},
-				}).done((res) => {
-					// clear input of addModal
-					document.querySelector('#addModal form input[name="country_name"]').value = '';
-					document.querySelector('#addModal form input[name="slug"]').value = '';
-					$('#addModal').modal('hide');
-					dataTable.ajax.reload(null, false);
-				});
+				})
+					.done((res) => {
+						// clear input of addModal
+						document.querySelector('#addModal form input[name="country_name"]').value = '';
+						document.querySelector('#addModal form input[name="slug"]').value = '';
+						$('#addModal').modal('hide');
+						dataTable.ajax.reload(null, false);
+						notyf.success(res.message);
+					})
+					.fail((res) => {
+						// clear input of addModal
+						document.querySelector('#addModal form input[name="country_name"]').value = '';
+						document.querySelector('#addModal form input[name="slug"]').value = '';
+						$('#addModal').modal('hide');
+						notyf.error(res.message);
+					});
 			};
 
 			// Fill name, id of country to delete form
@@ -314,10 +323,16 @@
 					$.ajax({
 						type: 'DELETE',
 						url: '/admin/countries/delete/' + id,
-					}).done(() => {
-						$('#deleteModal').modal('hide');
-						dataTable.ajax.reload(null, false);
-					});
+					})
+						.done((res) => {
+							$('#deleteModal').modal('hide');
+							dataTable.ajax.reload(null, false);
+							notyf.success(res.message);
+						})
+						.fail((res) => {
+							$('#deleteModal').modal('hide');
+							notyf.error(res.message);
+						});
 				};
 			}
 
@@ -347,13 +362,19 @@
 							country_name: countryName,
 							slug: countrySlug,
 						},
-					}).done(() => {
-						$('#editModal').modal('hide');
-						dataTable.ajax.reload(null, false);
-					});
+					})
+						.done((res) => {
+							$('#editModal').modal('hide');
+							dataTable.ajax.reload(null, false);
+							notyf.success(res.message);
+						})
+						.fail((res) => {
+							$('#editModal').modal('hide');
+							notyf.error(res.message);
+						});
 				};
 
-        // Fill name, id of film to modal delete
+			// Fill name, id of film to modal delete
 			function fillDataToDeletePermanentlyForm(name, id) {
 				document.querySelector('#permanently-text').classList.remove('d-none');
 				document.querySelector('#country-name-text').textContent = name;
@@ -361,24 +382,35 @@
 					$.ajax({
 						type: 'DELETE',
 						url: '/admin/countries/destroy/' + id,
-					}).done(() => {
-						$('#deleteModal').modal('hide');
-						dataTable.ajax.reload(null, false);
-					});
+					})
+						.done((res) => {
+							$('#deleteModal').modal('hide');
+							dataTable.ajax.reload(null, false);
+							notyf.success(res.message);
+						})
+						.fail((res) => {
+							$('#deleteModal').modal('hide');
+							notyf.error(res.message);
+						});
 				};
 			}
 
-      // Handle resotre country
-      function restoreCountry(id) {
-      $.ajax({
-        type: 'PATCH',
-        url: '/admin/countries/restore/' + id,
-      }).done(() => {
-        dataTable.ajax.reload(null, false);
-      });
-    }
+			// Handle resotre country
+			function restoreCountry(id) {
+				$.ajax({
+					type: 'PATCH',
+					url: '/admin/countries/restore/' + id,
+				})
+					.done((res) => {
+						dataTable.ajax.reload(null, false);
+						notyf.success(res.message);
+					})
+					.fail((res) => {
+						notyf.error(res.message);
+					});
+			}
 
-      // Handle btn trash onclick
+			// Handle btn trash onclick
 			const btnTrash = document.getElementById('btn-trash');
 			if (btnTrash)
 				btnTrash.onclick = function () {
@@ -389,7 +421,6 @@
 						? dataTable.ajax.url('/admin/countries/datatables_ajax/?deleted=true').load()
 						: dataTable.ajax.url('/admin/countries/datatables_ajax/').load();
 				};
-
 		</script>
 		<!-- End Javascript Import -->
 	</body>

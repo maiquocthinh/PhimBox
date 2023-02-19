@@ -174,8 +174,7 @@ const createFilm = (req, res) => {
 	films
 		.save()
 		.then(() => {
-			// res.send({'message':'Create Film Success'});
-			res.redirect('/admin/films');
+			res.status(200).json({ message: 'Create Film Success' });
 		})
 		.catch((error) => {
 			res.status(500).json({ error: error.message });
@@ -259,7 +258,7 @@ const restoreFilm = (req, res) => {
 const destroyFilm = (req, res) => {
 	Films.deleteOne({ _id: req.params.id })
 		.then(() => {
-			res.status(200).json({ message: 'Delete Forever Success!' });
+			res.status(200).json({ message: 'Delete Permanently Success!' });
 		})
 		.catch((error) => {
 			res.status(500).json({ error: error.message });

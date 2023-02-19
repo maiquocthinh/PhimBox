@@ -157,7 +157,7 @@ const restoreUser = (req, res) => {
 const destroyUser = (req, res) => {
 	Users.deleteOne({ _id: req.params.id })
 		.then(() => {
-			res.status(200).json({ message: 'Destroy User Success' });
+			res.status(200).json({ message: 'Delete Permanently User Success' });
 		})
 		.catch((error) => {
 			res.status(500).json({ error: error.message });

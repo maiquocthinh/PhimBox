@@ -301,13 +301,22 @@
 						name: categoryName,
 						slug: categorySlug,
 					},
-				}).done((res) => {
-					// clear input of addModal
-					document.querySelector('#addModal form input[name="category_name"]').value = '';
-					document.querySelector('#addModal form input[name="slug"]').value = '';
-					$('#addModal').modal('hide');
-					dataTable.ajax.reload(null, false);
-				});
+				})
+					.done((res) => {
+						// clear input of addModal
+						document.querySelector('#addModal form input[name="category_name"]').value = '';
+						document.querySelector('#addModal form input[name="slug"]').value = '';
+						$('#addModal').modal('hide');
+						dataTable.ajax.reload(null, false);
+						notyf.success(res.message);
+					})
+					.fail((res) => {
+						// clear input of addModal
+						document.querySelector('#addModal form input[name="category_name"]').value = '';
+						document.querySelector('#addModal form input[name="slug"]').value = '';
+						$('#addModal').modal('hide');
+						notyf.error(res.message);
+					});
 			};
 
 			// Fill name, id of category to delete form
@@ -318,10 +327,16 @@
 					$.ajax({
 						type: 'DELETE',
 						url: '/admin/categories/delete/' + id,
-					}).done(() => {
-						$('#deleteModal').modal('hide');
-						dataTable.ajax.reload(null, false);
-					});
+					})
+						.done((res) => {
+							$('#deleteModal').modal('hide');
+							dataTable.ajax.reload(null, false);
+							notyf.success(res.message);
+						})
+						.fail((res) => {
+							$('#deleteModal').modal('hide');
+							notyf.error(res.message);
+						});
 				};
 			}
 
@@ -351,10 +366,16 @@
 							name: categoryName,
 							slug: categorySlug,
 						},
-					}).done(() => {
-						$('#editModal').modal('hide');
-						dataTable.ajax.reload(null, false);
-					});
+					})
+						.done((res) => {
+							$('#editModal').modal('hide');
+							dataTable.ajax.reload(null, false);
+							notyf.success(res.message);
+						})
+						.fail((res) => {
+							$('#editModal').modal('hide');
+							notyf.error(res.message);
+						});
 				};
 
 			// Fill name, id of film to modal delete
@@ -365,10 +386,16 @@
 					$.ajax({
 						type: 'DELETE',
 						url: '/admin/categories/destroy/' + id,
-					}).done(() => {
-						$('#deleteModal').modal('hide');
-						dataTable.ajax.reload(null, false);
-					});
+					})
+						.done((res) => {
+							$('#deleteModal').modal('hide');
+							dataTable.ajax.reload(null, false);
+							notyf.success(res.message);
+						})
+						.fail((res) => {
+							$('#deleteModal').modal('hide');
+							notyf.error(res.message);
+						});
 				};
 			}
 
@@ -377,9 +404,14 @@
 				$.ajax({
 					type: 'PATCH',
 					url: '/admin/categories/restore/' + id,
-				}).done(() => {
-					dataTable.ajax.reload(null, false);
-				});
+				})
+					.done((res) => {
+						dataTable.ajax.reload(null, false);
+						notyf.success(res.message);
+					})
+					.fail((res) => {
+						notyf.error(res.message);
+					});
 			}
 
 			// Handle btn trash onclick

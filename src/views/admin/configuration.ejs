@@ -249,8 +249,8 @@
 					type: 'PATCH',
 					url: '/admin/configuration/update',
 					data: dataForm,
-				}).done(() => {
-					location.reload();
+				}).done((res) => {
+					 notyf.success(res.message);
 				});
 			};
 
@@ -265,7 +265,7 @@
 							timecache: dataForm.cache_num + dataForm.cache_unit,
 						},
 					}).done((res) => {
-						location.reload();
+					 notyf.success(res.message);
 					});
 				};
 		</script>

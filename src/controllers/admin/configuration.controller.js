@@ -31,7 +31,6 @@ const configuration = (req, res) => {
 	Configurations.findOne()
 		.then((config) => {
 			const timecache = config._doc.timecache;
-			console.log(timecache[timecache.length - 1]);
 			res.render('admin/configuration', {
 				user: req.session.user,
 				config: {

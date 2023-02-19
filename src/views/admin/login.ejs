@@ -1,128 +1,143 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!--favicon-->
-  <link rel="icon" href="assets/images/favicon-32x32.png" type="image/png" />
-  <!--plugins-->
-  <link href="assets/plugins/simplebar/css/simplebar.css" rel="stylesheet" />
-  <link href="assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet" />
-  <link href="assets/plugins/metismenu/css/metisMenu.min.css" rel="stylesheet" />
-  <!-- loader-->
-  <link href="assets/css/pace.min.css" rel="stylesheet" />
-  <script src="assets/js/pace.min.js"></script>
-  <!-- Bootstrap CSS -->
-  <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/css/app.css" rel="stylesheet">
-  <link href="assets/css/icons.css" rel="stylesheet">
-  <title>Dashtrans - Bootstrap5 Admin Template</title>
+	<!-- Required meta tags -->
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<!--favicon-->
+	<link rel="icon" href="assets/images/favicon-32x32.png" type="image/png" />
+	<!--plugins-->
+	<link href="assets/plugins/simplebar/css/simplebar.css" rel="stylesheet" />
+	<link href="assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet" />
+	<link href="assets/plugins/metismenu/css/metisMenu.min.css" rel="stylesheet" />
+	<!-- loader-->
+	<link href="assets/css/pace.min.css" rel="stylesheet" />
+	<script src="assets/js/pace.min.js"></script>
+	<!-- Bootstrap CSS -->
+	<link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="assets/css/app.css" rel="stylesheet" />
+	<link href="assets/css/icons.css" rel="stylesheet" />
+	<!-- Notyf Style CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+	<title>Dashtrans - Bootstrap5 Admin Template</title>
 </head>
 
 <body class="bg-theme bg-theme13">
-  <!--wrapper-->
-  <div class="wrapper">
-    <div class="section-authentication-signin d-flex align-items-center justify-content-center my-5 my-lg-0">
-      <div class="container-fluid">
-        <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
-          <div class="col mx-auto">
-            <div class="mb-4 text-center">
-              <img src="assets/images/logo-img.png" width="180" alt="" />
-            </div>
-            <div class="card">
-              <div class="card-body">
-                <div class="border p-4 rounded">
-                  <div class="card-title text-center"><i class="bx bxs-user-circle text-white font-50"></i>
-                    <h5 class="mb-5 mt-2 text-white">User Login</h5>
-                  </div>
-                  <hr>
-                  <% if(messageError) { %>
-                  <div class="alert border-0 border-start border-5 border-warning alert-dismissible fade show py-2">
-                    <div class="d-flex align-items-center">
-                      <div class="font-35 text-warning"><i class="bx bx-info-square"></i>
-                      </div>
-                      <div class="ms-3">
-                        <h6 class="mb-0 text-warning">Login Error</h6>
-                        <div>Mail or Password Wrong !!!</div>
-                      </div>
-                    </div>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                  </div>
-                  <% } %>
-                  <div class="form-body">
-                    <form method="POST" class="row g-3">
-                      <div class="col-12">
-                        <label for="inputEmailAddress" class="form-label">Email Address</label>
-                        <!-- <input type="email" class="form-control" id="inputEmailAddress" placeholder="Email Address"> -->
-                        <div class="input-group">
-                          <span class="input-group-text"><i class="bx bxs-message"></i></span>
-                          <input type="email" name="email" class="form-control border-start-0" id="inputEmailAddress"
-                            value="majquocthjnh@gmail.com" placeholder="Email Address" required>
-                        </div>
-                      </div>
-                      <div class="col-12">
-                        <label for="inputChoosePassword" class="form-label">Enter
-                          Password</label>
-                        <div class="input-group" id="show_hide_password">
-                          <!-- <input type="password" class="form-control border-end-0" id="inputChoosePassword" value="12345678" placeholder="Enter Password"> 
-                                                        <a href="javascript:;" class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a> -->
-                          <span class="input-group-text"><i class="bx bxs-lock-open"></i></span>
-                          <input type="password" name="password" class="form-control border-start-0" id="inputChoosePassword" value="12345678"
-                            placeholder="Enter Password" required>
-                          <button type="button" class="input-group-text bg-transparent" style="outline:none;"><i class='bx bx-hide'></i></button>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-check form-switch">
-                          <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" name="remember">
-                          <label class="form-check-label" for="flexSwitchCheckChecked">Remember Me</label>
-                        </div>
-                      </div>
-                      <div class="col-12">
-                        <div class="d-grid">
-                          <button type="submit" class="btn btn-light"><i class="bx bxs-lock-open"></i>Sign in</button>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!--end row-->
-      </div>
-    </div>
-  </div>
-  <!--end wrapper-->
-  <!-- Bootstrap JS -->
-  <script src="assets/js/bootstrap.bundle.min.js"></script>
-  <!--plugins-->
-  <script src="assets/js/jquery.min.js"></script>
-  <script src="assets/plugins/simplebar/js/simplebar.min.js"></script>
-  <script src="assets/plugins/metismenu/js/metisMenu.min.js"></script>
-  <script src="assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js"></script>
-  <!--Password show & hide js -->
-  <script>
-            $(document).ready(function () {
-      $("#show_hide_password button").on('click', function (event) {
-        event.preventDefault();
-        if ($('#show_hide_password input').attr("type") == "text") {
-          $('#show_hide_password input').attr('type', 'password');
-          $('#show_hide_password i').addClass("bx-hide");
-          $('#show_hide_password i').removeClass("bx-show");
-        } else if ($('#show_hide_password input').attr("type") == "password") {
-          $('#show_hide_password input').attr('type', 'text');
-          $('#show_hide_password i').removeClass("bx-hide");
-          $('#show_hide_password i').addClass("bx-show");
-        }
-      });
-    });
-  </script>
-  <!--app JS-->
-  <script src="assets/js/app.js"></script>
+	<!--wrapper-->
+	<div class="wrapper">
+		<div class="section-authentication-signin d-flex align-items-center justify-content-center my-5 my-lg-0">
+			<div class="container-fluid">
+				<div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
+					<div class="col mx-auto">
+						<div class="mb-4 text-center">
+							<img src="assets/images/logo-img.png" width="180" alt="" />
+						</div>
+						<div class="card">
+							<div class="card-body">
+								<div class="border p-4 rounded">
+									<div class="card-title text-center">
+										<i class="bx bxs-user-circle text-white font-50"></i>
+										<h5 class="mb-5 mt-2 text-white">User Login</h5>
+									</div>
+									<hr />
+									<div class="form-body">
+										<form class="row g-3" id="form-login">
+											<div class="col-12">
+												<label for="inputEmailAddress" class="form-label">Email Address</label>
+												<div class="input-group">
+													<span class="input-group-text"><i class="bx bxs-message"></i></span>
+													<input type="text" name="email" class="form-control border-start-0" id="inputEmailAddress" value="majquocthjnh@gmail.com" placeholder="Email Address" />
+												</div>
+											</div>
+											<div class="col-12">
+												<label for="inputChoosePassword" class="form-label">Enter Password</label>
+												<div class="input-group" id="show_hide_password">
+													<span class="input-group-text"><i class="bx bxs-lock-open"></i></span>
+													<input type="password" name="password" class="form-control border-start-0" id="inputChoosePassword" value="12345678" placeholder="Enter Password" />
+													<button type="button" class="input-group-text bg-transparent" style="outline: none">
+														<i class="bx bx-hide"></i>
+													</button>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-check form-switch">
+													<input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" name="remember" />
+													<label class="form-check-label" for="flexSwitchCheckChecked">Remember Me</label>
+												</div>
+											</div>
+											<div class="col-12">
+												<div class="d-grid">
+													<button type="submit" class="btn btn-light">
+														<i class="bx bxs-lock-open"></i>Login
+													</button>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--end row-->
+			</div>
+		</div>
+	</div>
+	<!--end wrapper-->
+	<!-- Bootstrap JS -->
+	<script src="assets/js/bootstrap.bundle.min.js"></script>
+	<!--plugins-->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/plugins/simplebar/js/simplebar.min.js"></script>
+	<script src="assets/plugins/metismenu/js/metisMenu.min.js"></script>
+	<script src="assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js"></script>
+	<!--notyf js -->
+	<script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+	<script>
+		// NOTYF
+		const notyf = new Notyf({
+			duration: 6000,
+			position: { x: 'right', y: 'top' },
+			dismissible: true,
+			ripple: true,
+		});
+	</script>
+	<script>
+		// Handle show & hide password
+		$(document).ready(function() {
+			$('#show_hide_password button').on('click', function(event) {
+				event.preventDefault();
+				if ($('#show_hide_password input').attr('type') == 'text') {
+					$('#show_hide_password input').attr('type', 'password');
+					$('#show_hide_password i').addClass('bx-hide');
+					$('#show_hide_password i').removeClass('bx-show');
+				} else if ($('#show_hide_password input').attr('type') == 'password') {
+					$('#show_hide_password input').attr('type', 'text');
+					$('#show_hide_password i').removeClass('bx-hide');
+					$('#show_hide_password i').addClass('bx-show');
+				}
+			});
+		});
+		// Handle Login
+		const formLogin = document.getElementById('form-login');
+		if (formLogin)
+			formLogin.onsubmit = function(e) {
+				e.preventDefault();
+				const formData = {};
+				(new FormData(formLogin)).forEach((value, key) => (formData[key] = value));
+				$.ajax({
+					type: 'POST',
+					url: '/admin/login',
+					data: formData,
+				}).done((res) => {
+					notyf.success(res.message);
+					setTimeout(() => (window.location.pathname = '/admin/dashboard'), 2000);
+				}).fail(({responseJSON}) => {
+					notyf.error(responseJSON.message);
+				})
+			};
+	</script>
 </body>
 
 </html>
