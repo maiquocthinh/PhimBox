@@ -285,11 +285,11 @@
             $('.multiple-select').select2('val', 'All');
             notyf.success(res.message);
           })
-          .fail((res) => {
+          .fail(({ responseJSON }) => {
             // reset form
             formInfoFilm.reset();
             $('.multiple-select').select2('val', 'All');
-            notyf.error(res.message);
+            notyf.error(responseJSON.message);
           });
       };
   </script>

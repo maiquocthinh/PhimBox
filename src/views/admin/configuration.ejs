@@ -250,7 +250,9 @@
 					url: '/admin/configuration/update',
 					data: dataForm,
 				}).done((res) => {
-					 notyf.success(res.message);
+					notyf.success(res.message);
+				}).fail(({ responseJSON })=>{
+					notyf.error(responseJSON.message);
 				});
 			};
 
@@ -265,7 +267,9 @@
 							timecache: dataForm.cache_num + dataForm.cache_unit,
 						},
 					}).done((res) => {
-					 notyf.success(res.message);
+					 	notyf.success(res.message);
+					}).fail(({ responseJSON })=>{
+						notyf.error(responseJSON.message);
 					});
 				};
 		</script>

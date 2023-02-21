@@ -310,12 +310,12 @@
 						dataTable.ajax.reload(null, false);
 						notyf.success(res.message);
 					})
-					.fail((res) => {
+					.fail(({ responseJSON }) => {
 						// clear input of addModal
 						document.querySelector('#addModal form input[name="category_name"]').value = '';
 						document.querySelector('#addModal form input[name="slug"]').value = '';
 						$('#addModal').modal('hide');
-						notyf.error(res.message);
+						notyf.error(responseJSON.message);
 					});
 			};
 
@@ -333,9 +333,9 @@
 							dataTable.ajax.reload(null, false);
 							notyf.success(res.message);
 						})
-						.fail((res) => {
+						.fail(({ responseJSON }) => {
 							$('#deleteModal').modal('hide');
-							notyf.error(res.message);
+							notyf.error(responseJSON.message);
 						});
 				};
 			}
@@ -372,9 +372,9 @@
 							dataTable.ajax.reload(null, false);
 							notyf.success(res.message);
 						})
-						.fail((res) => {
+						.fail(({ responseJSON }) => {
 							$('#editModal').modal('hide');
-							notyf.error(res.message);
+							notyf.error(responseJSON.message);
 						});
 				};
 
@@ -392,9 +392,9 @@
 							dataTable.ajax.reload(null, false);
 							notyf.success(res.message);
 						})
-						.fail((res) => {
+						.fail(({ responseJSON }) => {
 							$('#deleteModal').modal('hide');
-							notyf.error(res.message);
+							notyf.error(responseJSON.message);
 						});
 				};
 			}
@@ -409,8 +409,8 @@
 						dataTable.ajax.reload(null, false);
 						notyf.success(res.message);
 					})
-					.fail((res) => {
-						notyf.error(res.message);
+					.fail(({ responseJSON }) => {
+						notyf.error(responseJSON.message);
 					});
 			}
 
