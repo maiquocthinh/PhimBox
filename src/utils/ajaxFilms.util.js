@@ -2,12 +2,13 @@ const arrayToCategories = (arrayCategories, listCategories) => {
 	const listHtmlCategories = arrayCategories
 		.map((categoryItem) => {
 			for (const element of listCategories) {
-				if (parseInt(categoryItem) === element._doc.category_id) {
-					return `<span class="badge rounded-pill text-white bg-gradient-cosmic">${element._doc.category_name}</span>`;
+				if (categoryItem === element._id.toString()) {
+					return `<span class="badge rounded-pill text-white bg-gradient-cosmic">${element.name}</span>`;
 				}
 			}
 		})
 		.join('');
+
 	return listHtmlCategories;
 };
 

@@ -230,7 +230,7 @@ if (logoutBtn)
 		})
 			.done((res) => {
 				notyf.success(res.message);
-				setTimeout(() => (window.location.pathname = '/admin/login'), 2000);
+				setTimeout(() => (window.location.pathname = '/admin/login'), 1200);
 			})
 			.fail(({ responseJSON }) => {
 				notyf.error(responseJSON.message);

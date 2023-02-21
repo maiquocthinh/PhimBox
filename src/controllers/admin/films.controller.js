@@ -306,20 +306,17 @@ const destroyManyFilm = (req, res) => {
 // [GET] admin/films/add
 const addFilm = async (req, res) => {
 	try {
-		const categories = (await Categories.find({}, { category_slug: 0, _id: 0 })).reduce(
-			(categories, currentCategory) => {
-				categories.push(currentCategory._doc);
-				return categories;
-			},
-			[],
-		);
-		const countries = (await Countries.find({}, { country_slug: 0, _id: 0 })).reduce(
-			(countries, currentCountry) => {
-				countries.push(currentCountry._doc);
-				return countries;
-			},
-			[],
-		);
+		const categories = (await Categories.find({}, { _id: 1, name: 1 })).reduce((categories, currentCategory) => {
+			categories.push(currentCategory);
+			return categories;
+		}, []);
+		const countries = (await Countries.find({}, { _id: 1, name: 1 })).reduce((countries, currentCountry) => {
+			countries.push(currentCountry);
+			return countries;
+		}, []);
+
+		console.log('categories :>> ', categories);
+		console.log('countries :>> ', countries);
 
 		res.render('admin/addFilm', {
 			user: req.session.user,
@@ -334,20 +331,14 @@ const addFilm = async (req, res) => {
 // [GET] admin/films
 const allFilms = async (req, res) => {
 	try {
-		const categories = (await Categories.find({}, { category_slug: 0, _id: 0 })).reduce(
-			(categories, currentCategory) => {
-				categories.push(currentCategory._doc);
-				return categories;
-			},
-			[],
-		);
-		const countries = (await Countries.find({}, { country_slug: 0, _id: 0 })).reduce(
-			(countries, currentCountry) => {
-				countries.push(currentCountry._doc);
-				return countries;
-			},
-			[],
-		);
+		const categories = (await Categories.find({}, { _id: 1, name: 1 })).reduce((categories, currentCategory) => {
+			categories.push(currentCategory._doc);
+			return categories;
+		}, []);
+		const countries = (await Countries.find({}, { _id: 1, name: 1 })).reduce((countries, currentCountry) => {
+			countries.push(currentCountry._doc);
+			return countries;
+		}, []);
 
 		res.render('admin/films', {
 			user: req.session.user,
