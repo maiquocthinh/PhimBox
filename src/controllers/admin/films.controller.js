@@ -1,7 +1,6 @@
 const Films = require('../../models/film.models');
 const Categories = require('../../models/category.models');
 const Countries = require('../../models/country.models');
-const Users = require('../../models/user.models');
 const ajaxFilmsUtil = require('../../utils/ajaxFilms.util');
 const { nanoid } = require('nanoid');
 
@@ -12,7 +11,7 @@ const ajaxDatatablesFilms = async (req, res) => {
 	const { status, type, category, country, info, deleted } = req.query;
 	const { columns, order, start, length, search, draw } = req.body;
 	const columnIndex = order[0]['column'];
-	const columnName = columns[columnIndex]['name'];
+	const columnName = columns[columnIndex]['name'] || 'createdAt';
 	const columnSortOrder = order[0]['dir'] === 'asc' ? 1 : -1;
 	const listCategories = await Categories.find();
 	let queryToDB = {};
@@ -83,6 +82,7 @@ const ajaxDatatablesFilms = async (req, res) => {
 	const data = dataFilmsWithFilter.reduce((arrDataFilms, currentDataFilm) => {
 		arrDataFilms.push([
 			currentDataFilm.id,
+			currentDataFilm.id,
 			`<div class="d-flex align-items-center">
 					<div class="recent-product-img"><img src="${currentDataFilm.poster}" alt="" /></div>
 					<div class="ms-2">
@@ -95,6 +95,7 @@ const ajaxDatatablesFilms = async (req, res) => {
 				</div>`,
 			ajaxFilmsUtil.arrayToCategories(currentDataFilm.category, listCategories),
 			currentDataFilm.episodes.length,
+			currentDataFilm.createdAt.toISOString().substring(0, 10),
 			currentDataFilm.viewable
 				? `<div class="badge rounded-pill text-white bg-gradient-blues p-1 text-capitalize px-3">
 					<i class="bx bx-show align-middle me-1"></i> Public
@@ -258,7 +259,42 @@ const restoreFilm = (req, res) => {
 const destroyFilm = (req, res) => {
 	Films.deleteOne({ _id: req.params.id })
 		.then(() => {
-			res.status(200).json({ message: 'Delete Permanently Success!' });
+			res.status(200).json({ message: 'Delete Permanently Film Success!' });
+		})
+		.catch((error) => {
+			res.status(500).json({ error: error.message });
+		});
+};
+// [DELETE] admin/films/delete-many/
+const deleteManyFilm = (req, res) => {
+	const { ids } = req.body;
+	Films.delete({ id: { $in: ids } })
+		.then(() => {
+			res.send({ message: 'Delete Films Success!' });
+		})
+		.catch((error) => {
+			res.status(500).json({ message: error.message });
+		});
+};
+
+// [PATCH] admin/films/restore-many/
+const restoreManyFilm = (req, res) => {
+	const { ids } = req.body;
+	Films.restore({ id: { $in: ids } })
+		.then(() => {
+			res.status(200).json({ message: 'Restore Films Success' });
+		})
+		.catch((error) => {
+			res.status(500).json({ error: error.message });
+		});
+};
+
+// [DELETE] admin/films/destroy-many/
+const destroyManyFilm = (req, res) => {
+	const { ids } = req.body;
+	Films.deleteMany({ id: { $in: ids } })
+		.then(() => {
+			res.status(200).json({ message: 'Delete Permanently Films Success!' });
 		})
 		.catch((error) => {
 			res.status(500).json({ error: error.message });
@@ -362,6 +398,9 @@ module.exports = {
 	deleteFilm,
 	restoreFilm,
 	destroyFilm,
+	deleteManyFilm,
+	restoreManyFilm,
+	destroyManyFilm,
 	addFilm,
 	filmsError,
 };
