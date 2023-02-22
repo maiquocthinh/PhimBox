@@ -24,29 +24,26 @@ const ajaxDatatablesCategories = async (req, res) => {
 				.limit(length)
 				.sort({ [columnName]: columnSortOrder });
 
-	const data = dataCategories.reduce((arrDataCategories, currentDataCategory) => {
-		arrDataCategories.push([
-			currentDataCategory.name,
-			currentDataCategory.slug,
-			currentDataCategory.createdAt.toISOString().substring(0, 10),
-			currentDataCategory.updatedAt.toISOString().substring(0, 10),
-			deleted
-				? `<div class="d-flex order-actions">
-					<a href="javascript:;" class="ms-1 btn-restore" onclick="restoreCategory('${currentDataCategory._id.toString()}')"><i class="bx bx-undo"></i></a>
-					<a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeletePermanentlyForm('${
-						currentDataCategory.name
-					}','${currentDataCategory._id.toString()}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>
-				</div>`
-				: `<div class="d-flex justify-content-center order-actions">
-					<a href="javascript:;" class="text-primary"><i class="bx bx-link-external"></i></a>
-					<a href="javascript:;" class="text-warning ms-1" onclick="fillDataToEditForm('${currentDataCategory._id.toString()}')" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bx bxs-edit"></i></a>
-					<a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeleteForm('${
-						currentDataCategory.name
-					}','${currentDataCategory._id.toString()}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>
-				</div>`,
-		]);
-		return arrDataCategories;
-	}, []);
+	const data = dataCategories.map((category) => [
+		category.name,
+		category.slug,
+		category.createdAt.toISOString().substring(0, 10),
+		category.updatedAt.toISOString().substring(0, 10),
+		deleted
+			? `<div class="d-flex order-actions">
+				<a href="javascript:;" class="ms-1 btn-restore" onclick="restoreCategory('${category._id.toString()}')"><i class="bx bx-undo"></i></a>
+				<a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeletePermanentlyForm('${
+					category.name
+				}','${category._id.toString()}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>
+			</div>`
+			: `<div class="d-flex justify-content-center order-actions">
+				<a href="javascript:;" class="text-primary"><i class="bx bx-link-external"></i></a>
+				<a href="javascript:;" class="text-warning ms-1" onclick="fillDataToEditForm('${category._id.toString()}')" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bx bxs-edit"></i></a>
+				<a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeleteForm('${
+					category.name
+				}','${category._id.toString()}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>
+			</div>`,
+	]);
 
 	res.status(200).json({
 		draw,
@@ -125,7 +122,7 @@ const restoreCategory = (req, res) => {
 const destroyCategory = (req, res) => {
 	Categories.deleteOne({ _id: req.params.id })
 		.then(() => {
-			res.status(200).json({ message: 'Delete Category Success!' });
+			res.status(200).json({ message: 'Delete Permanently Category Success!' });
 		})
 		.catch((error) => {
 			return res.status(500).json(error);

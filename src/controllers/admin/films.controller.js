@@ -79,58 +79,53 @@ const ajaxDatatablesFilms = async (req, res) => {
 				.sort({ [columnName]: columnSortOrder });
 	const totalFilm = deleted ? await Films.countDocumentsDeleted({}) : await Films.countDocuments({});
 
-	const data = dataFilmsWithFilter.reduce((arrDataFilms, currentDataFilm) => {
-		arrDataFilms.push([
-			currentDataFilm.id,
-			currentDataFilm.id,
-			`<div class="d-flex align-items-center">
-					<div class="recent-product-img"><img src="${currentDataFilm.poster}" alt="" /></div>
+	const data = dataFilmsWithFilter.map((film) => [
+		film.id,
+		film.id,
+		`<div class="d-flex align-items-center">
+					<div class="recent-product-img"><img src="${film.poster}" alt="" /></div>
 					<div class="ms-2">
-						<h6 class="mb-1 font-14">${currentDataFilm.originalName} (${currentDataFilm.year})</h6>
+						<h6 class="mb-1 font-14">${film.originalName} (${film.year})</h6>
 						<div class="d-flex gap-1">
-							<span class="badge rounded-pill text-white bg-gradient-lush text-capitalize" style="max-width: 72px">${currentDataFilm.type}</span>
-							<span class="badge rounded-pill text-white bg-gradient-kyoto text-capitalize" style="max-width: 72px">${currentDataFilm.status}</span>
+							<span class="badge rounded-pill text-white bg-gradient-lush text-capitalize" style="max-width: 72px">${film.type}</span>
+							<span class="badge rounded-pill text-white bg-gradient-kyoto text-capitalize" style="max-width: 72px">${film.status}</span>
 						</div>
 					</div>
 				</div>`,
-			ajaxFilmsUtil.arrayToCategories(currentDataFilm.category, listCategories),
-			currentDataFilm.episodes.length,
-			currentDataFilm.createdAt.toISOString().substring(0, 10),
-			currentDataFilm.viewable
-				? `<div class="badge rounded-pill text-white bg-gradient-blues p-1 text-capitalize px-3">
+		ajaxFilmsUtil.arrayToCategories(film.category, listCategories),
+		film.episodes.length,
+		film.createdAt.toISOString().substring(0, 10),
+		film.viewable
+			? `<div class="badge rounded-pill text-white bg-gradient-blues p-1 text-capitalize px-3">
 					<i class="bx bx-show align-middle me-1"></i> Public
 				</div>`
-				: `<div class="badge rounded-pill text-white bg-gradient-burning p-1 text-capitalize px-3">
+			: `<div class="badge rounded-pill text-white bg-gradient-burning p-1 text-capitalize px-3">
 				<i class="bx bx-hide align-middle me-1"></i> Hidden
 			</div>`,
-			deleted
-				? `<div class="d-flex order-actions">
-					<a href="javascript:;" class="ms-1 btn-restore" onclick="restoreFilm('${currentDataFilm._id.toString()}')"><i class="bx bx-undo"></i></a>
-					<a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeletePermanentlyForm('${
-						currentDataFilm.originalName
-					} (${
-						currentDataFilm.year
-				  })','${currentDataFilm._id.toString()}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>
-				</div>`
-				: `<div class="d-flex order-actions">
-					<a href="javascript:;" class="text-primary"><i class="bx bx-link-external"></i></a>
-					<div class="dropdown ms-1">
-						<a class="btn btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bx bx-add-to-queue" style="transform: translateX(2px);"></i></a>
-						<ul class="dropdown-menu" style="margin: 0px;">
-							<li><button class="dropdown-item">List Episode</button></li>
-							<li><hr class="dropdown-divider"></li>
-							<li><button class="dropdown-item">Add Episode</button></li>
-							<li><button class="dropdown-item">Add Episode Quick</button></li>
-						</ul>
-					</div>
-					<a href="javascript:;" class="text-warning ms-1" onclick="fillDataFilmToForm('${currentDataFilm._id.toString()}')" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bx bxs-edit"></i></a>
-					<a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeleteForm('${currentDataFilm.originalName} (${
-						currentDataFilm.year
-				  })','${currentDataFilm._id.toString()}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>
-				</div>`,
-		]);
-		return arrDataFilms;
-	}, []);
+		deleted
+			? `<div class="d-flex order-actions">
+				<a href="javascript:;" class="ms-1 btn-restore" onclick="restoreFilm('${film._id.toString()}')"><i class="bx bx-undo"></i></a>
+				<a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeletePermanentlyForm('${film.originalName} (${
+					film.year
+			  })','${film._id.toString()}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>
+			</div>`
+			: `<div class="d-flex order-actions">
+				<a href="javascript:;" class="text-primary"><i class="bx bx-link-external"></i></a>
+				<div class="dropdown ms-1">
+					<a class="btn btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bx bx-add-to-queue" style="transform: translateX(2px);"></i></a>
+					<ul class="dropdown-menu" style="margin: 0px;">
+						<li><button class="dropdown-item">List Episode</button></li>
+						<li><hr class="dropdown-divider"></li>
+						<li><button class="dropdown-item">Add Episode</button></li>
+						<li><button class="dropdown-item">Add Episode Quick</button></li>
+					</ul>
+				</div>
+				<a href="javascript:;" class="text-warning ms-1" onclick="fillDataFilmToForm('${film._id.toString()}')" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bx bxs-edit"></i></a>
+				<a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeleteForm('${film.originalName} (${
+					film.year
+			  })','${film._id.toString()}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>
+			</div>`,
+	]);
 
 	return res.status(200).json({
 		draw: draw,
@@ -306,17 +301,8 @@ const destroyManyFilm = (req, res) => {
 // [GET] admin/films/add
 const addFilm = async (req, res) => {
 	try {
-		const categories = (await Categories.find({}, { _id: 1, name: 1 })).reduce((categories, currentCategory) => {
-			categories.push(currentCategory);
-			return categories;
-		}, []);
-		const countries = (await Countries.find({}, { _id: 1, name: 1 })).reduce((countries, currentCountry) => {
-			countries.push(currentCountry);
-			return countries;
-		}, []);
-
-		console.log('categories :>> ', categories);
-		console.log('countries :>> ', countries);
+		const categories = await Categories.find({}, { _id: 1, name: 1 });
+		const countries = await Countries.find({}, { _id: 1, name: 1 });
 
 		res.render('admin/addFilm', {
 			user: req.session.user,
@@ -331,14 +317,8 @@ const addFilm = async (req, res) => {
 // [GET] admin/films
 const allFilms = async (req, res) => {
 	try {
-		const categories = (await Categories.find({}, { _id: 1, name: 1 })).reduce((categories, currentCategory) => {
-			categories.push(currentCategory._doc);
-			return categories;
-		}, []);
-		const countries = (await Countries.find({}, { _id: 1, name: 1 })).reduce((countries, currentCountry) => {
-			countries.push(currentCountry._doc);
-			return countries;
-		}, []);
+		const categories = await Categories.find({}, { _id: 1, name: 1 });
+		const countries = await Countries.find({}, { _id: 1, name: 1 });
 
 		res.render('admin/films', {
 			user: req.session.user,
@@ -353,25 +333,11 @@ const allFilms = async (req, res) => {
 // [GET] admin/films/error
 const filmsError = async (req, res) => {
 	try {
-		const categories = (await Categories.find({}, { category_slug: 0, _id: 0 })).reduce(
-			(categories, currentCategory) => {
-				categories.push(currentCategory._doc);
-				return categories;
-			},
-			[],
-		);
-		const countries = (await Countries.find({}, { country_slug: 0, _id: 0 })).reduce(
-			(countries, currentCountry) => {
-				countries.push(currentCountry._doc);
-				return countries;
-			},
-			[],
-		);
+		const categories = await Categories.find({}, { category_slug: 0, _id: 0 });
+		const countries = await Countries.find({}, { country_slug: 0, _id: 0 });
 
 		res.render('admin/films', {
 			user: req.session.user,
-			title: 'Error',
-			ajaxType: '',
 			categories,
 			countries,
 		});

@@ -51,15 +51,9 @@ const dashboard = (req, res) => {
 				film: totalFilm,
 				episode: totalEpisode,
 			};
-			const films = Films.reduce((films, currentFilm) => {
-				films.push(currentFilm);
-				return films;
-			}, []);
+			const films = Films.map((film) => film);
 
-			const users = Users.reduce((users, currentUser) => {
-				users.push(currentUser._doc);
-				return users;
-			}, []);
+			const users = Users.map((user) => user);
 
 			res.render('admin/dashboard', {
 				user: req.session.user,

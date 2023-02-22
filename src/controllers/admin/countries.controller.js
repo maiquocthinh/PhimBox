@@ -24,29 +24,26 @@ const ajaxDatatablesCountries = async (req, res) => {
 				.limit(length)
 				.sort({ [columnName]: columnSortOrder });
 
-	const data = dataCountries.reduce((arrDataCountries, currentDataCountry) => {
-		arrDataCountries.push([
-			currentDataCountry.name,
-			currentDataCountry.slug,
-			currentDataCountry.createdAt.toISOString().substring(0, 10),
-			currentDataCountry.updatedAt.toISOString().substring(0, 10),
-			deleted
-				? `<div class="d-flex order-actions">
-						<a href="javascript:;" class="ms-1 btn-restore" onclick="restoreCountry('${currentDataCountry._id.toString()}')"><i class="bx bx-undo"></i></a>
-						<a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeletePermanentlyForm('${
-							currentDataCountry.name
-						}','${currentDataCountry._id.toString()}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>
-					</div>`
-				: `<div class="d-flex justify-content-center order-actions">
-						<a href="javascript:;" class="text-primary"><i class="bx bx-link-external"></i></a>
-						<a href="javascript:;" class="text-warning ms-1" onclick="fillDataToEditForm('${currentDataCountry._id.toString()}')" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bx bxs-edit"></i></a>
-						<a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeleteForm('${
-							currentDataCountry.name
-						}','${currentDataCountry._id.toString()}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>
-					</div>`,
-		]);
-		return arrDataCountries;
-	}, []);
+	const data = dataCountries.map((country) => [
+		country.name,
+		country.slug,
+		country.createdAt.toISOString().substring(0, 10),
+		country.updatedAt.toISOString().substring(0, 10),
+		deleted
+			? `<div class="d-flex order-actions">
+				<a href="javascript:;" class="ms-1 btn-restore" onclick="restoreCountry('${country._id.toString()}')"><i class="bx bx-undo"></i></a>
+				<a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeletePermanentlyForm('${
+					country.name
+				}','${country._id.toString()}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>
+			</div>`
+			: `<div class="d-flex justify-content-center order-actions">
+				<a href="javascript:;" class="text-primary"><i class="bx bx-link-external"></i></a>
+				<a href="javascript:;" class="text-warning ms-1" onclick="fillDataToEditForm('${country._id.toString()}')" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bx bxs-edit"></i></a>
+				<a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeleteForm('${
+					country.name
+				}','${country._id.toString()}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>
+			</div>`,
+	]);
 
 	res.status(200).json({
 		draw,

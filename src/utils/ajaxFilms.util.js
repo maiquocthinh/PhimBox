@@ -9,7 +9,7 @@ const arrayToCategories = (arrayCategories, listCategories) => {
 		})
 		.join('');
 
-	return listHtmlCategories;
+	return `<div class="d-flex flex-wrap gap-2" style="min-width:160px;">${listHtmlCategories}</div>`;
 };
 
 const getUserById = (id, listUsers) => {
