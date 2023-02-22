@@ -48,7 +48,7 @@ const ajaxDatatablesCategories = async (req, res) => {
 	res.status(200).json({
 		draw,
 		recordsTotal: totalCategory,
-		recordsFiltered: dataCategories.length,
+		recordsFiltered: totalCategory,
 		data,
 	});
 };

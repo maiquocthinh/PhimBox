@@ -65,7 +65,7 @@ const ajaxDatatablesUsers = async (req, res) => {
 	res.status(200).json({
 		draw,
 		recordsTotal: totalUser,
-		recordsFiltered: dataUsers.length,
+		recordsFiltered: totalUser,
 		data,
 	});
 };

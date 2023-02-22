@@ -48,7 +48,7 @@ const ajaxDatatablesCountries = async (req, res) => {
 	res.status(200).json({
 		draw,
 		recordsTotal: totalCountry,
-		recordsFiltered: dataCountries.length,
+		recordsFiltered: totalCountry,
 		data,
 	});
 };

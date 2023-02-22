@@ -129,8 +129,8 @@ const ajaxDatatablesFilms = async (req, res) => {
 
 	return res.status(200).json({
 		draw: draw,
-		recordsFiltered: dataFilmsWithFilter.length,
 		recordsTotal: totalFilm,
+		recordsFiltered: totalFilm,
 		data: data,
 	});
 };
