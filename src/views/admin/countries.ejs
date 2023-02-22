@@ -88,7 +88,6 @@
 								<table id="tableCountry" class="table table-striped table-bordered" style="width: 100%">
 									<thead>
 										<tr>
-											<th>ID</th>
 											<th>Category</th>
 											<th>Slug</th>
 											<th>Created</th>
@@ -98,7 +97,6 @@
 									</thead>
 									<tfoot>
 										<tr>
-											<th>ID</th>
 											<th>Category</th>
 											<th>Slug</th>
 											<th>Created</th>
@@ -265,7 +263,6 @@
 					type: 'POST',
 				},
 				columns: [
-					{ name: 'id' },
 					{ name: 'name' },
 					{ name: 'slug' },
 					{ name: 'createdAt' },
@@ -275,7 +272,7 @@
 				columnDefs: [
 					{
 						orderable: false,
-						targets: [5],
+						targets: [4],
 					},
 				],
 			});

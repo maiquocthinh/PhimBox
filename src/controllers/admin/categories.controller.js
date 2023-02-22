@@ -1,4 +1,3 @@
-const { nanoid } = require('nanoid');
 const Categories = require('../../models/category.models');
 
 // ###### API ######
@@ -27,7 +26,6 @@ const ajaxDatatablesCategories = async (req, res) => {
 
 	const data = dataCategories.reduce((arrDataCategories, currentDataCategory) => {
 		arrDataCategories.push([
-			currentDataCategory.id,
 			currentDataCategory.name,
 			currentDataCategory.slug,
 			currentDataCategory.createdAt.toISOString().substring(0, 10),
@@ -39,7 +37,7 @@ const ajaxDatatablesCategories = async (req, res) => {
 						currentDataCategory.name
 					}','${currentDataCategory._id.toString()}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>
 				</div>`
-				: `<div class="d-flex order-actions">
+				: `<div class="d-flex justify-content-center order-actions">
 					<a href="javascript:;" class="text-primary"><i class="bx bx-link-external"></i></a>
 					<a href="javascript:;" class="text-warning ms-1" onclick="fillDataToEditForm('${currentDataCategory._id.toString()}')" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bx bxs-edit"></i></a>
 					<a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeleteForm('${
@@ -61,7 +59,6 @@ const ajaxDatatablesCategories = async (req, res) => {
 // [POST] admin/categories/create
 const createCategory = (req, res) => {
 	const category = new Categories({
-		id: nanoid(7),
 		name: req.body.name,
 		slug: req.body.slug,
 	});

@@ -1,4 +1,3 @@
-const { nanoid } = require('nanoid');
 const Countries = require('../../models/country.models');
 
 // ###### API ######
@@ -27,7 +26,6 @@ const ajaxDatatablesCountries = async (req, res) => {
 
 	const data = dataCountries.reduce((arrDataCountries, currentDataCountry) => {
 		arrDataCountries.push([
-			currentDataCountry.id,
 			currentDataCountry.name,
 			currentDataCountry.slug,
 			currentDataCountry.createdAt.toISOString().substring(0, 10),
@@ -39,7 +37,7 @@ const ajaxDatatablesCountries = async (req, res) => {
 							currentDataCountry.name
 						}','${currentDataCountry._id.toString()}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>
 					</div>`
-				: `<div class="d-flex order-actions">
+				: `<div class="d-flex justify-content-center order-actions">
 						<a href="javascript:;" class="text-primary"><i class="bx bx-link-external"></i></a>
 						<a href="javascript:;" class="text-warning ms-1" onclick="fillDataToEditForm('${currentDataCountry._id.toString()}')" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bx bxs-edit"></i></a>
 						<a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeleteForm('${
@@ -61,7 +59,6 @@ const ajaxDatatablesCountries = async (req, res) => {
 // [POST] admin/countries/create
 const createCountry = (req, res) => {
 	const country = new Countries({
-		id: nanoid(7),
 		name: req.body.name,
 		slug: req.body.slug,
 	});
@@ -81,8 +78,7 @@ const readCountry = async (req, res) => {
 		const country = await Countries.findById(req.params.id);
 		res.status(200).json(country);
 	} catch (error) {
-		console.log(error);
-		next();
+		return res.status(500).json(error);
 	}
 };
 

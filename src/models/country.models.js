@@ -7,7 +7,6 @@ const Schema = mongoose.Schema;
 
 const Country = new Schema(
 	{
-		id: { type: String },
 		name: { type: String },
 		slug: { type: String, slug: 'name' },
 	},
