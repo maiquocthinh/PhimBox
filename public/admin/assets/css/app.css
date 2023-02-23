@@ -2144,6 +2144,20 @@ input::placeholder {
     transition: background .3s;
 }
 
+#theme13 {
+    background-image: radial-gradient(circle at 17% 1%, rgba(198, 198, 198, .03) 0, rgba(198, 198, 198, .03) 50%, rgba(42, 42, 42, .03) 50%, rgba(42, 42, 42, .03) 100%), radial-gradient(circle at 8% 81%, rgba(253, 253, 253, .03) 0, rgba(253, 253, 253, .03) 50%, rgba(36, 36, 36, .03) 50%, rgba(36, 36, 36, .03) 100%), radial-gradient(circle at 83% 29%, rgba(164, 164, 164, .03) 0, rgba(164, 164, 164, .03) 50%, rgba(60, 60, 60, .03) 50%, rgba(60, 60, 60, .03) 100%), radial-gradient(circle at 96% 62%, rgba(170, 170, 170, .03) 0, rgba(170, 170, 170, .03) 50%, rgba(169, 169, 169, .03) 50%, rgba(169, 169, 169, .03) 100%), linear-gradient(338deg, #028DD5, #05AC51);
+    background-size: 100% 100%;
+    background-position: center;
+    transition: background .3s;
+}
+
+#theme14 {
+    background: linear-gradient(to right, #2b5876, #4e4376);
+    background-size: 100% 100%;
+    background-position: center;
+    transition: background .3s;
+}
+
 body.bg-theme1 {
     background-image: url(../images/bg-themes/1.png);
 }
@@ -2194,6 +2208,10 @@ body.bg-theme12 {
 
 body.bg-theme13 {
     background-image: radial-gradient(circle at 17% 1%, rgba(198, 198, 198, .03) 0, rgba(198, 198, 198, .03) 50%, rgba(42, 42, 42, .03) 50%, rgba(42, 42, 42, .03) 100%), radial-gradient(circle at 8% 81%, rgba(253, 253, 253, .03) 0, rgba(253, 253, 253, .03) 50%, rgba(36, 36, 36, .03) 50%, rgba(36, 36, 36, .03) 100%), radial-gradient(circle at 83% 29%, rgba(164, 164, 164, .03) 0, rgba(164, 164, 164, .03) 50%, rgba(60, 60, 60, .03) 50%, rgba(60, 60, 60, .03) 100%), radial-gradient(circle at 96% 62%, rgba(170, 170, 170, .03) 0, rgba(170, 170, 170, .03) 50%, rgba(169, 169, 169, .03) 50%, rgba(169, 169, 169, .03) 100%), linear-gradient(338deg, #028DD5, #05AC51);
+}
+
+body.bg-theme14 {
+    background: linear-gradient(to right, #2b5876, #4e4376);
 }
 
 .bg-theme {
