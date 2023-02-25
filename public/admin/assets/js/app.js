@@ -1,45 +1,48 @@
 $(function () {
 	'use strict';
-	new PerfectScrollbar('.header-message-list'),
-		new PerfectScrollbar('.header-notifications-list'),
-		$('.mobile-search-icon').on('click', function () {
-			$('.search-bar').addClass('full-search-bar');
-		}),
-		$('.search-close').on('click', function () {
-			$('.search-bar').removeClass('full-search-bar');
-		}),
-		$('.mobile-toggle-menu').on('click', function () {
-			$('.wrapper').addClass('toggled');
-		}),
-		$('.toggle-icon').click(function () {
-			$('.wrapper').hasClass('toggled')
-				? ($('.wrapper').removeClass('toggled'), $('.sidebar-wrapper').unbind('hover'))
-				: ($('.wrapper').addClass('toggled'),
-				  $('.sidebar-wrapper').hover(
-						function () {
-							$('.wrapper').addClass('sidebar-hovered');
-						},
-						function () {
-							$('.wrapper').removeClass('sidebar-hovered');
-						},
-				  ));
-		}),
-		$(document).ready(function () {
-			$(window).on('scroll', function () {
-				$(this).scrollTop() > 300 ? $('.back-to-top').fadeIn() : $('.back-to-top').fadeOut();
+	try {
+		new PerfectScrollbar('.header-message-list'),
+			new PerfectScrollbar('.header-notifications-list'),
+			$('.mobile-search-icon').on('click', function () {
+				$('.search-bar').addClass('full-search-bar');
 			}),
-				$('.back-to-top').on('click', function () {
-					return (
-						$('html, body').animate(
-							{
-								scrollTop: 0,
+			$('.search-close').on('click', function () {
+				$('.search-bar').removeClass('full-search-bar');
+			}),
+			$('.mobile-toggle-menu').on('click', function () {
+				$('.wrapper').addClass('toggled');
+			}),
+			$('.toggle-icon').click(function () {
+				$('.wrapper').hasClass('toggled')
+					? ($('.wrapper').removeClass('toggled'), $('.sidebar-wrapper').unbind('hover'))
+					: ($('.wrapper').addClass('toggled'),
+					  $('.sidebar-wrapper').hover(
+							function () {
+								$('.wrapper').addClass('sidebar-hovered');
 							},
-							600,
-						),
-						!1
-					);
-				});
+							function () {
+								$('.wrapper').removeClass('sidebar-hovered');
+							},
+					  ));
+			});
+	} catch (error) {}
+
+	$(document).ready(function () {
+		$(window).on('scroll', function () {
+			$(this).scrollTop() > 300 ? $('.back-to-top').fadeIn() : $('.back-to-top').fadeOut();
 		}),
+			$('.back-to-top').on('click', function () {
+				return (
+					$('html, body').animate(
+						{
+							scrollTop: 0,
+						},
+						600,
+					),
+					!1
+				);
+			});
+	}),
 		$(document).ready(function () {
 			$(window).on('scroll', function () {
 				if ($(this).scrollTop() > 60) {

@@ -8,6 +8,7 @@ const authRoutes = require('./auth.routes');
 const dashboardRoutes = require('./dashboard.routes');
 const profileRoutes = require('./profile.routes');
 const filmsRoutes = require('./films.routes');
+const episodesRoutes = require('./episodes.routes');
 const categoriesRoutes = require('./categories.routes');
 const countriesRoutes = require('./countries.routes');
 const usersRoutes = require('./users.routes');
@@ -24,6 +25,10 @@ router.use(profileRoutes);
 
 // films
 router.use('/films', filmsRoutes);
+
+// episodes
+router.use('/episodes', episodesRoutes);
+
 // category
 
 router.use('/categories', categoriesRoutes);

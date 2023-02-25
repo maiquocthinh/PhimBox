@@ -111,15 +111,7 @@ const ajaxDatatablesFilms = async (req, res) => {
 			</div>`
 			: `<div class="d-flex order-actions">
 				<a href="javascript:;" class="text-primary"><i class="bx bx-link-external"></i></a>
-				<div class="dropdown ms-1">
-					<a class="btn btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bx bx-add-to-queue" style="transform: translateX(2px);"></i></a>
-					<ul class="dropdown-menu" style="margin: 0px;">
-						<li><button class="dropdown-item">List Episode</button></li>
-						<li><hr class="dropdown-divider"></li>
-						<li><button class="dropdown-item">Add Episode</button></li>
-						<li><button class="dropdown-item">Add Episode Quick</button></li>
-					</ul>
-				</div>
+				<a href="/admin/episodes/${film._id.toString()}" class="ms-1"><i class="bx bx-collection"></i></a>
 				<a href="javascript:;" class="text-warning ms-1" onclick="fillDataFilmToForm('${film._id.toString()}')" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bx bxs-edit"></i></a>
 				<a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeleteForm('${film.originalName} (${
 					film.year
