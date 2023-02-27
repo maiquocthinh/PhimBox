@@ -51,16 +51,17 @@ const ajaxDatatables = async (req, res) => {
 };
 
 // [POST] admin/episodes/create
-const createEpisode = (req, res) => {
+const createEpisode = async (req, res) => {
 	const { data, filmId } = req.body;
-	episodeModels
-		.insertMany(data.map((d) => ({ id: nanoid(7), filmId, ...d })))
-		.then(() => {
-			res.status(200).json({ message: 'Create Episodes Success' });
-		})
-		.catch((error) => {
-			res.status(500).json({ error: error.message });
+	try {
+		const dataInserted = await episodeModels.insertMany(data.map((d) => ({ id: nanoid(7), filmId, ...d })));
+		await filmModels.findByIdAndUpdate(filmId, {
+			$push: { episodes: { $each: dataInserted.map((d) => d._id.toString()) } },
 		});
+		return res.status(200).json({ message: 'Create Episodes Success' });
+	} catch (error) {
+		return res.status(500).json({ message: error.message });
+	}
 };
 
 // [POST] admin/episodes/read/:id

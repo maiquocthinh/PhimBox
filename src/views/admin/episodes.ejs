@@ -580,7 +580,7 @@
 						.done((res) => {
 							episodeUiAction.clear();
 							$('#addModal').modal('hide');
-							// dataTable.ajax.reload(null, false);
+							dataTable.ajax.reload(null, false);
 							notyf.success(res.message);
 						})
 						.fail(({ responseJSON }) => {
