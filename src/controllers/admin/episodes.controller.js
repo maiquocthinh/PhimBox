@@ -8,32 +8,39 @@ const { nanoid } = require('nanoid');
 // [POST] admin/episodes/datatables_ajax
 const ajaxDatatables = async (req, res) => {
 	episodeModels;
-	const { filmId, deleted } = req.query;
+	const { filmId } = req.query;
 	const { columns, order, start, length, search, draw } = req.body;
 	const columnIndex = order[0]['column'];
 	const columnName = columns[columnIndex]['name'] || 'createdAt';
 	const columnSortOrder = order[0]['dir'] === 'asc' ? 1 : -1;
-	const film = await filmModels.findById(filmId);
-	const queryToDB = {};
+	// const film = await filmModels.findById(filmId);
+	const queryToDB = { filmId };
 
 	if (search.value) queryToDB.name = new RegExp(search.value, 'i');
 
-	const totalEpisode = deleted
-		? await episodeModels.countDocumentsDeleted({})
-		: await episodeModels.countDocuments({});
-	const dataEpisodes = deleted
-		? await episodeModels
-				.findDeleted(queryToDB)
-				.skip(start)
-				.limit(length)
-				.sort({ [columnName]: columnSortOrder })
-		: await episodeModels
-				.find(queryToDB)
-				.skip(start)
-				.limit(length)
-				.sort({ [columnName]: columnSortOrder });
+	const totalEpisode = await episodeModels.countDocuments({});
+	const dataEpisodes = await episodeModels
+		.find(queryToDB)
+		.skip(start)
+		.limit(length)
+		.sort({ [columnName]: columnSortOrder });
 
-	const data = dataEpisodes.map((episode) => [episode.id]);
+	const data = dataEpisodes.map((episode) => [
+		episode.id,
+		episode.id,
+		episode.name,
+		episode.language,
+		episode.subtitle ? 'Yes' : 'No',
+		episode.createdAt.toISOString().substring(0, 10),
+		episode.updatedAt.toISOString().substring(0, 10),
+		`<div class="d-flex order-actions">
+			<a href="javascript:;" class="text-primary"><i class="bx bx-link-external"></i></a>
+			<a href="javascript:;" class="text-warning ms-1" onclick="fillDataToEditForm('${episode._id.toString()}')" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bx bxs-edit"></i></a>
+			<a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeleteForm('${
+				episode.name
+			}','${episode._id.toString()}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>
+		</div>`,
+	]);
 
 	res.status(200).json({
 		draw,

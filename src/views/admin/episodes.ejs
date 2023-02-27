@@ -2,6 +2,10 @@
 <html lang="en">
 	<head>
 		<%- include('./partials/head') %>
+		<link
+			rel="stylesheet"
+			href="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/css/dataTables.checkboxes.css"
+		/>
 		<style>
 			.recent-product-img {
 				width: 50px;
@@ -105,14 +109,14 @@
 								</button>
 							</div>
 							<div class="table-responsive">
-								<table id="tableUser" class="table table-striped table-bordered" style="width: 100%">
+								<table id="tableEpisode" class="table table-striped table-bordered" style="width: 100%">
 									<thead>
 										<tr>
+											<th></th>
 											<th>ID</th>
 											<th>Name</th>
 											<th>Language</th>
 											<th>Subtitle</th>
-											<th>Uploaded</th>
 											<th>Created</th>
 											<th>Updated</th>
 											<th>Action</th>
@@ -120,11 +124,11 @@
 									</thead>
 									<tfoot>
 										<tr>
+											<th></th>
 											<th>ID</th>
 											<th>Name</th>
 											<th>Language</th>
 											<th>Subtitle</th>
-											<th>Uploaded</th>
 											<th>Created</th>
 											<th>Updated</th>
 											<th>Action</th>
@@ -409,6 +413,10 @@
 		<!--end switcher-->
 		<!-- Start Javascript Import -->
 		<%- include('./partials/javascript-import') %>
+		<script
+			type="text/javascript"
+			src="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/js/dataTables.checkboxes.min.js"
+		></script>
 		<script>
 			const episodeUiAction = {
 				currentId: 1,
@@ -493,15 +501,58 @@
 					li.remove();
 					$(id).remove();
 				},
-				clear: function(){
+				clear: function () {
 					this.currentId = 1;
 					$('#addModal .modal-body .card-body').children().remove();
 					$('#addModal .modal-body .card-body').html(this.initialUI.clone());
-				}
+				},
 			};
 		</script>
 		<script>
 			const FILM_ID = '<%=filmInfo._id%>';
+
+			const dataTable = $('#tableEpisode').DataTable({
+				scrollX: true,
+				processing: true,
+				serverSide: true,
+				ajax: {
+					url: '/admin/episodes/datatables_ajax/?filmId=' + FILM_ID,
+					type: 'POST',
+				},
+				columns: [
+					{ name: null },
+					{ name: 'id' },
+					{ name: 'name' },
+					{ name: 'language' },
+					{ name: 'subtitle' },
+					{ name: 'createdAt' },
+					{ name: 'updatedAt' },
+					{ name: null },
+				],
+				columnDefs: [
+					{
+						orderable: false,
+						targets: [4, 7],
+					},
+					{
+						orderable: false,
+						targets: 0,
+						checkboxes: {
+							selectRow: true,
+						},
+					},
+				],
+				select: {
+					style: 'multi',
+					selector: 'td:first-child > input[type="checkbox"], th:first-child > input[type="checkbox"]',
+				},
+				order: [[5, 'desc']],
+			});
+
+			$('#tableEpisode_filter input').unbind();
+			$('#tableEpisode_filter input').bind('keyup', function (e) {
+				if (e.keyCode == 13) dataTable.search(this.value).draw();
+			});
 
 			// Handle create new Country
 			const btnCreate = document.querySelector('#addModal .modal-footer .btn-create');
@@ -538,7 +589,6 @@
 							notyf.error(responseJSON.message);
 						});
 				};
-
 		</script>
 		<!-- End Javascript Import -->
 	</body>
