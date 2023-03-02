@@ -56,7 +56,7 @@ const createEpisode = async (req, res) => {
 	try {
 		const dataInserted = await episodeModels.insertMany(data.map((d) => ({ id: nanoid(7), filmId, ...d })));
 		await filmModels.findByIdAndUpdate(filmId, {
-			$push: { episodes: { $each: dataInserted.map((d) => d._id.toString()) } },
+			$push: { episodes: { $each: dataInserted.map((d) => d.id) } },
 		});
 		return res.status(200).json({ message: 'Create Episodes Success' });
 	} catch (error) {
@@ -71,13 +71,39 @@ const readEpisode = (req, res) => {};
 const updateEpisode = (req, res) => {};
 
 // [POST] admin/episodes/delete/:id
-const deleteEpisode = (req, res) => {};
+const deleteEpisode = (req, res) => {
+	const { filmId } = req.body;
+	const episodeId = req.params.id;
 
-// [POST] admin/episodes/restore/:id
-const restoreEpisode = (req, res) => {};
+	Promise.all([
+		filmModels.findByIdAndUpdate(filmId, { $pull: { episodes: episodeId } }),
+		episodeModels.findByIdAndDelete(episodeId),
+	])
+		.then(() => {
+			res.status(200).json({ message: 'Delete Episodes Success' });
+		})
+		.catch((error) => {
+			res.status(500).json({ message: error.message });
+		});
+};
 
-// [POST] admin/episodes/destroy/:id
-const destroyEpisode = (req, res) => {};
+// [POST] admin/episodes/delete-many
+const deleteManyEpisode = (req, res) => {
+	const { filmId, episodeIds } = req.body;
+
+	console.log(episodeIds);
+
+	Promise.all([
+		filmModels.findByIdAndUpdate(filmId, { $pull: { episodes: { $in: episodeIds } } }),
+		episodeModels.deleteMany({ id: { $in: episodeIds } }),
+	])
+		.then(() => {
+			res.status(200).json({ message: 'Delete Episodes Success' });
+		})
+		.catch((error) => {
+			res.status(500).json({ message: error.message });
+		});
+};
 
 // ###### PAGE ######
 
@@ -107,6 +133,5 @@ module.exports = {
 	readEpisode,
 	updateEpisode,
 	deleteEpisode,
-	restoreEpisode,
-	destroyEpisode,
+	deleteManyEpisode,
 };

@@ -107,6 +107,17 @@
 								>
 									<i class="bx bx-plus-circle me-1"></i>Episodes
 								</button>
+								<button
+									type="button"
+									class="btn btn-outline-light px-2 me-1"
+									id="btn-many-delete"
+									data-bs-toggle="modal"
+									data-bs-target="#deleteModal"
+									disabled
+								>
+									<i class="bx bx-trash"></i>
+									<span>Delete</span>
+								</button>
 							</div>
 							<div class="table-responsive">
 								<table id="tableEpisode" class="table table-striped table-bordered" style="width: 100%">
@@ -146,7 +157,7 @@
 					<div class="modal-dialog">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h5 class="modal-title" id="deleteModalLabel">Delete User</h5>
+								<h5 class="modal-title" id="deleteModalLabel">Delete Episode</h5>
 								<button
 									type="button"
 									class="btn-close"
@@ -155,11 +166,7 @@
 								></button>
 							</div>
 							<div class="modal-body">
-								Are you sure want delete user "<span
-									id="user-name-text"
-									style="font-weight: 500; color: #fff"
-								></span
-								>"<span id="permanently-text" class="d-none text-capitalize"> permanently</span>?
+								<span class="modal-body-text"></span>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-primary text-white bg-gradient-burning btn-delete">
@@ -549,10 +556,24 @@
 				order: [[5, 'desc']],
 			});
 
-			$('#tableEpisode_filter input').unbind();
-			$('#tableEpisode_filter input').bind('keyup', function (e) {
-				if (e.keyCode == 13) dataTable.search(this.value).draw();
-			});
+			$('#tableEpisode_filter input')
+				.unbind()
+				.bind('keyup', function (e) {
+					if (e.keyCode == 13) dataTable.search(this.value).draw();
+				});
+
+			// disabled/enabled btn-many-delete
+			dataTable
+				.on('select', function (e, dt, type, indexes) {
+					dataTable.rows('.selected').any()
+						? $('#btn-many-delete').attr('disabled', false)
+						: $('#btn-many-delete').attr('disabled', true);
+				})
+				.on('deselect', function (e, dt, type, indexes) {
+					dataTable.rows('.selected').any()
+						? $('#btn-many-delete').attr('disabled', false)
+						: $('#btn-many-delete').attr('disabled', true);
+				});
 
 			// Handle create new Country
 			const btnCreate = document.querySelector('#addModal .modal-footer .btn-create');
@@ -588,6 +609,56 @@
 							$('#addModal').modal('hide');
 							notyf.error(responseJSON.message);
 						});
+				};
+
+			function fillDataToDeleteForm(name, id) {
+				document.querySelector(
+					'#deleteModal .modal-body-text',
+				).innerHTML = `Are you sure want delete episode "<span style="font-weight: 500; color: #fff">${name}</span>"?`;
+				document.querySelector('#deleteModal .modal-footer .btn-delete').onclick = function () {
+					$.ajax({
+						type: 'DELETE',
+						url: '/admin/episodes/delete/' + id,
+						data: { filmId: FILM_ID },
+					})
+						.done((res) => {
+							$('#deleteModal').modal('hide');
+							notyf.success(res.message);
+							dataTable.ajax.reload(null, false);
+						})
+						.fail(({ responseJSON }) => {
+							$('#deleteModal').modal('hide');
+							notyf.error(responseJSON.message);
+						});
+				};
+			}
+
+			// Handle many delete & many delete permanently
+			const btnManyDelete = document.getElementById('btn-many-delete');
+			if (btnManyDelete)
+				btnManyDelete.onclick = function () {
+					const selected = dataTable.columns().checkboxes.selected()[0];
+					document.querySelector(
+						'#deleteModal .modal-body-text',
+					).innerHTML = `Are you sure want delete these ${selected.length} episodes?`;
+					document.querySelector('#deleteModal .modal-footer .btn-delete').onclick = function () {
+						$.ajax({
+							url: '/admin/episodes/delete-many/',
+							type: 'delete',
+							data: { episodeIds: selected, filmId: FILM_ID },
+						})
+							.done((res) => {
+								$('#deleteModal').modal('hide');
+								notyf.success(res.message);
+								dataTable.ajax.reload(null, false);
+								dataTable.columns().checkboxes.deselectAll();
+							})
+							.fail(({ responseJSON }) => {
+								$('#deleteModal').modal('hide');
+								notyf.error(responseJSON.message);
+								dataTable.columns().checkboxes.deselectAll();
+							});
+					};
 				};
 		</script>
 		<!-- End Javascript Import -->
