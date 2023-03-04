@@ -1534,7 +1534,7 @@ a {
     background-color: #0976b4 !important
 }
 
-body.bg-theme2 {
+.bg-theme2 {
     background-image: url(../images/bg-themes/2.png);
 }
 
@@ -2158,59 +2158,59 @@ input::placeholder {
     transition: background .3s;
 }
 
-body.bg-theme1 {
+.bg-theme1 {
     background-image: url(../images/bg-themes/1.png);
 }
 
-body.bg-theme2 {
+.bg-theme2 {
     background-image: url(../images/bg-themes/2.png);
 }
 
-body.bg-theme3 {
+.bg-theme3 {
     background-image: url(../images/bg-themes/3.png);
 }
 
-body.bg-theme4 {
+.bg-theme4 {
     background-image: url(../images/bg-themes/4.png);
 }
 
-body.bg-theme5 {
+.bg-theme5 {
     background-image: url(../images/bg-themes/5.png);
 }
 
-body.bg-theme6 {
+.bg-theme6 {
     background-image: url(../images/bg-themes/6.png);
 }
 
-body.bg-theme7 {
+.bg-theme7 {
     background-image: linear-gradient(45deg, #0c675e, #069e90);
 }
 
-body.bg-theme8 {
+.bg-theme8 {
     background-image: linear-gradient(45deg, rgb(0, 242, 96), rgb(5, 117, 230));
 }
 
-body.bg-theme9 {
+.bg-theme9 {
     background-image: linear-gradient(45deg, #29323c, #485563);
 }
 
-body.bg-theme10 {
+.bg-theme10 {
     background-image: linear-gradient(45deg, #795548, #945c48);
 }
 
-body.bg-theme11 {
+.bg-theme11 {
     background-image: linear-gradient(45deg, #1565C0, #1E88E5);
 }
 
-body.bg-theme12 {
+.bg-theme12 {
     background-image: linear-gradient(45deg, #65379b, #886aea);
 }
 
-body.bg-theme13 {
+.bg-theme13 {
     background-image: radial-gradient(circle at 17% 1%, rgba(198, 198, 198, .03) 0, rgba(198, 198, 198, .03) 50%, rgba(42, 42, 42, .03) 50%, rgba(42, 42, 42, .03) 100%), radial-gradient(circle at 8% 81%, rgba(253, 253, 253, .03) 0, rgba(253, 253, 253, .03) 50%, rgba(36, 36, 36, .03) 50%, rgba(36, 36, 36, .03) 100%), radial-gradient(circle at 83% 29%, rgba(164, 164, 164, .03) 0, rgba(164, 164, 164, .03) 50%, rgba(60, 60, 60, .03) 50%, rgba(60, 60, 60, .03) 100%), radial-gradient(circle at 96% 62%, rgba(170, 170, 170, .03) 0, rgba(170, 170, 170, .03) 50%, rgba(169, 169, 169, .03) 50%, rgba(169, 169, 169, .03) 100%), linear-gradient(338deg, #028DD5, #05AC51);
 }
 
-body.bg-theme14 {
+.bg-theme14 {
     background: linear-gradient(to right, #2b5876, #4e4376);
 }
 
