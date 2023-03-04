@@ -229,6 +229,7 @@
 													class="form-control"
 													name="name"
 													placeholder="Name"
+													onkeyup="episodeUiAction.autoChangeTitleTab(event)"
 													required
 												/>
 											</div>
@@ -391,6 +392,7 @@
 																	name="name"
 																	placeholder="Name"
 																	required
+																	onkeyup="episodeUiAction.autoChangeTitleTab(event)"
 																/>
 															</div>
 															<div class="col-md-8 mb-3">
@@ -523,7 +525,7 @@
 															</div>
 															<div class="col-md-4 mb-3">
 																<label class="form-label">Name:</label>
-																<input type="text" class="form-control" name="name" placeholder="Name" required/>
+																<input type="text" class="form-control" name="name" placeholder="Name" onkeyup="episodeUiAction.autoChangeTitleTab(event)" required/>
 															</div>
 															<div class="col-md-8 mb-3">
 																<label class="form-label">Subtitle:</label>
@@ -561,6 +563,11 @@
 					$('#addModal .modal-body .card-body').children().remove();
 					$('#addModal .modal-body .card-body').html(this.initialUI.clone());
 				},
+				autoChangeTitleTab: function (e){
+					const name = e.target.value;
+					const idElm = e.target.closest('.tab-pane').id;
+					document.querySelector(`a[href="#${idElm}"] .tab-title`).innerHTML = name.trim();
+				}
 			};
 		</script>
 		<script>
@@ -794,7 +801,7 @@
 															</div>
 															<div class="col-md-4 mb-3">
 																<label class="form-label">Name:</label>
-																<input type="text" class="form-control" name="name" placeholder="Name" value="${dataEpisode.name}" required/>
+																<input type="text" class="form-control" name="name" placeholder="Name" value="${dataEpisode.name}" onkeyup="episodeUiAction.autoChangeTitleTab(event)" required/>
 															</div>
 															<div class="col-md-8 mb-3">
 																<label class="form-label">Subtitle:</label>
