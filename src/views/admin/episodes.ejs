@@ -550,7 +550,6 @@
 												</div>
 											</div>`);
 				},
-
 				removeEpisodeTab: function (e) {
 					const li = e.target.closest('li');
 					const id = li.querySelector('a').getAttribute('href');
@@ -632,7 +631,7 @@
 					}
 				});
 
-			// Handle create new Country
+			// Handle create new Episodes
 			const btnCreate = document.querySelector('#addModal .modal-footer .btn-create');
 			if (btnCreate)
 				btnCreate.onclick = function () {
@@ -747,7 +746,7 @@
 				};
 			}
 
-			// Handle many delete & many delete permanently
+			// Handle many edit
 			const btnManyEdit = document.getElementById('btn-many-edit');
 			if (btnManyEdit)
 				btnManyEdit.onclick = async function () {
@@ -761,6 +760,8 @@
 
 					const navTabs = $(document.querySelector('#editManyModal .nav-tabs'));
 					const tabContent = $(document.querySelector('#editManyModal .tab-content'));
+					navTabs.children().remove();
+					tabContent.children().remove();
 
 					dataEpisodes.forEach(function (dataEpisode, index) {
 						navTabs.append(`<li class="nav-item" role="presentation">
@@ -843,8 +844,6 @@
 							return { language, message, name, subtitle, id, links };
 						});
 
-						console.log(dataForms);
-
 						$.ajax({
 							url: '/admin/episodes/update-many/',
 							type: 'patch',
@@ -855,15 +854,11 @@
 								notyf.success(res.message);
 								dataTable.ajax.reload(null, false);
 								dataTable.columns().checkboxes.deselectAll();
-								navTabs.children().remove();
-								tabContent.children().remove();
 							})
 							.fail(({ responseJSON }) => {
 								$('#editManyModal').modal('hide');
 								notyf.error(responseJSON.message);
 								dataTable.columns().checkboxes.deselectAll();
-								navTabs.children().remove();
-								tabContent.children().remove();
 							});
 					};
 				};
