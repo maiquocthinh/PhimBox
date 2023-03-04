@@ -182,7 +182,7 @@
 					<div class="modal-dialog modal-xl modal-dialog-scrollable">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h5 class="modal-title">Edit Member</h5>
+								<h5 class="modal-title">Edit Episode</h5>
 								<button
 									type="button"
 									class="btn-close"
@@ -194,51 +194,56 @@
 								<div class="card">
 									<div class="card-body">
 										<form class="row g-3">
-											<div class="col-md-6 mb-3">
-												<label class="form-label">User Name:</label>
+											<div class="col-md-4 mb-3">
+												<label class="form-label">Language:</label>
+												<select class="form-select" name="language" required>
+													<% listLanguages.forEach((val) => { %>
+													<option value="<%=val%>"><%=val%></option>
+													<% }); %>
+												</select>
+											</div>
+											<div class="col-md-8 mb-3">
+												<label class="form-label">Message:</label>
+												<input
+													type="text"
+													class="form-control"
+													name="message"
+													placeholder="Message"
+												/>
+											</div>
+											<div class="col-md-4 mb-3">
+												<label class="form-label">Name:</label>
 												<input
 													type="text"
 													class="form-control"
 													name="name"
-													placeholder="User Name"
+													placeholder="Name"
+													required
 												/>
 											</div>
-											<div class="col-md-6 mb-3">
-												<label class="form-label">Email:</label>
-												<input
-													type="email"
-													class="form-control"
-													name="email"
-													placeholder="Mail"
-												/>
-											</div>
-											<div class="col-md-5 mb-3">
-												<label class="form-label">Address Avatar:</label>
+											<div class="col-md-8 mb-3">
+												<label class="form-label">Subtitle:</label>
 												<input
 													type="text"
 													class="form-control"
-													name="avatar"
-													placeholder="Address Avatar"
+													name="subtitle"
+													placeholder="Subtitle"
 												/>
 											</div>
-											<div class="col-md-5 mb-3">
-												<label class="form-label">Reset Password:</label>
-												<input
-													type="text"
-													class="form-control"
-													name="pass"
-													placeholder="Reset Password"
-												/>
+											<div class="col-md-12 mb-3">
+												<div class="d-flex justify-content-between align-items-center mb-1">
+													<label class="form-label font-13">Links:</label>
+													<button
+														type="button"
+														class="btn btn-outline-light btn-sm float-end"
+														onclick="episodeUiAction.moreLinkfield(event)"
+													>
+														<i class="bx bx-plus me-0"></i> More
+													</button>
+												</div>
+												<div class="links-fields"></div>
 											</div>
-											<div class="col-md-2 mb-3">
-												<label class="form-label">Membership:</label>
-												<select class="form-control" name="level">
-													<option selected value="0">Admin</option>
-													<option value="1">Poster</option>
-													<option value="2">Member</option>
-												</select>
-											</div>
-											<input name="user_id" style="display: none" />
+											<input type="text" name="episode_id" class="d-none" />
 										</form>
 									</div>
 								</div>
@@ -582,13 +587,13 @@
 					const forms = document.querySelectorAll('#addModal form');
 					const dataForms = Array.prototype.map.bind(forms)((form) => {
 						const linksFields = form.querySelectorAll('.links-fields input[name="links"]');
+						const links = Array.prototype.map.bind(linksFields)(({ value }) => value);
 						const {
 							0: { value: language },
 							1: { value: message },
 							2: { value: name },
 							3: { value: subtitle },
 						} = form;
-						const links = Array.prototype.map.bind(linksFields)(({ value }) => value);
 
 						return { language, message, name, subtitle, links };
 					});
@@ -611,6 +616,66 @@
 						});
 				};
 
+			// Fill data of episodes to edit form
+			async function fillDataToEditForm(id) {
+				const dataEpisode = await $.ajax({
+					url: '/admin/episodes/read/' + id,
+					type: 'GET',
+				});
+				const formEdit = document.querySelector('#editModal form');
+				const linksFields = formEdit.querySelector('.links-fields');
+				linksFields.replaceChildren(); // clear linksFields
+
+				formEdit.querySelector('input[name="name"]').value = dataEpisode.name;
+				formEdit.querySelector('input[name="message"]').value = dataEpisode.message;
+				formEdit.querySelector('input[name="subtitle"]').value = dataEpisode.subtitle;
+				formEdit.querySelector('select[name="language"]').value = dataEpisode.language;
+				formEdit.querySelector('input[name="episode_id"]').value = dataEpisode._id;
+
+				dataEpisode.links.forEach(link => {
+					$(linksFields).append(`<div class="d-flex gap-2 mb-1">
+					<input type="text" class="form-control" name="links" placeholder="Link" value="${link}"/>
+					<button type="button" class="btn btn-outline-danger btn-sm" onclick="episodeUiAction.removeLinkfield(event)"><i class="bx bx-x me-0"></i></button>
+					</div>`);
+				});
+
+			}
+
+			// Handle submit update
+			const btnSaveUser = document.querySelector('#editModal .modal-footer .btn-save');
+			if (btnSaveUser)
+				btnSaveUser.onclick = function () {
+					const formEdit = document.querySelector('#editModal form');
+					const linksFields = formEdit.querySelectorAll('.links-fields input[name="links"]');
+					const links = Array.prototype.map.bind(linksFields)(({ value }) => value);
+
+					const {
+						episode_id: episodeId,
+						language,
+						message,
+						name,
+						subtitle,
+					} = Object.fromEntries(new FormData(formEdit));
+
+					$.ajax({
+						type: 'PATCH',
+						url: '/admin/episodes/update/' + episodeId,
+						data: { language, message, name, subtitle, links },
+					})
+						.done((res) => {
+							$('#editModal').modal('hide');
+							notyf.success(res.message);
+							dataTable.ajax.reload(null, false);
+
+						})
+						.fail(({ responseJSON }) => {
+							$('#editModal').modal('hide');
+							notyf.error(responseJSON.message);
+
+						});
+				};
+
+			// Fill data of episodes to delete form
 			function fillDataToDeleteForm(name, id) {
 				document.querySelector(
 					'#deleteModal .modal-body-text',

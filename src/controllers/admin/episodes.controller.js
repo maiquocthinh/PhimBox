@@ -18,7 +18,7 @@ const ajaxDatatables = async (req, res) => {
 
 	if (search.value) queryToDB.name = new RegExp(search.value, 'i');
 
-	const totalEpisode = await episodeModels.countDocuments({});
+	const totalEpisode = await episodeModels.countDocuments(queryToDB);
 	const dataEpisodes = await episodeModels
 		.find(queryToDB)
 		.skip(start)
@@ -65,10 +65,37 @@ const createEpisode = async (req, res) => {
 };
 
 // [POST] admin/episodes/read/:id
-const readEpisode = (req, res) => {};
+const readEpisode = (req, res) => {
+	episodeModels
+		.findById(req.params.id)
+		.then((result) => {
+			res.status(200).json(result);
+		})
+		.catch((error) => {
+			res.status(500).json({ message: error.message });
+		});
+};
 
 // [POST] admin/episodes//update/:id
-const updateEpisode = (req, res) => {};
+const updateEpisode = (req, res) => {
+	episodeModels
+		.updateOne(
+			{ _id: req.params.id },
+			{
+				name: req.body.name,
+				message: req.body.message,
+				subtitle: req.body.subtitle,
+				language: req.body.language,
+				links: req.body.links,
+			},
+		)
+		.then(async () => {
+			res.status(200).json({ message: 'Update Episode Success' });
+		})
+		.catch((error) => {
+			res.status(500).json({ error: error.message });
+		});
+};
 
 // [POST] admin/episodes/delete/:id
 const deleteEpisode = (req, res) => {
