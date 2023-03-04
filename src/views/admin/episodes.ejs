@@ -118,6 +118,17 @@
 									<i class="bx bx-trash"></i>
 									<span>Delete</span>
 								</button>
+								<button
+									type="button"
+									class="btn btn-outline-light px-2 me-1"
+									id="btn-many-edit"
+									data-bs-toggle="modal"
+									data-bs-target="#editManyModal"
+									disabled
+								>
+									<i class="bx bxs-edit"></i>
+									<span>Edit</span>
+								</button>
 							</div>
 							<div class="table-responsive">
 								<table id="tableEpisode" class="table table-striped table-bordered" style="width: 100%">
@@ -255,6 +266,40 @@
 									style="border-color: #fff"
 								>
 									Save changes
+								</button>
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Edit Many Modals -->
+				<div class="modal fade" id="editManyModal" tabindex="-1" aria-hidden="true">
+					<div class="modal-dialog modal-fullscreen modal-dialog-scrollable">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">Edit Episodes</h5>
+								<button
+									type="button"
+									class="btn-close"
+									data-bs-dismiss="modal"
+									aria-label="Close"
+								></button>
+							</div>
+							<div class="modal-body">
+								<div class="card">
+									<div class="card-body">
+										<ul class="nav nav-tabs" role="tablist"></ul>
+										<div class="tab-content py-3"></div>
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button
+									type="button"
+									class="btn btn-primary text-white bg-gradient-blues btn-save"
+									style="border-color: #fff"
+								>
+									Save Changes
 								</button>
 								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 							</div>
@@ -430,6 +475,7 @@
 			src="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/js/dataTables.checkboxes.min.js"
 		></script>
 		<script>
+			const LIST_lANGUAGES = [<%-listLanguages.map(l=>(`'${l}'`))%>];
 			const episodeUiAction = {
 				currentId: 1,
 				initialUI: $('#addModal .modal-body .card-body').first().children().clone(),
@@ -468,9 +514,7 @@
 															<div class="col-md-4 mb-3">
 																<label class="form-label">Language:</label>
 																<select class="form-select" name="language" required>
-																	<% listLanguages.forEach((val) => { %>
-																	<option value="<%=val%>"><%=val%></option>
-																	<% }); %>
+																	${LIST_lANGUAGES.map(l=>(`<option value="${l}">${l}</option>`)).join('')}
 																</select>
 															</div>
 															<div class="col-md-8 mb-3">
@@ -570,14 +614,22 @@
 			// disabled/enabled btn-many-delete
 			dataTable
 				.on('select', function (e, dt, type, indexes) {
-					dataTable.rows('.selected').any()
-						? $('#btn-many-delete').attr('disabled', false)
-						: $('#btn-many-delete').attr('disabled', true);
+					if (dataTable.rows('.selected').any()) {
+						$('#btn-many-delete').attr('disabled', false);
+						$('#btn-many-edit').attr('disabled', false);
+					} else {
+						$('#btn-many-delete').attr('disabled', true);
+						$('#btn-many-edit').attr('disabled', true);
+					}
 				})
 				.on('deselect', function (e, dt, type, indexes) {
-					dataTable.rows('.selected').any()
-						? $('#btn-many-delete').attr('disabled', false)
-						: $('#btn-many-delete').attr('disabled', true);
+					if (dataTable.rows('.selected').any()) {
+						$('#btn-many-delete').attr('disabled', false);
+						$('#btn-many-edit').attr('disabled', false);
+					} else {
+						$('#btn-many-delete').attr('disabled', true);
+						$('#btn-many-edit').attr('disabled', true);
+					}
 				});
 
 			// Handle create new Country
@@ -632,19 +684,18 @@
 				formEdit.querySelector('select[name="language"]').value = dataEpisode.language;
 				formEdit.querySelector('input[name="episode_id"]').value = dataEpisode._id;
 
-				dataEpisode.links.forEach(link => {
+				dataEpisode.links.forEach((link) => {
 					$(linksFields).append(`<div class="d-flex gap-2 mb-1">
 					<input type="text" class="form-control" name="links" placeholder="Link" value="${link}"/>
 					<button type="button" class="btn btn-outline-danger btn-sm" onclick="episodeUiAction.removeLinkfield(event)"><i class="bx bx-x me-0"></i></button>
 					</div>`);
 				});
-
 			}
 
 			// Handle submit update
-			const btnSaveUser = document.querySelector('#editModal .modal-footer .btn-save');
-			if (btnSaveUser)
-				btnSaveUser.onclick = function () {
+			const btnSaveEpisode = document.querySelector('#editModal .modal-footer .btn-save');
+			if (btnSaveEpisode)
+				btnSaveEpisode.onclick = function () {
 					const formEdit = document.querySelector('#editModal form');
 					const linksFields = formEdit.querySelectorAll('.links-fields input[name="links"]');
 					const links = Array.prototype.map.bind(linksFields)(({ value }) => value);
@@ -666,12 +717,10 @@
 							$('#editModal').modal('hide');
 							notyf.success(res.message);
 							dataTable.ajax.reload(null, false);
-
 						})
 						.fail(({ responseJSON }) => {
 							$('#editModal').modal('hide');
 							notyf.error(responseJSON.message);
-
 						});
 				};
 
@@ -699,6 +748,127 @@
 			}
 
 			// Handle many delete & many delete permanently
+			const btnManyEdit = document.getElementById('btn-many-edit');
+			if (btnManyEdit)
+				btnManyEdit.onclick = async function () {
+					// Handle fill data to editManyModal
+					const selected = dataTable.columns().checkboxes.selected()[0];
+					const dataEpisodes = await $.ajax({
+						url: '/admin/episodes/read-many/',
+						type: 'post',
+						data: { ids: selected },
+					});
+
+					const navTabs = $(document.querySelector('#editManyModal .nav-tabs'));
+					const tabContent = $(document.querySelector('#editManyModal .tab-content'));
+
+					dataEpisodes.forEach(function (dataEpisode, index) {
+						navTabs.append(`<li class="nav-item" role="presentation">
+												<a class="nav-link position-relative ${
+													index === 0 ? 'active' : ''
+												}" data-bs-toggle="tab" href="#ep-form-${index}" role="tab" aria-selected="true">
+													<div class="d-flex align-items-center">
+														<div class="tab-icon"><i class="bx bx-movie font-18 me-1"></i></div>
+														<div class="tab-title">${dataEpisode.name}</div>
+													</div>
+												</a>
+											</li>`);
+						tabContent.append(`<div class="tab-pane fade show ${
+							index === 0 ? 'active' : ''
+						}" id="ep-form-${index}" role="tabpanel">
+												<div class="card">
+													<div class="card-body">
+														<form class="row g-3">
+															<div class="col-md-4 mb-3">
+																<label class="form-label">Language:</label>
+																<select class="form-select" name="language" required>
+																	${LIST_lANGUAGES.map((l) => `<option value="${l}" ${l === dataEpisode.language ? 'selected' : ''}>${l}</option>`).join(
+																		'',
+																	)}
+																</select>
+															</div>
+															<div class="col-md-8 mb-3">
+																<label class="form-label">Message:</label>
+																<input type="text" class="form-control" name="message" placeholder="Message" value="${dataEpisode.message}"/>
+															</div>
+															<div class="col-md-4 mb-3">
+																<label class="form-label">Name:</label>
+																<input type="text" class="form-control" name="name" placeholder="Name" value="${dataEpisode.name}" required/>
+															</div>
+															<div class="col-md-8 mb-3">
+																<label class="form-label">Subtitle:</label>
+																<input type="text" class="form-control" name="subtitle" placeholder="Subtitle" value="${dataEpisode.subtitle}" />
+															</div>
+															<input type="text" name="episode_id" class="d-none" value="${dataEpisode.id}" />
+															<div class="col-md-12 mb-3">
+																<div class="d-flex justify-content-between align-items-center mb-1">
+																	<label class="form-label font-13">Links:</label>
+																	<button type="button" class="btn btn-outline-light btn-sm float-end" onclick="episodeUiAction.moreLinkfield(event)">
+																		<i class="bx bx-plus me-0"></i> More
+																	</button>
+																</div>
+																<div class="links-fields">
+																	${dataEpisode.links
+																		.map(
+																			(link) => `<div class="d-flex gap-2 mb-1">
+																			<input type="text" class="form-control" name="links" placeholder="Link" value="${link}" />
+																			<button type="button" class="btn btn-outline-danger btn-sm" onclick="episodeUiAction.removeLinkfield(event)">
+																				<i class="bx bx-x me-0"></i>
+																			</button>
+																		</div>`,
+																		)
+																		.join('')}
+																</div>
+															</div>
+														</form>
+													</div>
+												</div>
+											</div>`);
+					});
+
+					// Handle update submit
+					document.querySelector('#editManyModal .modal-footer .btn-save').onclick = function () {
+						const forms = document.querySelectorAll('#editManyModal form');
+						const dataForms = Array.prototype.map.bind(forms)((form) => {
+							const linksFields = form.querySelectorAll('.links-fields input[name="links"]');
+							const links = Array.prototype.map.bind(linksFields)(({ value }) => value);
+							const {
+								0: { value: language },
+								1: { value: message },
+								2: { value: name },
+								3: { value: subtitle },
+								4: { value: id },
+							} = form;
+
+							return { language, message, name, subtitle, id, links };
+						});
+
+						console.log(dataForms);
+
+						$.ajax({
+							url: '/admin/episodes/update-many/',
+							type: 'patch',
+							data: { data: dataForms },
+						})
+							.done((res) => {
+								$('#editManyModal').modal('hide');
+								notyf.success(res.message);
+								dataTable.ajax.reload(null, false);
+								dataTable.columns().checkboxes.deselectAll();
+								navTabs.children().remove();
+								tabContent.children().remove();
+							})
+							.fail(({ responseJSON }) => {
+								$('#editManyModal').modal('hide');
+								notyf.error(responseJSON.message);
+								dataTable.columns().checkboxes.deselectAll();
+								navTabs.children().remove();
+								tabContent.children().remove();
+							});
+					};
+				};
+
+			// Handle many delete
 			const btnManyDelete = document.getElementById('btn-many-delete');
 			if (btnManyDelete)
 				btnManyDelete.onclick = function () {

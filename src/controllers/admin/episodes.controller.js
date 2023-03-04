@@ -64,7 +64,7 @@ const createEpisode = async (req, res) => {
 	}
 };
 
-// [POST] admin/episodes/read/:id
+// [GET] admin/episodes/read/:id
 const readEpisode = (req, res) => {
 	episodeModels
 		.findById(req.params.id)
@@ -75,8 +75,20 @@ const readEpisode = (req, res) => {
 			res.status(500).json({ message: error.message });
 		});
 };
+// [POST] admin/episodes/read-many
+const readManyEpisode = (req, res) => {
+	const { ids } = req.body;
+	episodeModels
+		.find({ id: { $in: ids } })
+		.then((results) => {
+			res.status(200).json(results);
+		})
+		.catch((error) => {
+			res.status(500).json({ message: error.message });
+		});
+};
 
-// [POST] admin/episodes//update/:id
+// [PATCH] admin/episodes/update/:id
 const updateEpisode = (req, res) => {
 	episodeModels
 		.updateOne(
@@ -91,6 +103,23 @@ const updateEpisode = (req, res) => {
 		)
 		.then(async () => {
 			res.status(200).json({ message: 'Update Episode Success' });
+		})
+		.catch((error) => {
+			res.status(500).json({ error: error.message });
+		});
+};
+
+// [PATCH] admin/episodes/update/:id
+const updateManyEpisode = (req, res) => {
+	const { data } = req.body;
+	episodeModels
+		.bulkWrite(
+			data.map((dataEpisode) => ({
+				updateOne: { filter: { id: dataEpisode.id }, update: dataEpisode },
+			})),
+		)
+		.then(async () => {
+			res.status(200).json({ message: 'Update Episodes Success' });
 		})
 		.catch((error) => {
 			res.status(500).json({ error: error.message });
@@ -158,7 +187,9 @@ module.exports = {
 	errors,
 	createEpisode,
 	readEpisode,
+	readManyEpisode,
 	updateEpisode,
+	updateManyEpisode,
 	deleteEpisode,
 	deleteManyEpisode,
 };
