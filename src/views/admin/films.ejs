@@ -83,6 +83,7 @@
 											id="btn-many-delete"
 											data-bs-toggle="modal"
 											data-bs-target="#deleteModal"
+											disabled
 										>
 											<i class="bx bx-trash"></i>
 											<span>Delete</span>
@@ -91,6 +92,7 @@
 											class="btn btn-outline-light btn-sm float-end m-1 d-none"
 											type="button"
 											id="btn-many-restore"
+											disabled
 										>
 											<i class="bx bx-undo"></i>
 											<span>Restore</span>
@@ -657,7 +659,7 @@
 				scrollX: true,
 				processing: true,
 				serverSide: true,
-				pagingType: "full_numbers",
+				pagingType: 'full_numbers',
 				ajax: {
 					url: '/admin/films/datatables_ajax',
 					type: 'POST',
@@ -696,12 +698,32 @@
 						'<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span><span> Loading...</span>',
 				},
 			});
-			$('#tableFilms_filter input').unbind();
-			$('#tableFilms_filter input').bind('keyup', function (e) {
-				if (e.keyCode == 13) {
-					dataTable.search(this.value).draw();
-				}
-			});
+			$('#tableFilms_filter input')
+				.unbind()
+				.bind('keyup', function (e) {
+					if (e.keyCode == 13) dataTable.search(this.value).draw();
+				});
+
+			// disabled/enabled btn-many-delete & btn-many-restore
+			dataTable
+				.on('select', function (e, dt, type, indexes) {
+					if (dataTable.rows('.selected').any()) {
+						$('#btn-many-delete').attr('disabled', false);
+						$('#btn-many-restore').attr('disabled', false);
+					} else {
+						$('#btn-many-delete').attr('disabled', true);
+						$('#btn-many-restore').attr('disabled', true);
+					}
+				})
+				.on('deselect', function (e, dt, type, indexes) {
+					if (dataTable.rows('.selected').any()) {
+						$('#btn-many-delete').attr('disabled', false);
+						$('#btn-many-restore').attr('disabled', false);
+					} else {
+						$('#btn-many-delete').attr('disabled', true);
+						$('#btn-many-restore').attr('disabled', true);
+					}
+				});
 
 			$('.filter-select').select2({
 				theme: 'bootstrap4',
@@ -858,16 +880,12 @@
 			if (btnManyRestore)
 				btnManyRestore.onclick = function handleManyRestore() {
 					const selected = dataTable.columns().checkboxes.selected()[0];
-					if (selected){
-						if(selected.length === 0){
-							alert('Please select films to restore.')
-						}	
-						else{
-							$.ajax({
-								type: 'PATCH',
-								url: '/admin/films/restore-many/',
-								data: { ids: selected },
-							})
+					if (selected.length > 0) {
+						$.ajax({
+							type: 'PATCH',
+							url: '/admin/films/restore-many/',
+							data: { ids: selected },
+						})
 							.done((res) => {
 								dataTable.ajax.reload(null, false);
 								notyf.success(res.message);
@@ -876,7 +894,6 @@
 								dataTable.ajax.reload(null, false);
 								notyf.error(responseJSON.message);
 							});
-						}
 					}
 				};
 
@@ -886,39 +903,26 @@
 				btnManyDelete.onclick = function handleManyDelete() {
 					const selected = dataTable.columns().checkboxes.selected()[0];
 					const isDeletePermanently = !btnManyRestore.classList.contains('d-none');
-					if (selected) {
-						if (selected.length === 0) {
-							document.querySelector(
-								'#deleteModal .modal-body-text',
-							).innerHTML = `Please select films to delete`;
-							document.querySelector('#deleteModal .modal-footer .btn-delete').onclick = function () {
-								$('#deleteModal').modal('hide');
-							};
-						} else {
-							document.querySelector(
-								'#deleteModal .modal-body-text',
-							).innerHTML = `Are you sure want delete ${isDeletePermanently ? 'Permanently' : ''} these ${
-								selected.length
-							} films?`;
-							document.querySelector('#deleteModal .modal-footer .btn-delete').onclick = function () {
-								$.ajax({
-									url: isDeletePermanently
-										? '/admin/films/destroy-many/'
-										: '/admin/films/delete-many/',
-									type: 'delete',
-									data: { ids: selected },
+					if (selected.length > 0) {
+						document.querySelector('#deleteModal .modal-body-text').innerHTML = `Are you sure want delete ${
+							isDeletePermanently ? 'Permanently' : ''
+						} these ${selected.length} films?`;
+						document.querySelector('#deleteModal .modal-footer .btn-delete').onclick = function () {
+							$.ajax({
+								url: isDeletePermanently ? '/admin/films/destroy-many/' : '/admin/films/delete-many/',
+								type: 'delete',
+								data: { ids: selected },
+							})
+								.done((res) => {
+									$('#deleteModal').modal('hide');
+									dataTable.ajax.reload(null, false);
+									notyf.success(res.message);
 								})
-									.done((res) => {
-										$('#deleteModal').modal('hide');
-										dataTable.ajax.reload(null, false);
-										notyf.success(res.message);
-									})
-									.fail(({ responseJSON }) => {
-										$('#deleteModal').modal('hide');
-										notyf.error(responseJSON.message);
-									});
-							};
-						}
+								.fail(({ responseJSON }) => {
+									$('#deleteModal').modal('hide');
+									notyf.error(responseJSON.message);
+								});
+						};
 					}
 				};
 
