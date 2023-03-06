@@ -67,14 +67,36 @@
 					<div class="card">
 						<div class="card-body">
 							<div class="d-flex justify-content-end mb-3">
-								<button
-									type="button"
-									class="btn btn-outline-light px-2 me-1"
-									data-bs-toggle="modal"
-									data-bs-target="#addModal"
-								>
-									<i class="bx bx-plus-circle me-1"></i>Episodes
-								</button>
+								<div class="dropdown">
+									<button
+										class="btn btn-outline-light px-2 me-1 dropdown-toggle"
+										type="button"
+										data-bs-toggle="dropdown"
+										aria-expanded="false"
+									>
+										<i class="bx bx-plus-circle me-1"></i>Episodes
+									</button>
+									<ul class="dropdown-menu">
+										<li>
+											<button
+												class="dropdown-item"
+												data-bs-toggle="modal"
+												data-bs-target="#addModal"
+											>
+												Add
+											</button>
+										</li>
+										<li>
+											<button
+												class="dropdown-item"
+												data-bs-toggle="modal"
+												data-bs-target="#quickAddModal"
+											>
+												Quick Add
+											</button>
+										</li>
+									</ul>
+								</div>
 								<button
 									type="button"
 									class="btn btn-outline-light px-2 me-1"
@@ -424,6 +446,101 @@
 						</div>
 					</div>
 				</div>
+				<!-- Quick Add Modals -->
+				<div class="modal fade" id="quickAddModal" tabindex="-1" aria-hidden="true">
+					<div class="modal-dialog modal-lg modal-fullscreen-sm-down modal-dialog-scrollable">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">Quick Add Episodes</h5>
+								<button
+									type="button"
+									class="btn-close"
+									data-bs-dismiss="modal"
+									aria-label="Close"
+								></button>
+							</div>
+							<div class="modal-body">
+								<div class="card">
+									<div class="card-body">
+										<div class="accordion" id="accordion">
+											<div class="accordion-item">
+												<h2 class="accordion-header" id="headingOne">
+													<button
+														class="accordion-button collapsed"
+														type="button"
+														data-bs-toggle="collapse"
+														data-bs-target="#collapseOne"
+														aria-expanded="false"
+														aria-controls="collapseOne"
+													>
+														<span class="fw-bold text-uppercase">Format:</span>
+													</button>
+												</h2>
+												<div
+													id="collapseOne"
+													class="accordion-collapse collapse"
+													aria-labelledby="headingOne"
+													data-bs-parent="#accordion"
+												>
+													<div class="accordion-body">
+														<h6 class="font-14 fw-bold">
+															Format (<span class="badge bg-success">Add</span>):
+															<span class="text-warning">name|link|subtitle|message</span>
+														</h6>
+														<h6 class="font-14 fw-bold">
+															Format (<span class="badge bg-success">Add</span>):
+															<span class="text-warning">name|link|subtitle</span>
+														</h6>
+														<h6 class="font-14 fw-bold">
+															Format (<span class="badge bg-success">Add</span>):
+															<span class="text-warning">name|link</span>
+														</h6>
+													</div>
+												</div>
+											</div>
+										</div>
+										<hr />
+										<form class="row g-3">
+											<div class="col-12 d-flex align-items-center">
+												<label class="me-2">Language:</label>
+												<select class="form-select" name="language" required="">
+													<option value="#Vietsub 1">#Vietsub 1</option>
+													<option value="#Vietsub 2">#Vietsub 2</option>
+													<option value="#Vietsub 3">#Vietsub 3</option>
+													<option value="#Thuyết Minh 1">#Thuyết Minh 1</option>
+													<option value="#Thuyết Minh 2">#Thuyết Minh 2</option>
+													<option value="#Thuyết Minh 3">#Thuyết Minh 3</option>
+													<option value="#Lồng Tiếng 1">#Lồng Tiếng 1</option>
+													<option value="#Lồng Tiếng 2">#Lồng Tiếng 2</option>
+													<option value="#Lồng Tiếng 3">#Lồng Tiếng 3</option>
+													<option value="#No Sub 1">#No Sub 1</option>
+													<option value="#No Sub 2">#No Sub 2</option>
+												</select>
+											</div>
+											<div class="col-12">
+												<textarea
+													class="form-control"
+													name="quick-info-eps"
+													rows="10"
+												></textarea>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button
+									type="button"
+									class="btn btn-primary text-white bg-gradient-blues btn-create"
+									style="border-color: #fff"
+								>
+									Add
+								</button>
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 			<!--end page wrapper -->
 			<!--start overlay-->
@@ -642,6 +759,49 @@
 						});
 				};
 
+			// Handle create new Episodes quickly
+			const btnQuickCreate = document.querySelector('#quickAddModal .modal-footer .btn-create');
+			if (btnQuickCreate)
+				btnQuickCreate.onclick = function () {
+					const {
+						0: { value: language },
+						1: { value: infoEpisodes },
+					} = document.querySelector('#quickAddModal form');
+					document.querySelector('#quickAddModal form').reset();
+					if (infoEpisodes.trim()) {
+						const dataForms = infoEpisodes
+							.trim()
+							.split('\n')
+							.map((infoEpisode) => {
+								const { 0: name, 1: link, 2: subtitle, 3: message } = infoEpisode.split('|');
+								return {
+									name,
+									links: [link],
+									subtitle: subtitle ? subtitle : '',
+									message: message ? message : '',
+									language,
+								};
+							});
+
+						$.ajax({
+							type: 'POST',
+							url: '/admin/episodes/create',
+							data: { data: dataForms, filmId: FILM_ID },
+						})
+							.done((res) => {
+								episodeUiAction.clear();
+								$('#quickAddModal').modal('hide');
+								dataTable.ajax.reload(null, false);
+								notyf.success(res.message);
+							})
+							.fail(({ responseJSON }) => {
+								episodeUiAction.clear();
+								$('#quickAddModal').modal('hide');
+								notyf.error(responseJSON.message);
+							});
+					}
+				};
+
 			// Fill data of episodes to edit form
 			async function fillDataToEditForm(id) {
 				const dataEpisode = await $.ajax({
@@ -769,7 +929,9 @@
 															</div>
 															<div class="col-md-4 mb-3">
 																<label class="form-label">Name:</label>
-																<input type="text" class="form-control" name="name" placeholder="Name" value="${dataEpisode.name}" onkeyup="episodeUiAction.autoChangeTitleTab(event)" required/>
+																<input type="text" class="form-control" name="name" placeholder="Name" value="${
+																	dataEpisode.name
+																}" onkeyup="episodeUiAction.autoChangeTitleTab(event)" required/>
 															</div>
 															<div class="col-md-8 mb-3">
 																<label class="form-label">Subtitle:</label>
