@@ -218,6 +218,14 @@ function changeBgThemeOfModal(bgTheme) {
 	$('.modal-content').addClass(`bg-theme ${bgTheme}`);
 }
 
+// NOTYF
+const notyf = new Notyf({
+	duration: 6000,
+	position: { x: 'right', y: 'top' },
+	dismissible: true,
+	ripple: true,
+});
+
 // ImgUr upload function
 function imgurUpload(img) {
 	const API_URL = 'https://tame-red-clownfish-tutu.cyclic.app/image';
@@ -239,34 +247,28 @@ function imgurUpload(img) {
 }
 
 // Upload Images with Imgur API
-document.querySelectorAll('#form-info-film input[type=file][accept="image/*"]').forEach((inputEl) => {
-	const inputGroup = inputEl.parentElement;
-	const inputUrlEl = inputGroup.querySelector('input[type=url]');
+document.querySelectorAll('form .ig-upload-img').forEach((inputGroup) => {
+	const inputFileElm = inputGroup.querySelector('input[type=file][accept="image/*"]');
+	const inputUrlElm = inputGroup.querySelector('input[type=url]');
 	const btnUpload = inputGroup.querySelector('.btn-upload-img');
 
-	inputEl.onchange = function (e) {
-		inputUrlEl.value = e.target.files[0].name;
+	inputFileElm.onchange = function (e) {
+		inputUrlElm.value = e.target.files[0].name;
 	};
 
 	btnUpload.onclick = async function () {
 		const pattern = /(http)?s?:?(\/\/[^"']*\.(?:png|jpg|jpeg|gif|png|svg))/;
 
-		if (pattern.test(inputUrlEl.value)) {
-			const res = await imgurUpload(inputUrlEl.value);
-			inputUrlEl.value = res.data.link;
-		} else if (inputEl.files.length !== 0) {
-			const res = await imgurUpload(inputEl.files[0]);
-			inputUrlEl.value = res.data.link;
+		if (pattern.test(inputUrlElm.value)) {
+			const res = await imgurUpload(inputUrlElm.value);
+			inputUrlElm.value = res.data.link;
+		} else if (inputFileElm.files.length !== 0) {
+			const res = await imgurUpload(inputFileElm.files[0]);
+			inputUrlElm.value = res.data.link;
+		} else {
+			notyf.error('Image url is invalid!');
 		}
 	};
-});
-
-// NOTYF
-const notyf = new Notyf({
-	duration: 6000,
-	position: { x: 'right', y: 'top' },
-	dismissible: true,
-	ripple: true,
 });
 
 // do logout

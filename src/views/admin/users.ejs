@@ -144,7 +144,7 @@
 								<div class="card">
 									<div class="card-body">
 										<form class="row g-3">
-											<div class="col-md-6 mb-3">
+											<div class="col-md-5 mb-3">
 												<label class="form-label">User Name:</label>
 												<input
 													type="text"
@@ -153,7 +153,7 @@
 													placeholder="User Name"
 												/>
 											</div>
-											<div class="col-md-6 mb-3">
+											<div class="col-md-5 mb-3">
 												<label class="form-label">Email:</label>
 												<input
 													type="email"
@@ -162,14 +162,36 @@
 													placeholder="Mail"
 												/>
 											</div>
-											<div class="col-md-5 mb-3">
-												<label class="form-label">Address Avatar:</label>
-												<input
-													type="text"
-													class="form-control"
-													name="avatar"
-													placeholder="Address Avatar"
-												/>
+											<div class="col-md-2 mb-3">
+												<label class="form-label">Membership:</label>
+												<select class="form-select" name="level">
+													<option selected value="0">Admin</option>
+													<option value="1">Poster</option>
+													<option value="2">Member</option>
+												</select>
+											</div>
+											<div class="col-md-7 mb-3">
+												<label class="form-label">Url Avatar:</label>
+												<div class="input-group ig-upload-img">
+													<input
+														type="url"
+														class="form-control"
+														name="avatar"
+														placeholder="Url Avatar"
+													/>
+													<input
+														type="file"
+														accept="image/*"
+														class="form-control d-none"
+														id="upload_avatar"
+													/>
+													<label class="input-group-text cursor-pointer" for="upload_avatar"
+														><i class="bx bx-image-add"></i
+													></label>
+													<label class="input-group-text btn-upload-img cursor-pointer"
+														><i class="me-2 bx bx-cloud-upload"></i>Upload</label
+													>
+												</div>
 											</div>
 											<div class="col-md-5 mb-3">
 												<label class="form-label">Reset Password:</label>
@@ -179,14 +201,6 @@
 													name="pass"
 													placeholder="Reset Password"
 												/>
-											</div>
-											<div class="col-md-2 mb-3">
-												<label class="form-label">Membership:</label>
-												<select class="form-control" name="level">
-													<option selected value="0">Admin</option>
-													<option value="1">Poster</option>
-													<option value="2">Member</option>
-												</select>
 											</div>
 											<input name="user_id" style="display: none" />
 										</form>
@@ -223,7 +237,7 @@
 								<div class="card">
 									<div class="card-body">
 										<form class="row g-3">
-											<div class="col-md-6 mb-3">
+											<div class="col-md-5 mb-3">
 												<label class="form-label">User Name:</label>
 												<input
 													type="text"
@@ -232,7 +246,7 @@
 													placeholder="User Name"
 												/>
 											</div>
-											<div class="col-md-6 mb-3">
+											<div class="col-md-5 mb-3">
 												<label class="form-label">Email:</label>
 												<input
 													type="email"
@@ -241,14 +255,36 @@
 													placeholder="Mail"
 												/>
 											</div>
-											<div class="col-md-5 mb-3">
-												<label class="form-label">Address Avatar:</label>
-												<input
-													type="text"
-													class="form-control"
-													name="avatar"
-													placeholder="Address Avatar"
-												/>
+											<div class="col-md-2 mb-3">
+												<label class="form-label">Membership:</label>
+												<select class="form-select" name="level">
+													<option selected value="0">Admin</option>
+													<option value="1">Poster</option>
+													<option value="2">Member</option>
+												</select>
+											</div>
+											<div class="col-md-7 mb-3">
+												<label class="form-label">Url Avatar:</label>
+												<div class="input-group ig-upload-img">
+													<input
+														type="url"
+														class="form-control"
+														name="avatar"
+														placeholder="Url Avatar"
+													/>
+													<input
+														type="file"
+														accept="image/*"
+														class="form-control d-none"
+														id="upload_avatar"
+													/>
+													<label class="input-group-text cursor-pointer" for="upload_avatar"
+														><i class="bx bx-image-add"></i
+													></label>
+													<label class="input-group-text btn-upload-img cursor-pointer"
+														><i class="me-2 bx bx-cloud-upload"></i>Upload</label
+													>
+												</div>
 											</div>
 											<div class="col-md-5 mb-3">
 												<label class="form-label">Password:</label>
@@ -258,14 +294,6 @@
 													name="password"
 													placeholder="Password"
 												/>
-											</div>
-											<div class="col-md-2 mb-3">
-												<label class="form-label">Membership:</label>
-												<select class="form-control" name="level">
-													<option selected value="0">Admin</option>
-													<option value="1">Poster</option>
-													<option value="2">Member</option>
-												</select>
 											</div>
 										</form>
 									</div>
@@ -333,7 +361,7 @@
 				}
 			});
 
-			// Handle create new Country
+			// Handle create new User
 			const btnSave = document.querySelector('#addModal .modal-footer .btn-create');
 			btnSave.onclick = function () {
 				const formCreate = document.querySelector('#addModal form');
@@ -342,16 +370,18 @@
 					type: 'POST',
 					url: '/admin/users/create',
 					data: dataForm,
-				}).done((res) => {
-					formCreate.reset();
-					$('#addModal').modal('hide');
-					dataTable.ajax.reload(null, false);
-					notyf.success(res.message)
-				}).fail(({ responseJSON }) => {
-					formCreate.reset();
-					$('#addModal').modal('hide');
-					notyf.error(responseJSON.message)
-				});
+				})
+					.done((res) => {
+						formCreate.reset();
+						$('#addModal').modal('hide');
+						dataTable.ajax.reload(null, false);
+						notyf.success(res.message);
+					})
+					.fail(({ responseJSON }) => {
+						formCreate.reset();
+						$('#addModal').modal('hide');
+						notyf.error(responseJSON.message);
+					});
 			};
 
 			// Fill name, id of country to delete form
@@ -362,14 +392,16 @@
 					$.ajax({
 						type: 'DELETE',
 						url: '/admin/users/delete/' + id,
-					}).done((res) => {
-						$('#deleteModal').modal('hide');
-						dataTable.ajax.reload(null, false);
-						notyf.success(res.message);
-					}).fail(({ responseJSON }) => {
-						$('#deleteModal').modal('hide');
-						notyf.error(responseJSON.message);
-					});
+					})
+						.done((res) => {
+							$('#deleteModal').modal('hide');
+							dataTable.ajax.reload(null, false);
+							notyf.success(res.message);
+						})
+						.fail(({ responseJSON }) => {
+							$('#deleteModal').modal('hide');
+							notyf.error(responseJSON.message);
+						});
 				};
 			}
 
@@ -381,14 +413,16 @@
 					$.ajax({
 						type: 'DELETE',
 						url: '/admin/users/destroy/' + id,
-					}).done((res) => {
-						$('#deleteModal').modal('hide');
-						dataTable.ajax.reload(null, false);
-						notyf.success(res.message);
-					}).fail(({ responseJSON }) => {
-						$('#deleteModal').modal('hide');
-						notyf.error(responseJSON.message);
-					});
+					})
+						.done((res) => {
+							$('#deleteModal').modal('hide');
+							dataTable.ajax.reload(null, false);
+							notyf.success(res.message);
+						})
+						.fail(({ responseJSON }) => {
+							$('#deleteModal').modal('hide');
+							notyf.error(responseJSON.message);
+						});
 				};
 			}
 
@@ -416,14 +450,16 @@
 						type: 'PATCH',
 						url: '/admin/users/update/' + userId,
 						data: dataForm,
-					}).done((res) => {
-						$('#editModal').modal('hide');
-						dataTable.ajax.reload(null, false);
-						notyf.success(res.message);
-					}).fail(({ responseJSON }) => {
-						$('#editModal').modal('hide');
-						notyf.error(responseJSON.message);
-					});
+					})
+						.done((res) => {
+							$('#editModal').modal('hide');
+							dataTable.ajax.reload(null, false);
+							notyf.success(res.message);
+						})
+						.fail(({ responseJSON }) => {
+							$('#editModal').modal('hide');
+							notyf.error(responseJSON.message);
+						});
 				};
 
 			// Hnalde resotre user

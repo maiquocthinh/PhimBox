@@ -93,7 +93,12 @@
                       <h6 class="mb-0">User Avatar</h6>
                     </div>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" name="avatar" value="<%=user.avatar%>" required />
+                    <div class="input-group ig-upload-img">
+                      <input type="url" class="form-control" name="avatar" value="<%=user.avatar%>" required />
+                      <input type="file" accept="image/*" class="form-control d-none" id="upload_avatar" />
+                      <label class="input-group-text cursor-pointer" for="upload_avatar"><i class="bx bx-image-add"></i></label>
+										  <label class="input-group-text btn-upload-img cursor-pointer"><i class="me-2 bx bx-cloud-upload"></i>Upload</label>
+                    </div>
                     </div>
                   </div>
                   <div class="row mb-3">
