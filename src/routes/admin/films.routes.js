@@ -18,6 +18,5 @@ router.delete('/destroy-many/', authMiddleware.auth, filmsController.destroyMany
 // PAGE
 router.get('/', authMiddleware.auth, filmsController.allFilms);
 router.get('/add', authMiddleware.auth, filmsController.addFilm);
-router.get('/error', authMiddleware.auth, filmsController.filmsError);
 
 module.exports = router;

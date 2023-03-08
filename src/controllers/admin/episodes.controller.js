@@ -7,13 +7,11 @@ const { nanoid } = require('nanoid');
 
 // [POST] admin/episodes/datatables_ajax
 const ajaxDatatables = async (req, res) => {
-	episodeModels;
 	const { filmId } = req.query;
 	const { columns, order, start, length, search, draw } = req.body;
 	const columnIndex = order[0]['column'];
 	const columnName = columns[columnIndex]['name'] || 'createdAt';
 	const columnSortOrder = order[0]['dir'] === 'asc' ? 1 : -1;
-	// const film = await filmModels.findById(filmId);
 	const queryToDB = { filmId };
 
 	if (search.value) queryToDB.name = new RegExp(search.value, 'i');
@@ -39,6 +37,69 @@ const ajaxDatatables = async (req, res) => {
 			<a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeleteForm('${
 				episode.name
 			}','${episode._id.toString()}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>
+		</div>`,
+	]);
+
+	res.status(200).json({
+		draw,
+		recordsTotal: totalEpisode,
+		recordsFiltered: totalEpisode,
+		data,
+	});
+};
+
+// [POST] admin/episodes/datatables_ajax
+const errorsAjaxDatatables = async (req, res) => {
+	const { columns, order, start, length, search, draw } = req.body;
+	const columnIndex = order[0]['column'];
+	const columnName = columns[columnIndex]['name'] || 'createdAt';
+	const columnSortOrder = order[0]['dir'] === 'asc' ? 1 : -1;
+	const queryToDB = { isError: true };
+
+	if (search.value) queryToDB.name = new RegExp(search.value, 'i');
+
+	const totalEpisode = await episodeModels.countDocuments(queryToDB);
+	const dataEpisodes = await episodeModels.aggregate([
+		{ $match: queryToDB },
+		{
+			$addFields: {
+				filmId: {
+					$toObjectId: '$filmId',
+				},
+			},
+		},
+		{
+			$lookup: {
+				from: 'films',
+				localField: 'filmId',
+				foreignField: '_id',
+				as: 'film',
+			},
+		},
+		{
+			$project: {
+				id: 1,
+				name: 1,
+				updatedAt: 1,
+				film: { originalName: '$film.originalName', poster: '$film.poster', year: '$film.year' },
+			},
+		},
+		{ $skip: parseInt(start) },
+		{ $limit: parseInt(length) },
+		{ $sort: { [columnName]: columnSortOrder } },
+	]);
+
+	const data = dataEpisodes.map((episode) => [
+		episode.id,
+		episode.name,
+		`<div class="d-flex align-items-center">
+				<div class="recent-product-img"><img src="${episode.film[0].poster[0]}" alt="" /></div>
+				<div class="ms-2"><h6 class="mb-1 font-14">${episode.film[0].originalName[0]} (${episode.film[0].year[0]})</h6></div>
+			</div>`,
+		episode.updatedAt.toISOString().substring(0, 10),
+		`<div class="d-flex justify-content-center order-actions">
+			<a href="javascript:;" class="text-primary"><i class="bx bx-link-external"></i></a>
+			<a href="javascript:;" class="text-warning ms-1" onclick="fillDataToEditForm('${episode._id.toString()}')" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bx bxs-edit"></i></a>
 		</div>`,
 	]);
 
@@ -99,6 +160,7 @@ const updateEpisode = (req, res) => {
 				subtitle: req.body.subtitle,
 				language: req.body.language,
 				links: req.body.links,
+				isError: req.body.isError,
 			},
 		)
 		.then(async () => {
@@ -147,8 +209,6 @@ const deleteEpisode = (req, res) => {
 const deleteManyEpisode = (req, res) => {
 	const { filmId, episodeIds } = req.body;
 
-	console.log(episodeIds);
-
 	Promise.all([
 		filmModels.findByIdAndUpdate(filmId, { $pull: { episodes: { $in: episodeIds } } }),
 		episodeModels.deleteMany({ id: { $in: episodeIds } }),
@@ -177,12 +237,15 @@ const episodes = async (req, res) => {
 };
 
 // [GET] admin/episodes/errors
-const errors = (req, res) => {
-	res.send('coming soon');
+const errors = async (req, res) => {
+	res.render('admin/episodesError', {
+		user: req.session.user,
+	});
 };
 
 module.exports = {
 	ajaxDatatables,
+	errorsAjaxDatatables,
 	episodes,
 	errors,
 	createEpisode,

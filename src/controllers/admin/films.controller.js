@@ -322,22 +322,6 @@ const allFilms = async (req, res) => {
 	}
 };
 
-// [GET] admin/films/error
-const filmsError = async (req, res) => {
-	try {
-		const categories = await Categories.find({}, { category_slug: 0, _id: 0 });
-		const countries = await Countries.find({}, { country_slug: 0, _id: 0 });
-
-		res.render('admin/films', {
-			user: req.session.user,
-			categories,
-			countries,
-		});
-	} catch (error) {
-		res.status(500).json({ error: error.message });
-	}
-};
-
 module.exports = {
 	ajaxDatatablesFilms,
 	allFilms,
@@ -351,5 +335,4 @@ module.exports = {
 	restoreManyFilm,
 	destroyManyFilm,
 	addFilm,
-	filmsError,
 };

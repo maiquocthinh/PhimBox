@@ -12,6 +12,7 @@ const Episode = new Schema(
 		language: { type: String },
 		subtitle: { type: String },
 		message: { type: String },
+		isError: { type: Boolean, default: false },
 	},
 	{
 		timestamps: true,

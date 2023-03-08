@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<%- include('./partials/head') %>
+		<link
+			rel="stylesheet"
+			href="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/css/dataTables.checkboxes.css"
+		/>
+		<style>
+			.recent-product-img {
+				width: 54px;
+				height: 70px;
+				border-radius: 6px;
+			}
+
+			.recent-product-img img {
+				width: 100%;
+				height: 100%;
+				padding: 1px;
+				border-radius: 6px;
+			}
+
+			tbody tr td {
+				text-align: center;
+				vertical-align: middle;
+			}
+		</style>
+	</head>
+
+	<body class="bg-theme bg-theme13">
+		<!--wrapper-->
+		<div class="wrapper">
+			<!--sidebar wrapper -->
+			<%- include('./partials/sidebar') %>
+			<!--end sidebar wrapper -->
+			<!--start header -->
+			<%- include('./partials/header') %>
+			<!--end header -->
+			<!--start page wrapper -->
+			<div class="page-wrapper">
+				<div class="page-content">
+					<!--breadcrumb-->
+					<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+						<div class="breadcrumb-title pe-3">Episodes</div>
+						<div class="ps-3">
+							<nav aria-label="breadcrumb">
+								<ol class="breadcrumb mb-0 p-0">
+									<li class="breadcrumb-item">
+										<a href="javascript:;"><i class="bx bx-home-alt"></i></a>
+									</li>
+									<li class="breadcrumb-item" aria-current="page">Episodes</li>
+									<li class="breadcrumb-item active" aria-current="page">Errors</li>
+								</ol>
+							</nav>
+						</div>
+					</div>
+					<!--end breadcrumb-->
+					<div class="card">
+						<div class="card-body">
+							<div class="table-responsive">
+								<table id="tableEpisode" class="table table-striped table-bordered" style="width: 100%">
+									<thead>
+										<tr>
+											<th>ID</th>
+											<th>Name</th>
+											<th>Of Film</th>
+											<th>Updated</th>
+											<th>Action</th>
+										</tr>
+									</thead>
+									<tfoot>
+										<tr>
+											<th>ID</th>
+											<th>Name</th>
+											<th>Of Film</th>
+											<th>Updated</th>
+											<th>Action</th>
+										</tr>
+									</tfoot>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Modals -->
+				<!-- Edit Modals -->
+				<div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
+					<div class="modal-dialog modal-lg modal-dialog-scrollable">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">Edit Episode</h5>
+								<button
+									type="button"
+									class="btn-close"
+									data-bs-dismiss="modal"
+									aria-label="Close"
+								></button>
+							</div>
+							<div class="modal-body">
+								<div class="card">
+									<div class="card-body">
+										<div class="card-title font-18"></div>
+										<hr />
+										<form class="row g-3">
+											<div class="col-md-12 mb-3">
+												<div class="d-flex justify-content-between align-items-center mb-1">
+													<label class="form-label font-13">Links:</label>
+													<button
+														type="button"
+														class="btn btn-outline-light btn-sm float-end"
+														onclick="episodeUiAction.moreLinkfield(event)"
+													>
+														<i class="bx bx-plus me-0"></i> More
+													</button>
+												</div>
+												<div class="links-fields"></div>
+											</div>
+											<div class="col-md-12">
+												<div class="form-check">
+													<input
+														class="form-check-input"
+														type="checkbox"
+														id="fixed"
+														name="fixed"
+													/>
+													<label class="form-check-label" for="fixed">Episode Erroring</label>
+												</div>
+											</div>
+											<input type="text" name="episode_id" class="d-none" />
+										</form>
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button
+									type="button"
+									class="btn btn-primary text-white bg-gradient-blues btn-save"
+									style="border-color: #fff"
+								>
+									Save changes
+								</button>
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--end page wrapper -->
+			<!--start overlay-->
+			<div class="overlay toggle-icon"></div>
+			<!--end overlay-->
+			<!--Start Back To Top Button-->
+			<a href="javaScript:;" class="back-to-top"><i class="bx bxs-up-arrow-alt"></i></a>
+			<!--End Back To Top Button-->
+			<%- include('./partials/footer') %>
+		</div>
+		<!--end wrapper-->
+		<!--start switcher-->
+		<%- include('./partials/switcher') %>
+		<!--end switcher-->
+		<!-- Start Javascript Import -->
+		<%- include('./partials/javascript-import') %>
+		<script
+			type="text/javascript"
+			src="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/js/dataTables.checkboxes.min.js"
+		></script>
+		<script>
+			const episodeUiAction = {
+				moreLinkfield: function (e) {
+					e.preventDefault();
+					const linksFields = e.target.closest('form').querySelector('.links-fields');
+					$(linksFields).append(`<div class="d-flex gap-2 mb-1">
+					<input type="text" class="form-control" name="links" placeholder="Link"/>
+					<button type="button" class="btn btn-outline-danger btn-sm" onclick="episodeUiAction.removeLinkfield(event)"><i class="bx bx-x me-0"></i></button>
+					</div>`);
+				},
+				removeLinkfield: function (e) {
+					e.target.closest('div').remove();
+				},
+			};
+		</script>
+		<script>
+			const dataTable = $('#tableEpisode').DataTable({
+				scrollX: true,
+				processing: true,
+				serverSide: true,
+				ajax: {
+					url: '/admin/episodes/errors/datatables_ajax/',
+					type: 'POST',
+				},
+				columns: [{ name: 'id' }, { name: 'name' }, { name: null }, { name: 'updatedAt' }, { name: null }],
+				columnDefs: [
+					{
+						orderable: false,
+						targets: [2, 4],
+					},
+				],
+				order: [[3, 'desc']],
+			});
+
+			$('#tableEpisode_filter input')
+				.unbind()
+				.bind('keyup', function (e) {
+					if (e.keyCode == 13) dataTable.search(this.value).draw();
+				});
+
+			// Fill data of episodes to edit form
+			async function fillDataToEditForm(id) {
+				const dataEpisode = await $.ajax({
+					url: '/admin/episodes/read/' + id,
+					type: 'GET',
+				});
+				const formEdit = document.querySelector('#editModal form');
+				const linksFields = formEdit.querySelector('.links-fields');
+				linksFields.replaceChildren(); // clear linksFields
+
+				document.querySelector('#editModal .card-title').innerHTML = `Episode: ${dataEpisode.name}`;
+				formEdit.querySelector('input[name="fixed"]').checked = true;
+				formEdit.querySelector('input[name="episode_id"]').value = dataEpisode._id;
+
+				dataEpisode.links.forEach((link) => {
+					$(linksFields).append(`<div class="d-flex gap-2 mb-1">
+					<input type="text" class="form-control" name="links" placeholder="Link" value="${link}"/>
+					<button type="button" class="btn btn-outline-danger btn-sm" onclick="episodeUiAction.removeLinkfield(event)"><i class="bx bx-x me-0"></i></button>
+					</div>`);
+				});
+			}
+
+			// Handle submit update
+			const btnSaveEpisode = document.querySelector('#editModal .modal-footer .btn-save');
+			if (btnSaveEpisode)
+				btnSaveEpisode.onclick = function () {
+					const formEdit = document.querySelector('#editModal form');
+					const linksFields = formEdit.querySelectorAll('.links-fields input[name="links"]');
+					const links = Array.prototype.map.bind(linksFields)(({ value }) => value);
+
+					const { episode_id: episodeId, fixed } = Object.fromEntries(new FormData(formEdit));
+
+					$.ajax({
+						type: 'PATCH',
+						url: '/admin/episodes/update/' + episodeId,
+						data: { links, isError: !!fixed },
+					})
+						.done((res) => {
+							$('#editModal').modal('hide');
+							notyf.success(res.message);
+							dataTable.ajax.reload(null, false);
+						})
+						.fail(({ responseJSON }) => {
+							$('#editModal').modal('hide');
+							notyf.error(responseJSON.message);
+						});
+				};
+		</script>
+		<!-- End Javascript Import -->
+	</body>
+</html>
