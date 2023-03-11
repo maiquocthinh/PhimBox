@@ -13,6 +13,7 @@ const categoriesRoutes = require('./categories.routes');
 const countriesRoutes = require('./countries.routes');
 const usersRoutes = require('./users.routes');
 const configurationRoutes = require('./configuration.routes');
+const rolesRoutes = require('./roles.routes');
 
 // auth
 router.use(authRoutes);
@@ -41,6 +42,9 @@ router.use('/users', usersRoutes);
 
 // configs
 router.use('/configuration', configurationRoutes);
+
+// roles
+router.use('/roles', rolesRoutes);
 
 // admin home
 router.get('/', authMiddleware.auth, adminController.admin);
