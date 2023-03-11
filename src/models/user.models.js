@@ -10,7 +10,6 @@ const User = new Schema(
 		email: { type: String },
 		name: { type: String },
 		password: { type: String },
-		level: { type: Number },
 		status: { type: Number, default: 1 },
 		avatar: { type: String },
 	},

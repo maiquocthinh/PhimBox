@@ -1,4 +1,3 @@
-const { Store } = require('express-session');
 const Users = require('../../models/user.models');
 const { validateEmail } = require('../../utils');
 
