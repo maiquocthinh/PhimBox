@@ -160,11 +160,9 @@
 														required
 													>
 														<option selected value="">--All--</option>
-														<option value="1">Hành Động</option>
-														<option value="2">Viễn Tưởng</option>
-														<option value="3">Chiến Tranh</option>
-														<option value="5">Hình Sự</option>
-														<option value="6">Phiêu Lưu</option>
+														<% for (const category of categories) { %>
+														<option value="<%=category._id%>"><%=category.name%></option>
+														<% } %>
 													</select>
 												</div>
 												<div class="col" style="min-width: 150px">
@@ -182,12 +180,9 @@
 														required
 													>
 														<option selected value="">--All--</option>
-														<option value="4">Mỹ</option>
-														<option value="5">Trung Quốc</option>
-														<option value="6">Nhật Bản</option>
-														<option value="7">Hàn Quốc</option>
-														<option value="9">Đài Loan</option>
-														<option value="10">Úc</option>
+														<% for (const country of countries) { %>
+														<option value="<%=country._id%>"><%=country.name%></option>
+														<% } %>
 													</select>
 												</div>
 												<div class="col" style="min-width: 150px">

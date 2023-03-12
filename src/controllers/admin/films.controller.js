@@ -67,7 +67,7 @@ const ajaxDatatablesFilms = async (req, res) => {
 				queryToDB.episodes = { $not: { $exists: true, $type: 'array', $ne: [] } };
 				break;
 		}
-
+	console.log(queryToDB);
 	const dataFilmsWithFilter = deleted
 		? await Films.findDeleted(queryToDB)
 				.skip(start)
