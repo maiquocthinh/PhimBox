@@ -24,6 +24,6 @@ module.exports = {
 	'create roles': 'CR',
 	'update roles': 'UR',
 	'delete roles': 'DR',
-	'set role': 'SR',
+	'set user role': 'SR',
 	configuration: 'CFG',
 };

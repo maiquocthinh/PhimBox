@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const router = Router();
 const authMiddleware = require('../../middlewares/auth.middleware');
-const usersController = require('../../controllers/admin/roles.controller');
+const rolesController = require('../../controllers/admin/roles.controller');
 const PERMISSION = require('../../config/permission.config');
 
 // API
@@ -9,31 +9,37 @@ router.post(
 	'/datatables_ajax',
 	authMiddleware.auth,
 	authMiddleware.checkPermission(PERMISSION['browse roles']),
-	usersController.ajaxDatatablesUsers,
+	rolesController.ajaxDatatablesRoles,
 );
 router.post(
 	'/create',
 	authMiddleware.auth,
 	authMiddleware.checkPermission(PERMISSION['create roles']),
-	usersController.createUser,
+	rolesController.createRole,
 );
 router.get(
 	'/read/:id',
 	authMiddleware.auth,
 	authMiddleware.checkPermission(PERMISSION['browse roles']),
-	usersController.readUser,
+	rolesController.readRole,
 );
 router.patch(
 	'/update/:id',
 	authMiddleware.auth,
 	authMiddleware.checkPermission(PERMISSION['update roles']),
-	usersController.updateUser,
+	rolesController.updateRole,
 );
 router.delete(
 	'/delete/:id',
 	authMiddleware.auth,
 	authMiddleware.checkPermission(PERMISSION['delete roles']),
-	usersController.deleteUser,
+	rolesController.deleteRole,
+);
+router.post(
+	'/set-user-role',
+	authMiddleware.auth,
+	authMiddleware.checkPermission(PERMISSION['set user role']),
+	rolesController.setUserRole,
 );
 
 // PAGE
@@ -41,7 +47,7 @@ router.get(
 	'/',
 	authMiddleware.auth,
 	authMiddleware.checkPermission(PERMISSION['browse roles']),
-	usersController.allUsers,
+	rolesController.allRoles,
 );
 
 module.exports = router;

@@ -163,11 +163,11 @@
 												/>
 											</div>
 											<div class="col-md-2 mb-3">
-												<label class="form-label">Membership:</label>
-												<select class="form-select" name="level">
-													<option selected value="0">Admin</option>
-													<option value="1">Poster</option>
-													<option value="2">Member</option>
+												<label class="form-label">Role:</label>
+												<select class="form-select" name="role">
+													<% roles.forEach(role => { %>
+													<option value="<%=role._id%>"><%=role.name%></option>
+													<% }); %>
 												</select>
 											</div>
 											<div class="col-md-7 mb-3">
@@ -256,11 +256,11 @@
 												/>
 											</div>
 											<div class="col-md-2 mb-3">
-												<label class="form-label">Membership:</label>
-												<select class="form-select" name="level">
-													<option selected value="0">Admin</option>
-													<option value="1">Poster</option>
-													<option value="2">Member</option>
+												<label class="form-label">Role:</label>
+												<select class="form-select" name="role">
+													<% roles.forEach(role => { %>
+													<option value="<%=role._id%>"><%=role.name%></option>
+													<% }); %>
 												</select>
 											</div>
 											<div class="col-md-7 mb-3">
@@ -342,7 +342,7 @@
 					{ name: 'name' },
 					{ name: 'mail' },
 					{ name: 'level' },
-					{ name: 'null' },
+					{ name: null },
 					{ name: 'createdAt' },
 					{ name: 'updatedAt' },
 					{ name: null },
@@ -350,22 +350,23 @@
 				columnDefs: [
 					{
 						orderable: false,
-						targets: [6],
+						targets: [4,7],
 					},
 				],
 			});
-			$('#tableUser_filter input').unbind();
-			$('#tableUser_filter input').bind('keyup', function (e) {
-				if (e.keyCode == 13) {
-					dataTable.search(this.value).draw();
-				}
-			});
+			$('#tableUser_filter input')
+				.unbind()
+				.bind('keyup', function (e) {
+					if (e.keyCode == 13) dataTable.search(this.value).draw();
+				});
 
 			// Handle create new User
-			const btnSave = document.querySelector('#addModal .modal-footer .btn-create');
-			btnSave.onclick = function () {
+			const btnCreate = document.querySelector('#addModal .modal-footer .btn-create');
+			btnCreate.onclick = function () {
 				const formCreate = document.querySelector('#addModal form');
-				const dataForm = Object.fromEntries(new FormData(formCreate));
+				const { role, ...dataForm } = Object.fromEntries(new FormData(formCreate));
+
+				// create new user
 				$.ajax({
 					type: 'POST',
 					url: '/admin/users/create',
@@ -374,8 +375,22 @@
 					.done((res) => {
 						formCreate.reset();
 						$('#addModal').modal('hide');
-						dataTable.ajax.reload(null, false);
 						notyf.success(res.message);
+						const newUserId = res._id;
+
+						// set role for new user
+						$.ajax({
+							type: 'POST',
+							url: '/admin/roles/set-user-role',
+							data: { userId: newUserId, roleId: role },
+						})
+							.done((res) => {
+								notyf.success(res.message);
+								dataTable.ajax.reload(null, false);
+							})
+							.fail(({ responseJSON }) => {
+								notyf.error(responseJSON.message);
+							});
 					})
 					.fail(({ responseJSON }) => {
 						formCreate.reset();
@@ -436,31 +451,47 @@
 				formEdit.querySelector('input[name="name"]').value = dataUser.name;
 				formEdit.querySelector('input[name="email"]').value = dataUser.email;
 				formEdit.querySelector('input[name="avatar"]').value = dataUser.avatar;
-				formEdit.querySelector('select[name="level"]').value = dataUser.level;
+				formEdit.querySelector('select[name="role"]').value = dataUser.roleId;
 				formEdit.querySelector('input[name="user_id"]').value = dataUser._id;
-			}
 
-			// Handle submit update
-			const btnSaveUser = document.querySelector('#editModal .modal-footer .btn-save');
-			if (btnSaveUser)
-				btnSaveUser.onclick = function () {
-					const formEdit = document.querySelector('#editModal form');
-					const { user_id: userId, ...dataForm } = Object.fromEntries(new FormData(formEdit));
-					$.ajax({
-						type: 'PATCH',
-						url: '/admin/users/update/' + userId,
-						data: dataForm,
-					})
-						.done((res) => {
-							$('#editModal').modal('hide');
-							dataTable.ajax.reload(null, false);
-							notyf.success(res.message);
+				// Handle submit update
+				const btnSaveUser = document.querySelector('#editModal .modal-footer .btn-save');
+				if (btnSaveUser)
+					btnSaveUser.onclick = function () {
+						const formEdit = document.querySelector('#editModal form');
+						const { user_id: userId, role, ...dataForm } = Object.fromEntries(new FormData(formEdit));
+
+						// update user info
+						$.ajax({
+							type: 'PATCH',
+							url: '/admin/users/update/' + userId,
+							data: dataForm,
 						})
-						.fail(({ responseJSON }) => {
-							$('#editModal').modal('hide');
-							notyf.error(responseJSON.message);
-						});
-				};
+							.done((res) => {
+								$('#editModal').modal('hide');
+								notyf.success(res.message);
+
+								// update role of user
+								if (dataUser.roleId !== role)
+									$.ajax({
+										type: 'POST',
+										url: '/admin/roles/set-user-role',
+										data: { userId, roleId: role },
+									})
+										.done((res) => {
+											notyf.success(res.message);
+											dataTable.ajax.reload(null, false);
+										})
+										.fail(({ responseJSON }) => {
+											notyf.error(responseJSON.message);
+										});
+							})
+							.fail(({ responseJSON }) => {
+								$('#editModal').modal('hide');
+								notyf.error(responseJSON.message);
+							});
+					};
+			}
 
 			// Hnalde resotre user
 			function restoreUser(id) {

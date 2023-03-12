@@ -1,11 +1,12 @@
 const roleModels = require('../../models/role.models');
-const Users = require('../../models/user.models');
 const PERMISSION = require('../../config/permission.config');
+const userRoleModels = require('../../models/userRole.models');
+const { findOneAndUpdate } = require('../../models/user.models');
 
 // ###### API ######
 
 // [POST] admin/roles/datatables_ajax
-const ajaxDatatablesUsers = async (req, res) => {
+const ajaxDatatablesRoles = async (req, res) => {
 	const { columns, order, start, length, search, draw } = req.body;
 	const columnIndex = order[0]['column'];
 	const columnName = columns[columnIndex]['name'];
@@ -53,7 +54,7 @@ const ajaxDatatablesUsers = async (req, res) => {
 };
 
 // [POST] admin/roles/create
-const createUser = (req, res) => {
+const createRole = (req, res) => {
 	const role = new roleModels({
 		name: req.body.name,
 		permissions: req.body.permissions,
@@ -69,7 +70,7 @@ const createUser = (req, res) => {
 };
 
 // [GET] admin/roles/read/:id
-const readUser = async (req, res) => {
+const readRole = async (req, res) => {
 	try {
 		const role = await roleModels.findById(req.params.id);
 		res.status(200).json(role);
@@ -80,7 +81,7 @@ const readUser = async (req, res) => {
 };
 
 // [PUT] admin/roles/update/:id
-const updateUser = (req, res) => {
+const updateRole = (req, res) => {
 	roleModels
 		.findByIdAndUpdate(req.params.id, {
 			name: req.body.name,
@@ -96,7 +97,7 @@ const updateUser = (req, res) => {
 };
 
 // [DELETE] admin/roles/delete/:id
-const deleteUser = (req, res) => {
+const deleteRole = (req, res) => {
 	roleModels
 		.findByIdAndDelete(req.params.id)
 		.then(() => {
@@ -108,10 +109,26 @@ const deleteUser = (req, res) => {
 		});
 };
 
+// [POST] admin/roles/set-user-role
+const setUserRole = async (req, res) => {
+	const { userId, roleId } = req.body;
+	try {
+		const userRole = await userRoleModels.findOneAndUpdate({ userId }, { userId, roleId });
+		if (!userRole) {
+			const userRole = new userRoleModels({ userId, roleId });
+			await userRole.save();
+		}
+		return res.status(200).json({ message: 'Set User Role Success' });
+	} catch (error) {
+		console.log(error);
+		res.status(500).json({ message: error.message });
+	}
+};
+
 // ###### PAGE ######
 
 // [GET] admin/roles
-const allUsers = (req, res) => {
+const allRoles = (req, res) => {
 	res.render('admin/roles', {
 		user: req.session.user,
 		listPermissions: PERMISSION,
@@ -119,10 +136,11 @@ const allUsers = (req, res) => {
 };
 
 module.exports = {
-	ajaxDatatablesUsers,
-	allUsers,
-	createUser,
-	readUser,
-	updateUser,
-	deleteUser,
+	ajaxDatatablesRoles,
+	allRoles,
+	createRole,
+	readRole,
+	updateRole,
+	deleteRole,
+	setUserRole,
 };

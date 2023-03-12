@@ -1,5 +1,8 @@
 const { nanoid } = require('nanoid');
 const Users = require('../../models/user.models');
+const roleModels = require('../../models/role.models');
+const userRoleModels = require('../../models/userRole.models');
+const { getUserLevelHtml } = require('../../utils/ajaxUsers.util');
 
 // ###### API ######
 
@@ -17,15 +20,41 @@ const ajaxDatatablesUsers = async (req, res) => {
 		queryToDB['$or'] = [{ name: new RegExp(search.value, 'i') }, { email: new RegExp(search.value, 'i') }];
 
 	const totalUser = deleted ? await Users.countDocumentsDeleted({}) : await Users.countDocuments({});
-	let dataUsers = deleted
-		? await Users.findDeleted(queryToDB)
-				.skip(start)
-				.limit(length)
-				.sort({ [columnName]: columnSortOrder })
-		: await Users.find(queryToDB)
-				.skip(start)
-				.limit(length)
-				.sort({ [columnName]: columnSortOrder });
+	const dataUsers = await Users.aggregate([
+		{ $match: { ...queryToDB, deleted: !!deleted } },
+		{ $addFields: { _id: { $toString: '$_id' } } },
+		{
+			$lookup: {
+				from: 'user_role',
+				localField: '_id',
+				foreignField: 'userId',
+				as: 'userRole',
+			},
+		},
+		{
+			$lookup: {
+				from: 'roles',
+				let: { roleId: { $arrayElemAt: ['$userRole.roleId', 0] } },
+				pipeline: [
+					{ $addFields: { _id: { $toString: '$_id' } } },
+					{ $match: { $expr: { $eq: ['$_id', '$$roleId'] } } },
+				],
+				as: 'role',
+			},
+		},
+		{
+			$lookup: {
+				from: 'films',
+				localField: '_id',
+				foreignField: 'createdBy',
+				as: 'updated',
+			},
+		},
+		{ $addFields: { updated: { $size: '$updated' } } },
+		{ $skip: parseInt(start) },
+		{ $limit: parseInt(length) },
+		{ $sort: { [columnName]: columnSortOrder } },
+	]);
 
 	const data = dataUsers.map((user) => [
 		user.id,
@@ -38,12 +67,8 @@ const ajaxDatatablesUsers = async (req, res) => {
 			</div>
 		</div>`,
 		user.email,
-		user.level === 0
-			? `<span class="badge text-white bg-gradient-lush text-uppercase px-3">Admin</span>`
-			: user.level === 1
-			? `<span class="badge text-white bg-gradient-blues text-uppercase px-3">Poster</span>`
-			: `<span class="badge text-white bg-gradient-kyoto text-uppercase px-3">Member</span>`,
-		``,
+		getUserLevelHtml(user.role[0]?.permissions),
+		user.updated,
 		user.createdAt.toISOString().substring(0, 10),
 		user.updatedAt.toISOString().substring(0, 10),
 		deleted
@@ -77,13 +102,12 @@ const createUser = (req, res) => {
 		email: req.body.email,
 		name: req.body.name,
 		password: req.body.password,
-		level: req.body.level,
 		status: req.body.status,
 		avatar: req.body.avatar,
 	});
 	user.save()
-		.then(() => {
-			res.status(200).json({ message: 'Create User Success' });
+		.then((result) => {
+			res.status(200).json({ message: 'Create User Success', _id: result._id });
 		})
 		.catch((error) => {
 			res.status(500).json({ error: error.message });
@@ -93,10 +117,12 @@ const createUser = (req, res) => {
 // [GET] admin/users/read/:id
 const readUser = async (req, res) => {
 	try {
-		const user = await Users.findById(req.params.id);
-		user.password = undefined;
-		res.status(200).json(user);
+		const user = await Users.findById(req.params.id, { password: 0 });
+		const userRole = await userRoleModels.findOne({ userId: user._id.toString() });
+		if (userRole) res.status(200).json({ ...user._doc, roleId: userRole.roleId });
+		else res.status(200).json(user);
 	} catch (error) {
+		console.log(error);
 		res.status(500).json({ error: error.message });
 	}
 };
@@ -152,7 +178,7 @@ const restoreUser = (req, res) => {
 
 // [DELETE] admin/users/destroy/:id
 const destroyUser = (req, res) => {
-	Users.deleteOne({ _id: req.params.id })
+	Promise.all([userRoleModels.findOneAndDelete({ userId: req.params.id }), Users.deleteOne({ _id: req.params.id })])
 		.then(() => {
 			res.status(200).json({ message: 'Delete Permanently User Success' });
 		})
@@ -164,10 +190,18 @@ const destroyUser = (req, res) => {
 // ###### PAGE ######
 
 // [GET] admin/users
-const allUsers = (req, res) => {
-	res.render('admin/users', {
-		user: req.session.user,
-	});
+const allUsers = async (req, res) => {
+	try {
+		const roles = await roleModels.find({}, { _id: 1, name: 1 });
+
+		res.render('admin/users', {
+			user: req.session.user,
+			roles,
+		});
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({ message: error.message });
+	}
 };
 
 module.exports = {
