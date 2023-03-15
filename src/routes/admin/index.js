@@ -14,6 +14,7 @@ const countriesRoutes = require('./countries.routes');
 const usersRoutes = require('./users.routes');
 const configurationRoutes = require('./configuration.routes');
 const rolesRoutes = require('./roles.routes');
+const uploadRoutes = require('./upload.routes');
 
 // auth
 router.use(authRoutes);
@@ -45,6 +46,9 @@ router.use('/configuration', configurationRoutes);
 
 // roles
 router.use('/roles', rolesRoutes);
+
+// upload
+router.use('/upload', uploadRoutes);
 
 // admin home
 router.get('/', authMiddleware.auth, adminController.admin);

@@ -3,6 +3,7 @@ const app = express();
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const fileupload = require('express-fileupload');
 const RedisStore = require('connect-redis')(session);
 const { createClient } = require('redis');
 // const morgan = require("morgan");
@@ -40,6 +41,7 @@ app.use(
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
+app.use(fileupload());
 
 // HTTP logger
 // app.use(morgan('combined'));

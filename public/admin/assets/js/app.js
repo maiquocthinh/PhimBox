@@ -271,6 +271,42 @@ document.querySelectorAll('form .ig-upload-img').forEach((inputGroup) => {
 	};
 });
 
+// Upload file
+$(document).bind('DOMSubtreeModified', function () {
+	document.querySelectorAll('form .ig-upload-file').forEach((inputGroup, idx) => {
+		const inputFileElm = inputGroup.querySelector('input[type=file][accept=".srt,.ssa,.vtt"]');
+		const inputUrlElm = inputGroup.querySelector('input[type=url]');
+		const labelElm = inputGroup.querySelector('label');
+		const btnUpload = inputGroup.querySelector('.btn-upload-img');
+
+		// change id input file suitablle for label
+		inputFileElm.id = 'upload_file-' + idx;
+		labelElm.setAttribute('for', inputFileElm.id);
+
+		inputFileElm.onchange = function (e) {
+			inputUrlElm.value = e.target.files[0].name;
+		};
+
+		btnUpload.onclick = async function () {
+			if (inputFileElm.files.length !== 0) {
+				const formData = new FormData();
+				formData.append('files', inputFileElm.files[0]);
+				const res = await $.ajax({
+					type: 'POST',
+					url: '/admin/upload/dropbox',
+					data: formData,
+					processData: false,
+					contentType: false,
+				});
+
+				inputUrlElm.value = res.url;
+			} else {
+				notyf.error('Please select a file!');
+			}
+		};
+	});
+});
+
 // do logout
 const logoutBtn = document.getElementById('logout-btn');
 if (logoutBtn)

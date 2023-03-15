@@ -225,12 +225,26 @@
 											</div>
 											<div class="col-md-8 mb-3">
 												<label class="form-label">Subtitle:</label>
-												<input
-													type="text"
-													class="form-control"
-													name="subtitle"
-													placeholder="Subtitle"
-												/>
+												<div class="input-group ig-upload-file">
+													<input
+														type="url"
+														class="form-control"
+														name="subtitle"
+														placeholder="Subtitle"
+													/>
+													<input
+														type="file"
+														accept=".srt,.ssa,.vtt"
+														class="form-control d-none"
+														id="upload_file"
+													/>
+													<label class="input-group-text cursor-pointer" for="upload_file">
+														<i class="bx bx-file"></i>
+													</label>
+													<label class="input-group-text btn-upload-img cursor-pointer">
+														<i class="me-2 bx bx-cloud-upload"></i>Upload
+													</label>
+												</div>
 											</div>
 											<div class="col-md-12 mb-3">
 												<div class="d-flex justify-content-between align-items-center mb-1">
@@ -387,12 +401,26 @@
 															</div>
 															<div class="col-md-8 mb-3">
 																<label class="form-label">Subtitle:</label>
-																<input
-																	type="text"
-																	class="form-control"
-																	name="subtitle"
-																	placeholder="Subtitle"
-																/>
+																<div class="input-group ig-upload-file">
+																	<input
+																		type="url"
+																		class="form-control"
+																		name="subtitle"
+																		placeholder="Subtitle"
+																	/>
+																	<input
+																		type="file"
+																		accept=".srt,.ssa,.vtt"
+																		class="form-control d-none"
+																		id="upload_file"
+																	/>
+																	<label class="input-group-text cursor-pointer" for="upload_file">
+																		<i class="bx bx-file"></i>
+																	</label>
+																	<label class="input-group-text btn-upload-img cursor-pointer">
+																		<i class="me-2 bx bx-cloud-upload"></i>Upload
+																	</label>
+																</div>
 															</div>
 															<div class="col-md-12 mb-3">
 																<div
@@ -606,7 +634,12 @@
 															</div>
 															<div class="col-md-8 mb-3">
 																<label class="form-label">Subtitle:</label>
-																<input type="text" class="form-control" name="subtitle" placeholder="Subtitle"/>
+																<div class="input-group ig-upload-file">
+																	<input type="url" class="form-control" name="subtitle" placeholder="Subtitle" />
+																	<input type="file" accept=".srt,.ssa,.vtt" class="form-control d-none" id="upload_file" />
+																	<label class="input-group-text cursor-pointer" for="upload_file"><i class="bx bx-file"></i></label>
+																	<label class="input-group-text btn-upload-img cursor-pointer"><i class="me-2 bx bx-cloud-upload"></i>Upload</label>
+																</div>
 															</div>
 															<div class="col-md-12 mb-3">
 																<div class="d-flex justify-content-between align-items-center mb-1">
@@ -927,7 +960,12 @@
 															</div>
 															<div class="col-md-8 mb-3">
 																<label class="form-label">Subtitle:</label>
-																<input type="text" class="form-control" name="subtitle" placeholder="Subtitle" value="${dataEpisode.subtitle}" />
+																<div class="input-group ig-upload-file">
+																	<input type="url" class="form-control" name="subtitle" placeholder="Subtitle" value="${dataEpisode.subtitle}" />
+																	<input type="file" accept=".srt,.ssa,.vtt" class="form-control d-none" id="upload_file" />
+																	<label class="input-group-text cursor-pointer" for="upload_file"><i class="bx bx-file"></i></label>
+																	<label class="input-group-text btn-upload-img cursor-pointer"><i class="me-2 bx bx-cloud-upload"></i>Upload</label>
+																</div>
 															</div>
 															<input type="text" name="episode_id" class="d-none" value="${dataEpisode.id}" />
 															<div class="col-md-12 mb-3">
@@ -967,9 +1005,9 @@
 								1: { value: message },
 								2: { value: name },
 								3: { value: subtitle },
-								4: { value: id },
+								5: { value: id },
 							} = form;
-
+							
 							return { language, message, name, subtitle, id, links };
 						});
 
