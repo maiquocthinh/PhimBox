@@ -125,6 +125,43 @@ const setUserRole = async (req, res) => {
 	}
 };
 
+// [POST] admin/roles/get-user-role
+const getUserRole = async (req, res) => {
+	const { userId } = req.body;
+	try {
+		const userRole = await userRoleModels.aggregate([
+			{
+				$match: { userId: userId },
+			},
+			{
+				$limit: 1,
+			},
+			{
+				$addFields: {
+					roleId: { $toObjectId: '$roleId' },
+				},
+			},
+			{
+				$lookup: {
+					from: 'roles',
+					localField: 'roleId',
+					foreignField: '_id',
+					as: 'role',
+				},
+			},
+			{
+				$unwind: '$role',
+			},
+		]);
+
+		if (userRole[0]) return res.status(200).json(userRole[0]);
+		return res.status(200).json({ message: 'User have not role.' });
+	} catch (error) {
+		console.log(error);
+		res.status(500).json({ message: error.message });
+	}
+};
+
 // ###### PAGE ######
 
 // [GET] admin/roles
@@ -143,4 +180,5 @@ module.exports = {
 	updateRole,
 	deleteRole,
 	setUserRole,
+	getUserRole,
 };

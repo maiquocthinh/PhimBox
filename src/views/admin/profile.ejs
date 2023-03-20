@@ -106,14 +106,13 @@
                       <h6 class="mb-0">Membership</h6>
                     </div>
                     <div class="col-sm-9">
-                      <select class="form-select" name="level" required>
-                        <option <%= user.level===0 ? 'selected' : '' %> value="0">Admin</option>
-                        <option <%= user.level===1 ? 'selected' : '' %> value="1">Poster</option>
-                        <option <%= user.level===2 ? 'selected' : '' %> value="2">Member</option>
+                      <select class="form-select" name="role" required>
+                        <% roles.forEach(role => { %>
+													<option value="<%=role._id%>"><%=role.name%></option>
+												<% }); %>
                       </select>
                     </div>
                   </div>
-                  <input type="text" name="user_id" style="display:none;" value="<%=user._id.toString()%>">
                   <div class="row">
                     <div class="col-sm-3"></div>
                     <div class="col-sm-9">
@@ -133,7 +132,6 @@
                     <div class="col-sm-9">
                       <input type="text" class="form-control" name="password" required />
                     </div>
-                    <input type="text" name="user_id" style="display:none;" value="<%=user._id.toString()%>">
                   </div>
                   <div class="row">
                     <div class="col-sm-3"></div>
@@ -163,6 +161,28 @@
   <!-- Start Javascript Import -->
   <%- include('./partials/javascript-import') %>
   <script>
+    const USER_ID = "<%=user._id.toString()%>";
+    let USER_ROLE_ID = '';
+    
+    const roleSelect = document.querySelector('#form-info select[name="role"]');
+
+    $(document).ready(function(){
+      $.ajax({
+        type: 'POST',
+        url: '/admin/roles/get-user-role',
+        data: {userId: USER_ID}
+      }).done(function (res) {
+        // chose role select
+        roleSelect.value = res.roleId;
+        // disabled/enabled role select
+        roleSelect.disabled = !res.role.permissions.includes('SR');
+        // set user role
+        USER_ROLE_ID = res.roleId;
+      }).fail(function ({ responseJSON }) {
+        notyf.error(responseJSON.message);
+      });
+    });
+
     const formInfo = document.querySelector('#form-info');
     const formPassword = document.querySelector('#form-password');
     const btnChangeInfo = document.querySelector('.btn-change-info');
@@ -170,31 +190,45 @@
 
     // Handle submit change info
     if (btnChangeInfo) btnChangeInfo.onclick = function () {
-      const {
-        user_id,
-        ...dataForm
-      } = Object.fromEntries(new FormData(formInfo));
+      const { role, ...dataForm } = Object.fromEntries(new FormData(formInfo));
+
+      // update info
       $.ajax({
         type: 'PATCH',
-        url: '/admin/users/update/' + user_id,
+        url: '/admin/users/update/' + USER_ID,
         data: dataForm,
-      }).done((res) => {
-				notyf.success(res.message);
-      }).fail(({ responseJSON }) => {
-				notyf.error(responseJSON.message);
-      });
+      })
+        .done((res) => {
+          notyf.success(res.message);
+        })
+        .fail(({ responseJSON }) => {
+          notyf.error(responseJSON.message);
+        });
+
+      // set role
+      if (role !== USER_ROLE_ID)
+        $.ajax({
+          type: 'POST',
+          url: '/admin/roles/set-user-role',
+          data: { userId: USER_ID, roleId: role },
+        })
+          .done((res) => {
+            notyf.success(res.message);
+          })
+          .fail(({ responseJSON }) => {
+            notyf.error(responseJSON.message);
+          });
+
+
     }
 
     // Handle submit change password
     if (btnChangePassWord) btnChangePassWord.onclick = function () {
-      const {
-        user_id,
-        ...dataForm
-      } = Object.fromEntries(new FormData(formPassword));
+      const password = formPassword.querySelector(input[name="password"]);
       $.ajax({
         type: 'PATCH',
         url: '/admin/users/update/' + user_id,
-        data: dataForm,
+        data: { password },
       }).done((res) => {
 				notyf.success(res.message);
       }).fail(({ responseJSON }) => {

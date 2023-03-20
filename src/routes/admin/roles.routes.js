@@ -41,6 +41,7 @@ router.post(
 	authMiddleware.checkPermission(PERMISSION['set user role']),
 	rolesController.setUserRole,
 );
+router.post('/get-user-role', authMiddleware.auth, rolesController.getUserRole);
 
 // PAGE
 router.get(
