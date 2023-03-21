@@ -1,3 +1,4 @@
+const bcrypt = require('bcryptjs');
 const Users = require('../../models/user.models');
 const { validateEmail } = require('../../utils');
 
@@ -15,7 +16,8 @@ const loginHandler = async (req, res) => {
 		const user = await Users.findOne({ email: email });
 		if (!user) return res.status(400).json({ message: 'The email is not registered in our system.' });
 
-		if (password !== user.password) return res.status(400).json({ message: 'The password is incorrect.' });
+		if (!bcrypt.compareSync(password, user.password))
+			return res.status(400).json({ message: 'The password is incorrect.' });
 
 		user.password = undefined;
 		req.session.user = user;

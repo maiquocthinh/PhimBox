@@ -1,8 +1,8 @@
 const roleModels = require('../../models/role.models');
 const userModels = require('../../models/user.models');
-const PERMISSIONS = require('../../config/permission.config');
 const userRoleModels = require('../../models/userRole.models');
 const { getUserLevelHtml } = require('../../utils/ajaxUsers.util');
+const { generateHashPassword } = require('../../utils');
 
 // ###### API ######
 // [PATCH] admin/profile/update/:id
@@ -13,7 +13,10 @@ const update = (req, res) => {
 	if (userId !== req.params.id) return res.status(500).json({ message: 'You have not permission.' });
 
 	try {
-		userModels.findByIdAndUpdate(userId, { email, name, password, avatar }).then(async () => {
+		// hash password
+		const hashPassword = password ? generateHashPassword(password) : undefined;
+
+		userModels.findByIdAndUpdate(userId, { email, name, password: hashPassword, avatar }).then(async () => {
 			// change user info in current session
 			if (req.session.user._id === req.params.id) {
 				const user = await userModels.findById(req.params.id);

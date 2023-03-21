@@ -3,6 +3,7 @@ const Users = require('../../models/user.models');
 const roleModels = require('../../models/role.models');
 const userRoleModels = require('../../models/userRole.models');
 const { getUserLevelHtml } = require('../../utils/ajaxUsers.util');
+const { generateHashPassword } = require('../../utils');
 
 // ###### API ######
 
@@ -97,11 +98,14 @@ const ajaxDatatablesUsers = async (req, res) => {
 
 // [POST] admin/users/create
 const createUser = (req, res) => {
+	// hash password
+	const hashPassword = req.body.password ? generateHashPassword(req.body.password) : undefined;
+
 	const user = new Users({
 		id: nanoid(7),
 		email: req.body.email,
 		name: req.body.name,
-		password: req.body.password,
+		password: hashPassword,
 		status: req.body.status,
 		avatar: req.body.avatar,
 	});
@@ -129,12 +133,15 @@ const readUser = async (req, res) => {
 
 // [PUT] admin/users/update/:id
 const updateUser = (req, res) => {
+	// hash password
+	const hashPassword = generateHashPassword(req.body.password);
+
 	Users.updateOne(
 		{ _id: req.params.id },
 		{
 			email: req.body.email,
 			name: req.body.name,
-			password: req.body.password,
+			password: hashPassword,
 			level: req.body.level,
 			status: req.body.status,
 			avatar: req.body.avatar,

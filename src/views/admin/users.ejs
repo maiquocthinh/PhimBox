@@ -198,7 +198,7 @@
 												<input
 													type="text"
 													class="form-control"
-													name="pass"
+													name="password"
 													placeholder="Reset Password"
 												/>
 											</div>
@@ -372,7 +372,7 @@
 					url: '/admin/users/create',
 					data: dataForm,
 				})
-					.done((res) => {
+					.done(function(res) {
 						formCreate.reset();
 						$('#addModal').modal('hide');
 						notyf.success(res.message);
@@ -384,22 +384,25 @@
 							url: '/admin/roles/set-user-role',
 							data: { userId: newUserId, roleId: role },
 						})
-							.done((res) => {
+							.done(function(res) {
 								notyf.success(res.message);
 								dataTable.ajax.reload(null, false);
 							})
-							.fail(({ responseJSON }) => {
+							.fail(function({ responseJSON }) {
 								notyf.error(responseJSON.message);
-							});
+							})
 					})
-					.fail(({ responseJSON }) => {
+					.fail(function({ responseJSON }) {
 						formCreate.reset();
 						$('#addModal').modal('hide');
 						notyf.error(responseJSON.message);
+					})
+					.always(function() {
+						formCreate.reset();
 					});
 			};
 
-			// Fill name, id of country to delete form
+			// Fill name, id of user to delete form
 			function fillDataToDeleteForm(name, id) {
 				document.querySelector('#permanently-text').classList.add('d-none');
 				document.querySelector('#user-name-text').textContent = name;
@@ -408,19 +411,19 @@
 						type: 'DELETE',
 						url: '/admin/users/delete/' + id,
 					})
-						.done((res) => {
+						.done(function(res) {
 							$('#deleteModal').modal('hide');
 							dataTable.ajax.reload(null, false);
 							notyf.success(res.message);
 						})
-						.fail(({ responseJSON }) => {
+						.fail(function({ responseJSON }) {
 							$('#deleteModal').modal('hide');
 							notyf.error(responseJSON.message);
 						});
 				};
 			}
 
-			// Fill name, id of film to modal delete
+			// Fill name, id of user to modal delete permanently
 			function fillDataToDeletePermanentlyForm(name, id) {
 				document.querySelector('#permanently-text').classList.remove('d-none');
 				document.querySelector('#user-name-text').textContent = name;
@@ -429,19 +432,19 @@
 						type: 'DELETE',
 						url: '/admin/users/destroy/' + id,
 					})
-						.done((res) => {
+						.done(function(res) {
 							$('#deleteModal').modal('hide');
 							dataTable.ajax.reload(null, false);
 							notyf.success(res.message);
 						})
-						.fail(({ responseJSON }) => {
+						.fail(function({ responseJSON }) {
 							$('#deleteModal').modal('hide');
 							notyf.error(responseJSON.message);
 						});
 				};
 			}
 
-			// Fill data of country to edit form
+			// Fill data of user to edit form
 			async function fillDataToEditForm(id) {
 				const dataUser = await $.ajax({
 					url: '/admin/users/read/' + id,
@@ -467,7 +470,7 @@
 							url: '/admin/users/update/' + userId,
 							data: dataForm,
 						})
-							.done((res) => {
+							.done(function(res) {
 								$('#editModal').modal('hide');
 								notyf.success(res.message);
 
@@ -478,32 +481,35 @@
 										url: '/admin/roles/set-user-role',
 										data: { userId, roleId: role },
 									})
-										.done((res) => {
+										.done(function(res) {
 											notyf.success(res.message);
 											dataTable.ajax.reload(null, false);
 										})
-										.fail(({ responseJSON }) => {
+										.fail(function({ responseJSON }) {
 											notyf.error(responseJSON.message);
 										});
 							})
-							.fail(({ responseJSON }) => {
+							.fail(function({ responseJSON }) {
 								$('#editModal').modal('hide');
 								notyf.error(responseJSON.message);
+							})
+							.always(function() {
+								formEdit.reset();
 							});
 					};
 			}
 
-			// Hnalde resotre user
+			// Hanlde resotre user
 			function restoreUser(id) {
 				$.ajax({
 					type: 'PATCH',
 					url: '/admin/users/restore/' + id,
 				})
-					.done((res) => {
+					.done(function(res) {
 						notyf.success(res.message);
 						dataTable.ajax.reload(null, false);
 					})
-					.fail(({ responseJSON }) => {
+					.fail(function({ responseJSON }) {
 						notyf.error(responseJSON.message);
 					});
 			}

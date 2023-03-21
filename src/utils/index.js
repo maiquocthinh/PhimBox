@@ -1,3 +1,5 @@
+const bcrypt = require('bcryptjs');
+
 const validateEmail = (email) =>
 	String(email)
 		.toLowerCase()
@@ -5,4 +7,9 @@ const validateEmail = (email) =>
 			/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
 		);
 
-module.exports = { validateEmail };
+const generateHashPassword = (password) => {
+	const salt = bcrypt.genSaltSync(10);
+	const hashPassword = bcrypt.hashSync(password, salt);
+	return hashPassword;
+};
+module.exports = { validateEmail, generateHashPassword };

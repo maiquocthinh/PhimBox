@@ -214,13 +214,11 @@
           .fail(({ responseJSON }) => {
             notyf.error(responseJSON.message);
           });
-
-
     }
 
     // Handle submit change password
     if (btnChangePassWord) btnChangePassWord.onclick = function () {
-      const password = formPassword.querySelector(input[name="password"]);
+      const password = formPassword.querySelector('input[name="password"]').value;
       $.ajax({
         type: 'PATCH',
         url: '/admin/profile/update/' + USER_ID,
