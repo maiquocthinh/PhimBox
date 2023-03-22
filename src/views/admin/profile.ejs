@@ -219,15 +219,18 @@
     // Handle submit change password
     if (btnChangePassWord) btnChangePassWord.onclick = function () {
       const password = formPassword.querySelector('input[name="password"]').value;
-      $.ajax({
-        type: 'PATCH',
-        url: '/admin/profile/update/' + USER_ID,
-        data: { password },
-      }).done((res) => {
-				notyf.success(res.message);
-      }).fail(({ responseJSON }) => {
-				notyf.error(responseJSON.message);
-      });
+      if(password)
+        $.ajax({
+          type: 'PATCH',
+          url: '/admin/profile/update/' + USER_ID,
+          data: { password },
+        }).done((res) => {
+          notyf.success(res.message);
+        }).fail(({ responseJSON }) => {
+          notyf.error(responseJSON.message);
+        }).always(() => {
+          formPassword.querySelector('input[name="password"]').value = '';
+        });
     }
   </script>
   <!-- End Javascript Import -->

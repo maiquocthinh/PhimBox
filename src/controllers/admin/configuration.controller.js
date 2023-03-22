@@ -1,21 +1,22 @@
-const Configurations = require('../../models/configuration.models');
+const configurationModels = require('../../models/configuration.models');
 
 // ###### API ######
 
 // [PATCH] admin/configuration/update
 const configurationUpdate = (req, res) => {
-	Configurations.updateOne(
-		{},
-		{
-			web_title: req.body.web_title,
-			web_url: req.body.web_url,
-			web_description: req.body.web_description,
-			web_keyword: req.body.web_keys,
-			web_servers: req.body.web_servers,
-			web_tags: req.body.web_tags,
-			timecache: req.body.timecache,
-		},
-	)
+	configurationModels
+		.updateOne(
+			{},
+			{
+				web_title: req.body.web_title,
+				web_url: req.body.web_url,
+				web_description: req.body.web_description,
+				web_keyword: req.body.web_keys,
+				web_servers: req.body.web_servers,
+				web_tags: req.body.web_tags,
+				timecache: req.body.timecache,
+			},
+		)
 		.then(() => {
 			res.status(200).json({ message: 'Update Configurations Success' });
 		})
@@ -28,7 +29,8 @@ const configurationUpdate = (req, res) => {
 
 // [GET] admin/configuration
 const configuration = (req, res) => {
-	Configurations.findOne()
+	configurationModels
+		.findOne()
 		.then((config) => {
 			const timecache = config._doc.timecache;
 			res.render('admin/configuration', {

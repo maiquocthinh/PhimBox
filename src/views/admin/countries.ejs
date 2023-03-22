@@ -246,6 +246,11 @@
 						targets: [4],
 					},
 				],
+				order: [[2, 'desc']],
+				language: {
+					processing:
+						'<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span><span> Loading...</span>',
+				},
 			});
 			$('#tableCountry_filter input').unbind();
 			$('#tableCountry_filter input').bind('keyup', function (e) {

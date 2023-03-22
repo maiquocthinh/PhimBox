@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs');
-const Users = require('../../models/user.models');
+const userModels = require('../../models/user.models');
 const { validateEmail } = require('../../utils');
 
 // ###### API ######
@@ -13,7 +13,7 @@ const loginHandler = async (req, res) => {
 	if (!validateEmail(email)) return res.status(400).json({ message: 'The email is invalid.' });
 
 	try {
-		const user = await Users.findOne({ email: email });
+		const user = await userModels.findOne({ email: email });
 		if (!user) return res.status(400).json({ message: 'The email is not registered in our system.' });
 
 		if (!bcrypt.compareSync(password, user.password))

@@ -150,8 +150,7 @@ const updateUser = (req, res) => {
 		.then(async () => {
 			// change user info in current session
 			if (req.session.user._id === req.params.id) {
-				const user = await Users.findById(req.params.id);
-				user.password = undefined;
+				const user = await Users.findById(req.params.id, { password: 0 });
 				req.session.user = user;
 			}
 			res.status(200).json({ message: 'Update User Success' });

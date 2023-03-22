@@ -1,4 +1,4 @@
-const Countries = require('../../models/country.models');
+const countryModels = require('../../models/country.models');
 
 // ###### API ######
 
@@ -13,13 +13,17 @@ const ajaxDatatablesCountries = async (req, res) => {
 
 	if (search.value) queryToDB.name = new RegExp(search.value, 'i');
 
-	const totalCountry = deleted ? await Countries.countDocumentsDeleted({}) : await Countries.countDocuments({});
+	const totalCountry = deleted
+		? await countryModels.countDocumentsDeleted({})
+		: await countryModels.countDocuments({});
 	const dataCountries = deleted
-		? await Countries.findDeleted(queryToDB)
+		? await countryModels
+				.findDeleted(queryToDB)
 				.skip(start)
 				.limit(length)
 				.sort({ [columnName]: columnSortOrder })
-		: await Countries.find(queryToDB)
+		: await countryModels
+				.find(queryToDB)
 				.skip(start)
 				.limit(length)
 				.sort({ [columnName]: columnSortOrder });
@@ -55,7 +59,7 @@ const ajaxDatatablesCountries = async (req, res) => {
 
 // [POST] admin/countries/create
 const createCountry = (req, res) => {
-	const country = new Countries({
+	const country = new countryModels({
 		name: req.body.name,
 		slug: req.body.slug,
 	});
@@ -72,7 +76,7 @@ const createCountry = (req, res) => {
 // [GET] admin/countries/read/:id
 const readCountry = async (req, res) => {
 	try {
-		const country = await Countries.findById(req.params.id);
+		const country = await countryModels.findById(req.params.id);
 		res.status(200).json(country);
 	} catch (error) {
 		return res.status(500).json(error);
@@ -81,13 +85,14 @@ const readCountry = async (req, res) => {
 
 // [PUT] admin/countries/update/:id
 const updateCountry = (req, res) => {
-	Countries.updateOne(
-		{ _id: req.params.id },
-		{
-			name: req.body.name,
-			slug: req.body.slug,
-		},
-	)
+	countryModels
+		.updateOne(
+			{ _id: req.params.id },
+			{
+				name: req.body.name,
+				slug: req.body.slug,
+			},
+		)
 		.then(() => {
 			res.status(200).json({ message: 'Update Country Success' });
 		})
@@ -98,7 +103,8 @@ const updateCountry = (req, res) => {
 
 // [DELETE] admin/countries/delete/:id
 const deleteCountry = (req, res) => {
-	Countries.delete({ _id: req.params.id })
+	countryModels
+		.delete({ _id: req.params.id })
 		.then(() => {
 			res.status(200).json({ message: 'Delete Country Success!' });
 		})
@@ -109,7 +115,8 @@ const deleteCountry = (req, res) => {
 
 // [PATCH] admin/countries/restore/:id
 const restoreCountry = (req, res) => {
-	Countries.restore({ _id: req.params.id })
+	countryModels
+		.restore({ _id: req.params.id })
 		.then(() => {
 			res.status(200).json({ message: 'Restore Country Success' });
 		})
@@ -120,7 +127,8 @@ const restoreCountry = (req, res) => {
 
 // [DELETE] admin/countries/destroy/:id
 const destroyCountry = (req, res) => {
-	Countries.deleteOne({ _id: req.params.id })
+	countryModels
+		.deleteOne({ _id: req.params.id })
 		.then(() => {
 			res.status(200).json({ message: 'Delete Country Success!' });
 		})

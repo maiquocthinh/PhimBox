@@ -1,8 +1,8 @@
-const Films = require('../../models/film.models');
-const Categories = require('../../models/category.models');
-const Countries = require('../../models/country.models');
 const ajaxFilmsUtil = require('../../utils/ajaxFilms.util');
 const { nanoid } = require('nanoid');
+const filmModels = require('../../models/film.models');
+const categoryModels = require('../../models/category.models');
+const countryModels = require('../../models/country.models');
 
 // ###### API ######
 
@@ -13,7 +13,7 @@ const ajaxDatatablesFilms = async (req, res) => {
 	const columnIndex = order[0]['column'];
 	const columnName = columns[columnIndex]['name'] || 'createdAt';
 	const columnSortOrder = order[0]['dir'] === 'asc' ? 1 : -1;
-	const listCategories = await Categories.find();
+	const listCategories = await categoryModels.find();
 	let queryToDB = {};
 
 	if (search.value) queryToDB.originalName = new RegExp(search.value, 'i');
@@ -69,15 +69,17 @@ const ajaxDatatablesFilms = async (req, res) => {
 		}
 	console.log(queryToDB);
 	const dataFilmsWithFilter = deleted
-		? await Films.findDeleted(queryToDB)
+		? await filmModels
+				.findDeleted(queryToDB)
 				.skip(start)
 				.limit(length)
 				.sort({ [columnName]: columnSortOrder })
-		: await Films.find(queryToDB)
+		: await filmModels
+				.find(queryToDB)
 				.skip(start)
 				.limit(length)
 				.sort({ [columnName]: columnSortOrder });
-	const totalFilm = deleted ? await Films.countDocumentsDeleted({}) : await Films.countDocuments({});
+	const totalFilm = deleted ? await filmModels.countDocumentsDeleted({}) : await filmModels.countDocuments({});
 
 	const data = dataFilmsWithFilter.map((film) => [
 		film.id,
@@ -129,7 +131,7 @@ const ajaxDatatablesFilms = async (req, res) => {
 
 // [POST] admin/films/create
 const createFilm = (req, res) => {
-	const films = new Films({
+	const films = new filmModels({
 		id: nanoid(7),
 		name: req.body.name,
 		originalName: req.body.original_name,
@@ -172,7 +174,7 @@ const createFilm = (req, res) => {
 // [GET] admin/films/read/:id
 const readFilm = async (req, res) => {
 	try {
-		const film = await Films.findById(req.params.id);
+		const film = await filmModels.findById(req.params.id);
 		res.status(200).json(film);
 	} catch (error) {
 		res.status(500).json({ error: error.message });
@@ -181,37 +183,38 @@ const readFilm = async (req, res) => {
 
 // [PUT] admin/films/update/:id
 const updateFilm = (req, res) => {
-	Films.updateOne(
-		{ _id: req.params.id },
-		{
-			name: req.body.name,
-			originalName: req.body.original_name,
-			status: req.body.status,
-			viewable: !!req.body.viewable,
-			poster: req.body.poster,
-			backdrops: req.body.backdrops,
-			backdropsCanonical: req.body.backdrops_canonical,
-			logo: req.body.logo,
-			category: req.body.categories,
-			country: req.body.countries,
-			trailer: req.body.trailer,
-			duration: req.body.duration,
-			quality: req.body.quality,
-			year: req.body.year,
-			imdb: req.body.imdb,
-			language: req.body.language,
-			type: req.body.type,
-			inCinema: req.body.in_cinema,
-			recommend: req.body.recommend,
-			canonical: req.body.canonical,
-			notify: req.body.notify,
-			description: req.body.description,
-			info: req.body.info,
-			tag: req.body.tags,
-			tagAscii: req.body.tagsascii,
-			updatedBy: req.session.user._id,
-		},
-	)
+	filmModels
+		.updateOne(
+			{ _id: req.params.id },
+			{
+				name: req.body.name,
+				originalName: req.body.original_name,
+				status: req.body.status,
+				viewable: !!req.body.viewable,
+				poster: req.body.poster,
+				backdrops: req.body.backdrops,
+				backdropsCanonical: req.body.backdrops_canonical,
+				logo: req.body.logo,
+				category: req.body.categories,
+				country: req.body.countries,
+				trailer: req.body.trailer,
+				duration: req.body.duration,
+				quality: req.body.quality,
+				year: req.body.year,
+				imdb: req.body.imdb,
+				language: req.body.language,
+				type: req.body.type,
+				inCinema: req.body.in_cinema,
+				recommend: req.body.recommend,
+				canonical: req.body.canonical,
+				notify: req.body.notify,
+				description: req.body.description,
+				info: req.body.info,
+				tag: req.body.tags,
+				tagAscii: req.body.tagsascii,
+				updatedBy: req.session.user._id,
+			},
+		)
 		.then(() => {
 			res.status(200).json({ message: 'Update Film Success' });
 		})
@@ -222,7 +225,8 @@ const updateFilm = (req, res) => {
 
 // [DELETE] admin/films/delete/:id
 const deleteFilm = (req, res) => {
-	Films.delete({ _id: req.params.id })
+	filmModels
+		.delete({ _id: req.params.id })
 		.then(() => {
 			res.send({ message: 'Delete Film Success!' });
 		})
@@ -233,7 +237,8 @@ const deleteFilm = (req, res) => {
 
 // [PATCH] admin/films/restore/:id
 const restoreFilm = (req, res) => {
-	Films.restore({ _id: req.params.id })
+	filmModels
+		.restore({ _id: req.params.id })
 		.then(() => {
 			res.status(200).json({ message: 'Restore Film Success' });
 		})
@@ -244,7 +249,8 @@ const restoreFilm = (req, res) => {
 
 // [DELETE] admin/films/destroy/:id
 const destroyFilm = (req, res) => {
-	Films.deleteOne({ _id: req.params.id })
+	filmModels
+		.deleteOne({ _id: req.params.id })
 		.then(() => {
 			res.status(200).json({ message: 'Delete Permanently Film Success!' });
 		})
@@ -255,7 +261,8 @@ const destroyFilm = (req, res) => {
 // [DELETE] admin/films/delete-many/
 const deleteManyFilm = (req, res) => {
 	const { ids } = req.body;
-	Films.delete({ id: { $in: ids } })
+	filmModels
+		.delete({ id: { $in: ids } })
 		.then(() => {
 			res.send({ message: 'Delete Films Success!' });
 		})
@@ -267,7 +274,8 @@ const deleteManyFilm = (req, res) => {
 // [PATCH] admin/films/restore-many/
 const restoreManyFilm = (req, res) => {
 	const { ids } = req.body;
-	Films.restore({ id: { $in: ids } })
+	filmModels
+		.restore({ id: { $in: ids } })
 		.then(() => {
 			res.status(200).json({ message: 'Restore Films Success' });
 		})
@@ -279,7 +287,8 @@ const restoreManyFilm = (req, res) => {
 // [DELETE] admin/films/destroy-many/
 const destroyManyFilm = (req, res) => {
 	const { ids } = req.body;
-	Films.deleteMany({ id: { $in: ids } })
+	filmModels
+		.deleteMany({ id: { $in: ids } })
 		.then(() => {
 			res.status(200).json({ message: 'Delete Permanently Films Success!' });
 		})
@@ -293,8 +302,8 @@ const destroyManyFilm = (req, res) => {
 // [GET] admin/films/add
 const addFilm = async (req, res) => {
 	try {
-		const categories = await Categories.find({}, { _id: 1, name: 1 });
-		const countries = await Countries.find({}, { _id: 1, name: 1 });
+		const categories = await categoryModels.find({}, { _id: 1, name: 1 });
+		const countries = await countryModels.find({}, { _id: 1, name: 1 });
 
 		res.render('admin/addFilm', {
 			user: req.session.user,
@@ -309,8 +318,8 @@ const addFilm = async (req, res) => {
 // [GET] admin/films
 const allFilms = async (req, res) => {
 	try {
-		const categories = await Categories.find({}, { _id: 1, name: 1 });
-		const countries = await Countries.find({}, { _id: 1, name: 1 });
+		const categories = await categoryModels.find({}, { _id: 1, name: 1 });
+		const countries = await countryModels.find({}, { _id: 1, name: 1 });
 
 		res.render('admin/films', {
 			user: req.session.user,

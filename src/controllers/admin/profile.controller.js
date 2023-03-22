@@ -19,8 +19,7 @@ const update = (req, res) => {
 		userModels.findByIdAndUpdate(userId, { email, name, password: hashPassword, avatar }).then(async () => {
 			// change user info in current session
 			if (req.session.user._id === req.params.id) {
-				const user = await userModels.findById(req.params.id);
-				user.password = undefined;
+				const user = await userModels.findById(req.params.id, { password: 0 });
 				req.session.user = user;
 			}
 			return res.status(200).json({ message: 'Change profile success.' });

@@ -719,6 +719,10 @@
 					selector: 'td:first-child > input[type="checkbox"], th:first-child > input[type="checkbox"]',
 				},
 				order: [[5, 'desc']],
+				language: {
+					processing:
+						'<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span><span> Loading...</span>',
+				},
 			});
 
 			$('#tableEpisode_filter input')

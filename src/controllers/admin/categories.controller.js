@@ -1,4 +1,4 @@
-const Categories = require('../../models/category.models');
+const categoryModels = require('../../models/category.models');
 
 // ###### API ######
 
@@ -13,13 +13,17 @@ const ajaxDatatablesCategories = async (req, res) => {
 
 	if (search.value) queryToDB.name = new RegExp(search.value, 'i');
 
-	const totalCategory = deleted ? await Categories.countDocumentsDeleted({}) : await Categories.countDocuments({});
+	const totalCategory = deleted
+		? await categoryModels.countDocumentsDeleted({})
+		: await categoryModels.countDocuments({});
 	const dataCategories = deleted
-		? await Categories.findDeleted(queryToDB)
+		? await categoryModels
+				.findDeleted(queryToDB)
 				.skip(start)
 				.limit(length)
 				.sort({ [columnName]: columnSortOrder })
-		: await Categories.find(queryToDB)
+		: await categoryModels
+				.find(queryToDB)
 				.skip(start)
 				.limit(length)
 				.sort({ [columnName]: columnSortOrder });
@@ -55,7 +59,7 @@ const ajaxDatatablesCategories = async (req, res) => {
 
 // [POST] admin/categories/create
 const createCategory = (req, res) => {
-	const category = new Categories({
+	const category = new categoryModels({
 		name: req.body.name,
 		slug: req.body.slug,
 	});
@@ -72,7 +76,7 @@ const createCategory = (req, res) => {
 // [GET] admin/categories/read/:id
 const readCategory = async (req, res) => {
 	try {
-		const category = await Categories.findById(req.params.id);
+		const category = await categoryModels.findById(req.params.id);
 		res.status(200).json(category);
 	} catch (error) {
 		return res.status(500).json(error);
@@ -81,13 +85,14 @@ const readCategory = async (req, res) => {
 
 // [PUT] admin/categories/update/:id
 const updateCategory = (req, res) => {
-	Categories.updateOne(
-		{ _id: req.params.id },
-		{
-			name: req.body.name,
-			slug: req.body.slug,
-		},
-	)
+	categoryModels
+		.updateOne(
+			{ _id: req.params.id },
+			{
+				name: req.body.name,
+				slug: req.body.slug,
+			},
+		)
 		.then(() => {
 			res.status(200).json({ message: 'Update Category Success' });
 		})
@@ -98,7 +103,8 @@ const updateCategory = (req, res) => {
 
 // [DELETE] admin/categories/delete/:id
 const deleteCategory = (req, res) => {
-	Categories.delete({ _id: req.params.id })
+	categoryModels
+		.delete({ _id: req.params.id })
 		.then(() => {
 			res.status(200).json({ message: 'Delete Category Success!' });
 		})
@@ -109,7 +115,8 @@ const deleteCategory = (req, res) => {
 
 // [PATCH] admin/categories/restore/:id
 const restoreCategory = (req, res) => {
-	Categories.restore({ _id: req.params.id })
+	categoryModels
+		.restore({ _id: req.params.id })
 		.then(() => {
 			res.status(200).json({ message: 'Restore Category Success' });
 		})
@@ -120,7 +127,8 @@ const restoreCategory = (req, res) => {
 
 // [DELETE] admin/categories/destroy/:id
 const destroyCategory = (req, res) => {
-	Categories.deleteOne({ _id: req.params.id })
+	categoryModels
+		.deleteOne({ _id: req.params.id })
 		.then(() => {
 			res.status(200).json({ message: 'Delete Permanently Category Success!' });
 		})

@@ -367,7 +367,6 @@
 				theme: 'bootstrap4',
 				width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
 				placeholder: $(this).data('placeholder'),
-				// placeholder: $(this).attributes.placeholder.textContent,
 				allowClear: Boolean($(this).data('allow-clear')),
 			});
 
@@ -376,33 +375,35 @@
 			if (formInfoFilm)
 				formInfoFilm.onsubmit = function (e) {
 					e.preventDefault();
-					const formData = {};
-					new FormData(formInfoFilm).forEach((value, key) => (formData[key] = value));
-          formData.categories = $('.multiple-select[name="categories"]')
+					const formData = Object.fromEntries(new FormData(formInfoFilm));
+					formData.info = CKEDITOR.instances['info_film'].getData();
+          			formData.categories = $('.multiple-select[name="categories"]')
 						.select2('data')
 						.map(({ id }) => id);
 					formData.countries = $('.multiple-select[name="countries"]')
 						.select2('data')
 						.map(({ id }) => id);
 
+					console.log('formData :>> ', formData);
+
 					$.ajax({
-            type: 'POST',
-            url: '/admin/films/create',
-            data: formData,
-          })
-          .done((res) => {
-            // reset form
-            formInfoFilm.reset();
-            $('.multiple-select').select2('val', 'All');
-            notyf.success(res.message);
-          })
-          .fail(({ responseJSON }) => {
-            // reset form
-            formInfoFilm.reset();
-            $('.multiple-select').select2('val', 'All');
-            CKEDITOR.instances.info_film.setData('');
-            notyf.error(responseJSON.message);
-          });
+						type: 'POST',
+						url: '/admin/films/create',
+						data: formData,
+					})
+					.done((res) => {
+						// reset form
+						formInfoFilm.reset();
+						$('.multiple-select').select2('val', 'All');
+						notyf.success(res.message);
+					})
+					.fail(({ responseJSON }) => {
+						// reset form
+						formInfoFilm.reset();
+						$('.multiple-select').select2('val', 'All');
+						CKEDITOR.instances.info_film.setData('');
+						notyf.error(responseJSON.message);
+					});
 				};
 		</script>
 		<!-- End Javascript Import -->

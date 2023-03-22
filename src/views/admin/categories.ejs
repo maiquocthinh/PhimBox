@@ -250,6 +250,11 @@
 						targets: [4],
 					},
 				],
+				order: [[2, 'desc']],
+				language: {
+					processing:
+						'<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span><span> Loading...</span>',
+				},
 			});
 			$('#tableCategory_filter input').unbind();
 			$('#tableCategory_filter input').bind('keyup', function (e) {
@@ -346,7 +351,7 @@
 						});
 				};
 
-			// Fill name, id of film to modal delete
+			// Fill name, id of category to modal delete
 			function fillDataToDeletePermanentlyForm(name, id) {
 				document.querySelector('#permanently-text').classList.remove('d-none');
 				document.querySelector('#category-name-text').textContent = name;
