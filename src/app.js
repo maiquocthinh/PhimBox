@@ -5,12 +5,12 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const fileupload = require('express-fileupload');
 const RedisStore = require('connect-redis')(session);
-const { createClient } = require('redis');
 // const morgan = require("morgan");
 require('dotenv').config();
 
 const routes = require('./routes');
 const db = require('./config/db.config');
+const redisClient = require('./database/init.redis');
 
 const PORT = process.env.PORT || 8000;
 
@@ -21,11 +21,6 @@ db.connect();
 app.use(express.static(path.join(__dirname, '../public')));
 
 // middlewares
-const redisClient = createClient({
-	host: process.env.REDIS_HOSTNAME,
-	port: process.env.REDIS_PORT,
-	password: process.env.REDIS_PASSWORD,
-});
 app.use(
 	session({
 		store: new RedisStore({ client: redisClient }),

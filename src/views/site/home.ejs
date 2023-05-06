@@ -30,283 +30,46 @@
               <h2 class="section-bar__title"><span><i class="iconify section-bar__icon" data-icon="bi:star-fill"></i> Phim Hot</span><i class="skew-left"></i></h2>
             </div>
             <div id="xpo-hot" class="owl-carousel owl-theme xpo-box">
-              <div class="item">
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Liên Minh Công Lý: Phiên bản của Zack Snyder - Zack Snyder’s Justice League (2021)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1616846455/phimbox_images/Poster-lien-minh-cong-ly-phien-ban-cua-zack-snyder.jpg" alt="Liên Minh Công Lý: Phiên bản của Zack Snyder - Zack Snyder’s Justice League (2021)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">2021</span>
-                    <span class="xpo-language">Vietsub</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Liên Minh Công Lý: Phiên bản của Zack Snyder - Zack Snyder’s Justice League (2021)">Liên Minh Công Lý: Phiên bản của Zack Snyder - Zack Snyder’s Justice League (2021)</a>
-                      </h3>
-                      <p class="xpo-original-name">Zack Snyder’s Justice League</p>
+              <% for (const film of home.listFilmRecommend) { %>
+                <div class="item">
+                  <div class="xpo-item">
+                    <a class="xpo-thumb" href="/info/<%=film.slug%>" title="<%=film.name%> - <%=film.originalName%> (<%=film.year%>)">
+                      <img src="<%=film.poster%>" alt="<%=film.name%> - <%=film.originalName%> (<%=film.year%>)">
+                      <span class="xpo-status"><%=film.status%></span>
+                      <span class="xpo-year"><%=film.year%></span>
+                      <span class="xpo-language"><%=film.language%></span>
+                      <div class="xpo-icon-overlay"></div>
+                    </a>
+                    <div class="xpo-content">
+                      <div class="xpo-content__name">
+                        <h3 class="xpo-vn-name">
+                          <a href="/info/<%=film.slug%>" title="<%=film.name%> - <%=film.originalName%> (<%=film.year%>)"><%=film.name%> - <%=film.originalName%> (<%=film.year%>)</a>
+                        </h3>
+                        <p class="xpo-original-name"><%=film.originalName%></p>
+                      </div>
                     </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Zack Snyder’s Justice League (2021)" data-original-name="Zack Snyder’s Justice League" data-imdb="8.4" data-duration="242 phút" data-year="2021" data-short-description="Bản Justice League dài 4 tiếng của đạo diễn Zack Snyder là bản dựng mang đúng phong cách Snyder - một trong những nhà sáng tạo quan trọng của vũ trụ siêu anh hùng DC với tầm nhìn xa và giọng kể riêng" data-countries="Mỹ," data-categories="Hình Sự, Hài Hước, Tâm Lý," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Wanda và Vision (Phần 1) - Wanda Vision (Season 1) (2021)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612932327/phimbox_images/Poster-wanda-va-vision-phan-1.jpg" alt="Wanda và Vision (Phần 1) - Wanda Vision (Season 1) (2021)">
-                    <span class="xpo-status">9/9</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Wanda và Vision (Phần 1) - Wanda Vision (Season 1) (2021)">Wanda và Vision (Phần 1)</a>
-                      </h3>
-                      <p class="xpo-original-name">Wanda Vision (Season 1)</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Wanda và Vision (Phần 1)" data-original-name="Wanda Vision (Season 1)" data-imdb="8.4" data-duration="32 phút/tập" data-year="2021" data-short-description="Bộ phim pha trộn giữa phong cách phim sitcom cổ điển với MCU. Wanda Maximoff và Vision - hai con người với năng lực siêu nhiên đang có cuộc sống vô cùng lí tưởng ở vùng ngoại ô, lại bắt đầu nảy sinh những nghi ngờ về đối phương" data-countries="Mỹ," data-categories="Hình Sự, Hài Hước, Tâm Lý," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-
-                    <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
+                    <div class="xpo-mini-info__data" style="display:none;" data-name="<%=film.name%> (<%=film.year%>)" data-original-name="<%=film.originalName%>" data-imdb="<%=film.imdb%>" data-duration="<%=film.duration%>" data-year="<%=film.year%>" data-short-description="<%=film.description%>" data-countries="Mỹ," data-categories="Hình Sự, Hài Hước, Tâm Lý," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
                   </div>
                 </div>
-              </div>
-              <div class="item">
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-              </div>
+              <% } %>
             </div>
           </div>
         </div>
         <main class="main-content col col-lg-9 col-md-9 col-sm-12">
           <section class="xpo-slide-full xpo-violet">
             <ul class="owl-carousel owl-theme xpo-slide-full__list">
-              <li>
-                <a href="./info.html" title="Liên Minh Công Lý: Phiên bản của Zack Snyder - Zack Snyder’s Justice League (2021)" class="xpo-slide-full__item">
-                  <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_854,h_480/v1616846434/phimbox_images/Banner-lien-minh-cong-ly-phien-ban-cua-zack-snyder.jpg" alt="Liên Minh Công Lý: Phiên bản của Zack Snyder - Zack Snyder’s Justice League (2021)" class="xpo-slide-full__img">
-                  <div class="xpo-slide-full__text">
-                    <h3 class="xpo-slide-full__title">Liên Minh Công Lý: Phiên bản của Zack Snyder</h3>
-                    <p class="xpo-slide-full__original-title sm-hidden">Zack Snyder’s Justice League</p>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Zack Snyder’s Justice League (2021)" data-original-name="Zack Snyder’s Justice League" data-imdb="8.4" data-duration="242 phút" data-year="2021" data-short-description="Bản Justice League dài 4 tiếng của đạo diễn Zack Snyder là bản dựng mang đúng phong cách Snyder - một trong những nhà sáng tạo quan trọng của vũ trụ siêu anh hùng DC với tầm nhìn xa và giọng kể riêng" data-countries="Mỹ," data-categories="Hình Sự, Hài Hước, Tâm Lý," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </a>
-              </li>
-              <li>
-                <a href="./info.html" title="Wanda và Vision (Phần 1) - Wanda Vision (Season 1) (2021)" class="xpo-slide-full__item">
-                  <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_854,h_480/v1612932336/phimbox_images/Banner-wanda-va-vision-phan-1.jpg" alt="Wanda và Vision (Phần 1) - Wanda Vision (Season 1) (2021)" class="xpo-slide-full__img">
-                  <div class="xpo-slide-full__text">
-                    <h3 class="xpo-slide-full__title">Wanda và Vision (Phần 1)</h3>
-                    <p class="xpo-slide-full__original-title sm-hidden">Wanda Vision (Season 1)</p>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Wanda và Vision (Phần 1)" data-original-name="Wanda Vision (Season 1)" data-imdb="8.4" data-duration="32 phút/tập" data-year="2021" data-short-description="Bộ phim pha trộn giữa phong cách phim sitcom cổ điển với MCU. Wanda Maximoff và Vision - hai con người với năng lực siêu nhiên đang có cuộc sống vô cùng lí tưởng ở vùng ngoại ô, lại bắt đầu nảy sinh những nghi ngờ về đối phương" data-countries="Mỹ," data-categories="Hình Sự, Hài Hước, Tâm Lý," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </a>
-              </li>
-              <li>
-                <a href="./info.html" title="Cuộc Sống Nhiệm Màu - Soul (2020)" class="xpo-slide-full__item">
-                  <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_854,h_480/v1612603746/phimbox_images/Banner-cuoc-song-nhiem-mau.jpg" alt="Cuộc Sống Nhiệm Màu - Soul (2020)" class="xpo-slide-full__img">
-                  <div class="xpo-slide-full__text">
-                    <h3 class="xpo-slide-full__title">Cuộc Sống Nhiệm Màu</h3>
-                    <p class="xpo-slide-full__original-title sm-hidden">Soul</p>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Cuộc Sống Nhiệm Màu" data-original-name="Soul" data-imdb="8.2" data-duration="100 phút" data-year="2020" data-short-description="Điều gì khiến bạn là chính bạn? Cuối năm nay, hãng phim hoạt hình danh tiếng Pixar sẽ trình làng một tác phẩm mới mang tên SOUL – CUỘC SỐNG NHIỆM MÀU với nhân vật chính là Joe Gardner một giáo viên dạy nhạc ở trường trung học. Anh vừa nhận được một cơ hội duy nhất trong đời khi có thể được tham gia chơi Jazz cho một ban nhạc nổi nhất thành phố." data-countries="Mỹ," data-categories="Viễn Tưởng, Tâm Lý," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </a>
-              </li>
+              <% for (const film of home.listFilmCanonical) { %>
+                <li>
+                  <a href="/info/<%=film.slug%>" title="<%=film.name%> - <%=film.originalName%> (<%=film.year%>)" class="xpo-slide-full__item">
+                    <img src="<%=film.backdropsCanonical%>" alt="<%=film.name%> - <%=film.originalName%> (<%=film.year%>)" class="xpo-slide-full__img">
+                    <div class="xpo-slide-full__text">
+                      <h3 class="xpo-slide-full__title"><%=film.name%></h3>
+                      <p class="xpo-slide-full__original-title sm-hidden"><%=film.originalName%></p>
+                    </div>
+                    <div class="xpo-mini-info__data" style="display:none;" data-name="<%=film.name%> (<%=film.year%>)" data-original-name="<%=film.originalName%>" data-imdb="<%=film.imdb%>" data-duration="<%=film.duration%>" data-year="<%=film.year%>" data-short-description="<%=film.description%>" data-countries="Mỹ," data-categories="Hình Sự, Hài Hước, Tâm Lý," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
+                  </a>
+                </li>
+              <% } %>
             </ul>
           </section>
           <section class="xpo-cat xpo-red">
@@ -316,348 +79,54 @@
               <div class="section-bar__view-more"><a href="#"><i class="iconify section-bar__icon" data-icon="fluent:add-circle-16-regular"></i> Xem thêm</a></div>
             </div>
             <div class="owl-carousel owl-theme xpo-content-cat xpo-box">
-              <div class="xpo-2row">
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
+              <% for (let index = 0; index < home.listFilmMovie.length; index+=2) { %>
+                <% 
+                  const film1 = home.listFilmMovie[index];
+                  const film2 = home.listFilmMovie[index+1];
+                %>
+                <div class="xpo-2row">
+                  <% if(film1) { %>
+                  <div class="xpo-item">
+                    <a class="xpo-thumb" href="/info/<%=film1.slug%>" title="<%=film1.name%> - <%=film1.originalName%> (<%=film1.year%>)">
+                      <img src="<%=film1.poster%>" alt="<%=film1.name%> - <%=film1.originalName%> (<%=film1.year%>)">
+                      <span class="xpo-status"><%=film1.status%></span>
+                      <span class="xpo-year"><%=film1.year%></span>
+                      <span class="xpo-language"><%=film1.language%></span>
+                      <div class="xpo-icon-overlay"></div>
+                    </a>
+                    <div class="xpo-content">
+                      <div class="xpo-content__name">
+                        <h3 class="xpo-vn-name">
+                          <a href="/info/<%=film1.slug%>" title="<%=film1.name%> - <%=film1.originalName%> (<%=film1.year%>)"><%=film1.name%> - <%=film1.originalName%> (<%=film1.year%>)</a>
+                        </h3>
+                        <p class="xpo-original-name"><%=film1.originalName%></p>
+                      </div>
                     </div>
+                    <div class="xpo-mini-info__data" style="display:none;" data-name="<%=film1.name%> (<%=film1.year%>)" data-original-name="<%=film1.originalName%>" data-imdb="<%=film1.imdb%>" data-duration="<%=film1.duration%>" data-year="<%=film1.year%>" data-short-description="<%=film1.description%>" data-countries="Mỹ," data-categories="Hình Sự, Hài Hước, Tâm Lý," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
                   </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
+                  <% } %>
+                  <% if(film2) { %>
+                  <div class="xpo-item">
+                    <a class="xpo-thumb" href="/info/<%=film2.slug%>" title="<%=film2.name%> - <%=film2.originalName%> (<%=film2.year%>)">
+                      <img src="<%=film2.poster%>" alt="<%=film2.name%> - <%=film2.originalName%> (<%=film2.year%>)">
+                      <span class="xpo-status"><%=film2.status%></span>
+                      <span class="xpo-year"><%=film2.year%></span>
+                      <span class="xpo-language"><%=film2.language%></span>
+                      <div class="xpo-icon-overlay"></div>
+                    </a>
+                    <div class="xpo-content">
+                      <div class="xpo-content__name">
+                        <h3 class="xpo-vn-name">
+                          <a href="/info/<%=film2.slug%>" title="<%=film2.name%> - <%=film2.originalName%> (<%=film2.year%>)"><%=film2.name%> - <%=film2.originalName%> (<%=film2.year%>)</a>
+                        </h3>
+                        <p class="xpo-original-name"><%=film2.originalName%></p>
+                      </div>
                     </div>
+                    <div class="xpo-mini-info__data" style="display:none;" data-name="<%=film2.name%> (<%=film2.year%>)" data-original-name="<%=film2.originalName%>" data-imdb="<%=film2.imdb%>" data-duration="<%=film2.duration%>" data-year="<%=film2.year%>" data-short-description="<%=film2.description%>" data-countries="Mỹ," data-categories="Hình Sự, Hài Hước, Tâm Lý," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
                   </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
+                  <% } %>
                 </div>
-              </div>
-              <div class="xpo-2row">
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-              </div>
-              <div class="xpo-2row">
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-              </div>
-              <div class="xpo-2row">
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-              </div>
-              <div class="xpo-2row">
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-              </div>
-              <div class="xpo-2row">
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-              </div>
-              <div class="xpo-2row">
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-              </div>
-              <div class="xpo-2row">
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-              </div>
-              <div class="xpo-2row">
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-              </div>
+              <% } %>
             </div>
           </section>
           <section class="xpo-cat xpo-orange">
@@ -667,348 +136,54 @@
               <div class="section-bar__view-more"><a href="#"><i class="iconify section-bar__icon" data-icon="fluent:add-circle-16-regular"></i> Xem thêm</a></div>
             </div>
             <div class="owl-carousel owl-theme xpo-content-cat xpo-box">
-              <div class="xpo-2row">
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
+              <% for (let index = 0; index < home.listFilmSeries.length; index+=2) { %>
+                <% 
+                  const film1 = home.listFilmSeries[index];
+                  const film2 = home.listFilmSeries[index+1];
+                %>
+                <div class="xpo-2row">
+                  <% if(film1) { %>
+                  <div class="xpo-item">
+                    <a class="xpo-thumb" href="/info/<%=film1.slug%>" title="<%=film1.name%> - <%=film1.originalName%> (<%=film1.year%>)">
+                      <img src="<%=film1.poster%>" alt="<%=film1.name%> - <%=film1.originalName%> (<%=film1.year%>)">
+                      <span class="xpo-status"><%=film1.status%></span>
+                      <span class="xpo-year"><%=film1.year%></span>
+                      <span class="xpo-language"><%=film1.language%></span>
+                      <div class="xpo-icon-overlay"></div>
+                    </a>
+                    <div class="xpo-content">
+                      <div class="xpo-content__name">
+                        <h3 class="xpo-vn-name">
+                          <a href="/info/<%=film1.slug%>" title="<%=film1.name%> - <%=film1.originalName%> (<%=film1.year%>)"><%=film1.name%> - <%=film1.originalName%> (<%=film1.year%>)</a>
+                        </h3>
+                        <p class="xpo-original-name"><%=film1.originalName%></p>
+                      </div>
                     </div>
+                    <div class="xpo-mini-info__data" style="display:none;" data-name="<%=film1.name%> (<%=film1.year%>)" data-original-name="<%=film1.originalName%>" data-imdb="<%=film1.imdb%>" data-duration="<%=film1.duration%>" data-year="<%=film1.year%>" data-short-description="<%=film1.description%>" data-countries="Mỹ," data-categories="Hình Sự, Hài Hước, Tâm Lý," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
                   </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
+                  <% } %>
+                  <% if(film2) { %>
+                  <div class="xpo-item">
+                    <a class="xpo-thumb" href="/info/<%=film2.slug%>" title="<%=film2.name%> - <%=film2.originalName%> (<%=film2.year%>)">
+                      <img src="<%=film2.poster%>" alt="<%=film2.name%> - <%=film2.originalName%> (<%=film2.year%>)">
+                      <span class="xpo-status"><%=film2.status%></span>
+                      <span class="xpo-year"><%=film2.year%></span>
+                      <span class="xpo-language"><%=film2.language%></span>
+                      <div class="xpo-icon-overlay"></div>
+                    </a>
+                    <div class="xpo-content">
+                      <div class="xpo-content__name">
+                        <h3 class="xpo-vn-name">
+                          <a href="/info/<%=film2.slug%>" title="<%=film2.name%> - <%=film2.originalName%> (<%=film2.year%>)"><%=film2.name%> - <%=film2.originalName%> (<%=film2.year%>)</a>
+                        </h3>
+                        <p class="xpo-original-name"><%=film2.originalName%></p>
+                      </div>
                     </div>
+                    <div class="xpo-mini-info__data" style="display:none;" data-name="<%=film2.name%> (<%=film2.year%>)" data-original-name="<%=film2.originalName%>" data-imdb="<%=film2.imdb%>" data-duration="<%=film2.duration%>" data-year="<%=film2.year%>" data-short-description="<%=film2.description%>" data-countries="Mỹ," data-categories="Hình Sự, Hài Hước, Tâm Lý," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
                   </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
+                  <% } %>
                 </div>
-              </div>
-              <div class="xpo-2row">
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-              </div>
-              <div class="xpo-2row">
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-              </div>
-              <div class="xpo-2row">
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-              </div>
-              <div class="xpo-2row">
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-              </div>
-              <div class="xpo-2row">
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-              </div>
-              <div class="xpo-2row">
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-              </div>
-              <div class="xpo-2row">
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-              </div>
-              <div class="xpo-2row">
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-              </div>
+              <% } %>
             </div>
           </section>
           <section class="xpo-cat xpo-green">
@@ -1018,348 +193,54 @@
               <div class="section-bar__view-more"><a href="#"><i class="iconify section-bar__icon" data-icon="fluent:add-circle-16-regular"></i> Xem thêm</a></div>
             </div>
             <div class="owl-carousel owl-theme xpo-content-cat xpo-box">
-              <div class="xpo-2row">
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
+              <% for (let index = 0; index < home.listFilmAnimation.length; index+=2) { %>
+                <% 
+                  const film1 = home.listFilmAnimation[index];
+                  const film2 = home.listFilmAnimation[index+1];
+                %>
+                <div class="xpo-2row">
+                  <% if(film1) { %>
+                  <div class="xpo-item">
+                    <a class="xpo-thumb" href="/info/<%=film1.slug%>" title="<%=film1.name%> - <%=film1.originalName%> (<%=film1.year%>)">
+                      <img src="<%=film1.poster%>" alt="<%=film1.name%> - <%=film1.originalName%> (<%=film1.year%>)">
+                      <span class="xpo-status"><%=film1.status%></span>
+                      <span class="xpo-year"><%=film1.year%></span>
+                      <span class="xpo-language"><%=film1.language%></span>
+                      <div class="xpo-icon-overlay"></div>
+                    </a>
+                    <div class="xpo-content">
+                      <div class="xpo-content__name">
+                        <h3 class="xpo-vn-name">
+                          <a href="/info/<%=film1.slug%>" title="<%=film1.name%> - <%=film1.originalName%> (<%=film1.year%>)"><%=film1.name%> - <%=film1.originalName%> (<%=film1.year%>)</a>
+                        </h3>
+                        <p class="xpo-original-name"><%=film1.originalName%></p>
+                      </div>
                     </div>
+                    <div class="xpo-mini-info__data" style="display:none;" data-name="<%=film1.name%> (<%=film1.year%>)" data-original-name="<%=film1.originalName%>" data-imdb="<%=film1.imdb%>" data-duration="<%=film1.duration%>" data-year="<%=film1.year%>" data-short-description="<%=film1.description%>" data-countries="Mỹ," data-categories="Hình Sự, Hài Hước, Tâm Lý," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
                   </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
+                  <% } %>
+                  <% if(film2) { %>
+                  <div class="xpo-item">
+                    <a class="xpo-thumb" href="/info/<%=film2.slug%>" title="<%=film2.name%> - <%=film2.originalName%> (<%=film2.year%>)">
+                      <img src="<%=film2.poster%>" alt="<%=film2.name%> - <%=film2.originalName%> (<%=film2.year%>)">
+                      <span class="xpo-status"><%=film2.status%></span>
+                      <span class="xpo-year"><%=film2.year%></span>
+                      <span class="xpo-language"><%=film2.language%></span>
+                      <div class="xpo-icon-overlay"></div>
+                    </a>
+                    <div class="xpo-content">
+                      <div class="xpo-content__name">
+                        <h3 class="xpo-vn-name">
+                          <a href="/info/<%=film2.slug%>" title="<%=film2.name%> - <%=film2.originalName%> (<%=film2.year%>)"><%=film2.name%> - <%=film2.originalName%> (<%=film2.year%>)</a>
+                        </h3>
+                        <p class="xpo-original-name"><%=film2.originalName%></p>
+                      </div>
                     </div>
+                    <div class="xpo-mini-info__data" style="display:none;" data-name="<%=film2.name%> (<%=film2.year%>)" data-original-name="<%=film2.originalName%>" data-imdb="<%=film2.imdb%>" data-duration="<%=film2.duration%>" data-year="<%=film2.year%>" data-short-description="<%=film2.description%>" data-countries="Mỹ," data-categories="Hình Sự, Hài Hước, Tâm Lý," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
                   </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
+                  <% } %>
                 </div>
-              </div>
-              <div class="xpo-2row">
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-              </div>
-              <div class="xpo-2row">
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-              </div>
-              <div class="xpo-2row">
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-              </div>
-              <div class="xpo-2row">
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-              </div>
-              <div class="xpo-2row">
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-              </div>
-              <div class="xpo-2row">
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-              </div>
-              <div class="xpo-2row">
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-              </div>
-              <div class="xpo-2row">
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-                <div class="xpo-item">
-                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
-                    <span class="xpo-status">HD</span>
-                    <span class="xpo-year">1999</span>
-                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
-                    <div class="xpo-icon-overlay"></div>
-                  </a>
-                  <div class="xpo-content">
-                    <div class="xpo-content__name">
-                      <h3 class="xpo-vn-name">
-                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
-                      </h3>
-                      <p class="xpo-original-name">Toy Story 2</p>
-                    </div>
-                  </div>
-                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
-                </div>
-              </div>
+              <% } %>
             </div>
           </section>
         </main>
