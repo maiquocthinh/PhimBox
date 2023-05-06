@@ -4,13 +4,10 @@ const configurationModels = require('../../models/configuration.models');
 const redisClient = require('../../database/init.redis');
 
 const loadFromDatabase = async () => {
-	const { title, baseURL } = await configurationModels
-		.find({}, { web_title: 1, web_url: 1 })
-		.limit(1)
-		.then((result) => {
-			const { web_title: title, web_url: baseURL } = result[0];
-			return { title, baseURL };
-		});
+	const { title, baseURL } = await configurationModels.findOne({}, { web_title: 1, web_url: 1 }).then((result) => {
+		const { web_title: title, web_url: baseURL } = result;
+		return { title, baseURL };
+	});
 
 	const categories = await categoryModels.find({}, { name: 1, slug: 1 }).then((results) =>
 		results.map(({ name, slug }) => ({
