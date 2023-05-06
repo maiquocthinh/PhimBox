@@ -1,0 +1,105 @@
+/* Mobile */
+
+@media (max-width: 740px) {
+    .tab-content__item:hover {
+        transform: none;
+        -webkit-transform: none;
+    }
+
+    .sm-hidden {
+        display: none !important;
+    }
+
+    .header-logo__logo {
+        background: url(../images/logonew.png) no-repeat center center;
+        background-size: 200px;
+    }
+
+    .header-navbar__home-menu {
+        flex-direction: column;
+    }
+
+    .header-navbar__menu-item>a {
+        display: block;
+        width: 100%;
+        padding: 0 15px;
+        -webkit-tap-highlight-color: transparent
+    }
+
+    .header-navbar__menu-icon-down {
+        float: right;
+        transform: translateY(16px);
+    }
+
+    .dropdown-list {
+        width: 100%;
+        min-height: 200px;
+        max-height: 350px;
+        overflow-y: auto;
+        position: relative;
+        background-color: rgb(16, 26, 35);
+        display: block;
+    }
+
+    .dropdown-list li {
+        width: 50%;
+    }
+
+    .header-navbar__menu-item.dropdown>a:hover~.dropdown-list,
+    .dropdown-list:hover {
+        z-index: 2;
+    }
+
+    .header-search {
+        order: 6;
+    }
+
+    .header-search__box {
+        position: relative;
+        width: 100%;
+    }
+
+    .header-search__results-list {
+        top: calc(100% - 9px);
+        width: 100%;
+    }
+
+    .header-user__btn-user {
+        padding: 0;
+        margin-left: 0;
+    }
+
+    .section-bar__title {
+        max-width: 86%;
+    }
+
+    .xpo-film-info,
+    .xpo-film-cast,
+    .xpo-film-content,
+    .xpo-film-tags,
+    .xpo-film-comment,
+    .xpo-film-related,
+    .xpo-film-media {
+        padding: 0 8px;
+    }
+}
+
+
+/* Tablet */
+
+@media (min-width: 740px) and (max-width: 1023px) {
+    .md-hidden {
+        display: none !important;
+    }
+
+    .section-bar__title {
+        max-width: 90%;
+    }
+}
+
+/* Desktop */
+@media (min-width: 1023px) {
+    .lg-hidden {
+        display: none !important;
+    }
+}

@@ -1,5 +1,6 @@
-const home = (req, res) => {
-	res.render('site/home');
-};
+const homeController = require('./home.controller');
+const infoController = require('./info.controller');
+const watchController = require('./watch.controller');
+const catalogueController = require('./catalogue.controller');
 
-module.exports = { home };
+module.exports = { homeController, infoController, watchController, catalogueController };

@@ -1,0 +1,57 @@
+<div class="auth-modal hidden">
+	<div class="auth-modal__overlay"></div>
+	<div class="auth-modal__dialog">
+		<div class="modal-dialog__tabs">
+			<ul class="modal-dialog__tabs-list">
+				<li id="modal-dialog__tab-login" class="modal-dialog__tabs-item active">
+					<i class="iconify header-user__icon" data-icon="tabler:login" data-flip="horizontal"></i>
+					<span>Đăng Nhập</span>
+				</li>
+				<li id="modal-dialog__tab-register" class="modal-dialog__tabs-item">
+					<i class="iconify header-user__icon" data-icon="gridicons:multiple-users"></i> <span>Đăng Ký</span>
+				</li>
+				<li>
+					<a href="#" class="modal-dialog__tabs-close"><i class="iconify" data-icon="ion:close"></i></a>
+				</li>
+			</ul>
+		</div>
+		<div class="modal-dialog__content">
+			<div class="modal-login">
+				<form action="" method="post">
+					<input type="text" class="form-input" placeholder="Tên đăng nhập hoặc Email" required />
+					<input type="password" class="form-input" placeholder="Mật khẩu" required />
+					<div class="form-aside">
+						<label for="" class="remember-user"
+							><input type="checkbox" class="accept-checkbox" />Nhớ tài khoản</label
+						>
+						<a href="#" class="forgot-user">Quên mật khẩu?</a>
+					</div>
+					<button type="submit" class="modal-btn-submit">Đăng Nhập</button>
+				</form>
+			</div>
+			<div class="modal-register hidden">
+				<form action="" method="post">
+					<input type="text" class="form-input" placeholder="Họ tên" required />
+					<input type="text" class="form-input" placeholder="Tên đăng nhập" required />
+					<input type="email" class="form-input" placeholder="Email" required />
+					<input type="password" class="form-input" placeholder="Mật khẩu" required />
+					<input type="password" class="form-input" placeholder="Xác nhận mật khẩu" required />
+					<div class="form-aside">
+						<label for="" class="user-accept"
+							><input type="checkbox" required />Tôi đồng ý với <a href="#">điều khoản sử dụng</a></label
+						>
+					</div>
+					<button type="submit" class="modal-btn-submit">Đăng Ký</button>
+				</form>
+			</div>
+			<div class="modal-forgot hidden">
+				<form action="" method="post">
+					<h3>Đặt Lại Mật Khẩu</h3>
+					<p>Chúng tôi sẽ gửi link reset password đến email của bạn, truy cập vào link để reset password.</p>
+					<input type="email" class="form-input" placeholder="Email của bạn" required />
+					<button type="submit" class="modal-btn-submit">Gửi</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,5 +1,5 @@
 const adminRouter = require('./admin');
-const siteRouter = require('./site.routes');
+const siteRouter = require('./site');
 
 const routes = (app) => {
 	app.use('/admin', adminRouter);

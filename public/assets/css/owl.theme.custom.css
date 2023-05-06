@@ -1,0 +1,52 @@
+.owl-theme .owl-dots {
+    /* height: 16px; */
+}
+
+.owl-theme .owl-dots .owl-dot span {
+    width: 25px;
+    height: 0;
+    margin: 5px 2px;
+    background-color: #224d61;
+    padding: 3px;
+    display: block;
+    backface-visibility: visible;
+    -webkit-backface-visibility: visible;
+    transition: opacity .2s ease;
+    border-radius: unset;
+}
+
+.owl-theme .owl-dots .owl-dot.active span,
+.owl-theme .owl-dots .owl-dot:hover span {
+    background-color: #52a7f1;
+}
+
+.owl-theme .owl-nav {
+    margin-top: 6px;
+}
+
+.owl-theme .owl-nav button.owl-next,
+.owl-theme .owl-nav button.owl-prev {
+    position: absolute;
+    top: 50%;
+    background: #85ADE2;
+    opacity: 0.75;
+    color: #fff;
+    border-radius: 0;
+    padding: 11px 8px !important;
+    transform: translateY(-100%);
+}
+
+.owl-theme .owl-nav button.owl-prev {
+    left: 0;
+}
+
+.owl-theme .owl-nav button.owl-next {
+    right: 0;
+}
+
+.owl-theme .owl-nav button.owl-next:hover,
+.owl-theme .owl-nav button.owl-prev:hover {
+    background: #85ADE2;
+    opacity: 0.75;
+    text-decoration: none;
+}

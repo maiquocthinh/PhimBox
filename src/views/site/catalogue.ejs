@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Danh sách</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&family=Charis+SIL&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/star-rating-svg@3.5.0/src/css/star-rating-svg.css">
+  <link rel="stylesheet" href="/assets/css/grid.css">
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/owl.theme.custom.css">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/assets/css/responsive.css">
+</head>
+
+<body>
+  <div class="app">
+    <!-- Heading -->
+    <%- include('./partials/header') %>
+    <!--  Container -->
+    <div class="container grid wide">
+      <div class="row sm-gutter">
+        <!-- Breadcurmb -->
+        <div class="breadcrumb-wrap col col-lg-12 col-md-12 col-sm-12">
+          <ul class="breadcrumb">
+            <li><a href="#"><i class="iconify" data-icon="dashicons:admin-home"></i>Trang Chủ</a></li>
+            <li class="active"><a href="#">Phim lẻ</a></li>
+          </ul>
+        </div>
+        <!-- Filter Films -->
+        <div class="list-films-filter htmlwrap">
+          <form id="form-filter" class="sm-hidden" action="#" method="get">
+            <div class="list-films-filter__item">
+              <label for="filter-category"><i class="iconify" data-icon="dashicons:category"></i> Thể loại</label>
+              <select name="category" id="filter-category">
+                <option value="">Tất cả</option>
+                <option value="1">Phim Hành Động</option>
+                <option value="2">Phim Viễn Tưởng</option>
+                <option value="3">Phim Chiến Tranh</option>
+                <option value="4">Phim Hình Sự</option>
+                <option value="5">Phim Phiêu Lưu</option>
+                <option value="6">Phim Hài Hước</option>
+                <option value="7">Phim Võ Thuật</option>
+                <option value="8">Phim Cổ Trang</option>
+                <option value="9">Phim Kinh Dị</option>
+                <option value="10">Phim Thần Thoại</option>
+                <option value="11">Phim Tâm Lý</option>
+                <option value="12">Phim Tài Liệu</option>
+                <option value="13">Phim Tình Cảm</option>
+                <option value="14">Phim Gia Đình</option>
+                <option value="15">Phim Thể Thao</option>
+                <option value="16">Phim Hoạt Hình</option>
+                <option value="17">Phim Trinh Thám</option>
+              </select>
+            </div>
+            <div class="list-films-filter__item">
+              <label for="filter-country"><i class="iconify" data-icon="ion:earth"></i> Quốc gia</label>
+              <select name="country" id="filter-country">
+                <option value="">Tất cả</option>
+                <option value="2">Trung Quốc</option>
+                <option value="3">Nhật Bản</option>
+                <option value="4">Hàn Quốc</option>
+                <option value="5">Hồng Kông</option>
+                <option value="6">Đài Loan</option>
+                <option value="7">Úc</option>
+                <option value="8">Canada</option>
+                <option value="9">Anh</option>
+                <option value="10">Nga</option>
+                <option value="11">Pháp</option>
+                <option value="12">Thái Lan</option>
+                <option value="13">Ấn Độ</option>
+                <option value="14">Việt Nam</option>
+                <option value="15">Ý</option>
+                <option value="16">Đức</option>
+                <option value="17">Tây Ban Nha</option>
+              </select>
+            </div>
+            <div class="list-films-filter__item">
+              <label for="filter-year"><i class="iconify" data-icon="uil:calender"></i> Năm phát hành</label>
+              <select name="year" id="filter-year">
+                <option value="">Tất cả</option>
+                <option value="2021">2021</option>
+                <option value="2020">2020</option>
+                <option value="2019">2019</option>
+                <option value="2018">2018</option>
+                <option value="2017">2017</option>
+                <option value="2016">2016</option>
+                <option value="2015">2015</option>
+                <option value="2014">2014</option>
+              </select>
+            </div>
+            <div class="list-films-filter__item">
+              <label for="filter-type"><i class="iconify" data-icon="fluent:apps-24-regular"></i> Loại phim</label>
+              <select name="type" id="filter-type">
+                <option value="">Tất cả</option>
+                <option value="le">Phim lẻ</option>
+                <option value="bo">Phim bộ</option>
+                <option value="rap">Phim rạp</option>
+                <option value="tm">Phim TM</option>
+              </select>
+            </div>
+            <div class="list-films-filter__item">
+              <label for="filter-sort"><i class="iconify" data-icon="jam:settings-alt"></i> Sắp xếp</label>
+              <select name="sort" id="filter-sort">
+                <option value="">Tất cả</option>
+                <option value="new">Mới đăng</option>
+                <option value="view">Lượt xem</option>
+                <option value="year">Năm phát hành</option>
+                <option value="name">Tên phim</option>
+              </select>
+            </div>
+            <button class="btn btn-filter" type="submit">Lọc Phim</button>
+          </form>
+          <p class="md-hidden lg-hidden btn btn-toggle-filter" data-show="false">Chức năng lọc phim &#10606;</p>
+        </div>
+        <main class="main-content col col-lg-9 col-md-9 col-sm-12">
+          <section class="xpo-cat xpo-blue htmlwrap">
+            <div class="section-bar">
+              <h2 class="section-bar__title">
+                <span><i class="iconify section-bar__icon" data-icon="bx:film"></i> Phim Lẻ</span><i class="skew-left"></i>
+              </h2>
+            </div>
+            <div class="xpo-box row md-gutter">
+              <div class="item col col-lg-3 col-md-4 col-sm-6">
+                <div class="xpo-item">
+                  <a class="xpo-thumb" href="./info.html" title="Liên Minh Công Lý: Phiên bản của Zack Snyder - Zack Snyder’s Justice League (2021)">
+                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1616846455/phimbox_images/Poster-lien-minh-cong-ly-phien-ban-cua-zack-snyder.jpg" alt="Liên Minh Công Lý: Phiên bản của Zack Snyder - Zack Snyder’s Justice League (2021)">
+                    <span class="xpo-status">HD</span>
+                    <span class="xpo-year">2021</span>
+                    <span class="xpo-language">Vietsub</span>
+                    <div class="xpo-icon-overlay"></div>
+                  </a>
+                  <div class="xpo-content">
+                    <div class="xpo-content__name">
+                      <h3 class="xpo-vn-name">
+                        <a href="./info.html" title="Liên Minh Công Lý: Phiên bản của Zack Snyder - Zack Snyder’s Justice League (2021)">Liên Minh Công Lý: Phiên bản của Zack Snyder - Zack Snyder’s Justice League (2021)</a>
+                      </h3>
+                      <p class="xpo-original-name">Zack Snyder’s Justice League</p>
+                    </div>
+                  </div>
+                  <div class="xpo-mini-info__data" style="display:none;" data-name="Zack Snyder’s Justice League (2021)" data-original-name="Zack Snyder’s Justice League" data-imdb="8.4" data-duration="242 phút" data-year="2021" data-short-description="Bản Justice League dài 4 tiếng của đạo diễn Zack Snyder là bản dựng mang đúng phong cách Snyder - một trong những nhà sáng tạo quan trọng của vũ trụ siêu anh hùng DC với tầm nhìn xa và giọng kể riêng" data-countries="Mỹ," data-categories="Hình Sự, Hài Hước, Tâm Lý," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
+                </div>
+              </div>
+              <div class="item col col-lg-3 col-md-4 col-sm-6">
+                <div class="xpo-item">
+                  <a class="xpo-thumb" href="./info.html" title="Wanda và Vision (Phần 1) - Wanda Vision (Season 1) (2021)">
+                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612932327/phimbox_images/Poster-wanda-va-vision-phan-1.jpg" alt="Wanda và Vision (Phần 1) - Wanda Vision (Season 1) (2021)">
+                    <span class="xpo-status">9/9</span>
+                    <span class="xpo-year">1999</span>
+                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
+                    <div class="xpo-icon-overlay"></div>
+                  </a>
+                  <div class="xpo-content">
+                    <div class="xpo-content__name">
+                      <h3 class="xpo-vn-name">
+                        <a href="./info.html" title="Wanda và Vision (Phần 1) - Wanda Vision (Season 1) (2021)">Wanda và Vision (Phần 1)</a>
+                      </h3>
+                      <p class="xpo-original-name">Wanda Vision (Season 1)</p>
+                    </div>
+                  </div>
+                  <div class="xpo-mini-info__data" style="display:none;" data-name="Wanda và Vision (Phần 1)" data-original-name="Wanda Vision (Season 1)" data-imdb="8.4" data-duration="32 phút/tập" data-year="2021" data-short-description="Bộ phim pha trộn giữa phong cách phim sitcom cổ điển với MCU. Wanda Maximoff và Vision - hai con người với năng lực siêu nhiên đang có cuộc sống vô cùng lí tưởng ở vùng ngoại ô, lại bắt đầu nảy sinh những nghi ngờ về đối phương" data-countries="Mỹ," data-categories="Hình Sự, Hài Hước, Tâm Lý," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
+                </div>
+              </div>
+              <div class="item col col-lg-3 col-md-4 col-sm-6">
+                <div class="xpo-item">
+                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
+                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
+                    <span class="xpo-status">HD</span>
+                    <span class="xpo-year">1999</span>
+                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
+                    <div class="xpo-icon-overlay"></div>
+                  </a>
+                  <div class="xpo-content">
+                    <div class="xpo-content__name">
+                      <h3 class="xpo-vn-name">
+                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
+                      </h3>
+                      <p class="xpo-original-name">Toy Story 2</p>
+                    </div>
+
+                    <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="item col col-lg-3 col-md-4 col-sm-6">
+                <div class="xpo-item">
+                  <a class="xpo-thumb" href="./info.html" title="Liên Minh Công Lý: Phiên bản của Zack Snyder - Zack Snyder’s Justice League (2021)">
+                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1616846455/phimbox_images/Poster-lien-minh-cong-ly-phien-ban-cua-zack-snyder.jpg" alt="Liên Minh Công Lý: Phiên bản của Zack Snyder - Zack Snyder’s Justice League (2021)">
+                    <span class="xpo-status">HD</span>
+                    <span class="xpo-year">2021</span>
+                    <span class="xpo-language">Vietsub</span>
+                    <div class="xpo-icon-overlay"></div>
+                  </a>
+                  <div class="xpo-content">
+                    <div class="xpo-content__name">
+                      <h3 class="xpo-vn-name">
+                        <a href="./info.html" title="Liên Minh Công Lý: Phiên bản của Zack Snyder - Zack Snyder’s Justice League (2021)">Liên Minh Công Lý: Phiên bản của Zack Snyder - Zack Snyder’s Justice League (2021)</a>
+                      </h3>
+                      <p class="xpo-original-name">Zack Snyder’s Justice League</p>
+                    </div>
+                  </div>
+                  <div class="xpo-mini-info__data" style="display:none;" data-name="Zack Snyder’s Justice League (2021)" data-original-name="Zack Snyder’s Justice League" data-imdb="8.4" data-duration="242 phút" data-year="2021" data-short-description="Bản Justice League dài 4 tiếng của đạo diễn Zack Snyder là bản dựng mang đúng phong cách Snyder - một trong những nhà sáng tạo quan trọng của vũ trụ siêu anh hùng DC với tầm nhìn xa và giọng kể riêng" data-countries="Mỹ," data-categories="Hình Sự, Hài Hước, Tâm Lý," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
+                </div>
+              </div>
+              <div class="item col col-lg-3 col-md-4 col-sm-6">
+                <div class="xpo-item">
+                  <a class="xpo-thumb" href="./info.html" title="Wanda và Vision (Phần 1) - Wanda Vision (Season 1) (2021)">
+                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612932327/phimbox_images/Poster-wanda-va-vision-phan-1.jpg" alt="Wanda và Vision (Phần 1) - Wanda Vision (Season 1) (2021)">
+                    <span class="xpo-status">9/9</span>
+                    <span class="xpo-year">1999</span>
+                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
+                    <div class="xpo-icon-overlay"></div>
+                  </a>
+                  <div class="xpo-content">
+                    <div class="xpo-content__name">
+                      <h3 class="xpo-vn-name">
+                        <a href="./info.html" title="Wanda và Vision (Phần 1) - Wanda Vision (Season 1) (2021)">Wanda và Vision (Phần 1)</a>
+                      </h3>
+                      <p class="xpo-original-name">Wanda Vision (Season 1)</p>
+                    </div>
+                  </div>
+                  <div class="xpo-mini-info__data" style="display:none;" data-name="Wanda và Vision (Phần 1)" data-original-name="Wanda Vision (Season 1)" data-imdb="8.4" data-duration="32 phút/tập" data-year="2021" data-short-description="Bộ phim pha trộn giữa phong cách phim sitcom cổ điển với MCU. Wanda Maximoff và Vision - hai con người với năng lực siêu nhiên đang có cuộc sống vô cùng lí tưởng ở vùng ngoại ô, lại bắt đầu nảy sinh những nghi ngờ về đối phương" data-countries="Mỹ," data-categories="Hình Sự, Hài Hước, Tâm Lý," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
+                </div>
+              </div>
+              <div class="item col col-lg-3 col-md-4 col-sm-6">
+                <div class="xpo-item">
+                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
+                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
+                    <span class="xpo-status">HD</span>
+                    <span class="xpo-year">1999</span>
+                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
+                    <div class="xpo-icon-overlay"></div>
+                  </a>
+                  <div class="xpo-content">
+                    <div class="xpo-content__name">
+                      <h3 class="xpo-vn-name">
+                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
+                      </h3>
+                      <p class="xpo-original-name">Toy Story 2</p>
+                    </div>
+
+                    <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="item col col-lg-3 col-md-4 col-sm-6">
+                <div class="xpo-item">
+                  <a class="xpo-thumb" href="./info.html" title="Liên Minh Công Lý: Phiên bản của Zack Snyder - Zack Snyder’s Justice League (2021)">
+                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1616846455/phimbox_images/Poster-lien-minh-cong-ly-phien-ban-cua-zack-snyder.jpg" alt="Liên Minh Công Lý: Phiên bản của Zack Snyder - Zack Snyder’s Justice League (2021)">
+                    <span class="xpo-status">HD</span>
+                    <span class="xpo-year">2021</span>
+                    <span class="xpo-language">Vietsub</span>
+                    <div class="xpo-icon-overlay"></div>
+                  </a>
+                  <div class="xpo-content">
+                    <div class="xpo-content__name">
+                      <h3 class="xpo-vn-name">
+                        <a href="./info.html" title="Liên Minh Công Lý: Phiên bản của Zack Snyder - Zack Snyder’s Justice League (2021)">Liên Minh Công Lý: Phiên bản của Zack Snyder - Zack Snyder’s Justice League (2021)</a>
+                      </h3>
+                      <p class="xpo-original-name">Zack Snyder’s Justice League</p>
+                    </div>
+                  </div>
+                  <div class="xpo-mini-info__data" style="display:none;" data-name="Zack Snyder’s Justice League (2021)" data-original-name="Zack Snyder’s Justice League" data-imdb="8.4" data-duration="242 phút" data-year="2021" data-short-description="Bản Justice League dài 4 tiếng của đạo diễn Zack Snyder là bản dựng mang đúng phong cách Snyder - một trong những nhà sáng tạo quan trọng của vũ trụ siêu anh hùng DC với tầm nhìn xa và giọng kể riêng" data-countries="Mỹ," data-categories="Hình Sự, Hài Hước, Tâm Lý," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
+                </div>
+              </div>
+              <div class="item col col-lg-3 col-md-4 col-sm-6">
+                <div class="xpo-item">
+                  <a class="xpo-thumb" href="./info.html" title="Wanda và Vision (Phần 1) - Wanda Vision (Season 1) (2021)">
+                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612932327/phimbox_images/Poster-wanda-va-vision-phan-1.jpg" alt="Wanda và Vision (Phần 1) - Wanda Vision (Season 1) (2021)">
+                    <span class="xpo-status">9/9</span>
+                    <span class="xpo-year">1999</span>
+                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
+                    <div class="xpo-icon-overlay"></div>
+                  </a>
+                  <div class="xpo-content">
+                    <div class="xpo-content__name">
+                      <h3 class="xpo-vn-name">
+                        <a href="./info.html" title="Wanda và Vision (Phần 1) - Wanda Vision (Season 1) (2021)">Wanda và Vision (Phần 1)</a>
+                      </h3>
+                      <p class="xpo-original-name">Wanda Vision (Season 1)</p>
+                    </div>
+                  </div>
+                  <div class="xpo-mini-info__data" style="display:none;" data-name="Wanda và Vision (Phần 1)" data-original-name="Wanda Vision (Season 1)" data-imdb="8.4" data-duration="32 phút/tập" data-year="2021" data-short-description="Bộ phim pha trộn giữa phong cách phim sitcom cổ điển với MCU. Wanda Maximoff và Vision - hai con người với năng lực siêu nhiên đang có cuộc sống vô cùng lí tưởng ở vùng ngoại ô, lại bắt đầu nảy sinh những nghi ngờ về đối phương" data-countries="Mỹ," data-categories="Hình Sự, Hài Hước, Tâm Lý," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
+                </div>
+              </div>
+              <div class="item col col-lg-3 col-md-4 col-sm-6">
+                <div class="xpo-item">
+                  <a class="xpo-thumb" href="./info.html" title="Liên Minh Công Lý: Phiên bản của Zack Snyder - Zack Snyder’s Justice League (2021)">
+                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1616846455/phimbox_images/Poster-lien-minh-cong-ly-phien-ban-cua-zack-snyder.jpg" alt="Liên Minh Công Lý: Phiên bản của Zack Snyder - Zack Snyder’s Justice League (2021)">
+                    <span class="xpo-status">HD</span>
+                    <span class="xpo-year">2021</span>
+                    <span class="xpo-language">Vietsub</span>
+                    <div class="xpo-icon-overlay"></div>
+                  </a>
+                  <div class="xpo-content">
+                    <div class="xpo-content__name">
+                      <h3 class="xpo-vn-name">
+                        <a href="./info.html" title="Liên Minh Công Lý: Phiên bản của Zack Snyder - Zack Snyder’s Justice League (2021)">Liên Minh Công Lý: Phiên bản của Zack Snyder - Zack Snyder’s Justice League (2021)</a>
+                      </h3>
+                      <p class="xpo-original-name">Zack Snyder’s Justice League</p>
+                    </div>
+                  </div>
+                  <div class="xpo-mini-info__data" style="display:none;" data-name="Zack Snyder’s Justice League (2021)" data-original-name="Zack Snyder’s Justice League" data-imdb="8.4" data-duration="242 phút" data-year="2021" data-short-description="Bản Justice League dài 4 tiếng của đạo diễn Zack Snyder là bản dựng mang đúng phong cách Snyder - một trong những nhà sáng tạo quan trọng của vũ trụ siêu anh hùng DC với tầm nhìn xa và giọng kể riêng" data-countries="Mỹ," data-categories="Hình Sự, Hài Hước, Tâm Lý," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
+                </div>
+              </div>
+              <div class="item col col-lg-3 col-md-4 col-sm-6">
+                <div class="xpo-item">
+                  <a class="xpo-thumb" href="./info.html" title="Wanda và Vision (Phần 1) - Wanda Vision (Season 1) (2021)">
+                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612932327/phimbox_images/Poster-wanda-va-vision-phan-1.jpg" alt="Wanda và Vision (Phần 1) - Wanda Vision (Season 1) (2021)">
+                    <span class="xpo-status">9/9</span>
+                    <span class="xpo-year">1999</span>
+                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
+                    <div class="xpo-icon-overlay"></div>
+                  </a>
+                  <div class="xpo-content">
+                    <div class="xpo-content__name">
+                      <h3 class="xpo-vn-name">
+                        <a href="./info.html" title="Wanda và Vision (Phần 1) - Wanda Vision (Season 1) (2021)">Wanda và Vision (Phần 1)</a>
+                      </h3>
+                      <p class="xpo-original-name">Wanda Vision (Season 1)</p>
+                    </div>
+                  </div>
+                  <div class="xpo-mini-info__data" style="display:none;" data-name="Wanda và Vision (Phần 1)" data-original-name="Wanda Vision (Season 1)" data-imdb="8.4" data-duration="32 phút/tập" data-year="2021" data-short-description="Bộ phim pha trộn giữa phong cách phim sitcom cổ điển với MCU. Wanda Maximoff và Vision - hai con người với năng lực siêu nhiên đang có cuộc sống vô cùng lí tưởng ở vùng ngoại ô, lại bắt đầu nảy sinh những nghi ngờ về đối phương" data-countries="Mỹ," data-categories="Hình Sự, Hài Hước, Tâm Lý," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
+                </div>
+              </div>
+              <div class="item col col-lg-3 col-md-4 col-sm-6">
+                <div class="xpo-item">
+                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
+                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
+                    <span class="xpo-status">HD</span>
+                    <span class="xpo-year">1999</span>
+                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
+                    <div class="xpo-icon-overlay"></div>
+                  </a>
+                  <div class="xpo-content">
+                    <div class="xpo-content__name">
+                      <h3 class="xpo-vn-name">
+                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
+                      </h3>
+                      <p class="xpo-original-name">Toy Story 2</p>
+                    </div>
+
+                    <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="item col col-lg-3 col-md-4 col-sm-6">
+                <div class="xpo-item">
+                  <a class="xpo-thumb" href="./info.html" title="Liên Minh Công Lý: Phiên bản của Zack Snyder - Zack Snyder’s Justice League (2021)">
+                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1616846455/phimbox_images/Poster-lien-minh-cong-ly-phien-ban-cua-zack-snyder.jpg" alt="Liên Minh Công Lý: Phiên bản của Zack Snyder - Zack Snyder’s Justice League (2021)">
+                    <span class="xpo-status">HD</span>
+                    <span class="xpo-year">2021</span>
+                    <span class="xpo-language">Vietsub</span>
+                    <div class="xpo-icon-overlay"></div>
+                  </a>
+                  <div class="xpo-content">
+                    <div class="xpo-content__name">
+                      <h3 class="xpo-vn-name">
+                        <a href="./info.html" title="Liên Minh Công Lý: Phiên bản của Zack Snyder - Zack Snyder’s Justice League (2021)">Liên Minh Công Lý: Phiên bản của Zack Snyder - Zack Snyder’s Justice League (2021)</a>
+                      </h3>
+                      <p class="xpo-original-name">Zack Snyder’s Justice League</p>
+                    </div>
+                  </div>
+                  <div class="xpo-mini-info__data" style="display:none;" data-name="Zack Snyder’s Justice League (2021)" data-original-name="Zack Snyder’s Justice League" data-imdb="8.4" data-duration="242 phút" data-year="2021" data-short-description="Bản Justice League dài 4 tiếng của đạo diễn Zack Snyder là bản dựng mang đúng phong cách Snyder - một trong những nhà sáng tạo quan trọng của vũ trụ siêu anh hùng DC với tầm nhìn xa và giọng kể riêng" data-countries="Mỹ," data-categories="Hình Sự, Hài Hước, Tâm Lý," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
+                </div>
+              </div>
+              <div class="item col col-lg-3 col-md-4 col-sm-6">
+                <div class="xpo-item">
+                  <a class="xpo-thumb" href="./info.html" title="Wanda và Vision (Phần 1) - Wanda Vision (Season 1) (2021)">
+                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612932327/phimbox_images/Poster-wanda-va-vision-phan-1.jpg" alt="Wanda và Vision (Phần 1) - Wanda Vision (Season 1) (2021)">
+                    <span class="xpo-status">9/9</span>
+                    <span class="xpo-year">1999</span>
+                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
+                    <div class="xpo-icon-overlay"></div>
+                  </a>
+                  <div class="xpo-content">
+                    <div class="xpo-content__name">
+                      <h3 class="xpo-vn-name">
+                        <a href="./info.html" title="Wanda và Vision (Phần 1) - Wanda Vision (Season 1) (2021)">Wanda và Vision (Phần 1)</a>
+                      </h3>
+                      <p class="xpo-original-name">Wanda Vision (Season 1)</p>
+                    </div>
+                  </div>
+                  <div class="xpo-mini-info__data" style="display:none;" data-name="Wanda và Vision (Phần 1)" data-original-name="Wanda Vision (Season 1)" data-imdb="8.4" data-duration="32 phút/tập" data-year="2021" data-short-description="Bộ phim pha trộn giữa phong cách phim sitcom cổ điển với MCU. Wanda Maximoff và Vision - hai con người với năng lực siêu nhiên đang có cuộc sống vô cùng lí tưởng ở vùng ngoại ô, lại bắt đầu nảy sinh những nghi ngờ về đối phương" data-countries="Mỹ," data-categories="Hình Sự, Hài Hước, Tâm Lý," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
+                </div>
+              </div>
+              <div class="item col col-lg-3 col-md-4 col-sm-6">
+                <div class="xpo-item">
+                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
+                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
+                    <span class="xpo-status">HD</span>
+                    <span class="xpo-year">1999</span>
+                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
+                    <div class="xpo-icon-overlay"></div>
+                  </a>
+                  <div class="xpo-content">
+                    <div class="xpo-content__name">
+                      <h3 class="xpo-vn-name">
+                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
+                      </h3>
+                      <p class="xpo-original-name">Toy Story 2</p>
+                    </div>
+
+                    <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="item col col-lg-3 col-md-4 col-sm-6">
+                <div class="xpo-item">
+                  <a class="xpo-thumb" href="./info.html" title="Liên Minh Công Lý: Phiên bản của Zack Snyder - Zack Snyder’s Justice League (2021)">
+                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1616846455/phimbox_images/Poster-lien-minh-cong-ly-phien-ban-cua-zack-snyder.jpg" alt="Liên Minh Công Lý: Phiên bản của Zack Snyder - Zack Snyder’s Justice League (2021)">
+                    <span class="xpo-status">HD</span>
+                    <span class="xpo-year">2021</span>
+                    <span class="xpo-language">Vietsub</span>
+                    <div class="xpo-icon-overlay"></div>
+                  </a>
+                  <div class="xpo-content">
+                    <div class="xpo-content__name">
+                      <h3 class="xpo-vn-name">
+                        <a href="./info.html" title="Liên Minh Công Lý: Phiên bản của Zack Snyder - Zack Snyder’s Justice League (2021)">Liên Minh Công Lý: Phiên bản của Zack Snyder - Zack Snyder’s Justice League (2021)</a>
+                      </h3>
+                      <p class="xpo-original-name">Zack Snyder’s Justice League</p>
+                    </div>
+                  </div>
+                  <div class="xpo-mini-info__data" style="display:none;" data-name="Zack Snyder’s Justice League (2021)" data-original-name="Zack Snyder’s Justice League" data-imdb="8.4" data-duration="242 phút" data-year="2021" data-short-description="Bản Justice League dài 4 tiếng của đạo diễn Zack Snyder là bản dựng mang đúng phong cách Snyder - một trong những nhà sáng tạo quan trọng của vũ trụ siêu anh hùng DC với tầm nhìn xa và giọng kể riêng" data-countries="Mỹ," data-categories="Hình Sự, Hài Hước, Tâm Lý," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
+                </div>
+              </div>
+              <div class="item col col-lg-3 col-md-4 col-sm-6">
+                <div class="xpo-item">
+                  <a class="xpo-thumb" href="./info.html" title="Wanda và Vision (Phần 1) - Wanda Vision (Season 1) (2021)">
+                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612932327/phimbox_images/Poster-wanda-va-vision-phan-1.jpg" alt="Wanda và Vision (Phần 1) - Wanda Vision (Season 1) (2021)">
+                    <span class="xpo-status">9/9</span>
+                    <span class="xpo-year">1999</span>
+                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
+                    <div class="xpo-icon-overlay"></div>
+                  </a>
+                  <div class="xpo-content">
+                    <div class="xpo-content__name">
+                      <h3 class="xpo-vn-name">
+                        <a href="./info.html" title="Wanda và Vision (Phần 1) - Wanda Vision (Season 1) (2021)">Wanda và Vision (Phần 1)</a>
+                      </h3>
+                      <p class="xpo-original-name">Wanda Vision (Season 1)</p>
+                    </div>
+                  </div>
+                  <div class="xpo-mini-info__data" style="display:none;" data-name="Wanda và Vision (Phần 1)" data-original-name="Wanda Vision (Season 1)" data-imdb="8.4" data-duration="32 phút/tập" data-year="2021" data-short-description="Bộ phim pha trộn giữa phong cách phim sitcom cổ điển với MCU. Wanda Maximoff và Vision - hai con người với năng lực siêu nhiên đang có cuộc sống vô cùng lí tưởng ở vùng ngoại ô, lại bắt đầu nảy sinh những nghi ngờ về đối phương" data-countries="Mỹ," data-categories="Hình Sự, Hài Hước, Tâm Lý," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
+                </div>
+              </div>
+              <div class="item col col-lg-3 col-md-4 col-sm-6">
+                <div class="xpo-item">
+                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
+                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
+                    <span class="xpo-status">HD</span>
+                    <span class="xpo-year">1999</span>
+                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
+                    <div class="xpo-icon-overlay"></div>
+                  </a>
+                  <div class="xpo-content">
+                    <div class="xpo-content__name">
+                      <h3 class="xpo-vn-name">
+                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
+                      </h3>
+                      <p class="xpo-original-name">Toy Story 2</p>
+                    </div>
+
+                    <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="item col col-lg-3 col-md-4 col-sm-6">
+                <div class="xpo-item">
+                  <a class="xpo-thumb" href="./info.html" title="Liên Minh Công Lý: Phiên bản của Zack Snyder - Zack Snyder’s Justice League (2021)">
+                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1616846455/phimbox_images/Poster-lien-minh-cong-ly-phien-ban-cua-zack-snyder.jpg" alt="Liên Minh Công Lý: Phiên bản của Zack Snyder - Zack Snyder’s Justice League (2021)">
+                    <span class="xpo-status">HD</span>
+                    <span class="xpo-year">2021</span>
+                    <span class="xpo-language">Vietsub</span>
+                    <div class="xpo-icon-overlay"></div>
+                  </a>
+                  <div class="xpo-content">
+                    <div class="xpo-content__name">
+                      <h3 class="xpo-vn-name">
+                        <a href="./info.html" title="Liên Minh Công Lý: Phiên bản của Zack Snyder - Zack Snyder’s Justice League (2021)">Liên Minh Công Lý: Phiên bản của Zack Snyder - Zack Snyder’s Justice League (2021)</a>
+                      </h3>
+                      <p class="xpo-original-name">Zack Snyder’s Justice League</p>
+                    </div>
+                  </div>
+                  <div class="xpo-mini-info__data" style="display:none;" data-name="Zack Snyder’s Justice League (2021)" data-original-name="Zack Snyder’s Justice League" data-imdb="8.4" data-duration="242 phút" data-year="2021" data-short-description="Bản Justice League dài 4 tiếng của đạo diễn Zack Snyder là bản dựng mang đúng phong cách Snyder - một trong những nhà sáng tạo quan trọng của vũ trụ siêu anh hùng DC với tầm nhìn xa và giọng kể riêng" data-countries="Mỹ," data-categories="Hình Sự, Hài Hước, Tâm Lý," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
+                </div>
+              </div>
+              <div class="item col col-lg-3 col-md-4 col-sm-6">
+                <div class="xpo-item">
+                  <a class="xpo-thumb" href="./info.html" title="Wanda và Vision (Phần 1) - Wanda Vision (Season 1) (2021)">
+                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612932327/phimbox_images/Poster-wanda-va-vision-phan-1.jpg" alt="Wanda và Vision (Phần 1) - Wanda Vision (Season 1) (2021)">
+                    <span class="xpo-status">9/9</span>
+                    <span class="xpo-year">1999</span>
+                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
+                    <div class="xpo-icon-overlay"></div>
+                  </a>
+                  <div class="xpo-content">
+                    <div class="xpo-content__name">
+                      <h3 class="xpo-vn-name">
+                        <a href="./info.html" title="Wanda và Vision (Phần 1) - Wanda Vision (Season 1) (2021)">Wanda và Vision (Phần 1)</a>
+                      </h3>
+                      <p class="xpo-original-name">Wanda Vision (Season 1)</p>
+                    </div>
+                  </div>
+                  <div class="xpo-mini-info__data" style="display:none;" data-name="Wanda và Vision (Phần 1)" data-original-name="Wanda Vision (Season 1)" data-imdb="8.4" data-duration="32 phút/tập" data-year="2021" data-short-description="Bộ phim pha trộn giữa phong cách phim sitcom cổ điển với MCU. Wanda Maximoff và Vision - hai con người với năng lực siêu nhiên đang có cuộc sống vô cùng lí tưởng ở vùng ngoại ô, lại bắt đầu nảy sinh những nghi ngờ về đối phương" data-countries="Mỹ," data-categories="Hình Sự, Hài Hước, Tâm Lý," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
+                </div>
+              </div>
+              <div class="item col col-lg-3 col-md-4 col-sm-6">
+                <div class="xpo-item">
+                  <a class="xpo-thumb" href="./info.html" title="Liên Minh Công Lý: Phiên bản của Zack Snyder - Zack Snyder’s Justice League (2021)">
+                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1616846455/phimbox_images/Poster-lien-minh-cong-ly-phien-ban-cua-zack-snyder.jpg" alt="Liên Minh Công Lý: Phiên bản của Zack Snyder - Zack Snyder’s Justice League (2021)">
+                    <span class="xpo-status">HD</span>
+                    <span class="xpo-year">2021</span>
+                    <span class="xpo-language">Vietsub</span>
+                    <div class="xpo-icon-overlay"></div>
+                  </a>
+                  <div class="xpo-content">
+                    <div class="xpo-content__name">
+                      <h3 class="xpo-vn-name">
+                        <a href="./info.html" title="Liên Minh Công Lý: Phiên bản của Zack Snyder - Zack Snyder’s Justice League (2021)">Liên Minh Công Lý: Phiên bản của Zack Snyder - Zack Snyder’s Justice League (2021)</a>
+                      </h3>
+                      <p class="xpo-original-name">Zack Snyder’s Justice League</p>
+                    </div>
+                  </div>
+                  <div class="xpo-mini-info__data" style="display:none;" data-name="Zack Snyder’s Justice League (2021)" data-original-name="Zack Snyder’s Justice League" data-imdb="8.4" data-duration="242 phút" data-year="2021" data-short-description="Bản Justice League dài 4 tiếng của đạo diễn Zack Snyder là bản dựng mang đúng phong cách Snyder - một trong những nhà sáng tạo quan trọng của vũ trụ siêu anh hùng DC với tầm nhìn xa và giọng kể riêng" data-countries="Mỹ," data-categories="Hình Sự, Hài Hước, Tâm Lý," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
+                </div>
+              </div>
+              <div class="item col col-lg-3 col-md-4 col-sm-6">
+                <div class="xpo-item">
+                  <a class="xpo-thumb" href="./info.html" title="Wanda và Vision (Phần 1) - Wanda Vision (Season 1) (2021)">
+                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612932327/phimbox_images/Poster-wanda-va-vision-phan-1.jpg" alt="Wanda và Vision (Phần 1) - Wanda Vision (Season 1) (2021)">
+                    <span class="xpo-status">9/9</span>
+                    <span class="xpo-year">1999</span>
+                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
+                    <div class="xpo-icon-overlay"></div>
+                  </a>
+                  <div class="xpo-content">
+                    <div class="xpo-content__name">
+                      <h3 class="xpo-vn-name">
+                        <a href="./info.html" title="Wanda và Vision (Phần 1) - Wanda Vision (Season 1) (2021)">Wanda và Vision (Phần 1)</a>
+                      </h3>
+                      <p class="xpo-original-name">Wanda Vision (Season 1)</p>
+                    </div>
+                  </div>
+                  <div class="xpo-mini-info__data" style="display:none;" data-name="Wanda và Vision (Phần 1)" data-original-name="Wanda Vision (Season 1)" data-imdb="8.4" data-duration="32 phút/tập" data-year="2021" data-short-description="Bộ phim pha trộn giữa phong cách phim sitcom cổ điển với MCU. Wanda Maximoff và Vision - hai con người với năng lực siêu nhiên đang có cuộc sống vô cùng lí tưởng ở vùng ngoại ô, lại bắt đầu nảy sinh những nghi ngờ về đối phương" data-countries="Mỹ," data-categories="Hình Sự, Hài Hước, Tâm Lý," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
+                </div>
+              </div>
+              <div class="item col col-lg-3 col-md-4 col-sm-6">
+                <div class="xpo-item">
+                  <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
+                    <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
+                    <span class="xpo-status">HD</span>
+                    <span class="xpo-year">1999</span>
+                    <span class="xpo-language">Vietsub + Thuyết Minh</span>
+                    <div class="xpo-icon-overlay"></div>
+                  </a>
+                  <div class="xpo-content">
+                    <div class="xpo-content__name">
+                      <h3 class="xpo-vn-name">
+                        <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
+                      </h3>
+                      <p class="xpo-original-name">Toy Story 2</p>
+                    </div>
+
+                    <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <nav class="pagination">
+              <button class="btn"><a href="#">&#171;</a></button>
+              <button class="btn"><a href="#">&#8249;</a></button>
+              <button class="btn active"><span>1</span></button>
+              <button class="btn"><a href="#">2</a></button>
+              <button class="btn"><a href="#">3</a></button>
+              <button class="btn"><a href="#">4</a></button>
+              <button class="btn"><a href="#">5</a></button>
+              <button class="btn"><a href="#">&#8250;</a></button>
+              <button class="btn"><a href="#">&#187;</a></button>
+            </nav>
+          </section>
+        </main>
+        <aside class="sidebar col col-lg-3 col-md-3 col-sm-12">
+          <div class="sidebar-widget xpo-violet sm-hidden">
+            <div class="sidebar-widget__section-bar section-bar">
+              <h2 class="section-bar__title">
+                <span><i class="iconify section-bar__icon" data-icon="ri:movie-line"></i> Phim Sắp Chiếu</span>
+                <i class="skew-left"></i>
+                <i class="skew-left"></i>
+              </h2>
+            </div>
+            <div class="tab-container">
+              <div id="xpo-sidebar-trailer" class="owl-carousel owl-theme xpo-box">
+                <div class="item">
+                  <div class="xpo-item">
+                    <a class="xpo-thumb" href="#" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
+                      <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
+                      <span class="xpo-status">HD</span>
+                      <span class="xpo-year">1999</span>
+                      <span class="xpo-language">Vietsub + Thuyết Minh</span>
+                      <div class="xpo-icon-overlay"></div>
+                    </a>
+                    <div class="xpo-content">
+                      <div class="xpo-content__name">
+                        <h3 class="xpo-vn-name">
+                          <a href="#" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
+                        </h3>
+                        <p class="xpo-original-name">Toy Story 2</p>
+                      </div>
+                    </div>
+                    <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
+                  </div>
+                </div>
+                <div class="item">
+                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
+                  <div class="xpo-item">
+                    <a class="xpo-thumb" href="#" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
+                      <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
+                      <span class="xpo-status">HD</span>
+                      <span class="xpo-year">1999</span>
+                      <span class="xpo-language">Vietsub + Thuyết Minh</span>
+                      <div class="xpo-icon-overlay"></div>
+                    </a>
+                    <div class="xpo-content">
+                      <div class="xpo-content__name">
+                        <h3 class="xpo-vn-name">
+                          <a href="#" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
+                        </h3>
+                        <p class="xpo-original-name">Toy Story 2</p>
+                      </div>
+                    </div>
+                    <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
+                  </div>
+                </div>
+                <div class="item">
+                  <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
+                  <div class="xpo-item">
+                    <a class="xpo-thumb" href="#" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
+                      <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
+                      <span class="xpo-status">HD</span>
+                      <span class="xpo-year">1999</span>
+                      <span class="xpo-language">Vietsub + Thuyết Minh</span>
+                      <div class="xpo-icon-overlay"></div>
+                    </a>
+                    <div class="xpo-content">
+                      <div class="xpo-content__name">
+                        <h3 class="xpo-vn-name">
+                          <a href="#" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
+                        </h3>
+                        <p class="xpo-original-name">Toy Story 2</p>
+                      </div>
+                    </div>
+                    <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="xpo-mini-info__data" style="display:none;" data-name="Câu Chuyện Đồ Chơi 2" data-original-name="Toy Story 2" data-imdb="6.7" data-duration="103 phút" data-year="1999" data-short-description="Câu Chuyện Đồ Chơi 2 ở phần này phim hoạt hình câu chuyện đồ chơi tiếp tục giới thiệu với khán giả cuộc phiêu lưu của Woody và Buzz khi chủ nhân Andy của chúng vắng nhà. Lần này cả hai biết được nguồn gốc và giá trị thật của mình. Nhưng khi biết được già trị của mình thì Woody đã bị một trong những kẻ sưu tầm đồ chơi nắm giữ. Woody là một món đồ chơi rất có giá trị cho những người kẻ biết nhìn đồ chơi , và những kẻ tham lam xấu xa, liệu Woody có thoát khỏi tay bọn người sưu tầm đồ chơi đó không? Hãy đón xem phim hoạt hình Câu Chuyện Đồ Chơi 2." data-countries="Mỹ," data-categories="Phiêu Lưu, Hài Hước, Hoạt Hình," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
+            </div>
+          </div>
+          <div class="sidebar-widget xpo-blue">
+            <div class="sidebar-widget__section-bar section-bar">
+              <h2 class="section-bar__title">
+                <span><i class="iconify section-bar__icon" data-icon="bx:film"></i> Phim Xem Nhiều</span>
+                <i class="skew-left"></i>
+                <i class="skew-left"></i>
+              </h2>
+            </div>
+            <section class="tab-container">
+              <div class="popular-posts">
+                <ul class="tab-header">
+                  <li id="tab-label-1" class="active">Phim Lẻ</li>
+                  <li id="tab-label-2">Phim Bộ</li>
+                  <li id="tab-label-3">Hoạt Hình</li>
+                </ul>
+                <div class="tab-contents">
+                  <div id="tab-content-1" class="tab-content">
+                    <div class="tab-content__item">
+                      <a href="#" class="tab-content__img" title="Nhím Sonic">
+                        <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1597641287/phimbox_images/Poster-nhim-sonic.jpg" alt="Nhím Sonic">
+                      </a>
+                      <div class="tab-content__info">
+                        <a href="#" class="tab-content__vn-name" title="Nhím Sonic">
+                          <h3>Nhím Sonic</h3>
+                        </a>
+                        <p class="tab-content__original-name">Sonic The Hedgehog</p>
+                        <p><span class="tab-content__status">HD Vietsub + Thuyết Minh</span></p>
+                        <p>
+                          <span class="tab-content__imdb"><i class="tab-content__imdb-icon"></i><span class="tab-content__imdb-point">6.7</span></span>
+                          <span class="tab-content__year">2020</span>
+                        </p>
+                      </div>
+
+                    </div>
+                    <div class="tab-content__item">
+                      <a href="#" class="tab-content__img" title="Nhím Sonic">
+                        <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1597641287/phimbox_images/Poster-nhim-sonic.jpg" alt="Nhím Sonic">
+                      </a>
+                      <div class="tab-content__info">
+                        <a href="#" class="tab-content__vn-name" title="Nhím Sonic">
+                          <h3>Nhím Sonic</h3>
+                        </a>
+                        <p class="tab-content__original-name">Sonic The Hedgehog</p>
+                        <p><span class="tab-content__status">HD Vietsub + Thuyết Minh</span></p>
+                        <p>
+                          <span class="tab-content__imdb"><i class="tab-content__imdb-icon"></i><span class="tab-content__imdb-point">6.7</span></span>
+                          <span class="tab-content__year">2020</span>
+                        </p>
+                      </div>
+
+                    </div>
+                    <div class="tab-content__item">
+                      <a href="#" class="tab-content__img" title="Nhím Sonic">
+                        <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1597641287/phimbox_images/Poster-nhim-sonic.jpg" alt="Nhím Sonic">
+                      </a>
+                      <div class="tab-content__info">
+                        <a href="#" class="tab-content__vn-name" title="Nhím Sonic">
+                          <h3>Nhím Sonic</h3>
+                        </a>
+                        <p class="tab-content__original-name">Sonic The Hedgehog</p>
+                        <p><span class="tab-content__status">HD Vietsub + Thuyết Minh</span></p>
+                        <p>
+                          <span class="tab-content__imdb"><i class="tab-content__imdb-icon"></i><span class="tab-content__imdb-point">6.7</span></span>
+                          <span class="tab-content__year">2020</span>
+                        </p>
+                      </div>
+
+                    </div>
+                    <div class="tab-content__item">
+                      <a href="#" class="tab-content__img" title="Nhím Sonic">
+                        <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1597641287/phimbox_images/Poster-nhim-sonic.jpg" alt="Nhím Sonic">
+                      </a>
+                      <div class="tab-content__info">
+                        <a href="#" class="tab-content__vn-name" title="Nhím Sonic">
+                          <h3>Nhím Sonic</h3>
+                        </a>
+                        <p class="tab-content__original-name">Sonic The Hedgehog</p>
+                        <p><span class="tab-content__status">HD Vietsub + Thuyết Minh</span></p>
+                        <p>
+                          <span class="tab-content__imdb"><i class="tab-content__imdb-icon"></i><span class="tab-content__imdb-point">6.7</span></span>
+                          <span class="tab-content__year">2020</span>
+                        </p>
+                      </div>
+
+                    </div>
+                    <div class="tab-content__item">
+                      <a href="#" class="tab-content__img" title="Nhím Sonic">
+                        <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1597641287/phimbox_images/Poster-nhim-sonic.jpg" alt="Nhím Sonic">
+                      </a>
+                      <div class="tab-content__info">
+                        <a href="#" class="tab-content__vn-name" title="Nhím Sonic">
+                          <h3>Nhím Sonic</h3>
+                        </a>
+                        <p class="tab-content__original-name">Sonic The Hedgehog</p>
+                        <p><span class="tab-content__status">HD Vietsub + Thuyết Minh</span></p>
+                        <p>
+                          <span class="tab-content__imdb"><i class="tab-content__imdb-icon"></i><span class="tab-content__imdb-point">6.7</span></span>
+                          <span class="tab-content__year">2020</span>
+                        </p>
+                      </div>
+
+                    </div>
+                    <div class="tab-content__item">
+                      <a href="#" class="tab-content__img" title="Nhím Sonic">
+                        <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1597641287/phimbox_images/Poster-nhim-sonic.jpg" alt="Nhím Sonic">
+                      </a>
+                      <div class="tab-content__info">
+                        <a href="#" class="tab-content__vn-name" title="Nhím Sonic">
+                          <h3>Nhím Sonic</h3>
+                        </a>
+                        <p class="tab-content__original-name">Sonic The Hedgehog</p>
+                        <p><span class="tab-content__status">HD Vietsub + Thuyết Minh</span></p>
+                        <p>
+                          <span class="tab-content__imdb"><i class="tab-content__imdb-icon"></i><span class="tab-content__imdb-point">6.7</span></span>
+                          <span class="tab-content__year">2020</span>
+                        </p>
+                      </div>
+
+                    </div>
+                    <div class="tab-content__item">
+                      <a href="#" class="tab-content__img" title="Nhím Sonic">
+                        <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1597641287/phimbox_images/Poster-nhim-sonic.jpg" alt="Nhím Sonic">
+                      </a>
+                      <div class="tab-content__info">
+                        <a href="#" class="tab-content__vn-name" title="Nhím Sonic">
+                          <h3>Nhím Sonic</h3>
+                        </a>
+                        <p class="tab-content__original-name">Sonic The Hedgehog</p>
+                        <p><span class="tab-content__status">HD Vietsub + Thuyết Minh</span></p>
+                        <p>
+                          <span class="tab-content__imdb"><i class="tab-content__imdb-icon"></i><span class="tab-content__imdb-point">6.7</span></span>
+                          <span class="tab-content__year">2020</span>
+                        </p>
+                      </div>
+
+                    </div>
+                    <div class="tab-content__item">
+                      <a href="#" class="tab-content__img" title="Nhím Sonic">
+                        <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1597641287/phimbox_images/Poster-nhim-sonic.jpg" alt="Nhím Sonic">
+                      </a>
+                      <div class="tab-content__info">
+                        <a href="#" class="tab-content__vn-name" title="Nhím Sonic">
+                          <h3>Nhím Sonic</h3>
+                        </a>
+                        <p class="tab-content__original-name">Sonic The Hedgehog</p>
+                        <p><span class="tab-content__status">HD Vietsub + Thuyết Minh</span></p>
+                        <p>
+                          <span class="tab-content__imdb"><i class="tab-content__imdb-icon"></i><span class="tab-content__imdb-point">6.7</span></span>
+                          <span class="tab-content__year">2020</span>
+                        </p>
+                      </div>
+
+                    </div>
+                    <div class="tab-content__item">
+                      <a href="#" class="tab-content__img" title="Nhím Sonic">
+                        <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1597641287/phimbox_images/Poster-nhim-sonic.jpg" alt="Nhím Sonic">
+                      </a>
+                      <div class="tab-content__info">
+                        <a href="#" class="tab-content__vn-name" title="Nhím Sonic">
+                          <h3>Nhím Sonic</h3>
+                        </a>
+                        <p class="tab-content__original-name">Sonic The Hedgehog</p>
+                        <p><span class="tab-content__status">HD Vietsub + Thuyết Minh</span></p>
+                        <p>
+                          <span class="tab-content__imdb"><i class="tab-content__imdb-icon"></i><span class="tab-content__imdb-point">6.7</span></span>
+                          <span class="tab-content__year">2020</span>
+                        </p>
+                      </div>
+
+                    </div>
+                    <div class="tab-content__item">
+                      <a href="#" class="tab-content__img" title="Nhím Sonic">
+                        <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1597641287/phimbox_images/Poster-nhim-sonic.jpg" alt="Nhím Sonic">
+                      </a>
+                      <div class="tab-content__info">
+                        <a href="#" class="tab-content__vn-name" title="Nhím Sonic">
+                          <h3>Nhím Sonic</h3>
+                        </a>
+                        <p class="tab-content__original-name">Sonic The Hedgehog</p>
+                        <p><span class="tab-content__status">HD Vietsub + Thuyết Minh</span></p>
+                        <p>
+                          <span class="tab-content__imdb"><i class="tab-content__imdb-icon"></i><span class="tab-content__imdb-point">6.7</span></span>
+                          <span class="tab-content__year">2020</span>
+                        </p>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div id="tab-content-2" class="tab-content hidden">
+                    <div class="tab-content__item">
+                      <a href="#" class="tab-content__img" title="Nhím Sonic">
+                        <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1613042380/phimbox_images/Poster-ga-he.jpg" alt="Gã Hề">
+                      </a>
+                      <div class="tab-content__info">
+                        <a href="#" class="tab-content__vn-name" title="Gã Hề">
+                          <h3>Gã Hề</h3>
+                        </a>
+                        <p class="tab-content__original-name">Joker</p>
+                        <p><span class="tab-content__status">HD Thuyết Minh</span></p>
+                        <p>
+                          <span class="tab-content__imdb"><i class="tab-content__imdb-icon"></i><span class="tab-content__imdb-point">8.6</span></span>
+                          <span class="tab-content__year">2019</span>
+                        </p>
+                      </div>
+
+                    </div>
+                    <div class="tab-content__item">
+                      <a href="#" class="tab-content__img" title="Nhím Sonic">
+                        <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1597641287/phimbox_images/Poster-nhim-sonic.jpg" alt="Nhím Sonic">
+                      </a>
+                      <div class="tab-content__info">
+                        <a href="#" class="tab-content__vn-name" title="Nhím Sonic">
+                          <h3>Nhím Sonic</h3>
+                        </a>
+                        <p class="tab-content__original-name">Sonic The Hedgehog</p>
+                        <p><span class="tab-content__status">HD Vietsub + Thuyết Minh</span></p>
+                        <p>
+                          <span class="tab-content__imdb"><i class="tab-content__imdb-icon"></i><span class="tab-content__imdb-point">6.7</span></span>
+                          <span class="tab-content__year">2020</span>
+                        </p>
+                      </div>
+
+                    </div>
+                    <div class="tab-content__item">
+                      <a href="#" class="tab-content__img" title="Nhím Sonic">
+                        <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1597641287/phimbox_images/Poster-nhim-sonic.jpg" alt="Nhím Sonic">
+                      </a>
+                      <div class="tab-content__info">
+                        <a href="#" class="tab-content__vn-name" title="Nhím Sonic">
+                          <h3>Nhím Sonic</h3>
+                        </a>
+                        <p class="tab-content__original-name">Sonic The Hedgehog</p>
+                        <p><span class="tab-content__status">HD Vietsub + Thuyết Minh</span></p>
+                        <p>
+                          <span class="tab-content__imdb"><i class="tab-content__imdb-icon"></i><span class="tab-content__imdb-point">6.7</span></span>
+                          <span class="tab-content__year">2020</span>
+                        </p>
+                      </div>
+
+                    </div>
+                    <div class="tab-content__item">
+                      <a href="#" class="tab-content__img" title="Nhím Sonic">
+                        <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1597641287/phimbox_images/Poster-nhim-sonic.jpg" alt="Nhím Sonic">
+                      </a>
+                      <div class="tab-content__info">
+                        <a href="#" class="tab-content__vn-name" title="Nhím Sonic">
+                          <h3>Nhím Sonic</h3>
+                        </a>
+                        <p class="tab-content__original-name">Sonic The Hedgehog</p>
+                        <p><span class="tab-content__status">HD Vietsub + Thuyết Minh</span></p>
+                        <p>
+                          <span class="tab-content__imdb"><i class="tab-content__imdb-icon"></i><span class="tab-content__imdb-point">6.7</span></span>
+                          <span class="tab-content__year">2020</span>
+                        </p>
+                      </div>
+
+                    </div>
+                    <div class="tab-content__item">
+                      <a href="#" class="tab-content__img" title="Nhím Sonic">
+                        <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1597641287/phimbox_images/Poster-nhim-sonic.jpg" alt="Nhím Sonic">
+                      </a>
+                      <div class="tab-content__info">
+                        <a href="#" class="tab-content__vn-name" title="Nhím Sonic">
+                          <h3>Nhím Sonic</h3>
+                        </a>
+                        <p class="tab-content__original-name">Sonic The Hedgehog</p>
+                        <p><span class="tab-content__status">HD Vietsub + Thuyết Minh</span></p>
+                        <p>
+                          <span class="tab-content__imdb"><i class="tab-content__imdb-icon"></i><span class="tab-content__imdb-point">6.7</span></span>
+                          <span class="tab-content__year">2020</span>
+                        </p>
+                      </div>
+
+                    </div>
+                    <div class="tab-content__item">
+                      <a href="#" class="tab-content__img" title="Nhím Sonic">
+                        <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1597641287/phimbox_images/Poster-nhim-sonic.jpg" alt="Nhím Sonic">
+                      </a>
+                      <div class="tab-content__info">
+                        <a href="#" class="tab-content__vn-name" title="Nhím Sonic">
+                          <h3>Nhím Sonic</h3>
+                        </a>
+                        <p class="tab-content__original-name">Sonic The Hedgehog</p>
+                        <p><span class="tab-content__status">HD Vietsub + Thuyết Minh</span></p>
+                        <p>
+                          <span class="tab-content__imdb"><i class="tab-content__imdb-icon"></i><span class="tab-content__imdb-point">6.7</span></span>
+                          <span class="tab-content__year">2020</span>
+                        </p>
+                      </div>
+
+                    </div>
+                    <div class="tab-content__item">
+                      <a href="#" class="tab-content__img" title="Nhím Sonic">
+                        <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1597641287/phimbox_images/Poster-nhim-sonic.jpg" alt="Nhím Sonic">
+                      </a>
+                      <div class="tab-content__info">
+                        <a href="#" class="tab-content__vn-name" title="Nhím Sonic">
+                          <h3>Nhím Sonic</h3>
+                        </a>
+                        <p class="tab-content__original-name">Sonic The Hedgehog</p>
+                        <p><span class="tab-content__status">HD Vietsub + Thuyết Minh</span></p>
+                        <p>
+                          <span class="tab-content__imdb"><i class="tab-content__imdb-icon"></i><span class="tab-content__imdb-point">6.7</span></span>
+                          <span class="tab-content__year">2020</span>
+                        </p>
+                      </div>
+
+                    </div>
+                    <div class="tab-content__item">
+                      <a href="#" class="tab-content__img" title="Nhím Sonic">
+                        <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1597641287/phimbox_images/Poster-nhim-sonic.jpg" alt="Nhím Sonic">
+                      </a>
+                      <div class="tab-content__info">
+                        <a href="#" class="tab-content__vn-name" title="Nhím Sonic">
+                          <h3>Nhím Sonic</h3>
+                        </a>
+                        <p class="tab-content__original-name">Sonic The Hedgehog</p>
+                        <p><span class="tab-content__status">HD Vietsub + Thuyết Minh</span></p>
+                        <p>
+                          <span class="tab-content__imdb"><i class="tab-content__imdb-icon"></i><span class="tab-content__imdb-point">6.7</span></span>
+                          <span class="tab-content__year">2020</span>
+                        </p>
+                      </div>
+
+                    </div>
+                    <div class="tab-content__item">
+                      <a href="#" class="tab-content__img" title="Nhím Sonic">
+                        <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1597641287/phimbox_images/Poster-nhim-sonic.jpg" alt="Nhím Sonic">
+                      </a>
+                      <div class="tab-content__info">
+                        <a href="#" class="tab-content__vn-name" title="Nhím Sonic">
+                          <h3>Nhím Sonic</h3>
+                        </a>
+                        <p class="tab-content__original-name">Sonic The Hedgehog</p>
+                        <p><span class="tab-content__status">HD Vietsub + Thuyết Minh</span></p>
+                        <p>
+                          <span class="tab-content__imdb"><i class="tab-content__imdb-icon"></i><span class="tab-content__imdb-point">6.7</span></span>
+                          <span class="tab-content__year">2020</span>
+                        </p>
+                      </div>
+
+                    </div>
+                    <div class="tab-content__item">
+                      <a href="#" class="tab-content__img" title="Nhím Sonic">
+                        <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1597641287/phimbox_images/Poster-nhim-sonic.jpg" alt="Nhím Sonic">
+                      </a>
+                      <div class="tab-content__info">
+                        <a href="#" class="tab-content__vn-name" title="Nhím Sonic">
+                          <h3>Nhím Sonic</h3>
+                        </a>
+                        <p class="tab-content__original-name">Sonic The Hedgehog</p>
+                        <p><span class="tab-content__status">HD Vietsub + Thuyết Minh</span></p>
+                        <p>
+                          <span class="tab-content__imdb"><i class="tab-content__imdb-icon"></i><span class="tab-content__imdb-point">6.7</span></span>
+                          <span class="tab-content__year">2020</span>
+                        </p>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div id="tab-content-3" class="tab-content hidden">
+                    <div class="tab-content__item">
+                      <a href="#" class="tab-content__img" title="Nhím Sonic">
+                        <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_100,h_143/v1597306188/phimbox_images/Poster-rap-pho-dap-pha.jpg" alt="Nhím Sonic">
+                      </a>
+                      <div class="tab-content__info">
+                        <a href="#" class="tab-content__vn-name" title="Nhím Sonic">
+                          <h3>Nhím Sonic</h3>
+                        </a>
+                        <p class="tab-content__original-name">Sonic The Hedgehog</p>
+                        <p><span class="tab-content__status">HD Vietsub + Thuyết Minh</span></p>
+                        <p>
+                          <span class="tab-content__imdb"><i class="tab-content__imdb-icon"></i><span class="tab-content__imdb-point">6.7</span></span>
+                          <span class="tab-content__year">2020</span>
+                        </p>
+                      </div>
+
+                    </div>
+                    <div class="tab-content__item">
+                      <a href="#" class="tab-content__img" title="Nhím Sonic">
+                        <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1597641287/phimbox_images/Poster-nhim-sonic.jpg" alt="Nhím Sonic">
+                      </a>
+                      <div class="tab-content__info">
+                        <a href="#" class="tab-content__vn-name" title="Nhím Sonic">
+                          <h3>Nhím Sonic</h3>
+                        </a>
+                        <p class="tab-content__original-name">Sonic The Hedgehog</p>
+                        <p><span class="tab-content__status">HD Vietsub + Thuyết Minh</span></p>
+                        <p>
+                          <span class="tab-content__imdb"><i class="tab-content__imdb-icon"></i><span class="tab-content__imdb-point">6.7</span></span>
+                          <span class="tab-content__year">2020</span>
+                        </p>
+                      </div>
+
+                    </div>
+                    <div class="tab-content__item">
+                      <a href="#" class="tab-content__img" title="Nhím Sonic">
+                        <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1597641287/phimbox_images/Poster-nhim-sonic.jpg" alt="Nhím Sonic">
+                      </a>
+                      <div class="tab-content__info">
+                        <a href="#" class="tab-content__vn-name" title="Nhím Sonic">
+                          <h3>Nhím Sonic</h3>
+                        </a>
+                        <p class="tab-content__original-name">Sonic The Hedgehog</p>
+                        <p><span class="tab-content__status">HD Vietsub + Thuyết Minh</span></p>
+                        <p>
+                          <span class="tab-content__imdb"><i class="tab-content__imdb-icon"></i><span class="tab-content__imdb-point">6.7</span></span>
+                          <span class="tab-content__year">2020</span>
+                        </p>
+                      </div>
+
+                    </div>
+                    <div class="tab-content__item">
+                      <a href="#" class="tab-content__img" title="Nhím Sonic">
+                        <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1597641287/phimbox_images/Poster-nhim-sonic.jpg" alt="Nhím Sonic">
+                      </a>
+                      <div class="tab-content__info">
+                        <a href="#" class="tab-content__vn-name" title="Nhím Sonic">
+                          <h3>Nhím Sonic</h3>
+                        </a>
+                        <p class="tab-content__original-name">Sonic The Hedgehog</p>
+                        <p><span class="tab-content__status">HD Vietsub + Thuyết Minh</span></p>
+                        <p>
+                          <span class="tab-content__imdb"><i class="tab-content__imdb-icon"></i><span class="tab-content__imdb-point">6.7</span></span>
+                          <span class="tab-content__year">2020</span>
+                        </p>
+                      </div>
+
+                    </div>
+                    <div class="tab-content__item">
+                      <a href="#" class="tab-content__img" title="Nhím Sonic">
+                        <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1597641287/phimbox_images/Poster-nhim-sonic.jpg" alt="Nhím Sonic">
+                      </a>
+                      <div class="tab-content__info">
+                        <a href="#" class="tab-content__vn-name" title="Nhím Sonic">
+                          <h3>Nhím Sonic</h3>
+                        </a>
+                        <p class="tab-content__original-name">Sonic The Hedgehog</p>
+                        <p><span class="tab-content__status">HD Vietsub + Thuyết Minh</span></p>
+                        <p>
+                          <span class="tab-content__imdb"><i class="tab-content__imdb-icon"></i><span class="tab-content__imdb-point">6.7</span></span>
+                          <span class="tab-content__year">2020</span>
+                        </p>
+                      </div>
+
+                    </div>
+                    <div class="tab-content__item">
+                      <a href="#" class="tab-content__img" title="Nhím Sonic">
+                        <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1597641287/phimbox_images/Poster-nhim-sonic.jpg" alt="Nhím Sonic">
+                      </a>
+                      <div class="tab-content__info">
+                        <a href="#" class="tab-content__vn-name" title="Nhím Sonic">
+                          <h3>Nhím Sonic</h3>
+                        </a>
+                        <p class="tab-content__original-name">Sonic The Hedgehog</p>
+                        <p><span class="tab-content__status">HD Vietsub + Thuyết Minh</span></p>
+                        <p>
+                          <span class="tab-content__imdb"><i class="tab-content__imdb-icon"></i><span class="tab-content__imdb-point">6.7</span></span>
+                          <span class="tab-content__year">2020</span>
+                        </p>
+                      </div>
+
+                    </div>
+                    <div class="tab-content__item">
+                      <a href="#" class="tab-content__img" title="Nhím Sonic">
+                        <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1597641287/phimbox_images/Poster-nhim-sonic.jpg" alt="Nhím Sonic">
+                      </a>
+                      <div class="tab-content__info">
+                        <a href="#" class="tab-content__vn-name" title="Nhím Sonic">
+                          <h3>Nhím Sonic</h3>
+                        </a>
+                        <p class="tab-content__original-name">Sonic The Hedgehog</p>
+                        <p><span class="tab-content__status">HD Vietsub + Thuyết Minh</span></p>
+                        <p>
+                          <span class="tab-content__imdb"><i class="tab-content__imdb-icon"></i><span class="tab-content__imdb-point">6.7</span></span>
+                          <span class="tab-content__year">2020</span>
+                        </p>
+                      </div>
+
+                    </div>
+                    <div class="tab-content__item">
+                      <a href="#" class="tab-content__img" title="Nhím Sonic">
+                        <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1597641287/phimbox_images/Poster-nhim-sonic.jpg" alt="Nhím Sonic">
+                      </a>
+                      <div class="tab-content__info">
+                        <a href="#" class="tab-content__vn-name" title="Nhím Sonic">
+                          <h3>Nhím Sonic</h3>
+                        </a>
+                        <p class="tab-content__original-name">Sonic The Hedgehog</p>
+                        <p><span class="tab-content__status">HD Vietsub + Thuyết Minh</span></p>
+                        <p>
+                          <span class="tab-content__imdb"><i class="tab-content__imdb-icon"></i><span class="tab-content__imdb-point">6.7</span></span>
+                          <span class="tab-content__year">2020</span>
+                        </p>
+                      </div>
+
+                    </div>
+                    <div class="tab-content__item">
+                      <a href="#" class="tab-content__img" title="Nhím Sonic">
+                        <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1597641287/phimbox_images/Poster-nhim-sonic.jpg" alt="Nhím Sonic">
+                      </a>
+                      <div class="tab-content__info">
+                        <a href="#" class="tab-content__vn-name" title="Nhím Sonic">
+                          <h3>Nhím Sonic</h3>
+                        </a>
+                        <p class="tab-content__original-name">Sonic The Hedgehog</p>
+                        <p><span class="tab-content__status">HD Vietsub + Thuyết Minh</span></p>
+                        <p>
+                          <span class="tab-content__imdb"><i class="tab-content__imdb-icon"></i><span class="tab-content__imdb-point">6.7</span></span>
+                          <span class="tab-content__year">2020</span>
+                        </p>
+                      </div>
+
+                    </div>
+                    <div class="tab-content__item">
+                      <a href="#" class="tab-content__img" title="Nhím Sonic">
+                        <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1597641287/phimbox_images/Poster-nhim-sonic.jpg" alt="Nhím Sonic">
+                      </a>
+                      <div class="tab-content__info">
+                        <a href="#" class="tab-content__vn-name" title="Nhím Sonic">
+                          <h3>Nhím Sonic</h3>
+                        </a>
+                        <p class="tab-content__original-name">Sonic The Hedgehog</p>
+                        <p><span class="tab-content__status">HD Vietsub + Thuyết Minh</span></p>
+                        <p>
+                          <span class="tab-content__imdb"><i class="tab-content__imdb-icon"></i><span class="tab-content__imdb-point">6.7</span></span>
+                          <span class="tab-content__year">2020</span>
+                        </p>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </section>
+          </div>
+          <div class="sidebar-widget xpo-green">
+            <div class="sidebar-widget__section-bar section-bar">
+              <h2 class="section-bar__title">
+                <span><i class="iconify section-bar__icon" data-icon="el:tags"></i> Tag Cloud</span>
+                <i class="skew-left"></i>
+                <i class="skew-left"></i>
+              </h2>
+
+            </div>
+            <section class="tab-container">
+              <div class="tabcloud-list">
+                <a href="" title="Phim Marvel" class="tabcloud-item">Marvel</a>
+                <a href="" title="Phim DC" class="tabcloud-item">DC</a>
+                <a href="" title="Phim Doraemon" class="tabcloud-item">Doraemon</a>
+                <a href="" title="Phim Conan" class="tabcloud-item">Conan</a>
+                <a href="" title="Phim Pokemon" class="tabcloud-item">Pokemon</a>
+                <a href="" title="Phim Naruto" class="tabcloud-item">Naruto</a>
+                <a href="" title="Phim One Piece" class="tabcloud-item">One Piece</a>
+                <a href="" title="Phim Dragon Ball Z" class="tabcloud-item">Dragon Ball Z</a>
+              </div>
+            </section>
+          </div>
+        </aside>
+      </div>
+    </div>
+    <!-- Footer -->
+    <%- include('./partials/footer') %>
+    <!-- Auth Modal -->
+    <%- include('./partials/authModal') %>
+    <!-- Mini Info Films -->
+    <%- include('./partials/miniFilmInfo') %>
+    <!-- Scroll Top -->
+    <div id="scroll-top">
+      <i class="iconify scroll-top__icon" data-icon="bi:arrow-up-short"></i>
+    </div>
+  </div>
+
+
+  <!-- Javascripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/iconify/2.2.1/iconify.min.js" integrity="sha512-sU5Gzc108d8ERAXEUoNh3DZQ3GZCQyygVkeuhIxFR+D9Go8kLw3Ce3HVD/AI5cnhGzW7Km9V4oOOiepKcD0vlg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdn.jsdelivr.net/npm/star-rating-svg@3.5.0/src/jquery.star-rating-svg.js"></script>
+  <script src="/assets/js/main.js"></script>
+</body>
+
+</html>
