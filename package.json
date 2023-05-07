@@ -27,6 +27,7 @@
         "mongoose-sequence": "^5.3.1",
         "mongoose-slug-generator": "^1.0.4",
         "nanoid": "^3.3.4",
+        "node-fetch": "^2.6.9",
         "redis": "^3.1.2",
         "slugify": "^1.6.5",
         "to-time": "^1.0.2"

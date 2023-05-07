@@ -34,6 +34,8 @@ const loadFromDatabase = async () => {
 
 	const [listFilmRecommend, listFilmCanonical, listFilmMovie, listFilmSeries, listFilmAnimation] = await Promise.all(
 		promiseArray,
+	).then((results) =>
+		results.map((result) => result.map((film) => ({ ...film._doc, slug: `${film.slug}-${film.id}` }))),
 	);
 
 	return { listFilmRecommend, listFilmCanonical, listFilmMovie, listFilmSeries, listFilmAnimation };
