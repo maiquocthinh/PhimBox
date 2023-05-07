@@ -18,7 +18,6 @@ const ajaxDatatablesRoles = async (req, res) => {
 	const totalRole = await roleModels.countDocuments({});
 	let dataRoles = await roleModels.aggregate([
 		{ $match: queryToDB },
-		{ $addFields: { _id: { $toString: '$_id' } } },
 		{
 			$lookup: {
 				from: 'user_role',
@@ -135,11 +134,6 @@ const getUserRole = async (req, res) => {
 			},
 			{
 				$limit: 1,
-			},
-			{
-				$addFields: {
-					roleId: { $toObjectId: '$roleId' },
-				},
 			},
 			{
 				$lookup: {

@@ -43,11 +43,6 @@ const profile = async (req, res) => {
 				$limit: 1,
 			},
 			{
-				$addFields: {
-					roleId: { $toObjectId: '$roleId' },
-				},
-			},
-			{
 				$lookup: {
 					from: 'roles',
 					localField: 'roleId',
@@ -67,7 +62,6 @@ const profile = async (req, res) => {
 			levelLabel,
 		});
 	} catch (error) {
-		console.log(error);
 		return res.status(500).json({ message: error.message });
 	}
 };

@@ -4,10 +4,11 @@ const mongoose = require('mongoose');
 const slug = require('mongoose-slug-generator');
 const mongooseDelete = require('mongoose-delete');
 const Schema = mongoose.Schema;
+const nanoidUtil = require('../utils/nanoid.util');
 
 const Film = new Schema(
 	{
-		id: { type: String },
+		_id: { type: String, default: () => nanoidUtil(7) },
 		name: { type: String },
 		originalName: { type: String },
 		status: { type: String },

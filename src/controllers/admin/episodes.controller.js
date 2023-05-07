@@ -1,7 +1,6 @@
 const episodeModels = require('../../models/episode.models');
 const filmModels = require('../../models/film.models');
 const configurationModels = require('../../models/configuration.models');
-const { nanoid } = require('nanoid');
 
 // ###### API ######
 
@@ -33,10 +32,8 @@ const ajaxDatatables = async (req, res) => {
 		episode.updatedAt.toISOString().substring(0, 10),
 		`<div class="d-flex order-actions">
 			<a href="javascript:;" class="text-primary"><i class="bx bx-link-external"></i></a>
-			<a href="javascript:;" class="text-warning ms-1" onclick="fillDataToEditForm('${episode._id.toString()}')" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bx bxs-edit"></i></a>
-			<a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeleteForm('${
-				episode.name
-			}','${episode._id.toString()}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>
+			<a href="javascript:;" class="text-warning ms-1" onclick="fillDataToEditForm('${episode._id}')" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bx bxs-edit"></i></a>
+			<a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeleteForm('${episode.name}','${episode._id}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>
 		</div>`,
 	]);
 
@@ -99,7 +96,7 @@ const errorsAjaxDatatables = async (req, res) => {
 		episode.updatedAt.toISOString().substring(0, 10),
 		`<div class="d-flex justify-content-center order-actions">
 			<a href="javascript:;" class="text-primary"><i class="bx bx-link-external"></i></a>
-			<a href="javascript:;" class="text-warning ms-1" onclick="fillDataToEditForm('${episode._id.toString()}')" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bx bxs-edit"></i></a>
+			<a href="javascript:;" class="text-warning ms-1" onclick="fillDataToEditForm('${episode._id}')" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bx bxs-edit"></i></a>
 		</div>`,
 	]);
 
@@ -115,9 +112,9 @@ const errorsAjaxDatatables = async (req, res) => {
 const createEpisode = async (req, res) => {
 	const { data, filmId } = req.body;
 	try {
-		const dataInserted = await episodeModels.insertMany(data.map((d) => ({ id: nanoid(7), filmId, ...d })));
+		const dataInserted = await episodeModels.insertMany(data.map((d) => ({ filmId, ...d })));
 		await filmModels.findByIdAndUpdate(filmId, {
-			$push: { episodes: { $each: dataInserted.map((d) => d.id) } },
+			$push: { episodes: { $each: dataInserted.map((d) => d._id) } },
 		});
 		return res.status(200).json({ message: 'Create Episodes Success' });
 	} catch (error) {
@@ -140,7 +137,7 @@ const readEpisode = (req, res) => {
 const readManyEpisode = (req, res) => {
 	const { ids } = req.body;
 	episodeModels
-		.find({ id: { $in: ids } })
+		.find({ _id: { $in: ids } })
 		.then((results) => {
 			res.status(200).json(results);
 		})
@@ -177,7 +174,7 @@ const updateManyEpisode = (req, res) => {
 	episodeModels
 		.bulkWrite(
 			data.map((dataEpisode) => ({
-				updateOne: { filter: { id: dataEpisode.id }, update: dataEpisode },
+				updateOne: { filter: { _id: dataEpisode.id }, update: dataEpisode },
 			})),
 		)
 		.then(async () => {
@@ -211,7 +208,7 @@ const deleteManyEpisode = (req, res) => {
 
 	Promise.all([
 		filmModels.findByIdAndUpdate(filmId, { $pull: { episodes: { $in: episodeIds } } }),
-		episodeModels.deleteMany({ id: { $in: episodeIds } }),
+		episodeModels.deleteMany({ _id: { $in: episodeIds } }),
 	])
 		.then(() => {
 			res.status(200).json({ message: 'Delete Episodes Success' });

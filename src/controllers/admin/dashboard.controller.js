@@ -11,13 +11,6 @@ const dashboard = (req, res) => {
 		filmModels
 			.aggregate([
 				{
-					$addFields: {
-						createdBy: {
-							$toObjectId: '$createdBy',
-						},
-					},
-				},
-				{
 					$lookup: {
 						from: 'users',
 						localField: 'createdBy',
@@ -43,7 +36,7 @@ const dashboard = (req, res) => {
 			])
 			.sort({ _id: -1 })
 			.limit(10),
-		userModels.find({}, { user_pass: 0 }).sort({ _id: -1 }).limit(10),
+		userModels.find({}, { password: 0 }).sort({ createdAt: -1 }).limit(10),
 	])
 		.then(([totalUser, totalFilm, totalEpisode, Films, Users]) => {
 			const totalCount = {

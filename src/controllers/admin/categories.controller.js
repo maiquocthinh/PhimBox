@@ -35,17 +35,13 @@ const ajaxDatatablesCategories = async (req, res) => {
 		category.updatedAt.toISOString().substring(0, 10),
 		deleted
 			? `<div class="d-flex order-actions">
-				<a href="javascript:;" class="ms-1 btn-restore" onclick="restoreCategory('${category._id.toString()}')"><i class="bx bx-undo"></i></a>
-				<a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeletePermanentlyForm('${
-					category.name
-				}','${category._id.toString()}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>
+				<a href="javascript:;" class="ms-1 btn-restore" onclick="restoreCategory('${category._id}')"><i class="bx bx-undo"></i></a>
+				<a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeletePermanentlyForm('${category.name}','${category._id}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>
 			</div>`
 			: `<div class="d-flex justify-content-center order-actions">
 				<a href="javascript:;" class="text-primary"><i class="bx bx-link-external"></i></a>
-				<a href="javascript:;" class="text-warning ms-1" onclick="fillDataToEditForm('${category._id.toString()}')" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bx bxs-edit"></i></a>
-				<a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeleteForm('${
-					category.name
-				}','${category._id.toString()}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>
+				<a href="javascript:;" class="text-warning ms-1" onclick="fillDataToEditForm('${category._id}')" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bx bxs-edit"></i></a>
+				<a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeleteForm('${category.name}','${category._id}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>
 			</div>`,
 	]);
 

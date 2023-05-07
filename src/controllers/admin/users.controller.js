@@ -1,4 +1,3 @@
-const { nanoid } = require('nanoid');
 const Users = require('../../models/user.models');
 const roleModels = require('../../models/role.models');
 const userRoleModels = require('../../models/userRole.models');
@@ -21,7 +20,7 @@ const ajaxDatatablesUsers = async (req, res) => {
 		queryToDB['$or'] = [{ name: new RegExp(search.value, 'i') }, { email: new RegExp(search.value, 'i') }];
 
 	const totalUser = deleted ? await Users.countDocumentsDeleted({}) : await Users.countDocuments({});
-	const dataUsers = await Users.aggregate([
+	const dataUsers = await Users.aggregateWithDeleted([
 		{ $match: { ...queryToDB, deleted: !!deleted } },
 		{ $addFields: { _id: { $toString: '$_id' } } },
 		{
@@ -58,7 +57,7 @@ const ajaxDatatablesUsers = async (req, res) => {
 	]);
 
 	const data = dataUsers.map((user) => [
-		user.id,
+		user._id,
 		`<div class="d-flex align-items-center">
 			<div class="recent-product-img">
 			<img src="${user.avatar}" alt="">
@@ -74,17 +73,13 @@ const ajaxDatatablesUsers = async (req, res) => {
 		user.updatedAt.toISOString().substring(0, 10),
 		deleted
 			? `<div class="d-flex order-actions">
-				<a href="javascript:;" class="ms-1 btn-restore" onclick="restoreUser('${user._id.toString()}')"><i class="bx bx-undo"></i></a>
-				<a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeletePermanentlyForm('${
-					user.name
-				}','${user._id.toString()}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>
+				<a href="javascript:;" class="ms-1 btn-restore" onclick="restoreUser('${user._id}')"><i class="bx bx-undo"></i></a>
+				<a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeletePermanentlyForm('${user.name}','${user._id}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>
 			</div>`
 			: `<div class="d-flex order-actions">
 				<a href="javascript:;" class="text-white"><i class="bx bx-detail"></i></a>
-				<a href="javascript:;" class="text-warning ms-1" onclick="fillDataToEditForm('${user._id.toString()}')" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bx bxs-edit"></i></a>
-				<a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeleteForm('${
-					user.name
-				}','${user._id.toString()}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>
+				<a href="javascript:;" class="text-warning ms-1" onclick="fillDataToEditForm('${user._id}')" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bx bxs-edit"></i></a>
+				<a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeleteForm('${user.name}','${user._id}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>
 			</div>`,
 	]);
 
@@ -102,7 +97,6 @@ const createUser = (req, res) => {
 	const hashPassword = req.body.password ? generateHashPassword(req.body.password) : undefined;
 
 	const user = new Users({
-		id: nanoid(7),
 		email: req.body.email,
 		name: req.body.name,
 		password: hashPassword,
@@ -122,7 +116,7 @@ const createUser = (req, res) => {
 const readUser = async (req, res) => {
 	try {
 		const user = await Users.findById(req.params.id, { password: 0 });
-		const userRole = await userRoleModels.findOne({ userId: user._id.toString() });
+		const userRole = await userRoleModels.findOne({ userId: user._id });
 		if (userRole) res.status(200).json({ ...user._doc, roleId: userRole.roleId });
 		else res.status(200).json(user);
 	} catch (error) {

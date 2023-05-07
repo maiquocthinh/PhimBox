@@ -3,10 +3,11 @@
 const mongoose = require('mongoose');
 const mongooseDelete = require('mongoose-delete');
 const Schema = mongoose.Schema;
+const nanoidUtil = require('../utils/nanoid.util');
 
 const User = new Schema(
 	{
-		id: { type: String },
+		_id: { type: String, default: () => nanoidUtil(7) },
 		email: { type: String },
 		name: { type: String },
 		password: { type: String },

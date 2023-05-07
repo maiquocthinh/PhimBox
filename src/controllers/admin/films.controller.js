@@ -1,5 +1,4 @@
 const ajaxFilmsUtil = require('../../utils/ajaxFilms.util');
-const { nanoid } = require('nanoid');
 const filmModels = require('../../models/film.models');
 const categoryModels = require('../../models/category.models');
 const countryModels = require('../../models/country.models');
@@ -67,7 +66,6 @@ const ajaxDatatablesFilms = async (req, res) => {
 				queryToDB.episodes = { $not: { $exists: true, $type: 'array', $ne: [] } };
 				break;
 		}
-	console.log(queryToDB);
 	const dataFilmsWithFilter = deleted
 		? await filmModels
 				.findDeleted(queryToDB)
@@ -82,8 +80,8 @@ const ajaxDatatablesFilms = async (req, res) => {
 	const totalFilm = deleted ? await filmModels.countDocumentsDeleted({}) : await filmModels.countDocuments({});
 
 	const data = dataFilmsWithFilter.map((film) => [
-		film.id,
-		film.id,
+		film._id,
+		film._id,
 		`<div class="d-flex align-items-center">
 					<div class="recent-product-img"><img src="${film.poster}" alt="" /></div>
 					<div class="ms-2">
@@ -106,18 +104,14 @@ const ajaxDatatablesFilms = async (req, res) => {
 			</div>`,
 		deleted
 			? `<div class="d-flex order-actions">
-				<a href="javascript:;" class="ms-1 btn-restore" onclick="restoreFilm('${film._id.toString()}')"><i class="bx bx-undo"></i></a>
-				<a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeletePermanentlyForm('${film.originalName} (${
-					film.year
-			  })','${film._id.toString()}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>
+				<a href="javascript:;" class="ms-1 btn-restore" onclick="restoreFilm('${film._id}')"><i class="bx bx-undo"></i></a>
+				<a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeletePermanentlyForm('${film.originalName} (${film.year})','${film._id}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>
 			</div>`
 			: `<div class="d-flex order-actions">
 				<a href="javascript:;" class="text-primary"><i class="bx bx-link-external"></i></a>
-				<a href="/admin/episodes/${film._id.toString()}" class="ms-1"><i class="bx bx-collection"></i></a>
-				<a href="javascript:;" class="text-warning ms-1" onclick="fillDataFilmToForm('${film._id.toString()}')" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bx bxs-edit"></i></a>
-				<a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeleteForm('${film.originalName} (${
-					film.year
-			  })','${film._id.toString()}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>
+				<a href="/admin/episodes/${film._id}" class="ms-1"><i class="bx bx-collection"></i></a>
+				<a href="javascript:;" class="text-warning ms-1" onclick="fillDataFilmToForm('${film._id}')" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bx bxs-edit"></i></a>
+				<a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeleteForm('${film.originalName} (${film.year})','${film._id}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>
 			</div>`,
 	]);
 
@@ -132,7 +126,6 @@ const ajaxDatatablesFilms = async (req, res) => {
 // [POST] admin/films/create
 const createFilm = (req, res) => {
 	const films = new filmModels({
-		id: nanoid(7),
 		name: req.body.name,
 		originalName: req.body.original_name,
 		status: req.body.status,
