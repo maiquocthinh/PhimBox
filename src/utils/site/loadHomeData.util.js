@@ -4,9 +4,27 @@ const redisClient = require('../../database/init.redis');
 const toTime = require('to-time');
 
 const loadFromDatabase = async () => {
+	const lookups = [
+		{
+			$lookup: {
+				from: 'categories',
+				localField: 'category',
+				foreignField: '_id',
+				as: 'categoriesData',
+			},
+		},
+		{
+			$lookup: {
+				from: 'countries',
+				localField: 'country',
+				foreignField: '_id',
+				as: 'countriesData',
+			},
+		},
+	];
+
 	const projection = {
-		_id: 0,
-		id: 1,
+		_id: 1,
 		name: 1,
 		originalName: 1,
 		poster: 1,
@@ -16,26 +34,29 @@ const loadFromDatabase = async () => {
 		duration: 1,
 		imdb: 1,
 		description: 1,
-		slug: 1,
-		category: 1,
-		country: 1,
+		slug: { $concat: ['$slug', '-', '$_id'] },
+		categoriesData: { name: 1, slug: 1 },
+		countriesData: { name: 1, slug: 1 },
 	};
 	const promiseArray = [
-		filmModels.find({ recommend: '1' }, projection).limit(10),
+		filmModels.aggregate([{ $match: { recommend: '1' } }, ...lookups, { $project: projection }, { $limit: 10 }]),
 
-		filmModels.find({ canonical: '1' }, { ...projection, backdropsCanonical: 1 }).limit(10),
+		filmModels.aggregate([
+			{ $match: { canonical: '1' } },
+			...lookups,
+			{ $project: { ...projection, backdropsCanonical: 1 } },
+			{ $limit: 10 },
+		]),
 
-		filmModels.find({ type: 'movie' }, projection).limit(18),
+		filmModels.aggregate([{ $match: { type: 'movie' } }, ...lookups, { $project: projection }, { $limit: 18 }]),
 
-		filmModels.find({ type: 'series' }, projection).limit(18),
+		filmModels.aggregate([{ $match: { type: 'series' } }, ...lookups, { $project: projection }, { $limit: 18 }]),
 
-		filmModels.find({ category: '63ea61267619eddd0a9cc94f' }, projection).limit(18),
+		filmModels.aggregate([{ $match: { category: 'jb9qn0B' } }, ...lookups, { $project: projection }, { $limit: 18 }]),
 	];
 
 	const [listFilmRecommend, listFilmCanonical, listFilmMovie, listFilmSeries, listFilmAnimation] = await Promise.all(
 		promiseArray,
-	).then((results) =>
-		results.map((result) => result.map((film) => ({ ...film._doc, slug: `${film.slug}-${film.id}` }))),
 	);
 
 	return { listFilmRecommend, listFilmCanonical, listFilmMovie, listFilmSeries, listFilmAnimation };
@@ -50,11 +71,10 @@ const load = async () => {
 			if (homeData) {
 				resolve(JSON.parse(homeData));
 			} else {
-				const { timecache: timeCache } = await configurationModels.findOne({}, { timecache: 1 });
-
 				homeData = await loadFromDatabase();
 				resolve(homeData);
 
+				const { timecache: timeCache } = await configurationModels.findOne({}, { timecache: 1 });
 				redisClient.set('site:home', JSON.stringify(homeData), 'EX', toTime(timeCache).seconds(), () => {});
 			}
 		});

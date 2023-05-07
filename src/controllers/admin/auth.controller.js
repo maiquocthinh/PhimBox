@@ -16,8 +16,7 @@ const loginHandler = async (req, res) => {
 		const user = await userModels.findOne({ email: email });
 		if (!user) return res.status(400).json({ message: 'The email is not registered in our system.' });
 
-		if (!bcrypt.compareSync(password, user.password))
-			return res.status(400).json({ message: 'The password is incorrect.' });
+		if (!bcrypt.compareSync(password, user.password)) return res.status(400).json({ message: 'The password is incorrect.' });
 
 		user.password = undefined;
 		req.session.user = user;

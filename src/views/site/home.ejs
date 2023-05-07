@@ -48,7 +48,11 @@
                         <p class="xpo-original-name"><%=film.originalName%></p>
                       </div>
                     </div>
-                    <div class="xpo-mini-info__data" style="display:none;" data-name="<%=film.name%> (<%=film.year%>)" data-original-name="<%=film.originalName%>" data-imdb="<%=film.imdb%>" data-duration="<%=film.duration%>" data-year="<%=film.year%>" data-short-description="<%=film.description%>" data-countries="Mỹ," data-categories="Hình Sự, Hài Hước, Tâm Lý," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
+                    <div class="xpo-mini-info__data" style="display:none;" data-name="<%=film.name%> (<%=film.year%>)" data-original-name="<%=film.originalName%>" data-imdb="<%=film.imdb%>" data-duration="<%=film.duration%>" data-year="<%=film.year%>" data-short-description="<%=film.description%>" 
+                        data-countries="<%for (const country of film.countriesData) { %><%=country.name%>,<% } %>" 
+                        data-categories="<%for (const category of film.categoriesData) { %><%=category.name%>,<% } %>" 
+                        data-actors="">
+                    </div>
                   </div>
                 </div>
               <% } %>
@@ -66,7 +70,11 @@
                       <h3 class="xpo-slide-full__title"><%=film.name%></h3>
                       <p class="xpo-slide-full__original-title sm-hidden"><%=film.originalName%></p>
                     </div>
-                    <div class="xpo-mini-info__data" style="display:none;" data-name="<%=film.name%> (<%=film.year%>)" data-original-name="<%=film.originalName%>" data-imdb="<%=film.imdb%>" data-duration="<%=film.duration%>" data-year="<%=film.year%>" data-short-description="<%=film.description%>" data-countries="Mỹ," data-categories="Hình Sự, Hài Hước, Tâm Lý," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
+                    <div class="xpo-mini-info__data" style="display:none;" data-name="<%=film.name%> (<%=film.year%>)" data-original-name="<%=film.originalName%>" data-imdb="<%=film.imdb%>" data-duration="<%=film.duration%>" data-year="<%=film.year%>" data-short-description="<%=film.description%>" 
+                      data-countries="<%for (const country of film.countriesData) { %><%=country.name%>,<% } %>" 
+                      data-categories="<%for (const category of film.categoriesData) { %><%=category.name%>,<% } %>" 
+                      data-actors="">
+                    </div>
                   </a>
                 </li>
               <% } %>
@@ -102,7 +110,11 @@
                         <p class="xpo-original-name"><%=film1.originalName%></p>
                       </div>
                     </div>
-                    <div class="xpo-mini-info__data" style="display:none;" data-name="<%=film1.name%> (<%=film1.year%>)" data-original-name="<%=film1.originalName%>" data-imdb="<%=film1.imdb%>" data-duration="<%=film1.duration%>" data-year="<%=film1.year%>" data-short-description="<%=film1.description%>" data-countries="Mỹ," data-categories="Hình Sự, Hài Hước, Tâm Lý," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
+                    <div class="xpo-mini-info__data" style="display:none;" data-name="<%=film1.name%> (<%=film1.year%>)" data-original-name="<%=film1.originalName%>" data-imdb="<%=film1.imdb%>" data-duration="<%=film1.duration%>" data-year="<%=film1.year%>" data-short-description="<%=film1.description%>" 
+                      data-countries="<%for (const country of film1.countriesData) { %><%=country.name%>,<% } %>" 
+                      data-categories="<%for (const category of film1.categoriesData) { %><%=category.name%>,<% } %>" 
+                      data-actors="">
+                    </div>
                   </div>
                   <% } %>
                   <% if(film2) { %>
@@ -122,7 +134,11 @@
                         <p class="xpo-original-name"><%=film2.originalName%></p>
                       </div>
                     </div>
-                    <div class="xpo-mini-info__data" style="display:none;" data-name="<%=film2.name%> (<%=film2.year%>)" data-original-name="<%=film2.originalName%>" data-imdb="<%=film2.imdb%>" data-duration="<%=film2.duration%>" data-year="<%=film2.year%>" data-short-description="<%=film2.description%>" data-countries="Mỹ," data-categories="Hình Sự, Hài Hước, Tâm Lý," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
+                    <div class="xpo-mini-info__data" style="display:none;" data-name="<%=film2.name%> (<%=film2.year%>)" data-original-name="<%=film2.originalName%>" data-imdb="<%=film2.imdb%>" data-duration="<%=film2.duration%>" data-year="<%=film2.year%>" data-short-description="<%=film2.description%>" 
+                      data-countries="<%for (const country of film2.countriesData) { %><%=country.name%>,<% } %>" 
+                      data-categories="<%for (const category of film2.categoriesData) { %><%=category.name%>,<% } %>" 
+                      data-actors="">
+                    </div>
                   </div>
                   <% } %>
                 </div>
@@ -159,7 +175,11 @@
                         <p class="xpo-original-name"><%=film1.originalName%></p>
                       </div>
                     </div>
-                    <div class="xpo-mini-info__data" style="display:none;" data-name="<%=film1.name%> (<%=film1.year%>)" data-original-name="<%=film1.originalName%>" data-imdb="<%=film1.imdb%>" data-duration="<%=film1.duration%>" data-year="<%=film1.year%>" data-short-description="<%=film1.description%>" data-countries="Mỹ," data-categories="Hình Sự, Hài Hước, Tâm Lý," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
+                    <div class="xpo-mini-info__data" style="display:none;" data-name="<%=film1.name%> (<%=film1.year%>)" data-original-name="<%=film1.originalName%>" data-imdb="<%=film1.imdb%>" data-duration="<%=film1.duration%>" data-year="<%=film1.year%>" data-short-description="<%=film1.description%>" 
+                      data-countries="<%for (const country of film1.countriesData) { %><%=country.name%>,<% } %>" 
+                      data-categories="<%for (const category of film1.categoriesData) { %><%=category.name%>,<% } %>" 
+                      data-actors="">
+                    </div>
                   </div>
                   <% } %>
                   <% if(film2) { %>
@@ -179,7 +199,11 @@
                         <p class="xpo-original-name"><%=film2.originalName%></p>
                       </div>
                     </div>
-                    <div class="xpo-mini-info__data" style="display:none;" data-name="<%=film2.name%> (<%=film2.year%>)" data-original-name="<%=film2.originalName%>" data-imdb="<%=film2.imdb%>" data-duration="<%=film2.duration%>" data-year="<%=film2.year%>" data-short-description="<%=film2.description%>" data-countries="Mỹ," data-categories="Hình Sự, Hài Hước, Tâm Lý," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
+                    <div class="xpo-mini-info__data" style="display:none;" data-name="<%=film2.name%> (<%=film2.year%>)" data-original-name="<%=film2.originalName%>" data-imdb="<%=film2.imdb%>" data-duration="<%=film2.duration%>" data-year="<%=film2.year%>" data-short-description="<%=film2.description%>" 
+                      data-countries="<%for (const country of film2.countriesData) { %><%=country.name%>,<% } %>" 
+                      data-categories="<%for (const category of film2.categoriesData) { %><%=category.name%>,<% } %>" 
+                      data-actors="">
+                    </div>
                   </div>
                   <% } %>
                 </div>
@@ -216,7 +240,11 @@
                         <p class="xpo-original-name"><%=film1.originalName%></p>
                       </div>
                     </div>
-                    <div class="xpo-mini-info__data" style="display:none;" data-name="<%=film1.name%> (<%=film1.year%>)" data-original-name="<%=film1.originalName%>" data-imdb="<%=film1.imdb%>" data-duration="<%=film1.duration%>" data-year="<%=film1.year%>" data-short-description="<%=film1.description%>" data-countries="Mỹ," data-categories="Hình Sự, Hài Hước, Tâm Lý," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
+                    <div class="xpo-mini-info__data" style="display:none;" data-name="<%=film1.name%> (<%=film1.year%>)" data-original-name="<%=film1.originalName%>" data-imdb="<%=film1.imdb%>" data-duration="<%=film1.duration%>" data-year="<%=film1.year%>" data-short-description="<%=film1.description%>" 
+                      data-countries="<%for (const country of film1.countriesData) { %><%=country.name%>,<% } %>" 
+                      data-categories="<%for (const category of film1.categoriesData) { %><%=category.name%>,<% } %>" 
+                      data-actors="">
+                    </div>
                   </div>
                   <% } %>
                   <% if(film2) { %>
@@ -236,7 +264,11 @@
                         <p class="xpo-original-name"><%=film2.originalName%></p>
                       </div>
                     </div>
-                    <div class="xpo-mini-info__data" style="display:none;" data-name="<%=film2.name%> (<%=film2.year%>)" data-original-name="<%=film2.originalName%>" data-imdb="<%=film2.imdb%>" data-duration="<%=film2.duration%>" data-year="<%=film2.year%>" data-short-description="<%=film2.description%>" data-countries="Mỹ," data-categories="Hình Sự, Hài Hước, Tâm Lý," data-actors="Tom Hanks, Tim Allen, Joan Cusack, Kelsey Grammer,"></div>
+                    <div class="xpo-mini-info__data" style="display:none;" data-name="<%=film2.name%> (<%=film2.year%>)" data-original-name="<%=film2.originalName%>" data-imdb="<%=film2.imdb%>" data-duration="<%=film2.duration%>" data-year="<%=film2.year%>" data-short-description="<%=film2.description%>" 
+                      data-countries="<%for (const country of film2.countriesData) { %><%=country.name%>,<% } %>" 
+                      data-categories="<%for (const category of film2.categoriesData) { %><%=category.name%>,<% } %>" 
+                      data-actors="">
+                    </div>
                   </div>
                   <% } %>
                 </div>

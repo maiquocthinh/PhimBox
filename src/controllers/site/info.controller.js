@@ -5,16 +5,17 @@ const loadLeftSidebarData = require('../../utils/site/loadLeftSidebarData.util')
 
 module.exports = async (req, res) => {
 	const filmId = req.params.filmSlug.split('-').pop();
+	const filmSlug = req.params.filmSlug.replace(`-${filmId}`, '');
 	const film = await filmModels
 		.aggregate([
 			{
-				$match: { id: filmId },
+				$match: { _id: filmId, slug: filmSlug },
 			},
 			{
 				$lookup: {
 					from: 'categories',
 					localField: 'category',
-					foreignField: 'id',
+					foreignField: '_id',
 					as: 'categoriesData',
 				},
 			},
@@ -22,19 +23,30 @@ module.exports = async (req, res) => {
 				$lookup: {
 					from: 'countries',
 					localField: 'country',
-					foreignField: 'id',
+					foreignField: '_id',
 					as: 'countriesData',
 				},
 			},
 			{
+				$addFields: {
+					isHasEpisode: {
+						$cond: {
+							if: { $eq: [{ $size: '$episodes' }, 0] },
+							then: false,
+							else: true,
+						},
+					},
+				},
+			},
+			{
 				$project: {
-					_id: 0,
+					_id: 1,
 					name: 1,
 					originalName: 1,
 					status: 1,
 					poster: 1,
-					categoriesData: 1,
-					countriesData: 1,
+					categoriesData: { name: 1, slug: 1 },
+					countriesData: { name: 1, slug: 1 },
 					trailer: 1,
 					duration: 1,
 					year: 1,
@@ -45,7 +57,8 @@ module.exports = async (req, res) => {
 					viewed: 1,
 					tag: 1,
 					tagAscii: 1,
-					slug: { $concat: ['$slug', '-', '$id'] },
+					slug: { $concat: ['$slug', '-', '$_id'] },
+					isHasEpisode: 1,
 				},
 			},
 			{ $limit: 1 },

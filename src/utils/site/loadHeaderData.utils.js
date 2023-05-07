@@ -2,6 +2,7 @@ const categoryModels = require('../../models/category.models');
 const countryModels = require('../../models/country.models');
 const configurationModels = require('../../models/configuration.models');
 const redisClient = require('../../database/init.redis');
+const toTime = require('to-time');
 
 const loadFromDatabase = async () => {
 	const { title, baseURL } = await configurationModels.findOne({}, { web_title: 1, web_url: 1 }).then((result) => {
@@ -36,8 +37,10 @@ const load = async () => {
 				resolve(JSON.parse(headerData));
 			} else {
 				headerData = await loadFromDatabase();
-				redisClient.set('site:header', JSON.stringify(headerData), 'EX', 60 * 60, () => {});
 				resolve(headerData);
+
+				const { timecache: timeCache } = await configurationModels.findOne({}, { timecache: 1 });
+				redisClient.set('site:header', JSON.stringify(headerData), 'EX', toTime(timeCache).seconds(), () => {});
 			}
 		});
 	});

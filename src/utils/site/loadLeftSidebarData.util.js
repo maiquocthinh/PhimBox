@@ -4,9 +4,27 @@ const redisClient = require('../../database/init.redis');
 const toTime = require('to-time');
 
 const loadFromDatabase = async () => {
+	const match = { $or: [{ status: 'trailer' }, { status: 'ongoing' }] };
+	const lookups = [
+		{
+			$lookup: {
+				from: 'categories',
+				localField: 'category',
+				foreignField: '_id',
+				as: 'categoriesData',
+			},
+		},
+		{
+			$lookup: {
+				from: 'countries',
+				localField: 'country',
+				foreignField: '_id',
+				as: 'countriesData',
+			},
+		},
+	];
 	const projection = {
-		_id: 0,
-		id: 1,
+		_id: 1,
 		name: 1,
 		originalName: 1,
 		poster: 1,
@@ -16,12 +34,13 @@ const loadFromDatabase = async () => {
 		duration: 1,
 		imdb: 1,
 		description: 1,
-		slug: 1,
-		category: 1,
-		country: 1,
+		slug: { $concat: ['$slug', '-', '$_id'] },
+		categoriesData: { name: 1, slug: 1 },
+		countriesData: { name: 1, slug: 1 },
 	};
+
 	const promiseArray = [
-		filmModels.find({ status: 'trailer' }, projection).limit(10),
+		filmModels.aggregate([{ $match: match }, ...lookups, { $project: projection }]),
 		configurationModels.findOne({}, { web_tags: 1 }),
 	];
 
@@ -39,18 +58,11 @@ const load = async () => {
 			if (leftSidebarData) {
 				resolve(JSON.parse(leftSidebarData));
 			} else {
-				const { timecache: timeCache } = await configurationModels.findOne({}, { timecache: 1 });
-
 				leftSidebarData = await loadFromDatabase();
 				resolve(leftSidebarData);
 
-				redisClient.set(
-					'site:leftSidebar',
-					JSON.stringify(leftSidebarData),
-					'EX',
-					toTime(timeCache).seconds(),
-					() => {},
-				);
+				const { timecache: timeCache } = await configurationModels.findOne({}, { timecache: 1 });
+				redisClient.set('site:leftSidebar', JSON.stringify(leftSidebarData), 'EX', toTime(timeCache).seconds(), () => {});
 			}
 		});
 	});
