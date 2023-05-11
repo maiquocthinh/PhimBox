@@ -584,8 +584,6 @@ if (searchInput) {
 			if (index > 0) child.remove();
 		});
 
-		searchResults.childe;
-
 		const innerHTML = data
 			.map(function (item) {
 				return `<li class="header-search__results-item">
@@ -604,6 +602,7 @@ if (searchInput) {
 			</li>`;
 			})
 			.join('');
+
 		keyWordSpan.parentNode.insertAdjacentHTML('afterend', innerHTML);
 	}
 }
@@ -614,8 +613,10 @@ function debounce(func, timeout = 300) {
 	return function (...args) {
 		if (timer) clearTimeout(timer);
 
+		const _this = this;
+
 		timer = setTimeout(function () {
-			func.apply(this, args);
+			func.apply(_this, args);
 		}, timeout);
 	};
 }
