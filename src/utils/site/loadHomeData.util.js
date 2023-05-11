@@ -2,6 +2,7 @@ const filmModels = require('../../models/film.models');
 const configurationModels = require('../../models/configuration.models');
 const redisClient = require('../../database/init.redis');
 const toTime = require('to-time');
+const { getIMDBScore } = require('./filmInfo.util');
 
 const loadFromDatabase = async () => {
 	const lookups = [
@@ -58,6 +59,19 @@ const loadFromDatabase = async () => {
 	const [listFilmRecommend, listFilmCanonical, listFilmMovie, listFilmSeries, listFilmAnimation] = await Promise.all(
 		promiseArray,
 	);
+
+	// load imdb score
+	for (const listFilm of [listFilmRecommend, listFilmCanonical, listFilmMovie, listFilmSeries, listFilmAnimation]) {
+		const imdbScorePromiseArray = [];
+		listFilm.forEach((film) => {
+			imdbScorePromiseArray.push(
+				getIMDBScore(film.imdb).then((imdbScore) => {
+					film.imdb = imdbScore;
+				}),
+			);
+		});
+		await Promise.all(imdbScorePromiseArray);
+	}
 
 	return { listFilmRecommend, listFilmCanonical, listFilmMovie, listFilmSeries, listFilmAnimation };
 };

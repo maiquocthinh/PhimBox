@@ -2,6 +2,7 @@ const filmModels = require('../../models/film.models');
 const configurationModels = require('../../models/configuration.models');
 const redisClient = require('../../database/init.redis');
 const toTime = require('to-time');
+const { getIMDBScore } = require('./filmInfo.util');
 
 const loadFromDatabase = async () => {
 	const match = { $or: [{ status: 'trailer' }, { status: 'ongoing' }] };
@@ -45,6 +46,19 @@ const loadFromDatabase = async () => {
 	];
 
 	const [listFilmTrailer, { web_tags: webTags }] = await Promise.all(promiseArray);
+
+	// load imdb score
+	{
+		const imdbScorePromiseArray = [];
+		listFilmTrailer.forEach((film) => {
+			imdbScorePromiseArray.push(
+				getIMDBScore(film.imdb).then((imdbScore) => {
+					film.imdb = imdbScore;
+				}),
+			);
+		});
+		await Promise.all(imdbScorePromiseArray);
+	}
 
 	return { listFilmTrailer, webTags: webTags.split(',') };
 };
