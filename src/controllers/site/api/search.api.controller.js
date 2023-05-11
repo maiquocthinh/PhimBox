@@ -11,12 +11,13 @@ module.exports = async (req, res) => {
 				$or: [{ name: { $regex: keyWord, $options: 'i' } }, { originalName: { $regex: keyWord, $options: 'i' } }],
 			},
 			{
+				_id: 0,
 				name: 1,
 				originalName: 1,
 				language: 1,
-				status: 1,
 				quality: 1,
-				slug: { $concat: ['$slug', '-', '$_id'] },
+				poster: 1,
+				href: { $concat: ['/info/', '$slug', '-', '$_id'] },
 			},
 		);
 
