@@ -1,7 +1,7 @@
 const filmModels = require('../../models/film.models');
 const { getIMDBScore } = require('./filmInfo.util');
 
-module.exports = async ({ categorySlug, countrySlug, type, keyWord }, pageNumber) => {
+module.exports = async ({ categorySlug, countrySlug, type, inCinema, keyWord }, pageNumber) => {
 	const RECORD_PER_PAGE = 20;
 	const PAGE_NUMBER = pageNumber || 1;
 	let filter = {};
@@ -23,6 +23,8 @@ module.exports = async ({ categorySlug, countrySlug, type, keyWord }, pageNumber
 
 	if (type) {
 		filter = { ...filter, type };
+	} else if (inCinema) {
+		filter = { ...filter, inCinema: '1' };
 	}
 
 	const pipelineOperators = [

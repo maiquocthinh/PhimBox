@@ -888,6 +888,7 @@ a:hover {
 	margin-right: 36px;
 	display: flex;
 	white-space: nowrap;
+	gap: 6px;
 }
 
 .breadcrumb li.active a {
