@@ -3,13 +3,13 @@ const countryModels = require('../../models/country.models');
 const filterFilmUtils = require('../../utils/site/filterFilm.utils');
 const loadHeaderData = require('../../utils/site/loadHeaderData.utils');
 const loadLeftSidebarData = require('../../utils/site/loadLeftSidebarData.util');
-const url = require('url');
+const { getPagination } = require('../../utils/site/pagination.util');
 
 module.exports = async (req, res) => {
-	let { categoryId, countryId, year, type, sort } = req.query;
-	let { page } = req.params;
+	let { categoryId, countryId, year, type, sort, page } = req.query;
+	const url = new URL(req.protocol + '://' + req.get('host') + req.originalUrl);
 
-	if (page) page = page.split('-').pop();
+	if (page) page = parseInt(page);
 	if (year) year = parseInt(year);
 
 	let typeName = 'Phim';
@@ -52,7 +52,7 @@ module.exports = async (req, res) => {
 			break;
 
 		default:
-			typeName += ' Mới';
+			// typeName += ' Mới';
 			sort = { updatedAt: -1 };
 	}
 
@@ -65,12 +65,12 @@ module.exports = async (req, res) => {
 		films,
 		totalPage,
 		pageNumber,
-		currentHref: url.parse(req.originalUrl).pathname.split('/page-').shift(),
 		breadcrumb: `<li><a href="#"><i class="iconify" data-icon="openmoji:filter"></i> Lọc Phim</a></li>
 		<li><a href="#"><i class="iconify" data-icon="twemoji:clapper-board"></i> ${typeName}</a></li>`,
 		sectionBarTitle: `<span><i class="iconify section-bar__icon" data-icon="bx:film"></i> ${typeName}</span><i class="skew-left"></i>`,
 		listCategory: await categoryModels.find({}, { _id: 1, name: 1 }),
 		listCountry: await countryModels.find({}, { _id: 1, name: 1 }),
+		pagination: getPagination(url, pageNumber, totalPage),
 	};
 
 	// SEO

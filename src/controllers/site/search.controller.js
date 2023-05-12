@@ -3,12 +3,15 @@ const countryModels = require('../../models/country.models');
 const filterFilmUtils = require('../../utils/site/filterFilm.utils');
 const loadHeaderData = require('../../utils/site/loadHeaderData.utils');
 const loadLeftSidebarData = require('../../utils/site/loadLeftSidebarData.util');
+const { getPagination } = require('../../utils/site/pagination.util');
 
 module.exports = async (req, res) => {
-	let { keyWord, page } = req.params;
+	let { keyWord } = req.params;
+	let { page } = req.query;
+	const url = new URL(req.protocol + '://' + req.get('host') + req.originalUrl);
 
 	keyWord = keyWord.replace('+', ' ');
-	if (page) page = page.split('-').pop();
+	if (page) page = parseInt(page);
 
 	const { data: films, pageNumber, totalPage } = await filterFilmUtils({ keyWord }, page);
 
@@ -17,12 +20,12 @@ module.exports = async (req, res) => {
 		films,
 		totalPage,
 		pageNumber,
-		currentHref: req.originalUrl.split('/page-').shift(),
 		breadcrumb: `<li><a href="#"><i class="iconify" data-icon="noto-v1:magnifying-glass-tilted-left"></i> Tìm kiếm</a></li>
-			<li class="active"><a href="${req.originalUrl}">${keyWord}</a></li>`,
+					<li class="active"><a href="${req.originalUrl}">${keyWord}</a></li>`,
 		sectionBarTitle: `<span><i class="iconify section-bar__icon" data-icon="bx:film"></i> Kết quả tìm kiếm: "${keyWord}"</span><i class="skew-left"></i>`,
 		listCategory: await categoryModels.find({}, { _id: 1, name: 1 }),
 		listCountry: await countryModels.find({}, { _id: 1, name: 1 }),
+		pagination: getPagination(url, pageNumber, totalPage),
 	};
 
 	// SEO

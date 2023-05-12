@@ -3,11 +3,14 @@ const countryModels = require('../../models/country.models');
 const filterFilmUtils = require('../../utils/site/filterFilm.utils');
 const loadHeaderData = require('../../utils/site/loadHeaderData.utils');
 const loadLeftSidebarData = require('../../utils/site/loadLeftSidebarData.util');
+const { getPagination } = require('../../utils/site/pagination.util');
 
 module.exports = async (req, res) => {
-	let { countrySlug, page } = req.params;
+	let { countrySlug } = req.params;
+	let { page } = req.query;
+	const url = new URL(req.protocol + '://' + req.get('host') + req.originalUrl);
 
-	if (page) page = page.split('-').pop();
+	if (page) page = parseInt(page);
 
 	const { name: countryName, _id: countryId } = await countryModels
 		.findOne({ slug: countrySlug }, { name: 1, _id: 1 })
@@ -19,12 +22,12 @@ module.exports = async (req, res) => {
 		films,
 		totalPage,
 		pageNumber,
-		currentHref: req.originalUrl.split('/page-').shift(),
 		breadcrumb: `<li><a href="#"><i class="iconify" data-icon="fluent-emoji:globe-showing-asia-australia"></i> Quốc gia</a></li>
 		<li class="active"><a href="${req.originalUrl}">${countryName}</a></li>`,
 		sectionBarTitle: `<span><i class="iconify section-bar__icon" data-icon="bx:film"></i> Quốc gia ${countryName}</span><i class="skew-left"></i>`,
 		listCategory: await categoryModels.find({}, { _id: 1, name: 1 }),
 		listCountry: await countryModels.find({}, { _id: 1, name: 1 }),
+		pagination: getPagination(url, pageNumber, totalPage),
 	};
 
 	// SEO

@@ -127,21 +127,19 @@
             </div>
             <!-- Pagination Films -->
             <nav class="pagination">
-              <button class="btn"><a href="<%= catalogue.currentHref + '/page-1' %>">&#171;</a></button>
-              <button class="btn"><a href="<%= catalogue.currentHref + '/page-' + (catalogue.pageNumber - 1 > 0 ? catalogue.pageNumber - 1 : 1) %>">&#8249;</a></button>
-              <% for (let index = 1; index <= catalogue.totalPage; index++) {
-                const isCurrentPage = index == catalogue.pageNumber
-                %>
-                <button class="btn<%= isCurrentPage ? ' active' : '' %>">
-                  <% if (isCurrentPage) { %>
-                    <span><%= index %></span> 
+              <button class="btn"><a href="<%= catalogue.pagination.first %>">&#171;</a></button>
+              <button class="btn"><a href="<%= catalogue.pagination.prev %>">&#8249;</a></button>
+              <% for (const page of catalogue.pagination.list) { %>
+                <button class="btn<%= page.isCurrentPage ? ' active' : '' %>">
+                  <% if (page.isCurrentPage) { %>
+                    <span><%= page.name %></span> 
                   <% } else { %>
-                    <a href="<%= catalogue.currentHref + '/page-' + index %>"><%= index %></a>
+                    <a href="<%= page.href %>"><%= page.name %></a>
                   <% } %>
                 </button>
               <% } %>
-              <button class="btn"><a href="<%= catalogue.currentHref + '/page-' + (catalogue.pageNumber + 1 <= catalogue.totalPage ? catalogue.pageNumber + 1 : catalogue.totalPage) %>">&#8250;</a></button>
-              <button class="btn"><a href="<%= catalogue.currentHref + '/page-'+catalogue.totalPage %>">&#187;</a></button>
+              <button class="btn"><a href="<%= catalogue.pagination.next %>">&#8250;</a></button>
+              <button class="btn"><a href="<%= catalogue.pagination.last %>">&#187;</a></button>
             </nav>
           </section>
         </main>
