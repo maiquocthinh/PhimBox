@@ -1,4 +1,5 @@
 const categoryModels = require('../../models/category.models');
+const countryModels = require('../../models/country.models');
 const filterFilmUtils = require('../../utils/site/filterFilm.utils');
 const loadHeaderData = require('../../utils/site/loadHeaderData.utils');
 const loadLeftSidebarData = require('../../utils/site/loadLeftSidebarData.util');
@@ -35,6 +36,8 @@ module.exports = async (req, res) => {
 		currentHref: req.originalUrl.split('/page-').shift(),
 		breadcrumb: `<li><a href="#"><i class="iconify" data-icon="twemoji:clapper-board"></i> ${typeName}</a></li>`,
 		sectionBarTitle: `<span><i class="iconify section-bar__icon" data-icon="bx:film"></i> ${typeName}</span><i class="skew-left"></i>`,
+		listCategory: await categoryModels.find({}, { _id: 1, name: 1 }),
+		listCountry: await countryModels.find({}, { _id: 1, name: 1 }),
 	};
 
 	// SEO

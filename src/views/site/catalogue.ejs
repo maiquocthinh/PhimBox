@@ -34,64 +34,35 @@
         </div>
         <!-- Filter Films -->
         <div class="list-films-filter htmlwrap">
-          <form id="form-filter" class="sm-hidden" action="#" method="get">
+          <form id="form-filter" class="sm-hidden" action="/catalogue/filter" method="get">
             <div class="list-films-filter__item">
               <label for="filter-category"><i class="iconify" data-icon="dashicons:category"></i> Thể loại</label>
-              <select name="category" id="filter-category">
+              <select name="categoryId" id="filter-category">
                 <option value="">Tất cả</option>
-                <option value="1">Phim Hành Động</option>
-                <option value="2">Phim Viễn Tưởng</option>
-                <option value="3">Phim Chiến Tranh</option>
-                <option value="4">Phim Hình Sự</option>
-                <option value="5">Phim Phiêu Lưu</option>
-                <option value="6">Phim Hài Hước</option>
-                <option value="7">Phim Võ Thuật</option>
-                <option value="8">Phim Cổ Trang</option>
-                <option value="9">Phim Kinh Dị</option>
-                <option value="10">Phim Thần Thoại</option>
-                <option value="11">Phim Tâm Lý</option>
-                <option value="12">Phim Tài Liệu</option>
-                <option value="13">Phim Tình Cảm</option>
-                <option value="14">Phim Gia Đình</option>
-                <option value="15">Phim Thể Thao</option>
-                <option value="16">Phim Hoạt Hình</option>
-                <option value="17">Phim Trinh Thám</option>
+                <% for (const category of catalogue.listCategory) { %>
+                  <option value="<%=category._id%>"><%=category.name%></option>
+                <% } %>
               </select>
             </div>
             <div class="list-films-filter__item">
               <label for="filter-country"><i class="iconify" data-icon="ion:earth"></i> Quốc gia</label>
-              <select name="country" id="filter-country">
+              <select name="countryId" id="filter-country">
                 <option value="">Tất cả</option>
-                <option value="2">Trung Quốc</option>
-                <option value="3">Nhật Bản</option>
-                <option value="4">Hàn Quốc</option>
-                <option value="5">Hồng Kông</option>
-                <option value="6">Đài Loan</option>
-                <option value="7">Úc</option>
-                <option value="8">Canada</option>
-                <option value="9">Anh</option>
-                <option value="10">Nga</option>
-                <option value="11">Pháp</option>
-                <option value="12">Thái Lan</option>
-                <option value="13">Ấn Độ</option>
-                <option value="14">Việt Nam</option>
-                <option value="15">Ý</option>
-                <option value="16">Đức</option>
-                <option value="17">Tây Ban Nha</option>
+                <% for (const country of catalogue.listCountry) { %>
+                  <option value="<%=country._id%>"><%=country.name%></option>
+                <% } %>
               </select>
             </div>
             <div class="list-films-filter__item">
               <label for="filter-year"><i class="iconify" data-icon="uil:calender"></i> Năm phát hành</label>
               <select name="year" id="filter-year">
                 <option value="">Tất cả</option>
-                <option value="2021">2021</option>
-                <option value="2020">2020</option>
-                <option value="2019">2019</option>
-                <option value="2018">2018</option>
-                <option value="2017">2017</option>
-                <option value="2016">2016</option>
-                <option value="2015">2015</option>
-                <option value="2014">2014</option>
+                <% 
+                  const currentYear = new Date().getFullYear()
+                  for (let index = currentYear; index > currentYear - 12; index--) { 
+                %>
+                  <option value="<%=index%>"><%=index%></option>
+                <% } %>
               </select>
             </div>
             <div class="list-films-filter__item">
@@ -101,7 +72,6 @@
                 <option value="le">Phim lẻ</option>
                 <option value="bo">Phim bộ</option>
                 <option value="rap">Phim rạp</option>
-                <option value="tm">Phim TM</option>
               </select>
             </div>
             <div class="list-films-filter__item">
@@ -833,6 +803,23 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="https://cdn.jsdelivr.net/npm/star-rating-svg@3.5.0/src/jquery.star-rating-svg.js"></script>
   <script src="/assets/js/main.js"></script>
+  <script>
+    // const formFilter = document.getElementById('form-filter');
+    const categoryFilterSelect = document.getElementById('filter-category');
+    const countryFilterSelect = document.getElementById('filter-country');
+    const yearFilterSelect = document.getElementById('filter-year');
+    const typeFilterSelect = document.getElementById('filter-type');
+    const sortFilterSelect = document.getElementById('filter-sort');
+
+    const urlParams = new URLSearchParams(window.location.search);
+
+    if(categoryFilterSelect) categoryFilterSelect.value = urlParams.get('categoryId') || '';
+    if(countryFilterSelect) countryFilterSelect.value = urlParams.get('countryId') || '';
+    if(yearFilterSelect) yearFilterSelect.value = urlParams.get('year') || '';
+    if(typeFilterSelect) typeFilterSelect.value = urlParams.get('type') || '';
+    if(sortFilterSelect) sortFilterSelect.value = urlParams.get('sort') || '';
+
+  </script>
 </body>
 
 </html>

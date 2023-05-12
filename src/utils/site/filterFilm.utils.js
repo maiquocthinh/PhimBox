@@ -1,17 +1,17 @@
 const filmModels = require('../../models/film.models');
 const { getIMDBScore } = require('./filmInfo.util');
 
-module.exports = async ({ categorySlug, countrySlug, type, inCinema, keyWord }, pageNumber) => {
-	const RECORD_PER_PAGE = 20;
+module.exports = async ({ categoryId, countryId, year, sort, type, inCinema, keyWord }, pageNumber) => {
+	const RECORD_PER_PAGE = 2;
 	const PAGE_NUMBER = pageNumber || 1;
 	let filter = {};
 
-	if (categorySlug) {
-		filter = { ...filter, 'categoriesData.slug': categorySlug };
+	if (categoryId) {
+		filter = { ...filter, 'categoriesData._id': categoryId };
 	}
 
-	if (countrySlug) {
-		filter = { ...filter, 'countriesData.slug': countrySlug };
+	if (countryId) {
+		filter = { ...filter, 'countriesData._id': countryId };
 	}
 
 	if (keyWord) {
@@ -25,6 +25,10 @@ module.exports = async ({ categorySlug, countrySlug, type, inCinema, keyWord }, 
 		filter = { ...filter, type };
 	} else if (inCinema) {
 		filter = { ...filter, inCinema: '1' };
+	}
+
+	if (year) {
+		filter = { ...filter, year };
 	}
 
 	const pipelineOperators = [
@@ -58,6 +62,8 @@ module.exports = async ({ categorySlug, countrySlug, type, inCinema, keyWord }, 
 			},
 		])
 		.then((res) => res[0]?.count || 0);
+
+	if (sort) pipelineOperators.push({ $sort: sort });
 
 	const films = await filmModels.aggregate([
 		...pipelineOperators,
