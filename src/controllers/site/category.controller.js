@@ -17,7 +17,7 @@ module.exports = async (req, res) => {
 		totalPage,
 		pageNumber,
 		currentHref: req.originalUrl.split('/page-').shift(),
-		breadcrumb: `<li><a href="#"><i class="iconify" data-icon="iconamoon:category-duotone"></i> Thể loại</a></li>
+		breadcrumb: `<li><a href="#"><i class="iconify" data-icon="openmoji:books"></i> Thể loại</a></li>
 		<li class="active"><a href="${req.originalUrl}">${categoryName}</a></li>`,
 		sectionBarTitle: `<span><i class="iconify section-bar__icon" data-icon="bx:film"></i> Thể loại ${categoryName}</span><i class="skew-left"></i>`,
 	};
