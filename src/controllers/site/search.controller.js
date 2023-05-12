@@ -10,22 +10,26 @@ module.exports = async (req, res) => {
 
 	const { data: films, pageNumber, totalPage } = await filterFilmUtils({ keyWord }, page);
 
-	const breadcrumb = `<li><a href="#"><i class="iconify" data-icon="noto-v1:magnifying-glass-tilted-left"></i> Tìm kiếm</a></li>
-						<li class="active"><a href="#">${keyWord}</a></li>`;
+	// catalogue data
+	const catalogue = {
+		films,
+		totalPage,
+		pageNumber,
+		currentHref: req.originalUrl.split('/page-').shift(),
+		breadcrumb: `<li><a href="#"><i class="iconify" data-icon="noto-v1:magnifying-glass-tilted-left"></i> Tìm kiếm</a></li>
+			<li class="active"><a href="${req.originalUrl}">${keyWord}</a></li>`,
+		sectionBarTitle: `<span><i class="iconify section-bar__icon" data-icon="bx:film"></i> Kết quả tìm kiếm: ${keyWord}</span><i class="skew-left"></i>`,
+	};
 
-	const sectionBarTitle = `<span><i class="iconify section-bar__icon" data-icon="bx:film"></i> Kết quả tìm kiếm: ${keyWord}</span><i class="skew-left"></i>`;
+	// SEO
+	const SEO = {
+		title: `Tìm phim: "${keyWord}" - Trang ${pageNumber}`,
+	};
 
 	res.render('site/catalogue', {
 		header: await loadHeaderData.load(),
 		leftSidebar: await loadLeftSidebarData.load(),
-		catalogue: {
-			films,
-			totalPage,
-			pageNumber,
-			currentHref: req.originalUrl.split('/page-').shift(),
-			breadcrumb,
-			sectionBarTitle,
-			keyWord,
-		},
+		catalogue,
+		SEO,
 	});
 };

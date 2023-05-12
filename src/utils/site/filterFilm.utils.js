@@ -1,12 +1,13 @@
 const filmModels = require('../../models/film.models');
 const { getIMDBScore } = require('./filmInfo.util');
 
-module.exports = async ({ category, country, type, keyWord }, pageNumber) => {
+module.exports = async ({ categorySlug, country, type, keyWord }, pageNumber) => {
 	const RECORD_PER_PAGE = 20;
 	const PAGE_NUMBER = pageNumber || 1;
 	let filter = {};
 
-	if (category) {
+	if (categorySlug) {
+		filter = { ...filter, 'categoriesData.slug': categorySlug };
 	}
 
 	if (country) {
