@@ -122,6 +122,7 @@ a:hover {
 	color: #fff;
 	background-color: #6c757d;
 	text-align: center;
+	text-transform: capitalize;
 	white-space: nowrap;
 	vertical-align: baseline;
 }
@@ -413,6 +414,7 @@ a:hover {
 
 .xpo-status {
 	--height: 25px;
+	padding: 0 4px;
 	position: absolute;
 	top: 4px;
 	left: 4px;
@@ -423,6 +425,7 @@ a:hover {
 	background-color: #365979;
 	color: var(--white-color);
 	text-align: center;
+	text-transform: capitalize;
 	line-height: var(--height);
 	font-size: 1.2rem;
 	z-index: 1;
@@ -882,6 +885,7 @@ a:hover {
 
 .breadcrumb li a {
 	text-decoration: none;
+	text-transform: capitalize;
 	position: relative;
 	background-color: #224361;
 	color: #ededed;

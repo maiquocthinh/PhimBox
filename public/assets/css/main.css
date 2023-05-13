@@ -1218,6 +1218,7 @@
 
 .xpo-film-info a {
 	text-decoration: none;
+	font-weight: 500;
 }
 
 .xpo-film-info__poster {
@@ -1333,7 +1334,7 @@
 .info__film-title__year {
 	color: #d3d3d3;
 	font-size: 1.4rem;
-	font-weight: 300;
+	font-weight: 600;
 }
 
 .info__list-info-group {
@@ -1348,7 +1349,7 @@
 
 .info__list-info-group__item {
 	display: block;
-	font-size: 1.2rem;
+	font-size: 1.4rem;
 	border-bottom: 1px dashed rgba(146, 146, 146, 0.125);
 	padding-bottom: 5px;
 	padding-top: 5px;

@@ -6,6 +6,7 @@ const categoryController = require('./category.controller');
 const countryController = require('./country.controller');
 const catalogueController = require('./catalogue.controller');
 const filterController = require('./filter.controller');
+const tagController = require('./tag.controller');
 
 module.exports = {
 	homeController,
@@ -16,4 +17,5 @@ module.exports = {
 	countryController,
 	catalogueController,
 	filterController,
+	tagController,
 };
