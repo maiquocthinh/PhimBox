@@ -1,15 +1,16 @@
+/* Import fonts */
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&display=swap');
+
+@font-face {
+	font-family: UTMCafetaRegular;
+	src: url('../fonts/vpc-webfont.woff');
+}
+
 :root {
 	--white-color: #fff;
 	--black-color: #000;
 	--text-color: #333;
 	--header-navbar-height: 50px;
-}
-
-/* Import fonts */
-
-@font-face {
-	font-family: UTMCafetaRegular;
-	src: url('../fonts/vpc-webfont.woff');
 }
 
 * {
@@ -25,7 +26,7 @@ html {
 body {
 	margin: 0;
 	background: #222d38 url('../images/xpoBg.png') fixed center;
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Josefin Sans', sans-serif;
 }
 
 a {
