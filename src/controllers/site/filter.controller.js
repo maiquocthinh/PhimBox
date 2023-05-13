@@ -58,7 +58,11 @@ module.exports = async (req, res) => {
 
 	if (year) typeName += ' Năm ' + year;
 
-	const { data: films, pageNumber, totalPage } = await filterFilmUtils({ categoryId, countryId, year, sort }, page);
+	const {
+		data: films,
+		pageNumber,
+		totalPage,
+	} = await filterFilmUtils({ categoryId, countryId, year, sort, type, inCinema: !type }, page);
 
 	// catalogue data
 	const catalogue = {
