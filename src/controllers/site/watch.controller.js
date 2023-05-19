@@ -1,5 +1,4 @@
 const filmModels = require('../../models/film.models');
-const episodeModels = require('../../models/episode.models');
 const loadHeaderData = require('../../utils/site/loadHeaderData.utils');
 const loadLeftSidebarData = require('../../utils/site/loadLeftSidebarData.util');
 module.exports = async (req, res) => {
@@ -11,8 +10,8 @@ module.exports = async (req, res) => {
 			{
 				$lookup: {
 					from: 'episodes',
-					localField: 'episodes',
-					foreignField: '_id',
+					let: { episodeIds: '$episodes' },
+					pipeline: [{ $match: { $expr: { $in: ['$_id', '$$episodeIds'] } } }, { $sort: { createdAt: 1 } }],
 					as: 'episodes',
 				},
 			},
