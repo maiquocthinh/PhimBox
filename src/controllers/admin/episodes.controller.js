@@ -23,8 +23,8 @@ const ajaxDatatables = async (req, res) => {
 		.sort({ [columnName]: columnSortOrder });
 
 	const data = dataEpisodes.map((episode) => [
-		episode.id,
-		episode.id,
+		episode._id,
+		episode._id,
 		episode.name,
 		episode.language,
 		episode.subtitle ? 'Yes' : 'No',
@@ -59,13 +59,6 @@ const errorsAjaxDatatables = async (req, res) => {
 	const dataEpisodes = await episodeModels.aggregate([
 		{ $match: queryToDB },
 		{
-			$addFields: {
-				filmId: {
-					$toObjectId: '$filmId',
-				},
-			},
-		},
-		{
 			$lookup: {
 				from: 'films',
 				localField: 'filmId',
@@ -87,7 +80,7 @@ const errorsAjaxDatatables = async (req, res) => {
 	]);
 
 	const data = dataEpisodes.map((episode) => [
-		episode.id,
+		episode._id,
 		episode.name,
 		`<div class="d-flex align-items-center">
 				<div class="recent-product-img"><img src="${episode.film[0].poster[0]}" alt="" /></div>
