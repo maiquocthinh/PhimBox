@@ -4,8 +4,7 @@ const loadHeaderData = require('../../utils/site/loadHeaderData.utils');
 const loadLeftSidebarData = require('../../utils/site/loadLeftSidebarData.util');
 
 module.exports = async (req, res) => {
-	const filmId = req.params.filmSlug.split('-').pop();
-	const filmSlug = req.params.filmSlug.replace(`-${filmId}`, '');
+	const { filmSlug, filmId } = req.params;
 	const film = await filmModels
 		.aggregate([
 			{

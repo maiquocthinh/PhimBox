@@ -2,8 +2,7 @@ const filmModels = require('../../models/film.models');
 const loadHeaderData = require('../../utils/site/loadHeaderData.utils');
 const loadLeftSidebarData = require('../../utils/site/loadLeftSidebarData.util');
 module.exports = async (req, res) => {
-	const filmId = req.params.filmSlug.split('-').pop();
-	const filmSlug = req.params.filmSlug.replace(`-${filmId}`, '');
+	const { filmSlug, filmId } = req.params;
 	const { episodes, ...film } = await filmModels
 		.aggregate([
 			{ $match: { _id: filmId, slug: filmSlug } },
@@ -40,24 +39,24 @@ module.exports = async (req, res) => {
 		return;
 	}
 
+	let _episodes = {};
 	let currentEpisode = episodes[0];
+
 	for (const ep of episodes) {
 		ep.href = `/watch/${film.slug}/${ep._id}`;
-		if (ep._id === req.params.episodeId) currentEpisode = ep;
-	}
 
-	let _episodes = {};
-	episodes.forEach((ep) => {
+		if (ep._id === req.params.episodeId) currentEpisode = ep;
+
 		if (!Array.isArray(_episodes[ep.language])) _episodes[ep.language] = [];
 		_episodes[ep.language].push(ep);
-	});
+	}
 
 	res.render('site/watch', {
 		header: await loadHeaderData.load(),
 		leftSidebar: await loadLeftSidebarData.load(),
 		info: { film, episodes: _episodes, currentEpisode },
 		SEO: {
-			title: `Xem phim ${film.name} ${film.year} Tập ${currentEpisode.name}`,
+			title: `Tập ${currentEpisode.name} - Phim ${film.name} ${film.year}`,
 		},
 	});
 };

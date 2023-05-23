@@ -15,8 +15,8 @@ const {
 
 const apiRoutes = require('./api.routes');
 
-router.get('/info/:filmSlug', infoController);
-router.get('/watch/:filmSlug/:episodeId?', watchController);
+router.get('/info/:filmSlug-:filmId([A-Za-z0-9]+[A-Za-z0-9_]+)', infoController);
+router.get('/watch/:filmSlug-:filmId([A-Za-z0-9]+[A-Za-z0-9_]+)/:episodeId?', watchController);
 router.use('/api', apiRoutes);
 
 router.get('/search/:keyWord', searchController);
