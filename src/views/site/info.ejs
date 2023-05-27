@@ -49,7 +49,9 @@
               </div>
               <div class="btn-wrap">
                 <a class="btn" onclick="showTrailer();"><i class="iconify" data-icon="bi:camera-reels-fill"></i>Trailer</a>
-                <a class="btn" href="/watch/<%=info.film.slug%>"><i class="iconify" data-icon="fa6-solid:play"></i>Watch</a>
+                <a class="btn" href="<%= info.film.isHasEpisode ? '/watch/' + info.film.slug : '#'%>" onclick="<%= info.film.isHasEpisode ? '' : `alert('Film has not episode')` %>">
+                  <i class="iconify" data-icon="fa6-solid:play"></i>Watch
+                </a>
               </div>
               <!-- Trailer Modal Popup -->
               <div id="trailer-popup" class="modal modal-lg hidden">

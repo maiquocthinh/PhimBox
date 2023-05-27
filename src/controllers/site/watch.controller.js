@@ -34,10 +34,12 @@ module.exports = async (req, res) => {
 		])
 		.then((res) => res[0]);
 
-	if (!film && episodes.lenght > 0) {
+	if (!film || episodes.length === 0) {
 		res.status(404).json({ message: 'Page not found' });
 		return;
 	}
+
+	// console.log(episodes.length);
 
 	let _episodes = {};
 	let currentEpisode = episodes[0];
