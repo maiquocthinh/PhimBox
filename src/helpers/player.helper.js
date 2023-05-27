@@ -14,29 +14,59 @@ const getYoutubeEmbed = (link) => {
 const getDirectVideoGooglePhoto = async (link) => {
 	const rawHtml = await fetch(link, {
 		method: 'GET',
-	}).then(async (res) => await res.body());
+	}).then(async (res) => await res.text());
 
-	console.log(rawHtml);
+	const regex = /https:\/\/video-downloads\.googleusercontent\.com\/[^"\s]+/gm;
+	const matches = rawHtml.match(regex);
+
+	return matches[0];
 };
 
 module.exports = async (link) => {
-	const youtubeRegex = /^https?:\/\/(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/).*/;
-	const googlePhotosRegex = /^https?:\/\/photos\.google\.com\/.*\/photo\/.*/;
+	const regexYoutube = /^https?:\/\/(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/).*/;
+	const regexGooglePhotos = /^https?:\/\/photos\.google\.com\/.*\/photo\/.*/;
+	const regexM3U8 = /^(http|https):\/\/[^\s$.?#].[^\s]*\.m3u8$/;
+	const regexMP4 = /^(http|https):\/\/[^\s$.?#].[^\s]*\.mp4$/;
 
-	if (youtubeRegex.test(link)) {
+	if (regexYoutube.test(link)) {
 		return {
 			type: 'embed',
-			link: getYoutubeEmbed(link),
+			data: [getYoutubeEmbed(link)],
 		};
-	} else if (googlePhotosRegex.test(link)) {
+	} else if (regexGooglePhotos.test(link)) {
 		return {
-			type: 'embed',
-			link: await getDirectVideoGooglePhoto(link),
+			type: 'direct',
+			data: [
+				{
+					file: await getDirectVideoGooglePhoto(link),
+					type: 'video/mp4',
+				},
+			],
+		};
+	} else if (regexM3U8.test(link)) {
+		return {
+			type: 'direct',
+			data: [
+				{
+					file: link,
+					type: 'hls',
+				},
+			],
+		};
+	} else if (regexMP4.test(link)) {
+		return {
+			type: 'direct',
+			data: [
+				{
+					file: link,
+					type: 'video/mp4',
+				},
+			],
 		};
 	} else {
 		return {
 			type: 'embed',
-			link: link,
+			data: [link],
 		};
 	}
 };

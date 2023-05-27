@@ -54,8 +54,9 @@ module.exports = async (req, res) => {
 
 	res.status(200).json({
 		image: film.backdrops,
-		title: `Tập ${episode.name} - Phim ${film.name} ${film.year}`,
-		link: await playerHelper(episode.links[parseInt(serverId) - 1 || 0]),
+		title: `Tập ${episode.name} - Phim ${film.name} (${film.year})`,
+		links: await playerHelper(episode.links[parseInt(serverId) - 1 || 0]),
+		subtitle: episode.subtitle || undefined,
 		servers: !serverId
 			? episode.links.map((_, index) => ({
 					name: 'Server#' + (index + 1),
