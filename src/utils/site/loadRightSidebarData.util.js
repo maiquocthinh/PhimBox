@@ -5,7 +5,7 @@ const toTime = require('to-time');
 const { getIMDBScore } = require('./filmInfo.util');
 
 const loadFromDatabase = async () => {
-	const match = { $or: [{ status: 'trailer' }, { status: 'ongoing' }] };
+	const matchTrailer = { status: 'trailer' };
 	const lookups = [
 		{
 			$lookup: {
@@ -32,20 +32,31 @@ const loadFromDatabase = async () => {
 		status: 1,
 		year: 1,
 		language: 1,
+		quality: 1,
 		duration: 1,
 		imdb: 1,
 		description: 1,
-		slug: { $concat: ['$slug', '-', '$_id'] },
+		infoHref: { $concat: ['/info/', '$slug', '-', '$_id'] },
 		categoriesData: { name: 1, slug: 1 },
 		countriesData: { name: 1, slug: 1 },
 	};
 
 	const promiseArray = [
-		filmModels.aggregate([{ $match: match }, ...lookups, { $project: projection }]),
+		filmModels.aggregate([{ $match: matchTrailer }, ...lookups, { $project: projection }]),
+		filmModels.aggregate([
+			{
+				$facet: {
+					topViewsOfDay: [{ $sort: { 'viewedDay.viewed': -1 } }, { $limit: 8 }, { $project: projection }],
+					topViewsOfWeek: [{ $sort: { 'viewedWeek.viewed': -1 } }, { $limit: 8 }, { $project: projection }],
+					topViewsOfMonth: [{ $sort: { 'viewedMonth.viewed': -1 } }, { $limit: 8 }, { $project: projection }],
+				},
+			},
+			{ $project: { topViewsOfDay: 1, topViewsOfWeek: 1, topViewsOfMonth: 1 } },
+		]),
 		configurationModels.findOne({}, { web_tags: 1 }),
 	];
 
-	const [listFilmTrailer, { web_tags: webTags }] = await Promise.all(promiseArray);
+	const [listFilmTrailer, [topViews], { web_tags: webTags }] = await Promise.all(promiseArray);
 
 	// load imdb score
 	{
@@ -57,10 +68,20 @@ const loadFromDatabase = async () => {
 				}),
 			);
 		});
+		for (const key in topViews) {
+			if (!Object.hasOwnProperty.call(topViews, key)) continue;
+			topViews[key].forEach((film) => {
+				imdbScorePromiseArray.push(
+					getIMDBScore(film.imdb).then((imdbScore) => {
+						film.imdb = imdbScore;
+					}),
+				);
+			});
+		}
 		await Promise.all(imdbScorePromiseArray);
 	}
 
-	return { listFilmTrailer, webTags: webTags.split(',') };
+	return { listFilmTrailer, topViews, webTags: webTags.split(',') };
 };
 
 const load = async () => {
@@ -75,8 +96,7 @@ const load = async () => {
 				leftSidebarData = await loadFromDatabase();
 				resolve(leftSidebarData);
 
-				const { timecache: timeCache } = await configurationModels.findOne({}, { timecache: 1 });
-				redisClient.set('site:leftSidebar', JSON.stringify(leftSidebarData), 'EX', toTime(timeCache).seconds(), () => {});
+				redisClient.set('site:leftSidebar', JSON.stringify(leftSidebarData), 'EX', toTime('15m').seconds(), () => {});
 			}
 		});
 	});

@@ -37,9 +37,18 @@ const Film = new Schema(
 		tagAscii: { type: Array },
 		slug: { type: String, slug: 'name' },
 		viewed: { type: Number, default: 0 },
-		viewedDay: { type: Number, default: 0 },
-		viewedWeek: { type: Number, default: 0 },
-		viewedMonth: { type: Number, default: 0 },
+		viewedDay: {
+			date: { type: Date, default: Date.now },
+			viewed: { type: Number, default: 0 },
+		},
+		viewedWeek: {
+			date: { type: Date, default: Date.now },
+			viewed: { type: Number, default: 0 },
+		},
+		viewedMonth: {
+			date: { type: Date, default: Date.now },
+			viewed: { type: Number, default: 0 },
+		},
 		createdBy: { type: String },
 		updatedBy: { type: String },
 	},

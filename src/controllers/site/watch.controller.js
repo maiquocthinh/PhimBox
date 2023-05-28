@@ -1,6 +1,121 @@
 const filmModels = require('../../models/film.models');
 const loadHeaderData = require('../../utils/site/loadHeaderData.utils');
-const loadLeftSidebarData = require('../../utils/site/loadLeftSidebarData.util');
+const loadRightSidebarData = require('../../utils/site/loadRightSidebarData.util');
+
+const updateView = (filmId) => {
+	const today = new Date();
+
+	const getStartOfWeek = () => {
+		const currentDate = new Date();
+		const dayOfWeek = currentDate.getDay();
+		const startOfWeek = new Date(currentDate.getTime() - (dayOfWeek > 0 ? dayOfWeek - 1 : 6) * 24 * 60 * 60 * 1000);
+
+		startOfWeek.setHours(0, 0, 0, 0);
+
+		return startOfWeek;
+	};
+
+	const getEndOfWeek = () => {
+		const dayOfWeek = today.getDay();
+		const daysUntilEndOfWeek = 7 - dayOfWeek;
+		const endOfWeek = new Date(today.getTime() + daysUntilEndOfWeek * 24 * 60 * 60 * 1000);
+
+		endOfWeek.setHours(23, 59, 59, 999);
+
+		return endOfWeek;
+	};
+
+	const getStartOfMonth = () => {
+		const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+
+		startOfMonth.setHours(0, 0, 0, 0);
+
+		return startOfMonth;
+	};
+
+	const getEndOfMonth = () => {
+		const currentMonth = today.getMonth();
+		const nextMonth = currentMonth + 1;
+		const nextMonthFirstDay = new Date(today.getFullYear(), nextMonth, 1);
+		const endOfMonth = new Date(nextMonthFirstDay.getTime() - 1);
+
+		endOfMonth.setHours(23, 59, 59, 999);
+
+		return endOfMonth;
+	};
+
+	filmModels
+		.findOneAndUpdate(
+			{
+				_id: filmId,
+			},
+			[
+				{
+					$set: {
+						viewed: { $add: ['$viewed', 1] },
+						viewedDay: {
+							$cond: {
+								if: {
+									$eq: [
+										{ $dateToString: { format: '%Y-%m-%d', date: '$viewedDay.date' } },
+										{ $dateToString: { format: '%Y-%m-%d', date: today } },
+									],
+								},
+								then: {
+									viewed: { $add: ['$viewedDay.viewed', 1] },
+									date: today,
+								},
+								else: {
+									viewed: 1,
+									date: today,
+								},
+							},
+						},
+						viewedWeek: {
+							$cond: {
+								if: {
+									$and: [
+										{ $gte: ['$viewedWeek.date', getStartOfWeek()] },
+										{ $lte: ['$viewedWeek.date', getEndOfWeek()] },
+									],
+								},
+								then: {
+									viewed: { $add: ['$viewedWeek.viewed', 1] },
+									date: today,
+								},
+								else: {
+									viewed: 1,
+									date: today,
+								},
+							},
+						},
+						viewedMonth: {
+							$cond: {
+								if: {
+									$and: [
+										{ $gte: ['$viewedMonth.date', getStartOfMonth()] },
+										{ $lte: ['$viewedMonth.date', getEndOfMonth()] },
+									],
+								},
+								then: {
+									viewed: { $add: ['$viewedMonth.viewed', 1] },
+									date: today,
+								},
+								else: {
+									viewed: 1,
+									date: today,
+								},
+							},
+						},
+					},
+				},
+			],
+		)
+		.catch((err) => {
+			console.log(err);
+		});
+};
+
 module.exports = async (req, res) => {
 	const { filmSlug, filmId } = req.params;
 	const { episodes, ...film } = await filmModels
@@ -26,7 +141,7 @@ module.exports = async (req, res) => {
 					viewed: 1,
 					tag: 1,
 					tagAscii: 1,
-					slug: { $concat: ['$slug', '-', '$_id'] },
+					infoHref: { $concat: ['/info/', '$slug', '-', '$_id'] },
 					episodes: { _id: 1, name: 1, links: 1, language: 1, subtitle: 1, message: 1 },
 				},
 			},
@@ -38,8 +153,6 @@ module.exports = async (req, res) => {
 		res.status(404).json({ message: 'Page not found' });
 		return;
 	}
-
-	// console.log(episodes.length);
 
 	let _episodes = {};
 	let currentEpisode = episodes[0];
@@ -53,12 +166,17 @@ module.exports = async (req, res) => {
 		_episodes[ep.language].push(ep);
 	}
 
+	const [header, rightSidebar] = await Promise.all([loadHeaderData.load(), loadRightSidebarData.load()]);
+
 	res.render('site/watch', {
-		header: await loadHeaderData.load(),
-		leftSidebar: await loadLeftSidebarData.load(),
+		header,
+		rightSidebar,
 		info: { film, episodes: _episodes, currentEpisode },
 		SEO: {
 			title: `Tập ${currentEpisode.name} - Phim ${film.name} ${film.year}`,
 		},
 	});
+
+	// update view
+	updateView(filmId);
 };

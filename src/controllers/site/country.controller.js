@@ -2,7 +2,7 @@ const categoryModels = require('../../models/category.models');
 const countryModels = require('../../models/country.models');
 const filterFilmUtils = require('../../utils/site/filterFilm.utils');
 const loadHeaderData = require('../../utils/site/loadHeaderData.utils');
-const loadLeftSidebarData = require('../../utils/site/loadLeftSidebarData.util');
+const loadRightSidebarData = require('../../utils/site/loadRightSidebarData.util');
 const { getPagination } = require('../../utils/site/pagination.util');
 
 module.exports = async (req, res) => {
@@ -35,9 +35,11 @@ module.exports = async (req, res) => {
 		title: `Phim Quốc gia  ${countryName} - Trang ${pageNumber}`,
 	};
 
+	const [header, rightSidebar] = await Promise.all([loadHeaderData.load(), loadRightSidebarData.load()]);
+
 	res.render('site/catalogue', {
-		header: await loadHeaderData.load(),
-		leftSidebar: await loadLeftSidebarData.load(),
+		header,
+		rightSidebar,
 		catalogue,
 		SEO,
 	});
