@@ -1,6 +1,7 @@
 const filmModels = require('../../models/film.models');
 const loadHeaderData = require('../../utils/site/loadHeaderData.utils');
 const loadRightSidebarData = require('../../utils/site/loadRightSidebarData.util');
+const loadRelatedFilms = require('../../utils/site/loadRelatedFilms.utils');
 
 const updateView = (filmId) => {
 	const today = new Date();
@@ -166,11 +167,16 @@ module.exports = async (req, res) => {
 		_episodes[ep.language].push(ep);
 	}
 
-	const [header, rightSidebar] = await Promise.all([loadHeaderData.load(), loadRightSidebarData.load()]);
+	const [header, rightSidebar, relatedFilms] = await Promise.all([
+		loadHeaderData.load(),
+		loadRightSidebarData.load(),
+		loadRelatedFilms.load(film),
+	]);
 
 	res.render('site/watch', {
 		header,
 		rightSidebar,
+		relatedFilms,
 		info: { film, episodes: _episodes, currentEpisode },
 		SEO: {
 			title: `Tập ${currentEpisode.name} - Phim ${film.name} ${film.year}`,

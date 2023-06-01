@@ -2,6 +2,7 @@ const filmModels = require('../../models/film.models');
 const { getIMDBScore, convertToYoutubeEmbed } = require('../../utils/site/filmInfo.util');
 const loadHeaderData = require('../../utils/site/loadHeaderData.utils');
 const loadRightSidebarData = require('../../utils/site/loadRightSidebarData.util');
+const loadRelatedFilms = require('../../utils/site/loadRelatedFilms.utils');
 
 module.exports = async (req, res) => {
 	const { filmSlug, filmId } = req.params;
@@ -72,11 +73,16 @@ module.exports = async (req, res) => {
 	film.imdb = await getIMDBScore(film.imdb);
 	film.trailer = convertToYoutubeEmbed(film.trailer);
 
-	const [header, rightSidebar] = await Promise.all([loadHeaderData.load(), loadRightSidebarData.load()]);
+	const [header, rightSidebar, relatedFilms] = await Promise.all([
+		loadHeaderData.load(),
+		loadRightSidebarData.load(),
+		loadRelatedFilms.load(film),
+	]);
 
 	res.render('site/info', {
 		header,
 		rightSidebar,
+		relatedFilms,
 		info: { film },
 	});
 };
