@@ -3,8 +3,12 @@ const configurationModels = require('../../models/configuration.models');
 const redisClient = require('../../database/init.redis');
 const toTime = require('to-time');
 const { getIMDBScore } = require('./filmInfo.util');
+const { getStartOfWeek, getEndOfWeek, getStartOfMonth, getEndOfMonth, getStartOfDay, getEndOfDay } = require('../date.util');
 
 const loadFromDatabase = async () => {
+	const currentDate = new Date();
+	currentDate.setHours(0, 0, 0, 0);
+
 	const matchTrailer = { status: 'trailer' };
 	const lookups = [
 		{
@@ -46,9 +50,25 @@ const loadFromDatabase = async () => {
 		filmModels.aggregate([
 			{
 				$facet: {
-					topViewsOfDay: [{ $sort: { 'viewedDay.viewed': -1 } }, { $limit: 8 }, { $project: projection }],
-					topViewsOfWeek: [{ $sort: { 'viewedWeek.viewed': -1 } }, { $limit: 8 }, { $project: projection }],
-					topViewsOfMonth: [{ $sort: { 'viewedMonth.viewed': -1 } }, { $limit: 8 }, { $project: projection }],
+					topViewsOfDay: [
+						// { $match: { 'viewedDay.date': { $gte: getStartOfDay(), $lte: getEndOfDay() } } },
+						{ $match: { 'viewedDay.date': { $gte: getStartOfDay() } } },
+						{ $sort: { 'viewedDay.viewed': -1 } },
+						{ $limit: 8 },
+						{ $project: projection },
+					],
+					topViewsOfWeek: [
+						{ $match: { 'viewedWeek.date': { $gte: getStartOfWeek(), $lte: getEndOfWeek() } } },
+						{ $sort: { 'viewedWeek.viewed': -1 } },
+						{ $limit: 8 },
+						{ $project: projection },
+					],
+					topViewsOfMonth: [
+						{ $match: { 'viewedMonth.date': { $gte: getStartOfMonth(), $lte: getEndOfMonth() } } },
+						{ $sort: { 'viewedMonth.viewed': -1 } },
+						{ $limit: 8 },
+						{ $project: projection },
+					],
 				},
 			},
 			{ $project: { topViewsOfDay: 1, topViewsOfWeek: 1, topViewsOfMonth: 1 } },

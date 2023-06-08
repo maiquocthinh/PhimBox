@@ -2,48 +2,10 @@ const filmModels = require('../../models/film.models');
 const loadHeaderData = require('../../utils/site/loadHeaderData.utils');
 const loadRightSidebarData = require('../../utils/site/loadRightSidebarData.util');
 const loadRelatedFilms = require('../../utils/site/loadRelatedFilms.utils');
+const { getStartOfWeek, getEndOfWeek, getStartOfMonth, getEndOfMonth } = require('../../utils/date.util');
 
 const updateView = (filmId) => {
-	const today = new Date();
-
-	const getStartOfWeek = () => {
-		const currentDate = new Date();
-		const dayOfWeek = currentDate.getDay();
-		const startOfWeek = new Date(currentDate.getTime() - (dayOfWeek > 0 ? dayOfWeek - 1 : 6) * 24 * 60 * 60 * 1000);
-
-		startOfWeek.setHours(0, 0, 0, 0);
-
-		return startOfWeek;
-	};
-
-	const getEndOfWeek = () => {
-		const dayOfWeek = today.getDay();
-		const daysUntilEndOfWeek = 7 - dayOfWeek;
-		const endOfWeek = new Date(today.getTime() + daysUntilEndOfWeek * 24 * 60 * 60 * 1000);
-
-		endOfWeek.setHours(23, 59, 59, 999);
-
-		return endOfWeek;
-	};
-
-	const getStartOfMonth = () => {
-		const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-
-		startOfMonth.setHours(0, 0, 0, 0);
-
-		return startOfMonth;
-	};
-
-	const getEndOfMonth = () => {
-		const currentMonth = today.getMonth();
-		const nextMonth = currentMonth + 1;
-		const nextMonthFirstDay = new Date(today.getFullYear(), nextMonth, 1);
-		const endOfMonth = new Date(nextMonthFirstDay.getTime() - 1);
-
-		endOfMonth.setHours(23, 59, 59, 999);
-
-		return endOfMonth;
-	};
+	const currentDate = new Date();
 
 	filmModels
 		.findOneAndUpdate(
@@ -59,16 +21,16 @@ const updateView = (filmId) => {
 								if: {
 									$eq: [
 										{ $dateToString: { format: '%Y-%m-%d', date: '$viewedDay.date' } },
-										{ $dateToString: { format: '%Y-%m-%d', date: today } },
+										{ $dateToString: { format: '%Y-%m-%d', date: currentDate } },
 									],
 								},
 								then: {
 									viewed: { $add: ['$viewedDay.viewed', 1] },
-									date: today,
+									date: currentDate,
 								},
 								else: {
 									viewed: 1,
-									date: today,
+									date: currentDate,
 								},
 							},
 						},
@@ -82,11 +44,11 @@ const updateView = (filmId) => {
 								},
 								then: {
 									viewed: { $add: ['$viewedWeek.viewed', 1] },
-									date: today,
+									date: currentDate,
 								},
 								else: {
 									viewed: 1,
-									date: today,
+									date: currentDate,
 								},
 							},
 						},
@@ -100,11 +62,11 @@ const updateView = (filmId) => {
 								},
 								then: {
 									viewed: { $add: ['$viewedMonth.viewed', 1] },
-									date: today,
+									date: currentDate,
 								},
 								else: {
 									viewed: 1,
-									date: today,
+									date: currentDate,
 								},
 							},
 						},
