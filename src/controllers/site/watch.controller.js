@@ -105,6 +105,8 @@ module.exports = async (req, res) => {
 					tag: 1,
 					tagAscii: 1,
 					infoHref: { $concat: ['/info/', '$slug', '-', '$_id'] },
+					watchHref: { $concat: ['/watch/', '$slug', '-', '$_id'] },
+					slug: 1,
 					episodes: { _id: 1, name: 1, links: 1, language: 1, subtitle: 1, message: 1 },
 				},
 			},
@@ -121,7 +123,7 @@ module.exports = async (req, res) => {
 	let currentEpisode = episodes[0];
 
 	for (const ep of episodes) {
-		ep.href = `/watch/${film.slug}/${ep._id}`;
+		ep.href = `${film.watchHref}/${ep._id}`;
 
 		if (ep._id === req.params.episodeId) currentEpisode = ep;
 
