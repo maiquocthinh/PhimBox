@@ -151,6 +151,7 @@ if (menuMobileBtn)
 		} else {
 			document.querySelector('#navbar-mobile__icon-list').style.display = 'none';
 			document.querySelector('#navbar-mobile__icon-close').style.display = 'inline-block';
+			hiddenUserBoxAndNotifyBox();
 		}
 	};
 // show dropdown-list in mobile
@@ -177,6 +178,7 @@ if (searchMobileBtn)
 		} else {
 			document.querySelector('#navbar-mobile__icon-search').style.display = 'none';
 			document.querySelector('#navbar-mobile__icon-close-search').style.display = 'inline-block';
+			hiddenUserBoxAndNotifyBox();
 		}
 	};
 // show login/register in mobile
@@ -240,6 +242,35 @@ if (btnRegister)
 		document.querySelector('.modal-dialog__content .modal-register').classList.remove('hidden');
 	};
 
+// show hidden when click notification & userbox
+const userBtn = document.querySelector('.header-user__btn-user');
+const notifyBtn = document.querySelector('.header-user__btn-notify');
+const userBox = document.querySelector('.user-box');
+const notifyBox = document.querySelector('.notify-box');
+const notifyBoxArrowUp = document.querySelector('.notify-box-arrow-up');
+
+if (userBtn && notifyBtn && userBox && notifyBox && notifyBoxArrowUp) {
+	userBtn.onclick = function () {
+		userBox.classList.toggle('hidden');
+	};
+
+	notifyBtn.onclick = function () {
+		notifyBox.classList.toggle('hidden');
+		notifyBoxArrowUp.classList.toggle('hidden');
+	};
+
+	userBox.onclick = notifyBox.onclick = function (event) {
+		event.stopPropagation();
+	};
+}
+
+function hiddenUserBoxAndNotifyBox() {
+	// hidden userBox & notifyBox
+	userBox?.classList?.add('hidden');
+	notifyBox?.classList?.add('hidden');
+	notifyBoxArrowUp?.classList?.add('hidden');
+}
+
 // change tab top aside
 const popularPosts = document.querySelectorAll('.tab-container .popular-posts');
 popularPosts.forEach(function (popularPost) {
@@ -281,13 +312,13 @@ function fillDataToXpoMiniInfo(xpoMiniInfo, infoFilm) {
 // box mini info film: show/hiden when mouse hover, bla bla,....
 const xpoItems = document.querySelectorAll('.xpo-item, .xpo-slide-full__item');
 const xpoMiniInfo = document.querySelector('.xpo-mini-info');
-// xpoMiniInfo.onmouseover = function () {
-//     xpoMiniInfo.style.display = "block"
-//     xpoMiniInfo.onmousemove = function (event) {
-//         xpoMiniInfo.style.left = -50 + event.pageX + "px"
-//         xpoMiniInfo.style.top = 20 + event.pageY + "px"
-//     }
-// }
+xpoMiniInfo.onmouseover = function () {
+	xpoMiniInfo.style.display = 'block';
+	xpoMiniInfo.onmousemove = function (event) {
+		xpoMiniInfo.style.left = -50 + event.pageX + 'px';
+		xpoMiniInfo.style.top = 20 + event.pageY + 'px';
+	};
+};
 xpoMiniInfo.onmouseleave = function () {
 	xpoMiniInfo.style.display = 'none';
 };

@@ -38,50 +38,71 @@
 						data-icon="mdi:close-box-outline"
 					></i>
 				</div>
-				<div class="user-mobile md-hidden lg-hidden">
+				<div class="user-mobile md-hidden lg-hidden hidden" style="width:40px;">
 					<!-- Chua login/register -->
 					<i class="iconify user-mobile__icon" data-icon="tabler:login" data-flip="horizontal"></i>
 				</div>
 				<div class="header-user">
 					<div class="header-user__wrap-btns">
 						<!-- Chua login/register -->
-						<div id="btn-login" class="header-user__btn btn sm-hidden">
+						<!-- <div id="btn-login" class="header-user__btn btn sm-hidden">
 							<i class="header-user__icon iconify" data-icon="tabler:login" data-flip="horizontal"></i>
 							<span>Đăng Nhập</span>
 						</div>
 						<div id="btn-register" class="header-user__btn btn sm-hidden">
 							<i class="header-user__icon iconify" data-icon="gridicons:multiple-users"></i>
 							<span>Đăng Ký</span>
-						</div>
+						</div> -->
 						<!-- Da login/register -->
-						<!-- <div class="header-user__btn-notify btn">
-                  <i class="iconify" data-icon="fontisto:bell-alt"></i>
-                  <div class="notify-box">
-                      <h3 class="notify-box__title">Thông báo</h3>
-                      <ul class="notify-box__list">
-                          <li><span>Bạn nhận được 100 XU từ nhiệm vụ đăng nhập điểm danh mỗi ngày</span></li>
-                          <li><span>Bạn nhận được 200 XU từ nhiệm vụ cập nhật Avatar</span></li>
-                          <li><span>Chào mừng bạn đã đến với BiluTV. Hãy nhớ tên tài khoản và mật khẩu của bạn để khi tên miền webiste bị chặn bạn có thể đăng nhập lại và không bị mất dữ liệu.</span></li>
-                          <li><span>Bạn nhận được 100 XU từ nhiệm vụ đăng nhập điểm danh mỗi ngày</span></li>
-                          <li><span>Bạn nhận được 200 XU từ nhiệm vụ cập nhật Avatar</span></li>
-                          <li><span>Chào mừng bạn đã đến với BiluTV. Hãy nhớ tên tài khoản và mật khẩu của bạn để khi tên miền webiste bị chặn bạn có thể đăng nhập lại và không bị mất dữ liệu.</span></li>
-                          <li><span>Bạn nhận được 100 XU từ nhiệm vụ đăng nhập điểm danh mỗi ngày</span></li>
-                      </ul>
-                  </div>
-                  <div class="notify-box-arrow-up"></div>
-              </div>
-              <div class="header-user__btn-user btn">
-                  <img src="./assets/images/User-avatar.png" alt="" class="header-user__btn-user-avatar">
-                  <span class="header-user__btn-user-name sm-hidden">ahakun</span>
-                  <i class="iconify header-user__btn-user-icon-down sm-hidden" data-icon="akar-icons:chevron-down"></i>
-                  <ul class="user-box">
-                      <li><a href="#"><i class="iconify user-box__icon" data-icon="carbon:user-filled"></i><span>Thông tin tài khoản</span></a></li>
-                      <li><a href="#"><i class="iconify user-box__icon" data-icon="ph:film-script-fill"></i><span>Tủ phim</span></a></li>
-                      <li><a href="#"><i class="iconify user-box__icon" data-icon="bx:film"></i><span>Phim đang theo dõi</span></a></li>
-                      <li><a href="#"><i class="iconify user-box__icon" data-icon="dashicons:lock"></i><span>Thay đổi thông tin</span></a></li>
-                      <li><a href="#"><i class="iconify user-box__icon" data-icon="wpf:shutdown"></i><span>Đăng xuất</span></a></li>
-                  </ul>
-              </div> -->
+						<div class="header-user__btn-user btn">
+							<img src="./assets/images/User-avatar.png" alt="" class="header-user__btn-user-avatar">
+							<span class="header-user__btn-user-name sm-hidden">ahakun</span>
+							<ul class="user-box hidden">
+								<li><a href="#"><i class="iconify user-box__icon" data-icon="carbon:user-filled"></i><span>Thông tin tài khoản</span></a></li>
+								<li><a href="#"><i class="iconify user-box__icon" data-icon="ph:film-script-fill"></i><span>Tủ phim</span></a></li>
+								<li><a href="#"><i class="iconify user-box__icon" data-icon="bx:film"></i><span>Phim đang theo dõi</span></a></li>
+								<li><a href="#"><i class="iconify user-box__icon" data-icon="dashicons:lock"></i><span>Thay đổi thông tin</span></a></li>
+								<li><a href="#"><i class="iconify user-box__icon" data-icon="wpf:shutdown"></i><span>Đăng xuất</span></a></li>
+							</ul>
+						</div>
+						<div class="header-user__btn-notify btn">
+							<i class="iconify" data-icon="fontisto:bell-alt"></i>
+							<div class="notify-box hidden">
+								<h3 class="notify-box__title">Thông báo</h3>
+								<a class="notify-box__view-more" href="#">Xem tất cả</a>
+								<ul class="notify-box__list">
+									<li>
+										<span>Bạn nhận được 100 XU từ nhiệm vụ đăng nhập điểm danh mỗi ngày</span>
+										<p><i class="iconify" data-icon="fa-regular:clock"></i>15/06/2023 00:28:32 </p>
+									</li>
+									<li class="read">
+										<span>Bạn nhận được 200 XU từ nhiệm vụ cập nhật Avatar</span>
+										<p><i class="iconify" data-icon="fa-regular:clock"></i>15/06/2023 00:28:32 </p>
+									</li>
+									<li class="read">
+										<span>Chào mừng bạn đã đến với BiluTV. Hãy nhớ tên tài khoản và mật khẩu của bạn để khi tên miền webiste bị chặn bạn có thể đăng nhập lại và không bị mất dữ liệu.</span>
+										<p><i class="iconify" data-icon="fa-regular:clock"></i>15/06/2023 00:28:32 </p>
+									</li>
+									<li class="read">
+										<span>Bạn nhận được 100 XU từ nhiệm vụ đăng nhập điểm danh mỗi ngày</span>
+										<p><i class="iconify" data-icon="fa-regular:clock"></i>15/06/2023 00:28:32 </p>
+									</li>
+									<li class="read">
+										<span>Bạn nhận được 200 XU từ nhiệm vụ cập nhật Avatar</span>
+										<p><i class="iconify" data-icon="fa-regular:clock"></i>15/06/2023 00:28:32 </p>
+									</li>
+									<li class="read">
+										<span>Chào mừng bạn đã đến với BiluTV. Hãy nhớ tên tài khoản và mật khẩu của bạn để khi tên miền webiste bị chặn bạn có thể đăng nhập lại và không bị mất dữ liệu.</span>
+										<p><i class="iconify" data-icon="fa-regular:clock"></i>15/06/2023 00:28:32 </p>
+									</li>
+									<li class="read">
+										<span>Bạn nhận được 100 XU từ nhiệm vụ đăng nhập điểm danh mỗi ngày</span>
+										<p><i class="iconify" data-icon="fa-regular:clock"></i>15/06/2023 00:28:32 </p>
+									</li>
+								</ul>
+							</div>
+							<div class="notify-box-arrow-up hidden"></div>
+						</div>
 					</div>
 				</div>
 			</div>

@@ -19,7 +19,7 @@
 
 .header-logo__logo {
 	display: block;
-	background: url('../images/logonew.png') no-repeat left top;
+	background: url('../images/logonew.png') no-repeat center;
 	background-size: contain;
 	height: 45px;
 	text-indent: -999999px;
@@ -325,7 +325,6 @@
 .wrap-header-action {
 	display: flex;
 	justify-content: flex-end;
-	gap: 8px;
 }
 
 /* logged in/registered */
@@ -333,12 +332,6 @@
 .header-user__btn-notify {
 	min-width: 30px;
 	position: relative;
-}
-
-.header-user__btn-notify:hover .notify-box,
-.header-user__btn-notify:hover .notify-box-arrow-up {
-	display: block;
-	z-index: 2;
 }
 
 .notify-box {
@@ -352,7 +345,7 @@
 	padding: 16px;
 	height: 70vh;
 	overflow-y: auto;
-	display: none;
+	z-index: 3;
 }
 
 .notify-box-arrow-up {
@@ -362,7 +355,7 @@
 	right: 6px;
 	border: 8px solid;
 	border-color: transparent transparent #12171b transparent;
-	display: none;
+	z-index: 2;
 }
 
 .notify-box__title {
@@ -376,6 +369,13 @@
 	margin: 0;
 	padding: 16px 20px;
 	border-bottom: 1px solid #172a3c;
+}
+
+.notify-box__view-more {
+	position: absolute;
+	top: 30px;
+	right: 30px;
+	font-size: 1.6rem;
 }
 
 .notify-box__list {
@@ -392,10 +392,24 @@
 	list-style-image: url('../images/right-arrow-blue.svg');
 	list-style-position: inside;
 	border-bottom: 1px solid #1d2731;
+	color: var(--white-color);
+	font-weight: 800;
+}
+.notify-box__list > li.read {
+	color: #d4d4d4;
+	font-weight: normal;
 }
 
 .notify-box__list > li > span {
-	color: #d4d4d4;
+	font-size: 1.4rem;
+}
+.notify-box__list > li > p {
+	display: flex;
+	justify-content: end;
+	align-items: center;
+	gap: 2px;
+	margin: 0;
+	margin-top: 4px;
 	font-size: 1.2rem;
 }
 
@@ -404,15 +418,6 @@
 	position: relative;
 	min-width: 30px;
 	padding: 0 12px;
-}
-
-.header-user__btn-user:hover .user-box {
-	display: block;
-	z-index: 2;
-}
-
-.header-user__btn-user:hover .header-user__btn-user-icon-down {
-	transform: scale(-1);
 }
 
 .header-user__btn-user-avatar {
@@ -437,14 +442,14 @@
 	padding: 8px 0;
 	margin: 0;
 	list-style: none;
-	display: none;
+	z-index: 3;
 }
 
 .user-box::before {
 	content: '';
 	position: absolute;
 	top: -16px;
-	right: 10px;
+	right: 40px;
 	border: 8px solid;
 	border-color: transparent transparent #12171b transparent;
 }
@@ -460,6 +465,13 @@
 
 .user-box > li {
 	height: 40px;
+}
+
+.user-box > li:last-child {
+	margin: 8px 0 0;
+	padding-top: 6px;
+	border-top: 1px solid #ffffff3d;
+	height: 46px;
 }
 
 .user-box > li > a {
@@ -1075,6 +1087,7 @@
 	align-items: center;
 	justify-content: center;
 	cursor: pointer;
+	-webkit-tap-highlight-color: transparent;
 }
 
 .menu-mobile__icon {
