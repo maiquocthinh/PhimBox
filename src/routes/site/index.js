@@ -13,12 +13,14 @@ const {
 	tagController,
 } = require('../../controllers/site');
 
-const apiRoutes = require('./api.routes');
+const apiRoutes = require('./api');
 
-router.get('/info/:filmSlug-:filmId([A-Za-z0-9]+[A-Za-z0-9_]+)', infoController);
-router.get('/watch/:filmSlug-:filmId([A-Za-z0-9]+[A-Za-z0-9_]+)/:episodeId?', watchController);
+// API
 router.use('/api', apiRoutes);
 
+// PAGE
+router.get('/info/:filmSlug-:filmId([A-Za-z0-9]+[A-Za-z0-9_]+)', infoController);
+router.get('/watch/:filmSlug-:filmId([A-Za-z0-9]+[A-Za-z0-9_]+)/:episodeId?', watchController);
 router.get('/search/:keyWord', searchController);
 router.get('/category/:categorySlug', categoryController);
 router.get('/country/:countrySlug', countryController);

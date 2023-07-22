@@ -8,16 +8,38 @@ const nanoidUtil = require('../utils/nanoid.util');
 const User = new Schema(
 	{
 		_id: { type: String, default: () => nanoidUtil(7) },
-		email: { type: String },
-		name: { type: String },
-		password: { type: String },
+		email: { type: String, required: true },
+		fullname: { type: String, required: true },
+		username: { type: String, required: true },
+		password: { type: String, required: true },
 		status: { type: Number, default: 1 },
-		avatar: { type: String },
+		avatar: { type: String, default: 'https://i.imgur.com/G5jDQjo.jpg' },
 	},
 	{
 		timestamps: true,
 	},
 );
+
+// middle ware handle error duplicate key
+User.post('save', function (error, doc, next) {
+	if (error.name === 'MongoServerError' && error.code === 11000) {
+		const fieldWithError = Object.keys(error.keyPattern)[0];
+		const fieldValue = error.keyValue[fieldWithError];
+
+		switch (fieldWithError) {
+			case 'email':
+				next(new Error(`Email "${fieldValue}" is already exists in the system.`));
+				break;
+			case 'username':
+				next(new Error(`Username "${fieldValue}" is already exists in the system.`));
+				break;
+			default:
+				next(new Error(`Field "${fieldWithError}" with value "${fieldValue}" already exists in the system.`));
+		}
+	} else {
+		next();
+	}
+});
 
 User.plugin(mongooseDelete, {
 	deletedAt: true,
