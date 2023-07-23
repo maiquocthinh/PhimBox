@@ -72,6 +72,7 @@
 											<th>ID</th>
 											<th>Name</th>
 											<th>Mail</th>
+											<th>Status</th>
 											<th>Permission</th>
 											<th>Uploaded</th>
 											<th>Created</th>
@@ -84,6 +85,7 @@
 											<th>ID</th>
 											<th>Name</th>
 											<th>Mail</th>
+											<th>Status</th>
 											<th>Permission</th>
 											<th>Uploaded</th>
 											<th>Created</th>
@@ -144,16 +146,25 @@
 								<div class="card">
 									<div class="card-body">
 										<form class="row g-3">
-											<div class="col-md-5 mb-3">
-												<label class="form-label">User Name:</label>
+											<div class="col-md-6 mb-3">
+												<label class="form-label">Full Name:</label>
 												<input
 													type="text"
 													class="form-control"
-													name="name"
+													name="fullname"
 													placeholder="User Name"
 												/>
 											</div>
-											<div class="col-md-5 mb-3">
+											<div class="col-md-6 mb-3">
+												<label class="form-label">Username:</label>
+												<input
+													type="text"
+													class="form-control"
+													name="username"
+													placeholder="User Name"
+												/>
+											</div>
+											<div class="col-md-6 mb-3">
 												<label class="form-label">Email:</label>
 												<input
 													type="email"
@@ -162,11 +173,22 @@
 													placeholder="Mail"
 												/>
 											</div>
+											<div class="col-md-3 mb-3">
+												<label class="form-label">Staus:</label>
+												<select class="form-select" name="status">
+													<% for(const key in userStatus) { 
+														if(userStatus.hasOwnProperty(key)) {
+															const status = userStatus[key];	
+													%>
+													<option value="<%=status%>"><%=key%></option>
+													<% }}; %>
+												</select>
+											</div>
 											<div class="col-md-2 mb-3">
 												<label class="form-label">Role:</label>
 												<select class="form-select" name="role">
 													<% roles.forEach(role => { %>
-													<option value="<%=role._id%>"><%=role.name%></option>
+													<option value="<%=role._id%>"><%=role.name.toUpperCase()%></option>
 													<% }); %>
 												</select>
 											</div>
@@ -237,16 +259,25 @@
 								<div class="card">
 									<div class="card-body">
 										<form class="row g-3">
-											<div class="col-md-5 mb-3">
-												<label class="form-label">User Name:</label>
+											<div class="col-md-6 mb-3">
+												<label class="form-label">Full Name:</label>
 												<input
 													type="text"
 													class="form-control"
-													name="name"
+													name="fullname"
 													placeholder="User Name"
 												/>
 											</div>
-											<div class="col-md-5 mb-3">
+											<div class="col-md-6 mb-3">
+												<label class="form-label">Username:</label>
+												<input
+													type="text"
+													class="form-control"
+													name="username"
+													placeholder="User Name"
+												/>
+											</div>
+											<div class="col-md-6 mb-3">
 												<label class="form-label">Email:</label>
 												<input
 													type="email"
@@ -255,11 +286,22 @@
 													placeholder="Mail"
 												/>
 											</div>
-											<div class="col-md-2 mb-3">
+											<div class="col-md-3 mb-3">
+												<label class="form-label">Staus:</label>
+												<select class="form-select" name="status">
+													<% for(const key in userStatus) { 
+														if(userStatus.hasOwnProperty(key)) {
+															const status = userStatus[key];	
+													%>
+													<option value="<%=status%>"><%=key%></option>
+													<% }}; %>
+												</select>
+											</div>
+											<div class="col-md-3 mb-3">
 												<label class="form-label">Role:</label>
 												<select class="form-select" name="role">
 													<% roles.forEach(role => { %>
-													<option value="<%=role._id%>"><%=role.name%></option>
+													<option value="<%=role._id%>"><%=role.name.toUpperCase()%></option>
 													<% }); %>
 												</select>
 											</div>
@@ -341,7 +383,8 @@
 					{ name: 'id' },
 					{ name: 'name' },
 					{ name: 'mail' },
-					{ name: 'level' },
+					{ name: null },
+					{ name: null },
 					{ name: null },
 					{ name: 'createdAt' },
 					{ name: 'updatedAt' },
@@ -350,10 +393,10 @@
 				columnDefs: [
 					{
 						orderable: false,
-						targets: [4,7],
+						targets: [3,4,5,8],
 					},
 				],
-				order: [[5, 'desc']],
+				order: [[6, 'desc']],
 				language: {
 					processing:
 						'<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span><span> Loading...</span>',
@@ -456,9 +499,11 @@
 					type: 'GET',
 				});
 				const formEdit = document.querySelector('#editModal form');
-				formEdit.querySelector('input[name="name"]').value = dataUser.name;
+				formEdit.querySelector('input[name="fullname"]').value = dataUser.fullname;
+				formEdit.querySelector('input[name="username"]').value = dataUser.username;
 				formEdit.querySelector('input[name="email"]').value = dataUser.email;
 				formEdit.querySelector('input[name="avatar"]').value = dataUser.avatar;
+				formEdit.querySelector('select[name="status"]').value = dataUser.status;
 				formEdit.querySelector('select[name="role"]').value = dataUser.roleId;
 				formEdit.querySelector('input[name="user_id"]').value = dataUser._id;
 

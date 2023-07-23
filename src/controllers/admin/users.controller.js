@@ -1,8 +1,9 @@
 const Users = require('../../models/user.models');
 const roleModels = require('../../models/role.models');
 const userRoleModels = require('../../models/userRole.models');
-const { getUserLevelHtml } = require('../../utils/ajaxUsers.util');
+const { getUserLevelHtml, getUserStatusHtml } = require('../../utils/ajaxUsers.util');
 const { generateHashPassword } = require('../../utils');
+const { userStatus } = require('../../config/constants');
 
 // ###### API ######
 
@@ -16,8 +17,7 @@ const ajaxDatatablesUsers = async (req, res) => {
 	const columnSortOrder = order[0]['dir'] === 'asc' ? 1 : -1;
 	let queryToDB = {};
 
-	if (search.value)
-		queryToDB['$or'] = [{ name: new RegExp(search.value, 'i') }, { email: new RegExp(search.value, 'i') }];
+	if (search.value) queryToDB['$or'] = [{ name: new RegExp(search.value, 'i') }, { email: new RegExp(search.value, 'i') }];
 
 	const totalUser = deleted ? await Users.countDocumentsDeleted({}) : await Users.countDocuments({});
 	const dataUsers = await Users.aggregateWithDeleted([
@@ -35,10 +35,7 @@ const ajaxDatatablesUsers = async (req, res) => {
 			$lookup: {
 				from: 'roles',
 				let: { roleId: { $arrayElemAt: ['$userRole.roleId', 0] } },
-				pipeline: [
-					{ $addFields: { _id: { $toString: '$_id' } } },
-					{ $match: { $expr: { $eq: ['$_id', '$$roleId'] } } },
-				],
+				pipeline: [{ $addFields: { _id: { $toString: '$_id' } } }, { $match: { $expr: { $eq: ['$_id', '$$roleId'] } } }],
 				as: 'role',
 			},
 		},
@@ -58,15 +55,14 @@ const ajaxDatatablesUsers = async (req, res) => {
 
 	const data = dataUsers.map((user) => [
 		user._id,
-		`<div class="d-flex align-items-center">
-			<div class="recent-product-img">
-			<img src="${user.avatar}" alt="">
-			</div>
+		`<div class="d-flex flex-column align-items-center">
+			<div class="recent-product-img"><img src="${user.avatar}" alt=""></div>
 			<div class="ms-2">
-			<h6 class="mb-1 font-14">${user.name}</h6>
+			<h6 class="mb-1 font-14">${user.username}</h6>
 			</div>
 		</div>`,
 		user.email,
+		getUserStatusHtml(user.status),
 		getUserLevelHtml(user.role[0]?.permissions),
 		user.updated,
 		user.createdAt.toISOString().substring(0, 10),
@@ -74,12 +70,12 @@ const ajaxDatatablesUsers = async (req, res) => {
 		deleted
 			? `<div class="d-flex order-actions">
 				<a href="javascript:;" class="ms-1 btn-restore" onclick="restoreUser('${user._id}')"><i class="bx bx-undo"></i></a>
-				<a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeletePermanentlyForm('${user.name}','${user._id}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>
+				<a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeletePermanentlyForm('${user.username}','${user._id}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>
 			</div>`
 			: `<div class="d-flex order-actions">
 				<a href="javascript:;" class="text-white"><i class="bx bx-detail"></i></a>
 				<a href="javascript:;" class="text-warning ms-1" onclick="fillDataToEditForm('${user._id}')" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bx bxs-edit"></i></a>
-				<a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeleteForm('${user.name}','${user._id}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>
+				<a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeleteForm('${user.username}','${user._id}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>
 			</div>`,
 	]);
 
@@ -93,15 +89,18 @@ const ajaxDatatablesUsers = async (req, res) => {
 
 // [POST] admin/users/create
 const createUser = (req, res) => {
+	const { fullname, username, email, avatar, password, status } = req.body;
+
 	// hash password
-	const hashPassword = req.body.password ? generateHashPassword(req.body.password) : undefined;
+	const hashPassword = req.body.password ? generateHashPassword(password) : undefined;
 
 	const user = new Users({
-		email: req.body.email,
-		name: req.body.name,
+		fullname,
+		username,
+		email,
 		password: hashPassword,
-		status: req.body.status,
-		avatar: req.body.avatar,
+		status,
+		avatar,
 	});
 	user.save()
 		.then((result) => {
@@ -128,15 +127,15 @@ const readUser = async (req, res) => {
 // [PUT] admin/users/update/:id
 const updateUser = (req, res) => {
 	// hash password
-	const hashPassword = generateHashPassword(req.body.password);
+	const hashPassword = req.body.password ? generateHashPassword(req.body.password) : undefined;
 
 	Users.updateOne(
 		{ _id: req.params.id },
 		{
+			fullname: req.body.fullname,
+			username: req.body.username,
 			email: req.body.email,
-			name: req.body.name,
 			password: hashPassword,
-			level: req.body.level,
 			status: req.body.status,
 			avatar: req.body.avatar,
 		},
@@ -197,6 +196,7 @@ const allUsers = async (req, res) => {
 		res.render('admin/users', {
 			user: req.session.user,
 			roles,
+			userStatus,
 		});
 	} catch (error) {
 		console.log(error);

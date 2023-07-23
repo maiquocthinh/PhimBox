@@ -30,7 +30,7 @@ const dashboard = (req, res) => {
 						createdAt: 1,
 						viewed: 1,
 						viewable: 1,
-						createdBy: { name: '$createdBy.name', avatar: '$createdBy.avatar' },
+						createdBy: { username: '$createdBy.username', avatar: '$createdBy.avatar' },
 					},
 				},
 			])

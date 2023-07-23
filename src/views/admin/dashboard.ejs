@@ -135,7 +135,7 @@
                     <tbody>
                       <% for(const film of films) { %>
                       <tr>
-                        <td><%=film.id%></td>
+                        <td><%=film._id%></td>
                         <td>
                           <div class="d-flex align-items-center">
                             <div class="recent-product-img">
@@ -153,14 +153,13 @@
                           </div>
                         </td>
                         <td><span class="d-block text-center"><%=film.viewed%></span></td>
-                        <!-- <td><%=film.createdBy[0].name%></td> -->
                         <td>
                           <div class="d-flex flex-column align-items-center">
                             <div class="recent-product-img rounded-circle" style="width:50px;height:50px;">
                               <img class="rounded-circle" src="<%=film.createdBy[0].avatar%>" alt="avatar" />
                             </div>
                             <div class="ms-2">
-                              <h6 class="mb-1 font-14"><%=film.createdBy[0].name%></h6>
+                              <h6 class="mb-1 font-14"><%=film.createdBy[0].username%></h6>
                             </div>
                           </div>
                         </td>
@@ -224,7 +223,7 @@
                               <img src="<%=user.avatar%>" alt="" />
                             </div>
                             <div class="ms-2">
-                              <h6 class="mb-1 font-14"><%=user.name%></h6>
+                              <h6 class="mb-1 font-14"><%=user.username%></h6>
                             </div>
                           </div>
                         </td>

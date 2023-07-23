@@ -8,7 +8,7 @@ const { generateHashPassword } = require('../../utils');
 // [PATCH] admin/profile/update/:id
 const update = (req, res) => {
 	const userId = req.session.user._id;
-	const { email, name, password, avatar } = req.body;
+	const { fullname, username, email, password, avatar } = req.body;
 
 	if (userId !== req.params.id) return res.status(500).json({ message: 'You have not permission.' });
 
@@ -16,7 +16,7 @@ const update = (req, res) => {
 		// hash password
 		const hashPassword = password ? generateHashPassword(password) : undefined;
 
-		userModels.findByIdAndUpdate(userId, { email, name, password: hashPassword, avatar }).then(async () => {
+		userModels.findByIdAndUpdate(userId, { fullname, username, email, password: hashPassword, avatar }).then(async () => {
 			// change user info in current session
 			if (req.session.user._id === req.params.id) {
 				const user = await userModels.findById(req.params.id, { password: 0 });
@@ -25,7 +25,6 @@ const update = (req, res) => {
 			return res.status(200).json({ message: 'Change profile success.' });
 		});
 	} catch (error) {
-		console.log(error);
 		return res.status(500).json({ message: error.message });
 	}
 };

@@ -1,3 +1,4 @@
+const { userStatus } = require('../config/constants');
 const PERMISSIONS = require('../config/permission.config');
 
 const getUserLevelHtml = (permissionsArray) => {
@@ -8,4 +9,17 @@ const getUserLevelHtml = (permissionsArray) => {
 	else return '<span class="badge text-white bg-gradient-blues text-uppercase px-3">Moderate</span>';
 };
 
-module.exports = { getUserLevelHtml };
+const getUserStatusHtml = (status) => {
+	switch (status) {
+		case userStatus.ACTIVED:
+			return `<div class="badge rounded-pill text-white bg-gradient-blues p-1 text-capitalize px-3">
+						<i class="bx bx-check-shield align-middle me-1"></i> Activated
+					</div>`;
+		case userStatus.BANED:
+			return `<div class="badge rounded-pill text-white bg-gradient-burning p-1 text-capitalize px-3">
+						<i class="bx bx-shield-x align-middle me-1"></i> Banned
+					</div>`;
+	}
+};
+
+module.exports = { getUserLevelHtml, getUserStatusHtml };

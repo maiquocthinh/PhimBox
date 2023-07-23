@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const mongooseDelete = require('mongoose-delete');
 const Schema = mongoose.Schema;
 const nanoidUtil = require('../utils/nanoid.util');
+const { userStatus } = require('../config/constants');
 
 const User = new Schema(
 	{
@@ -12,7 +13,7 @@ const User = new Schema(
 		fullname: { type: String, required: true },
 		username: { type: String, required: true },
 		password: { type: String, required: true },
-		status: { type: Number, default: 1 },
+		status: { type: Number, default: userStatus.ACTIVED },
 		avatar: { type: String, default: 'https://i.imgur.com/G5jDQjo.jpg' },
 	},
 	{
