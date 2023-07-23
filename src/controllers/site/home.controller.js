@@ -13,5 +13,6 @@ module.exports = async (req, res) => {
 		header,
 		home,
 		rightSidebar,
+		user: req.session.user,
 	});
 };

@@ -651,3 +651,116 @@ function debounce(func, timeout = 300) {
 		}, timeout);
 	};
 }
+
+// NOTYF
+const notyf = new Notyf({
+	duration: 6000,
+	position: { x: 'right', y: 'top' },
+	dismissible: true,
+	ripple: true,
+});
+
+// Register
+const formRegister = document.querySelector('.auth-modal .modal-register form');
+if (formRegister) {
+	formRegister.onsubmit = function (event) {
+		event.preventDefault();
+
+		const fullname = formRegister.querySelector("input[name='fullname']").value;
+		const username = formRegister.querySelector("input[name='username']").value;
+		const email = formRegister.querySelector("input[name='email']").value;
+		const password = formRegister.querySelector("input[name='password']").value;
+		const rePassword = formRegister.querySelector("input[name='re-password']").value;
+		const termsAccept = formRegister.querySelector("input[name='terms-accept']").checked;
+
+		// validate
+		if (!termsAccept) {
+			return notyf.error('Vui lòng đồng ý điều khoản để tiếp tục!');
+		}
+
+		if (!fullname || !username || !email || !password || !rePassword) {
+			return notyf.error('Không được bỏ trống trường nào!');
+		}
+
+		if (fullname.length < 3 || fullname.length > 32) {
+			return notyf.error('Họ và tên phải từ 3 đến 32 kí tự!');
+		}
+
+		if (username.length < 3 || username.length > 32) {
+			return notyf.error('Tên người dùng phải từ 3 đến 32 kí tự!');
+		}
+
+		if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+			return notyf.error('Email không đúng định dạng!');
+		}
+
+		if (password.length < 6 || password.length > 32) {
+			return notyf.error('Password phải từ 6 đến 32 kí tự!');
+		}
+
+		if (password !== rePassword) {
+			return notyf.error('Xác nhận mật khẩu không trùng!');
+		}
+
+		fetch('/api/auth/register', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ fullname, username, email, password }),
+		}).then(async function (res) {
+			const data = await res.json();
+			if (res.ok) notyf.success(data.msg);
+			else notyf.error(data.msg);
+		});
+	};
+}
+
+// Login
+const formLogin = document.querySelector('.auth-modal .modal-login form');
+if (formLogin) {
+	formLogin.onsubmit = function (event) {
+		event.preventDefault();
+
+		const email = formLogin.querySelector("input[name='email']").value;
+		const password = formLogin.querySelector("input[name='password']").value;
+		const remember = formLogin.querySelector("input[name='remember']").checked;
+
+		if (!email || !password) {
+			return notyf.error('Không được bỏ trống trường nào!');
+		}
+
+		if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+			return notyf.error('Email không đúng định dạng!');
+		}
+
+		fetch('/api/auth/login', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ email, password, remember }),
+		}).then(async function (res) {
+			const data = await res.json();
+			if (res.ok) {
+				notyf.success(data.msg);
+				setTimeout(function () {
+					location.reload();
+				}, 1500);
+			} else notyf.error(data.msg);
+		});
+	};
+}
+
+// Logout
+function logout(event) {
+	event.preventDefault();
+
+	fetch('/api/auth/logout', {
+		method: 'DELETE',
+	}).then(async function (res) {
+		const data = await res.json();
+		if (res.ok) {
+			notyf.success(data.msg);
+			setTimeout(function () {
+				location.reload();
+			}, 1500);
+		} else notyf.error(data.msg);
+	});
+}

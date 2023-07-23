@@ -42,5 +42,6 @@ module.exports = async (req, res) => {
 		rightSidebar,
 		catalogue,
 		SEO,
+		user: req.session.user,
 	});
 };

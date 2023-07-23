@@ -145,6 +145,7 @@ module.exports = async (req, res) => {
 		SEO: {
 			title: `Tập ${currentEpisode.name} - Phim ${film.name} ${film.year}`,
 		},
+		user: req.session.user,
 	});
 
 	// update view

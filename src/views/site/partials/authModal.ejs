@@ -18,11 +18,11 @@
 		<div class="modal-dialog__content">
 			<div class="modal-login">
 				<form action="" method="post">
-					<input type="text" class="form-input" placeholder="Tên đăng nhập hoặc Email" required />
-					<input type="password" class="form-input" placeholder="Mật khẩu" required />
+					<input type="text" name="email" class="form-input" placeholder="Tên đăng nhập hoặc Email" required />
+					<input type="password" name="password" class="form-input" placeholder="Mật khẩu" required />
 					<div class="form-aside">
 						<label for="" class="remember-user"
-							><input type="checkbox" class="accept-checkbox" />Nhớ tài khoản</label
+							><input type="checkbox" name="remember" class="accept-checkbox" />Nhớ tài khoản</label
 						>
 						<a href="#" class="forgot-user">Quên mật khẩu?</a>
 					</div>
@@ -30,15 +30,15 @@
 				</form>
 			</div>
 			<div class="modal-register hidden">
-				<form action="" method="post">
-					<input type="text" class="form-input" placeholder="Họ tên" required />
-					<input type="text" class="form-input" placeholder="Tên đăng nhập" required />
-					<input type="email" class="form-input" placeholder="Email" required />
-					<input type="password" class="form-input" placeholder="Mật khẩu" required />
-					<input type="password" class="form-input" placeholder="Xác nhận mật khẩu" required />
+				<form>
+					<input type="text" name="fullname" class="form-input" placeholder="Họ tên" required />
+					<input type="text" name="username" class="form-input" placeholder="Tên đăng nhập" required />
+					<input type="email" name="email" class="form-input" placeholder="Email" required />
+					<input type="password" name="password" class="form-input" placeholder="Mật khẩu" required />
+					<input type="password" name="re-password" class="form-input" placeholder="Xác nhận mật khẩu" required />
 					<div class="form-aside">
 						<label for="" class="user-accept"
-							><input type="checkbox" required />Tôi đồng ý với <a href="#">điều khoản sử dụng</a></label
+							><input type="checkbox" name="terms-accept" required />Tôi đồng ý với <a href="#">điều khoản sử dụng</a></label
 						>
 					</div>
 					<button type="submit" class="modal-btn-submit">Đăng Ký</button>

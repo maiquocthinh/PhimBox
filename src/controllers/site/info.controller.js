@@ -84,5 +84,6 @@ module.exports = async (req, res) => {
 		rightSidebar,
 		relatedFilms,
 		info: { film },
+		user: req.session.user,
 	});
 };
