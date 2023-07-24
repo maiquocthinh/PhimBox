@@ -1,4 +1,5 @@
 const { sendMail } = require('../../services/email.service');
+const { getTemplateNewPassword, getTemplateWelcome, getTemplateNewEpUpdate } = require('../../helpers/emailTemplate.helper');
 
 module.exports = async (req, res) => {
 	try {

@@ -4,6 +4,6 @@ const { internalServiceAuth } = require('../../middlewares/auth.middleware');
 const { sendMailController } = require('../../controllers/service');
 
 // API
-router.post('/send-email', internalServiceAuth, sendMailController);
+router.post('/send-email', sendMailController);
 
 module.exports = router;

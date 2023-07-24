@@ -1,6 +1,8 @@
 const bcrypt = require('bcryptjs');
 const userModels = require('../../../models/user.models');
 const { validateEmail } = require('../../../utils');
+const { sendMail } = require('../../../services/email.service');
+const { getTemplateWelcome } = require('../../../helpers/emailTemplate.helper');
 
 const registerController = async (req, res) => {
 	const { fullname, username, email, password } = req.body;
@@ -24,6 +26,12 @@ const registerController = async (req, res) => {
 			password: hashPassword,
 		});
 		await newUser.save();
+
+		// send email welcome
+		sendMail([email], 'Chào mừng đến với PhimBox', {
+			isHtml: true,
+			data: getTemplateWelcome({ username }),
+		});
 
 		// register success
 		res.status(200).json({ msg: 'Register account success!' });
