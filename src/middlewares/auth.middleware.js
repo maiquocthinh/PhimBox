@@ -2,6 +2,7 @@ const User = require('../models/user.models');
 const roleModels = require('../models/role.models');
 const userRoleModels = require('../models/userRole.models');
 const PERMISSION = require('../config/permission.config');
+const { serviceAccessToken } = require('../config/constants');
 
 const auth = async (req, res, next) => {
 	const { user } = req.session;
@@ -34,8 +35,7 @@ const checkPermission = (permission) => {
 				});
 
 			// check user permission
-			if (!role?.permissions?.includes(permission))
-				return res.status(403).json({ message: 'You have not permission' });
+			if (!role?.permissions?.includes(permission)) return res.status(403).json({ message: 'You have not permission' });
 
 			// go to next middleware
 			next();
@@ -46,7 +46,16 @@ const checkPermission = (permission) => {
 	};
 };
 
+const internalServiceAuth = (req, res, next) => {
+	const authHeader = req.headers['authorization'];
+	const token = authHeader && authHeader.split(' ')[1];
+
+	if (!(token === serviceAccessToken)) return res.status(401).json({ msg: 'Access Denied' });
+	next();
+};
+
 module.exports = {
 	auth,
 	checkPermission,
+	internalServiceAuth,
 };
