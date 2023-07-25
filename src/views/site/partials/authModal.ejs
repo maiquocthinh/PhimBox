@@ -17,7 +17,7 @@
 		</div>
 		<div class="modal-dialog__content">
 			<div class="modal-login">
-				<form action="" method="post">
+				<form>
 					<input type="text" name="email" class="form-input" placeholder="Tên đăng nhập hoặc Email" required />
 					<input type="password" name="password" class="form-input" placeholder="Mật khẩu" required />
 					<div class="form-aside">
@@ -45,10 +45,10 @@
 				</form>
 			</div>
 			<div class="modal-forgot hidden">
-				<form action="" method="post">
+				<form>
 					<h3>Đặt Lại Mật Khẩu</h3>
-					<p>Chúng tôi sẽ gửi link reset password đến email của bạn, truy cập vào link để reset password.</p>
-					<input type="email" class="form-input" placeholder="Email của bạn" required />
+					<p>Chúng tôi sẽ gửi mật khẩu mới đến email của bạn.</p>
+					<input type="email" name="email" class="form-input" placeholder="Email của bạn" required />
 					<button type="submit" class="modal-btn-submit">Gửi</button>
 				</form>
 			</div>

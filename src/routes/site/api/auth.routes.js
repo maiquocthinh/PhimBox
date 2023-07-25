@@ -1,11 +1,15 @@
 const { Router } = require('express');
 const router = Router();
 
-const { registerController, loginController, logoutController } = require('../../../controllers/site/api/auth.api.controller');
+const { limitForgotPassword } = require('../../../middlewares/auth.middleware');
+const {
+	authApiController: { registerController, loginController, logoutController, forgotPasswordController },
+} = require('../../../controllers/site/api');
 
 // API
 router.post('/register', registerController);
 router.post('/login', loginController);
+router.post('/forgot-password', limitForgotPassword, forgotPasswordController);
 router.delete('/logout', logoutController);
 
 module.exports = router;

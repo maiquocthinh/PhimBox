@@ -5,6 +5,4 @@ const userStatus = {
 	BANED: 0,
 };
 
-const serviceAccessToken = (() => bcrypt.hashSync(process.env.SERVICE_ACCESS_SECRET))();
-
-module.exports = { userStatus, serviceAccessToken };
+module.exports = { userStatus };

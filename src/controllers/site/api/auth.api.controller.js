@@ -1,8 +1,9 @@
 const bcrypt = require('bcryptjs');
+const { nanoid } = require('nanoid');
 const userModels = require('../../../models/user.models');
-const { validateEmail } = require('../../../utils');
+const { validateEmail, generateHashPassword } = require('../../../utils');
 const { sendMail } = require('../../../services/email.service');
-const { getTemplateWelcome } = require('../../../helpers/emailTemplate.helper');
+const { getTemplateWelcome, getTemplateNewPassword } = require('../../../helpers/emailTemplate.helper');
 
 const registerController = async (req, res) => {
 	const { fullname, username, email, password } = req.body;
@@ -76,4 +77,36 @@ const logoutController = (req, res) => {
 	});
 };
 
-module.exports = { registerController, loginController, logoutController };
+const forgotPasswordController = async (req, res) => {
+	const { email } = req.body;
+
+	if (!validateEmail(email)) return res.status(400).json({ msg: 'The email is invalid.' });
+
+	try {
+		// check user
+		const user = await userModels.findOne({ email: email });
+		if (!user) return res.status(400).json({ msg: 'This email is not registered in the system.' });
+
+		// general new pass & save
+		const newPassword = nanoid(7);
+		await userModels.updateOne(
+			{ email },
+			{
+				password: generateHashPassword(newPassword),
+			},
+		);
+		// send to email
+		sendMail([email], 'Mật khẩu mới', {
+			isHtml: true,
+			data: getTemplateNewPassword({ username: user.username, newPassword }),
+		});
+
+		// login success
+		res.status(200).json({ msg: 'Check your email to get new password.' });
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({ msg: error.message });
+	}
+};
+
+module.exports = { registerController, loginController, logoutController, forgotPasswordController };

@@ -1,14 +1,13 @@
-const User = require('../models/user.models');
+const userModels = require('../models/user.models');
 const roleModels = require('../models/role.models');
 const userRoleModels = require('../models/userRole.models');
 const PERMISSION = require('../config/permission.config');
-const { serviceAccessToken } = require('../config/constants');
 
 const auth = async (req, res, next) => {
 	const { user } = req.session;
 
 	if (user) {
-		const _user = await User.findOne({ user_email: user.user_email }, { id: 1 });
+		const _user = await userModels.findOne({ user_email: user.user_email }, { id: 1 });
 		if (_user) next();
 		else res.redirect('/admin/login');
 	} else res.redirect('/admin/login');
@@ -46,16 +45,26 @@ const checkPermission = (permission) => {
 	};
 };
 
-const internalServiceAuth = (req, res, next) => {
-	const authHeader = req.headers['authorization'];
-	const token = authHeader && authHeader.split(' ')[1];
+const limitForgotPassword = async (req, res, next) => {
+	const REQUEST_LIMIT_PER_HOUR = 3;
+	const { email } = req.body;
+	const user = await userModels.findOne({ email });
 
-	if (!(token === serviceAccessToken)) return res.status(401).json({ msg: 'Access Denied' });
-	next();
+	if (!user) next();
+
+	const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
+	const requestsInOneHour = user?.timesResetPassword?.filter((time) => new Date(time) > oneHourAgo) || [];
+
+	if (requestsInOneHour.length < REQUEST_LIMIT_PER_HOUR) {
+		await userModels.findOneAndUpdate({ email }, { timesResetPassword: [...requestsInOneHour, Date.now()] });
+		return next();
+	} else {
+		return res.status(429).json({ msg: 'Too many requests. Please try again later.' });
+	}
 };
 
 module.exports = {
 	auth,
 	checkPermission,
-	internalServiceAuth,
+	limitForgotPassword,
 };

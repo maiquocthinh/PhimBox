@@ -291,8 +291,8 @@
 }
 
 .forgot-user {
-	text-decoration: none;
-	font-size: 1.4rem;
+	text-decoration: underline;
+	font-size: 1.6rem;
 	color: #a0a0a0;
 }
 
@@ -314,7 +314,8 @@
 
 .modal-forgot form p {
 	color: #e2e2e2;
-	font: 1.4rem 'UTMCafetaRegular';
+	font: 1.6rem 'UTMCafetaRegular';
+	text-align: center;
 }
 
 .modal-forgot form button {

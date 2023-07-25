@@ -764,3 +764,31 @@ function logout(event) {
 		} else notyf.error(data.msg);
 	});
 }
+
+// forgot password
+const formForgotPassword = document.querySelector('.auth-modal .modal-forgot form');
+if (formForgotPassword) {
+	formForgotPassword.onsubmit = function (event) {
+		event.preventDefault();
+
+		const email = formForgotPassword.querySelector("input[name='email']").value;
+
+		if (!email) {
+			return notyf.error('Không được bỏ trống email!');
+		}
+
+		if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+			return notyf.error('Email không đúng định dạng!');
+		}
+
+		fetch('/api/auth/forgot-password', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ email }),
+		}).then(async function (res) {
+			const data = await res.json();
+			if (res.ok) notyf.success(data.msg);
+			else notyf.error(data.msg);
+		});
+	};
+}
