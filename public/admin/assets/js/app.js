@@ -288,21 +288,34 @@ $(document).bind('DOMSubtreeModified', function () {
 		};
 
 		btnUpload.onclick = async function () {
-			if (inputFileElm.files.length === 0) notyf.error('Please select a file!');
-
+			if (inputFileElm.files.length === 0) return notyf.error('Please select a file!');
+			const file = inputFileElm.files[0];
 			const formData = new FormData();
-			formData.append('file', inputFileElm.files[0]);
-			formData.append('destination', '/Subtitle');
+			formData.append('file', file);
 
-			const res = await $.ajax({
+			// notyf upload
+			const notification = notyf.open({
+				message: `${file.name} Uploading`,
+				background: '#9c9cff',
+				duration: 900000, // 30 minutes
+				icon: { className: 'gg-spinner-two', tagName: 'i', color: 'none' },
+			});
+
+			$.ajax({
 				type: 'POST',
-				url: '/admin/upload/dropbox',
+				url: '/admin/upload/subtitle',
 				data: formData,
 				processData: false,
 				contentType: false,
-			});
-
-			inputUrlElm.value = res.url;
+			})
+				.done(({ url, msg }) => {
+					notyf.dismiss(notification);
+					notyf.success(msg);
+					inputUrlElm.value = url;
+				})
+				.fail(({ responseJSON }) => {
+					notyf.error(responseJSON.msg);
+				});
 		};
 	});
 });
