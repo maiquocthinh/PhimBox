@@ -46,20 +46,20 @@ const checkPermission = (permission) => {
 };
 
 const limitResetPassword = async (req, res, next) => {
-	const REQUEST_LIMIT_PER_HOUR = 3;
+	const REQUEST_LIMIT_PER_DAY = 3;
 	const { email } = req.body;
 	const { limit: { timesResetPassword } = {} } = await userModels.findOne({ email }, { limit: 1 });
 
-	const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
-	const requestsInOneHour = timesResetPassword?.filter((time) => new Date(time) > oneHourAgo) || [];
+	const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+	const requestsInOneDay = timesResetPassword?.filter((time) => new Date(time) > oneDayAgo) || [];
 
-	if (requestsInOneHour?.length < REQUEST_LIMIT_PER_HOUR) {
-		await userModels.findOneAndUpdate({ email }, { 'limit.timesResetPassword': [...requestsInOneHour, Date.now()] });
+	if (requestsInOneDay?.length < REQUEST_LIMIT_PER_DAY) {
+		await userModels.findOneAndUpdate({ email }, { 'limit.timesResetPassword': [...requestsInOneDay, Date.now()] });
 		return next();
 	} else {
 		return res
 			.status(429)
-			.json({ msg: `Passwords are reset only ${REQUEST_LIMIT_PER_HOUR} times per hour. Please try again later.` });
+			.json({ msg: `Passwords are reset only ${REQUEST_LIMIT_PER_DAY} times per day. Please try again later.` });
 	}
 };
 
