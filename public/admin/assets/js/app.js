@@ -288,21 +288,21 @@ $(document).bind('DOMSubtreeModified', function () {
 		};
 
 		btnUpload.onclick = async function () {
-			if (inputFileElm.files.length !== 0) {
-				const formData = new FormData();
-				formData.append('files', inputFileElm.files[0]);
-				const res = await $.ajax({
-					type: 'POST',
-					url: '/admin/upload/dropbox',
-					data: formData,
-					processData: false,
-					contentType: false,
-				});
+			if (inputFileElm.files.length === 0) notyf.error('Please select a file!');
 
-				inputUrlElm.value = res.url;
-			} else {
-				notyf.error('Please select a file!');
-			}
+			const formData = new FormData();
+			formData.append('file', inputFileElm.files[0]);
+			formData.append('destination', '/Subtitle');
+
+			const res = await $.ajax({
+				type: 'POST',
+				url: '/admin/upload/dropbox',
+				data: formData,
+				processData: false,
+				contentType: false,
+			});
+
+			inputUrlElm.value = res.url;
 		};
 	});
 });

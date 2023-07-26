@@ -18,8 +18,7 @@ const updateInfoController = async (req, res) => {
 		if (!user) return res.status(400).json({ msg: 'This user is not exist in the system.' });
 
 		// hash password
-		const salt = await bcrypt.genSalt();
-		const hashPassword = password ? await bcrypt.hash(password, salt) : undefined;
+		const hashPassword = password ? generateHashPassword(password) : undefined;
 
 		// update user
 		await userModels.findOneAndUpdate(
