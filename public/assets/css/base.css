@@ -485,6 +485,27 @@ a:hover {
 	-webkit-transform: translateZ(0) scale(1, 1);
 }
 
+.xpo-remove {
+	display: inline-block;
+	background-color: #940034;
+	color: var(--white-color);
+	font-size: 3rem;
+	font-weight: 900;
+	padding: 4px;
+	border-radius: 4px;
+	position: absolute;
+	top: 4px;
+	right: 4px;
+	cursor: pointer;
+	transition: all 0.3s ease-in-out;
+	-webkit-transition: all 0.3s ease-in-out;
+}
+
+.xpo-remove:hover {
+	transform: scale(1.2);
+	-webkit-transform: scale(1.2);
+}
+
 .xpo-content {
 	position: absolute;
 	bottom: 0;

@@ -312,37 +312,39 @@ function fillDataToXpoMiniInfo(xpoMiniInfo, infoFilm) {
 // box mini info film: show/hiden when mouse hover, bla bla,....
 const xpoItems = document.querySelectorAll('.xpo-item, .xpo-slide-full__item');
 const xpoMiniInfo = document.querySelector('.xpo-mini-info');
-xpoMiniInfo.onmouseover = function () {
-	xpoMiniInfo.style.display = 'block';
-	xpoMiniInfo.onmousemove = function (event) {
-		xpoMiniInfo.style.left = -50 + event.pageX + 'px';
-		xpoMiniInfo.style.top = 20 + event.pageY + 'px';
+if (xpoItems && xpoMiniInfo) {
+	xpoMiniInfo.onmouseover = function () {
+		xpoMiniInfo.style.display = 'block';
+		xpoMiniInfo.onmousemove = function (event) {
+			xpoMiniInfo.style.left = -50 + event.pageX + 'px';
+			xpoMiniInfo.style.top = 20 + event.pageY + 'px';
+		};
 	};
-};
-xpoMiniInfo.onmouseleave = function () {
-	xpoMiniInfo.style.display = 'none';
-};
-xpoItems.forEach(function (xpoItem) {
-	// get info of film
-	const infoFilm = xpoItem.querySelector('.xpo-mini-info__data');
-
-	// handle hiden/show when mouseover/mouseout
-	xpoItem.onmouseover = function () {
-		const width = window.innerWidth;
-		if (width >= 740) {
-			fillDataToXpoMiniInfo(xpoMiniInfo, infoFilm);
-			xpoMiniInfo.style.display = 'block';
-			xpoItem.onmousemove = function (event) {
-				if (width - event.pageX < 320) xpoMiniInfo.style.left = width - 320 + 'px';
-				else xpoMiniInfo.style.left = -50 + event.pageX + 'px';
-				xpoMiniInfo.style.top = 30 + event.pageY + 'px';
-			};
-		}
-	};
-	xpoItem.onmouseleave = function () {
+	xpoMiniInfo.onmouseleave = function () {
 		xpoMiniInfo.style.display = 'none';
 	};
-});
+	xpoItems.forEach(function (xpoItem) {
+		// get info of film
+		const infoFilm = xpoItem.querySelector('.xpo-mini-info__data');
+
+		// handle hiden/show when mouseover/mouseout
+		xpoItem.onmouseover = function () {
+			const width = window.innerWidth;
+			if (width >= 740) {
+				fillDataToXpoMiniInfo(xpoMiniInfo, infoFilm);
+				xpoMiniInfo.style.display = 'block';
+				xpoItem.onmousemove = function (event) {
+					if (width - event.pageX < 320) xpoMiniInfo.style.left = width - 320 + 'px';
+					else xpoMiniInfo.style.left = -50 + event.pageX + 'px';
+					xpoMiniInfo.style.top = 30 + event.pageY + 'px';
+				};
+			}
+		};
+		xpoItem.onmouseleave = function () {
+			xpoMiniInfo.style.display = 'none';
+		};
+	});
+}
 
 // rating film
 function scoreToText(score) {

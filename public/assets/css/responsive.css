@@ -94,6 +94,29 @@
 		width: 100vw;
 		right: -8px;
 	}
+
+	/* PROFILE */
+	.xpo-profile {
+		padding: 0 8px;
+	}
+
+	.tabs-content__history--item .content {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+	}
+
+	.xpo-profile__content .xpo-profile__tabs-item {
+		font-size: 1.2rem;
+	}
+
+	.tabs-content__history--item .ep-name {
+		font-size: 1.4rem;
+	}
+
+	.tabs-content__history--item .date {
+		font-size: 1.2rem;
+	}
 }
 
 /* Tablet */

@@ -11,6 +11,7 @@ const {
 	catalogueController,
 	filterController,
 	tagController,
+	profileController,
 } = require('../../controllers/site');
 
 const apiRoutes = require('./api');
@@ -27,6 +28,7 @@ router.get('/country/:countrySlug', countryController);
 router.get('/catalogue/filter', filterController);
 router.get('/catalogue/:type', catalogueController);
 router.get('/tag/:tagAscii', tagController);
+router.get('/profile', profileController);
 
 router.get('/', homeController);
 

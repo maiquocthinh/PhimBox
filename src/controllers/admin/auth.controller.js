@@ -18,9 +18,12 @@ const loginHandler = async (req, res) => {
 
 		if (!bcrypt.compareSync(password, user.password)) return res.status(400).json({ message: 'The password is incorrect.' });
 
+		// set session
 		user.password = undefined;
+		user.limit = undefined;
 		req.session.user = user;
 		if (remember) req.session.cookie.maxAge = 1000 * 60 * 60 * 24 * 7;
+
 		return res.status(200).json({ message: 'Login Success!' });
 	} catch (error) {
 		res.status(500).json({ message: error.message });

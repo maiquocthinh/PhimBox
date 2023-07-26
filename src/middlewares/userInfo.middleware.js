@@ -2,7 +2,9 @@ const userModels = require('../models/user.models');
 
 const limitChangeInfo = async (req, res, next) => {
 	const REQUEST_LIMIT_PER_DAY = 3;
-	const { username } = req.body;
+
+	const { username } = req.session.user || {};
+	if (!username) return res.status(403).json({ msg: 'Access denied. Only user of system are permitted for change info' });
 
 	const { limit: { timesChangeInfo } = {} } = await userModels.findOne({ username }, { limit: 1 });
 

@@ -5,13 +5,14 @@ const { validateEmail, generateHashPassword } = require('../../../utils');
 const { upload } = require('../../../services/dropbox.service');
 
 const updateInfoController = async (req, res) => {
-	const { fullname, username, email, password, descript } = req.body;
+	const { username } = req.session.user;
+	const { fullname, email, password, descript } = req.body;
 
-	if (!fullname || !username || !email || !password) return res.status(400).json({ msg: 'Please fill in all fields.' });
+	if (!fullname || !email) return res.status(400).json({ msg: 'Please fill in all fields.' });
 	if (fullname.length < 3 || fullname.length > 32)
 		return res.status(400).json({ msg: 'Fullname must be between 3 and 32 characters!' });
 	if (!validateEmail(email)) return res.status(400).json({ msg: 'The email is invalid.' });
-	if (password.length < 6) return res.status(400).json({ msg: 'Password must be at least 6 characters.' });
+	if (password && password.length < 6) return res.status(400).json({ msg: 'Password must be at least 6 characters.' });
 
 	try {
 		// check user
@@ -27,12 +28,14 @@ const updateInfoController = async (req, res) => {
 			{ username },
 			{
 				fullname,
-				username,
 				email,
 				password: hashPassword,
 				descript,
 			},
 		);
+
+		// update session
+		req.session.user = { ...req.session.user, fullname, email, descript };
 
 		// change success
 		res.status(200).json({ msg: 'Change info success!' });
@@ -69,6 +72,9 @@ const updateAvatarController = async (req, res) => {
 
 	// update avatar
 	await userModels.findOneAndUpdate({ username }, { avatar: url });
+
+	// update session
+	req.session.user.avatar = url;
 
 	return res.status(200).json({ msg: 'Change avatar success!' });
 };

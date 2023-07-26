@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tài khoản</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&family=Charis+SIL&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+  <link rel="stylesheet" href="/assets/css/grid.css">
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/owl.theme.custom.css">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/assets/css/responsive.css">
+  <!-- css.gg icon -->
+  <link href='https://unpkg.com/css.gg@2.0.0/icons/css/spinner-two.css' rel='stylesheet'>
+</head>
+
+<body>
+  <div class="app">
+    <!-- Heading -->
+	  <%- include('./partials/header') %>
+    <!--  Container -->
+    <div class="container grid wide">
+        <!-- Breadcurmb -->
+        <div class="breadcrumb-wrap col col-lg-12 col-md-12 col-sm-12">
+            <ul class="breadcrumb">
+            <li><a href="/"><i class="iconify" data-icon="dashicons:admin-home"></i>Trang Chủ</a></li>
+            <li class="active"><a href="#">Tài khoản</a></li>
+            </ul>
+        </div>
+        <main class="main-content">
+        <section class="xpo-profile row sm-gutter">
+            <div class="col col-lg-3 col-md-12 col-sm-12">
+                <div class="xpo-profile__overview-box">
+                <div class="avatar">
+                    <img class="avatar__image" src="<%=user.avatar%>" alt="<%=user.username%>">
+                    <label for="avatar_input"  class="avatar__upload">
+                    <i class="iconify" data-icon="uil:image-edit"></i>
+                    <input type="file" accept="image/jpg, image/jpeg, image/png, image/gif, image/webp" name="avatar_input" id="avatar_input" class="hidden">
+                    </label>
+                </div>
+                <h2 class="fullname"><%=user.fullname%></h2>
+                <h4 class="idname">@<%=user.username%></h4>
+                <span class="join-date">Tham gia: <%=new Date(user.createdAt).toLocaleDateString('en-GB')%></span>
+                <p class="profile-sefl"><%=user.descript%></p>
+                <textarea id="link-profile" readonly>https://localhost/profile/<%=user.username%></textarea>
+                <button class="btn btn-copy-link-profile" onclick="copyProfileLink()">
+                    <i class="iconify" data-icon="mingcute:copy-2-line"></i>
+                    Sao chép liên kết
+                </button>
+                </div>
+            </div>
+            <div class="col col-lg-9 col-md-12 col-sm-12">
+                <div class="xpo-profile__content">
+                <ul class="xpo-profile__tabs">
+                    <li class="xpo-profile__tabs-item active">Tài khoản</li>
+                    <li class="xpo-profile__tabs-item">Lịch sử xem</li>
+                    <li class="xpo-profile__tabs-item">Phim đã lưu</li>
+                    <li class="xpo-profile__tabs-item">Phim theo dõi</li>
+                </ul>
+                <div class="xpo-profile__tabs-content">
+                    <div class="xpo-profile__tabs-content__item active">
+                    <div class="xpo-profile__tabs-content__item--title">
+                        <i class="iconify" data-icon="mingcute:user-4-line"></i>
+                        Thông tin tài khoản
+                    </div>
+                    <div class="xpo-profile__tabs-content__item--form">
+                        <form>
+                        <input type="text" name="fullname"  class="form-input" placeholder="Họ tên" required value="<%=user.fullname%>">
+                        <input type="text" name="username"  class="form-input" placeholder="Tên đăng nhập" disabled value="<%=user.username%>">
+                        <input type="email" name="email"  class="form-input" placeholder="Email" required value="<%=user.email%>">
+                        <input type="password" name="password"  class="form-input" placeholder="Mật khẩu (bỏ qua nếu không cần cập nhật)">
+                        <textarea type="text" name="profile_sefl"  class="form-input" placeholder="Mô tả"><%=user.descript%></textarea>
+                        <button type="submit" class="btn">Cập nhật</button>
+                        </form>
+                    </div>
+                    </div>
+                    <div class="xpo-profile__tabs-content__item">
+                    <div class="xpo-profile__tabs-content__item--title">
+                        <i class="iconify" data-icon="mingcute:history-line"></i>
+                        Lịch sử xem
+                    </div>
+                    <div class="xpo-profile__tabs-content__history">
+                        <div class="tabs-content__history--item">
+                        <div class="poster">
+                            <img src="https://animeaz.me/zip/uploads/main-qimg-b6357bed94f48f48f0e0b9313239450d.webp" alt="One Pice">
+                        </div>
+                        <div class="content">
+                            <a class="ep-name" href="./info.html">Tập 1069 - One Piece</a>
+                            <span class="date">17:05:06 21/07/2023</span>
+                        </div>
+                        <span class="xpo-remove" onclick="removeEpWatched(event)">&times;</span>
+                        </div>
+                        <div class="tabs-content__history--item">
+                        <div class="poster">
+                            <img src="https://animeaz.me/zip/uploads/one-piece-film-red.webp" alt="One Piece Film: Red">
+                        </div>
+                        <div class="content">
+                            <a class="ep-name" href="./info.html">Tập full - One Piece Film: Red</a>
+                            <span class="date">17:00:54 21/07/2023</span>
+                        </div>
+                        <span class="xpo-remove" onclick="removeEpWatched(event)">&times;</span>
+                        </div>
+                        <div class="tabs-content__history--item">
+                        <div class="poster">
+                            <img src="https://animeaz.me/zip/uploads/macross-movie-2-zettai-live.webp" alt="Macross Δ Movie 2: Zettai Live!!!">
+                        </div>
+                        <div class="content">
+                            <a class="ep-name" href="./info.html">Tập full - Macross Δ Movie 2: Zettai Live!!!</a>
+                            <span class="date">02:33:20 26/04/2023</span>
+                        </div>
+                        <span class="xpo-remove" onclick="removeEpWatched(event)">&times;</span>
+                        </div>
+                    </div>
+
+                    </div>
+                    <div class="xpo-profile__tabs-content__item">
+                    <div class="xpo-profile__tabs-content__item--title">
+                        <i class="iconify" data-icon="mingcute:box-2-line"></i>
+                        Tủ phim
+                    </div>
+                    <div class="xpo-profile__tabs-content__item--search">
+                        <label for="search_input">Tìm kiếm:</label>
+                        <input class="search_input" id="colection_search" type="text" name="search_input" placeholder="Nhập tên phim..">
+                    </div>
+                    <div class="row md-gutter" id="colection_box">
+                        <div class="item col col-lg-3 col-md-4 col-sm-6">
+                        <div class="xpo-item">
+                            <a class="xpo-thumb" href="./info.html" title="Liên Minh Công Lý: Phiên bản của Zack Snyder - Zack Snyder’s Justice League (2021)">
+                            <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1616846455/phimbox_images/Poster-lien-minh-cong-ly-phien-ban-cua-zack-snyder.jpg" alt="Liên Minh Công Lý: Phiên bản của Zack Snyder - Zack Snyder’s Justice League (2021)">
+                            <span class="xpo-status">HD</span>
+                            <span class="xpo-year">2021</span>
+                            <span class="xpo-language">Vietsub</span>
+                            <div class="xpo-icon-overlay"></div>
+                            <span class="xpo-remove" onclick="removeFilmElement(event);">&times;</span>
+                            </a>
+                            <div class="xpo-content">
+                            <div class="xpo-content__name">
+                                <h3 class="xpo-vn-name">
+                                <a href="./info.html" title="Liên Minh Công Lý: Phiên bản của Zack Snyder - Zack Snyder’s Justice League (2021)">Liên Minh Công Lý: Phiên bản của Zack Snyder - Zack Snyder’s Justice League (2021)</a>
+                                </h3>
+                                <p class="xpo-original-name">Zack Snyder’s Justice League</p>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="item col col-lg-3 col-md-4 col-sm-6">
+                        <div class="xpo-item">
+                            <a class="xpo-thumb" href="./info.html" title="Wanda và Vision (Phần 1) - Wanda Vision (Season 1) (2021)">
+                            <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612932327/phimbox_images/Poster-wanda-va-vision-phan-1.jpg" alt="Wanda và Vision (Phần 1) - Wanda Vision (Season 1) (2021)">
+                            <span class="xpo-status">9/9</span>
+                            <span class="xpo-year">1999</span>
+                            <span class="xpo-language">Vietsub + Thuyết Minh</span>
+                            <div class="xpo-icon-overlay"></div>
+                            <span class="xpo-remove" onclick="removeFilmElement(event);">&times;</span>
+                            </a>
+                            <div class="xpo-content">
+                            <div class="xpo-content__name">
+                                <h3 class="xpo-vn-name">
+                                <a href="./info.html" title="Wanda và Vision (Phần 1) - Wanda Vision (Season 1) (2021)">Wanda và Vision (Phần 1)</a>
+                                </h3>
+                                <p class="xpo-original-name">Wanda Vision (Season 1)</p>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="item col col-lg-3 col-md-4 col-sm-6">
+                        <div class="xpo-item">
+                            <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
+                            <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
+                            <span class="xpo-status">HD</span>
+                            <span class="xpo-year">1999</span>
+                            <span class="xpo-language">Vietsub + Thuyết Minh</span>
+                            <div class="xpo-icon-overlay"></div>
+                            <span class="xpo-remove" onclick="removeFilmElement(event);">&times;</span>
+                            </a>
+                            <div class="xpo-content">
+                            <div class="xpo-content__name">
+                                <h3 class="xpo-vn-name">
+                                <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
+                                </h3>
+                                <p class="xpo-original-name">Toy Story 2</p>
+                            </div>
+        
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="xpo-profile__tabs-content__item">
+                    <div class="xpo-profile__tabs-content__item--title">
+                        <i class="iconify" data-icon="ant-design:eye-outlined"></i>
+                        Phim đã theo dõi
+                    </div>
+                    <div class="xpo-profile__tabs-content__item--search">
+                        <label for="search_input">Tìm kiếm:</label>
+                        <input class="search_input" id="follow_search" type="text" name="search_input" placeholder="Nhập tên phim..">
+                    </div>
+                    <div class="row md-gutter" id="follow_box">
+                        <div class="item col col-lg-3 col-md-4 col-sm-6">
+                        <div class="xpo-item">
+                            <a class="xpo-thumb" href="./info.html" title="Liên Minh Công Lý: Phiên bản của Zack Snyder - Zack Snyder’s Justice League (2021)">
+                            <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1616846455/phimbox_images/Poster-lien-minh-cong-ly-phien-ban-cua-zack-snyder.jpg" alt="Liên Minh Công Lý: Phiên bản của Zack Snyder - Zack Snyder’s Justice League (2021)">
+                            <span class="xpo-status">HD</span>
+                            <span class="xpo-year">2021</span>
+                            <span class="xpo-language">Vietsub</span>
+                            <div class="xpo-icon-overlay"></div>
+                            <span class="xpo-remove" onclick="removeFilmElement(event);">&times;</span>
+                            </a>
+                            <div class="xpo-content">
+                            <div class="xpo-content__name">
+                                <h3 class="xpo-vn-name">
+                                <a href="./info.html" title="Liên Minh Công Lý: Phiên bản của Zack Snyder - Zack Snyder’s Justice League (2021)">Liên Minh Công Lý: Phiên bản của Zack Snyder - Zack Snyder’s Justice League (2021)</a>
+                                </h3>
+                                <p class="xpo-original-name">Zack Snyder’s Justice League</p>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="item col col-lg-3 col-md-4 col-sm-6">
+                        <div class="xpo-item">
+                            <a class="xpo-thumb" href="./info.html" title="Wanda và Vision (Phần 1) - Wanda Vision (Season 1) (2021)">
+                            <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612932327/phimbox_images/Poster-wanda-va-vision-phan-1.jpg" alt="Wanda và Vision (Phần 1) - Wanda Vision (Season 1) (2021)">
+                            <span class="xpo-status">9/9</span>
+                            <span class="xpo-year">1999</span>
+                            <span class="xpo-language">Vietsub + Thuyết Minh</span>
+                            <div class="xpo-icon-overlay"></div>
+                            <span class="xpo-remove" onclick="removeFilmElement(event);">&times;</span>
+                            </a>
+                            <div class="xpo-content">
+                            <div class="xpo-content__name">
+                                <h3 class="xpo-vn-name">
+                                <a href="./info.html" title="Wanda và Vision (Phần 1) - Wanda Vision (Season 1) (2021)">Wanda và Vision (Phần 1)</a>
+                                </h3>
+                                <p class="xpo-original-name">Wanda Vision (Season 1)</p>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="item col col-lg-3 col-md-4 col-sm-6">
+                        <div class="xpo-item">
+                            <a class="xpo-thumb" href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
+                            <img src="https://res.cloudinary.com/quocthinh-phim/image/upload/w_200,h_285/v1612969196/phimbox_images/Poster-cau-chuyen-do-choi-2.jpg" alt="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">
+                            <span class="xpo-status">HD</span>
+                            <span class="xpo-year">1999</span>
+                            <span class="xpo-language">Vietsub + Thuyết Minh</span>
+                            <div class="xpo-icon-overlay"></div>
+                            <span class="xpo-remove" onclick="removeFilmElement(event);">&times;</span>
+                            </a>
+                            <div class="xpo-content">
+                            <div class="xpo-content__name">
+                                <h3 class="xpo-vn-name">
+                                <a href="./info.html" title="Câu Chuyện Đồ Chơi 2 - Toy Story 2 (1999)">Câu Chuyện Đồ Chơi 2</a>
+                                </h3>
+                                <p class="xpo-original-name">Toy Story 2</p>
+                            </div>
+        
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </section>
+        </main>
+    </div>
+    <!-- Footer -->
+    <%- include('./partials/footer') %>
+    <!-- Auth Modal -->
+    <%- include('./partials/authModal') %>
+    <!-- Scroll Top -->
+    <div id="scroll-top">
+      <i class="iconify scroll-top__icon" data-icon="bi:arrow-up-short"></i>
+    </div>
+  </div>
+
+
+  <!-- Javascripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/iconify/2.2.1/iconify.min.js" integrity="sha512-sU5Gzc108d8ERAXEUoNh3DZQ3GZCQyygVkeuhIxFR+D9Go8kLw3Ce3HVD/AI5cnhGzW7Km9V4oOOiepKcD0vlg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/profile.js"></script>
+</body>
+
+</html>

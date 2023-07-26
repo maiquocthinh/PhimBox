@@ -59,6 +59,7 @@ const loginController = async (req, res) => {
 
 		// set session
 		user.password = undefined;
+		user.limit = undefined;
 		req.session.user = user;
 		if (remember) req.session.cookie.maxAge = 1000 * 60 * 60 * 24 * 7; // a week
 
