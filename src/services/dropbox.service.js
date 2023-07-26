@@ -30,7 +30,10 @@ const upload = async ({ file: { filename, contents }, destination }) => {
 	return {
 		name,
 		size,
-		url: url.replace('www.dropbox.com', 'dl.dropboxusercontent.com').replace('/scl/fi', '/s').replace('/[?&]dl=0/g', ''),
+		url: url
+			.replace('www.dropbox.com', 'dl.dropboxusercontent.com')
+			.replace('/scl/fi', '/s')
+			.replace(/[?&]dl=0/g, ''),
 	};
 };
 

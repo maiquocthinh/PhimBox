@@ -1,6 +1,8 @@
 const bcrypt = require('bcryptjs');
+const path = require('path');
 const userModels = require('../../../models/user.models');
 const { validateEmail, generateHashPassword } = require('../../../utils');
+const { upload } = require('../../../services/dropbox.service');
 
 const updateInfoController = async (req, res) => {
 	const { fullname, username, email, password, descript } = req.body;
@@ -39,4 +41,36 @@ const updateInfoController = async (req, res) => {
 	}
 };
 
-module.exports = { updateInfoController };
+const updateAvatarController = async (req, res) => {
+	// check user
+	const { username } = req.session.user;
+	const user = userModels.findOne({ username }, { _id: 1 });
+	if (!user) return res.status(403).json({ msg: 'Access denied. Only user of system are permitted for upload' });
+
+	// check file
+	if (!req.files || Object.keys(req.files).length === 0) return res.status(400).json({ msg: 'No files were uploaded.' });
+	const { file } = req.files;
+	if (Array.isArray(file)) return res.status(400).json({ msg: 'Only one file can be uploaded.' });
+
+	// check extension
+	const allowedExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
+	const fileExtension = path.extname(file.name).toLowerCase();
+	if (!allowedExtensions.includes(fileExtension)) return res.status(400).json({ msg: 'Only allow image file' });
+
+	// upload
+	const stream = file.data;
+	const { url } = await upload({
+		file: {
+			filename: username + fileExtension,
+			contents: stream,
+		},
+		destination: '/Avatar',
+	});
+
+	// update avatar
+	await userModels.findOneAndUpdate({ username }, { avatar: url });
+
+	return res.status(200).json({ msg: 'Change avatar success!' });
+};
+
+module.exports = { updateInfoController, updateAvatarController };

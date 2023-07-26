@@ -19,6 +19,7 @@ const User = new Schema(
 		limit: {
 			timesResetPassword: { type: [Date], default: [] },
 			timesChangeInfo: { type: [Date], default: [] },
+			timesChangeAvatar: { type: [Date], default: [] },
 		},
 	},
 	{
