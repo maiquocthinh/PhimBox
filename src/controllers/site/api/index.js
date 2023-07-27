@@ -3,7 +3,7 @@ const reportErrorEpisodeApiController = require('./reportErrorEpisode.api.contro
 const loadEpisodeApiController = require('./loadEpisode.api.controller');
 const authApiController = require('./auth.api.controller');
 const userInfoApiController = require('./userInfo.api.controller');
-const userFilmsApiController = require('./userFilms.api.controller');
+const userFilmsApiControllers = require('./userFilms.api.controller');
 
 module.exports = {
 	searchApiController,
@@ -11,5 +11,5 @@ module.exports = {
 	loadEpisodeApiController,
 	authApiController,
 	userInfoApiController,
-	userFilmsApiController,
+	userFilmsApiControllers,
 };

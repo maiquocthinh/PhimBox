@@ -1,5 +1,7 @@
+const filmModels = require('../../../models/film.models');
 const userModels = require('../../../models/user.models');
 
+// View History
 const getHistory = async (req, res) => {
 	const { username } = req.session.user || {};
 	if (!username) return res.status(400).json({ msg: 'Bad request' });
@@ -57,7 +59,7 @@ const getHistory = async (req, res) => {
 	}
 };
 
-const deleteHistory = async (req, res) => {
+const deleteFromHistory = async (req, res) => {
 	const { epId } = req.params;
 	const { username } = req.session.user || {};
 
@@ -66,12 +68,7 @@ const deleteHistory = async (req, res) => {
 
 	try {
 		// remove ep in view history
-		await userModels.updateOne(
-			{ username },
-			{
-				$pull: { 'films.history': { epId } },
-			},
-		);
+		await userModels.updateOne({ username }, { $pull: { 'films.history': { epId } } });
 
 		return res.status(200).json({ msg: 'Remove success!' });
 	} catch (error) {
@@ -79,4 +76,95 @@ const deleteHistory = async (req, res) => {
 	}
 };
 
-module.exports = { getHistory, deleteHistory };
+// Collection
+const getCollection = async (req, res) => {
+	const { username } = req.session.user || {};
+	if (!username) return res.status(400).json({ msg: 'Bad Request!' });
+
+	try {
+		const result = await userModels.aggregate([
+			{ $match: { username } },
+			{ $unwind: '$films.collection' },
+			{
+				$lookup: {
+					from: 'films',
+					localField: 'films.collection',
+					foreignField: '_id',
+					as: 'film',
+				},
+			},
+			{ $unwind: '$film' },
+			{
+				$project: {
+					_id: 0,
+					film: {
+						_id: 1,
+						name: 1,
+						originalName: 1,
+						poster: 1,
+						status: 1,
+						year: 1,
+						language: 1,
+					},
+				},
+			},
+		]);
+
+		return res.status(200).json(result?.map(({ film }) => film) || []);
+	} catch (error) {
+		return res.status(500).json({ msg: error.message });
+	}
+};
+
+const addIntoCollection = async (req, res) => {
+	const { filmId } = req.body;
+	const { username } = req.session.user || {};
+
+	if (!filmId) return res.status(400).json({ msg: 'Bad Request!' });
+	if (!username) return res.status(400).json({ msg: 'Bad Request!' });
+
+	try {
+		// check film
+		const film = await filmModels.findById(filmId, { _id: 1 });
+		if (!film) return res.status(400).json({ msg: 'Bad Request!' });
+
+		// check user
+		const user = await userModels.findOne({ username }, { films: { collection: 1 } });
+		if (!user) return res.status(400).json({ msg: 'Bad Request!' });
+
+		const collection = user?.films?.collection.filter((_filmId) => _filmId !== filmId) || [];
+
+		// update collection
+		await userModels.findOneAndUpdate(
+			{ username },
+			{
+				films: {
+					collection: [filmId, ...collection],
+				},
+			},
+		);
+
+		return res.status(200).json({ msg: 'Add into collection success!' });
+	} catch (error) {
+		return res.status(500).json({ msg: error.message });
+	}
+};
+
+const deleteFromCollection = async (req, res) => {
+	const { filmId } = req.params;
+	const { username } = req.session.user || {};
+
+	if (!filmId) return res.status(400).json({ msg: 'Bad Request!' });
+	if (!username) return res.status(400).json({ msg: 'Bad request!' });
+
+	try {
+		// update collection
+		await userModels.findOneAndUpdate({ username }, { $pull: { 'films.collection': filmId } });
+
+		return res.status(200).json({ msg: 'Remove success!' });
+	} catch (error) {
+		return res.status(500).json({ msg: error.message });
+	}
+};
+
+module.exports = { getHistory, deleteFromHistory, getCollection, addIntoCollection, deleteFromCollection };

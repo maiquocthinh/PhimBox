@@ -29,6 +29,7 @@ const User = new Schema(
 					date: { type: Date, default: Date.now },
 				},
 			],
+			collection: [String],
 		},
 	},
 	{
