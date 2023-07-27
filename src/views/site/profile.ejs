@@ -65,59 +65,27 @@
                 </ul>
                 <div class="xpo-profile__tabs-content">
                     <div class="xpo-profile__tabs-content__item active">
-                    <div class="xpo-profile__tabs-content__item--title">
-                        <i class="iconify" data-icon="mingcute:user-4-line"></i>
-                        Thông tin tài khoản
-                    </div>
-                    <div class="xpo-profile__tabs-content__item--form">
-                        <form>
-                        <input type="text" name="fullname"  class="form-input" placeholder="Họ tên" required value="<%=user.fullname%>">
-                        <input type="text" name="username"  class="form-input" placeholder="Tên đăng nhập" disabled value="<%=user.username%>">
-                        <input type="email" name="email"  class="form-input" placeholder="Email" required value="<%=user.email%>">
-                        <input type="password" name="password"  class="form-input" placeholder="Mật khẩu (bỏ qua nếu không cần cập nhật)">
-                        <textarea type="text" name="profile_sefl"  class="form-input" placeholder="Mô tả"><%=user.descript%></textarea>
-                        <button type="submit" class="btn">Cập nhật</button>
-                        </form>
-                    </div>
-                    </div>
-                    <div class="xpo-profile__tabs-content__item">
-                    <div class="xpo-profile__tabs-content__item--title">
-                        <i class="iconify" data-icon="mingcute:history-line"></i>
-                        Lịch sử xem
-                    </div>
-                    <div class="xpo-profile__tabs-content__history">
-                        <div class="tabs-content__history--item">
-                        <div class="poster">
-                            <img src="https://animeaz.me/zip/uploads/main-qimg-b6357bed94f48f48f0e0b9313239450d.webp" alt="One Pice">
+                        <div class="xpo-profile__tabs-content__item--title">
+                            <i class="iconify" data-icon="mingcute:user-4-line"></i>
+                            Thông tin tài khoản
                         </div>
-                        <div class="content">
-                            <a class="ep-name" href="./info.html">Tập 1069 - One Piece</a>
-                            <span class="date">17:05:06 21/07/2023</span>
-                        </div>
-                        <span class="xpo-remove" onclick="removeEpWatched(event)">&times;</span>
-                        </div>
-                        <div class="tabs-content__history--item">
-                        <div class="poster">
-                            <img src="https://animeaz.me/zip/uploads/one-piece-film-red.webp" alt="One Piece Film: Red">
-                        </div>
-                        <div class="content">
-                            <a class="ep-name" href="./info.html">Tập full - One Piece Film: Red</a>
-                            <span class="date">17:00:54 21/07/2023</span>
-                        </div>
-                        <span class="xpo-remove" onclick="removeEpWatched(event)">&times;</span>
-                        </div>
-                        <div class="tabs-content__history--item">
-                        <div class="poster">
-                            <img src="https://animeaz.me/zip/uploads/macross-movie-2-zettai-live.webp" alt="Macross Δ Movie 2: Zettai Live!!!">
-                        </div>
-                        <div class="content">
-                            <a class="ep-name" href="./info.html">Tập full - Macross Δ Movie 2: Zettai Live!!!</a>
-                            <span class="date">02:33:20 26/04/2023</span>
-                        </div>
-                        <span class="xpo-remove" onclick="removeEpWatched(event)">&times;</span>
+                        <div class="xpo-profile__tabs-content__item--form">
+                            <form>
+                            <input type="text" name="fullname"  class="form-input" placeholder="Họ tên" required value="<%=user.fullname%>">
+                            <input type="text" name="username"  class="form-input" placeholder="Tên đăng nhập" disabled value="<%=user.username%>">
+                            <input type="email" name="email"  class="form-input" placeholder="Email" required value="<%=user.email%>">
+                            <input type="password" name="password"  class="form-input" placeholder="Mật khẩu (bỏ qua nếu không cần cập nhật)">
+                            <textarea type="text" name="profile_sefl"  class="form-input" placeholder="Mô tả"><%=user.descript%></textarea>
+                            <button type="submit" class="btn">Cập nhật</button>
+                            </form>
                         </div>
                     </div>
-
+                    <div class="xpo-profile__tabs-content__item" id="tab_view_history">
+                        <div class="xpo-profile__tabs-content__item--title">
+                            <i class="iconify" data-icon="mingcute:history-line"></i>
+                            Lịch sử xem
+                        </div>
+                        <div class="xpo-profile__tabs-content__history"></div>
                     </div>
                     <div class="xpo-profile__tabs-content__item">
                     <div class="xpo-profile__tabs-content__item--title">

@@ -1988,7 +1988,10 @@
 	font-family: 'UTMCafetaRegular';
 }
 
-/* .xpo-profile__tabs-content__history {} */
+.xpo-profile__tabs-content__history {
+	height: 400px;
+	overflow-y: auto;
+}
 
 .tabs-content__history--item {
 	display: flex;

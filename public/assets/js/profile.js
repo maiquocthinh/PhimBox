@@ -34,16 +34,17 @@ if (profileTabs && profileContent) {
 	});
 
 	function saveTabProfile(index) {
-		localStorage.setItem('tabProfile', JSON.stringify({ index }));
+		const url = new URL(window.location.href);
+
+		const searchParams = new URLSearchParams(url.search);
+		searchParams.set('tab', index);
+
+		url.search = searchParams.toString();
+
+		window.history.pushState(null, '', url.toString());
 	}
 
 	function getTabProfile() {
-		const tabProfile = localStorage.getItem('tabProfile');
-		if (tabProfile) return JSON.parse(tabProfile).index;
-		return -1;
-	}
-
-	function getTabProfileOnUrl() {
 		const urlParams = new URLSearchParams(window.location.search);
 		const tabProfile = parseInt(urlParams.get('tab'));
 		return !isNaN(tabProfile) ? tabProfile : -1;
@@ -51,8 +52,7 @@ if (profileTabs && profileContent) {
 
 	// auto load profile tab
 	(function loadProfileTab() {
-		let tabIndex = getTabProfileOnUrl();
-		if (tabIndex === -1) tabIndex = getTabProfile();
+		const tabIndex = getTabProfile();
 
 		if (tabIndex !== -1) {
 			// change tab
@@ -161,10 +161,18 @@ if (avatarInput) {
 }
 
 // handle remove ep watched
-function removeEpWatched(event) {
+function removeEpWatched({ event, epId }) {
 	// call api to remove, if success remove element from dom
-	event.target.parentElement.remove();
-	notyf.success('Xóa lịch sử xem thành công!');
+	fetch('/api/films/history/' + epId, {
+		method: 'DELETE',
+	}).then(async function (res) {
+		const data = await res.json();
+		if (!res.ok) notyf.error(data.msg);
+		else {
+			notyf.success(data.msg);
+			event.target.parentElement.remove();
+		}
+	});
 }
 
 // handle remove film follow & film bookmark
@@ -215,4 +223,34 @@ if (colectionSearchInpput && followSearchInpput) {
 			});
 		})();
 	};
+}
+
+// load view history of user
+const isLoadViewHistory = document.getElementById('tab_view_history');
+if (isLoadViewHistory) {
+	window.addEventListener('DOMContentLoaded', function () {
+		const viewHistoryContainer = document.querySelector('.xpo-profile__tabs-content__history');
+
+		// fetch api
+		fetch('/api/films/history')
+			.then(async function (res) {
+				return await res.json();
+			})
+			.then(function (result) {
+				if (!result && !Array.isArray(result)) return;
+				// render to view
+				viewHistoryContainer.innerHTML = result
+					.map(function (history) {
+						return `<div class="tabs-content__history--item">
+								<div class="poster"><img src="${history.poster}"></div>
+								<div class="content">
+									<a class="ep-name" href="${history.url}">${history.name}</a>
+									<span class="date">${history.date}</span>
+								</div>
+								<span class="xpo-remove" onclick="removeEpWatched({event, epId: '${history.id}'})">&times;</span>
+							</div>`;
+					})
+					.join('\n');
+			});
+	});
 }
