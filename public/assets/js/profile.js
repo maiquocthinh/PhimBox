@@ -162,7 +162,6 @@ if (avatarInput) {
 
 // handle remove ep watched
 function removeEpWatched({ event, epId }) {
-	// call api to remove, if success remove element from dom
 	fetch('/api/films/history/' + epId, {
 		method: 'DELETE',
 	}).then(async function (res) {
@@ -176,10 +175,19 @@ function removeEpWatched({ event, epId }) {
 }
 
 // handle remove film follow & film bookmark
-function removeFilmElement(event) {
+function removeFilmCollection({ event, filmId }) {
 	event.preventDefault();
-	event.target.closest('.item.col').remove();
-	notyf.success('Xóa thành công!');
+
+	fetch('/api/films/collection/' + filmId, {
+		method: 'DELETE',
+	}).then(async function (res) {
+		const data = await res.json();
+		if (!res.ok) notyf.error(data.msg);
+		else {
+			notyf.success(data.msg);
+			event.target.closest('.item.col').remove();
+		}
+	});
 }
 
 // handle search film follow & film bookmark
@@ -249,6 +257,48 @@ if (isLoadViewHistory) {
 								</div>
 								<span class="xpo-remove" onclick="removeEpWatched({event, epId: '${history.id}'})">&times;</span>
 							</div>`;
+					})
+					.join('\n');
+			});
+	});
+}
+
+// load collection films of user
+const isLoadCollection = document.getElementById('colection_box');
+if (isLoadCollection) {
+	window.addEventListener('DOMContentLoaded', function () {
+		const collectionBox = document.getElementById('colection_box');
+
+		// fetch api
+		fetch('/api/films/collection')
+			.then(async function (res) {
+				return await res.json();
+			})
+			.then(function (result) {
+				if (!result && !Array.isArray(result)) return;
+				// render to view
+				collectionBox.innerHTML = result
+					.map(function (film) {
+						return `<div class="item col col-lg-3 col-md-4 col-sm-6">
+									<div class="xpo-item">
+										<a class="xpo-thumb" href="${film.url}" title="${film.name} - ${film.originalName} (${film.year})">
+											<img src="${film.poster}" alt="${film.name} - ${film.originalName} (${film.year})">
+											<span class="xpo-status">${film.status}</span>
+											<span class="xpo-year">${film.year}</span>
+											<span class="xpo-language">${film.language}</span>
+											<div class="xpo-icon-overlay"></div>
+											<span class="xpo-remove" onclick="removeFilmCollection({event, filmId: '${film._id}'});">&times;</span>
+										</a>
+										<div class="xpo-content">
+											<div class="xpo-content__name">
+												<h3 class="xpo-vn-name">
+													<a href="./info.html" title="${film.name} - ${film.originalName} (${film.year})">${film.name} - ${film.originalName} (${film.year})</a>
+												</h3>
+												<p class="xpo-original-name">${film.originalName}</p>
+											</div>
+										</div>
+									</div>
+								</div>`;
 					})
 					.join('\n');
 			});

@@ -105,6 +105,7 @@ const getCollection = async (req, res) => {
 						status: 1,
 						year: 1,
 						language: 1,
+						url: { $concat: ['/info/', '$film.slug', '-', '$film._id'] },
 					},
 				},
 			},
