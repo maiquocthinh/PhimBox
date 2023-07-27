@@ -2,84 +2,8 @@ const filmModels = require('../../models/film.models');
 const loadHeaderData = require('../../utils/site/loadHeaderData.utils');
 const loadRightSidebarData = require('../../utils/site/loadRightSidebarData.util');
 const loadRelatedFilms = require('../../utils/site/loadRelatedFilms.utils');
-const { getStartOfWeek, getEndOfWeek, getStartOfMonth, getEndOfMonth } = require('../../utils/date.util');
 
-const updateView = (filmId) => {
-	const currentDate = new Date();
-
-	filmModels
-		.findOneAndUpdate(
-			{
-				_id: filmId,
-			},
-			[
-				{
-					$set: {
-						viewed: { $add: ['$viewed', 1] },
-						viewedDay: {
-							$cond: {
-								if: {
-									$eq: [
-										{ $dateToString: { format: '%Y-%m-%d', date: '$viewedDay.date' } },
-										{ $dateToString: { format: '%Y-%m-%d', date: currentDate } },
-									],
-								},
-								then: {
-									viewed: { $add: ['$viewedDay.viewed', 1] },
-									date: currentDate,
-								},
-								else: {
-									viewed: 1,
-									date: currentDate,
-								},
-							},
-						},
-						viewedWeek: {
-							$cond: {
-								if: {
-									$and: [
-										{ $gte: ['$viewedWeek.date', getStartOfWeek()] },
-										{ $lte: ['$viewedWeek.date', getEndOfWeek()] },
-									],
-								},
-								then: {
-									viewed: { $add: ['$viewedWeek.viewed', 1] },
-									date: currentDate,
-								},
-								else: {
-									viewed: 1,
-									date: currentDate,
-								},
-							},
-						},
-						viewedMonth: {
-							$cond: {
-								if: {
-									$and: [
-										{ $gte: ['$viewedMonth.date', getStartOfMonth()] },
-										{ $lte: ['$viewedMonth.date', getEndOfMonth()] },
-									],
-								},
-								then: {
-									viewed: { $add: ['$viewedMonth.viewed', 1] },
-									date: currentDate,
-								},
-								else: {
-									viewed: 1,
-									date: currentDate,
-								},
-							},
-						},
-					},
-				},
-			],
-		)
-		.catch((err) => {
-			console.log(err);
-		});
-};
-
-module.exports = async (req, res) => {
+module.exports = async (req, res, next) => {
 	const { filmSlug, filmId } = req.params;
 	const { episodes, ...film } = await filmModels
 		.aggregate([
@@ -148,6 +72,6 @@ module.exports = async (req, res) => {
 		user: req.session.user,
 	});
 
-	// update view
-	updateView(filmId);
+	// update view in next middleware
+	next();
 };
