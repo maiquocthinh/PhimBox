@@ -66,7 +66,6 @@ const loginController = async (req, res) => {
 		// login success
 		res.status(200).json({ msg: 'Login Success.' });
 	} catch (error) {
-		console.log(error);
 		return res.status(500).json({ msg: error.message });
 	}
 };
@@ -105,7 +104,6 @@ const forgotPasswordController = async (req, res) => {
 		// login success
 		res.status(200).json({ msg: 'Check your email to get new password.' });
 	} catch (error) {
-		console.log(error);
 		return res.status(500).json({ msg: error.message });
 	}
 };

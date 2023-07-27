@@ -21,6 +21,15 @@ const User = new Schema(
 			timesChangeInfo: { type: [Date], default: [] },
 			timesChangeAvatar: { type: [Date], default: [] },
 		},
+		films: {
+			history: [
+				{
+					_id: 0,
+					epId: { type: String },
+					date: { type: Date, default: Date.now },
+				},
+			],
+		},
 	},
 	{
 		timestamps: true,

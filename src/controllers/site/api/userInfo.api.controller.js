@@ -61,22 +61,26 @@ const updateAvatarController = async (req, res) => {
 	if (!allowedExtensions.includes(fileExtension)) return res.status(400).json({ msg: 'Only allow image file' });
 
 	// upload
-	const stream = file.data;
-	const { url } = await upload({
-		file: {
-			filename: username + fileExtension,
-			contents: stream,
-		},
-		destination: '/Avatar',
-	});
+	try {
+		const stream = file.data;
+		const { url } = await upload({
+			file: {
+				filename: username + fileExtension,
+				contents: stream,
+			},
+			destination: '/Avatar',
+		});
 
-	// update avatar
-	await userModels.findOneAndUpdate({ username }, { avatar: url });
+		// update avatar
+		await userModels.findOneAndUpdate({ username }, { avatar: url });
 
-	// update session
-	req.session.user.avatar = url;
+		// update session
+		req.session.user.avatar = url;
 
-	return res.status(200).json({ msg: 'Change avatar success!' });
+		return res.status(200).json({ msg: 'Change avatar success!' });
+	} catch (error) {
+		return res.status(500).json({ msg: error.message });
+	}
 };
 
 module.exports = { updateInfoController, updateAvatarController };

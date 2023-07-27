@@ -52,7 +52,7 @@ module.exports = async (req, res) => {
 		}
 	});
 
-	res.status(200).json({
+	return res.status(200).json({
 		image: film.backdrops,
 		title: `Tập ${episode.name} - Phim ${film.name} (${film.year})`,
 		links: await playerHelper(episode.links[parseInt(serverId) - 1 || 0]),
