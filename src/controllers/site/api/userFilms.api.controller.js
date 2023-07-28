@@ -122,7 +122,7 @@ const addIntoCollection = async (req, res) => {
 	const { username } = req.session.user || {};
 
 	if (!filmId) return res.status(400).json({ msg: 'Bad Request!' });
-	if (!username) return res.status(400).json({ msg: 'Bad Request!' });
+	if (!username) return res.status(400).json({ msg: 'Please login to continue!' });
 
 	try {
 		// check film
@@ -161,4 +161,107 @@ const deleteFromCollection = async (req, res) => {
 	}
 };
 
-module.exports = { getHistory, deleteFromHistory, getCollection, addIntoCollection, deleteFromCollection };
+// Follow
+const getAllFollow = async (req, res) => {
+	const { username } = req.session.user || {};
+	if (!username) return res.status(400).json({ msg: 'Bad Request!' });
+
+	try {
+		const result = await userModels.aggregate([
+			{ $match: { username } },
+			{ $unwind: '$films.follow' },
+			{
+				$lookup: {
+					from: 'films',
+					localField: 'films.follow',
+					foreignField: '_id',
+					as: 'film',
+				},
+			},
+			{ $unwind: '$film' },
+			{
+				$project: {
+					_id: 0,
+					film: {
+						_id: 1,
+						name: 1,
+						originalName: 1,
+						poster: 1,
+						status: 1,
+						year: 1,
+						language: 1,
+						url: { $concat: ['/info/', '$film.slug', '-', '$film._id'] },
+					},
+				},
+			},
+		]);
+
+		return res.status(200).json(result?.map(({ film }) => film) || []);
+	} catch (error) {
+		return res.status(500).json({ msg: error.message });
+	}
+};
+
+const follow = async (req, res) => {
+	const { filmId } = req.body;
+	const { username } = req.session.user || {};
+
+	if (!filmId) return res.status(400).json({ msg: 'Bad Request!' });
+	if (!username) return res.status(400).json({ msg: 'Please login to continue!' });
+
+	try {
+		// check film
+		const film = await filmModels.findById(filmId, { _id: 1 });
+		if (!film) return res.status(400).json({ msg: 'Bad Request!' });
+
+		// check user
+		const user = await userModels.findOne({ username }, { _id: 1, films: { follow: 1 } });
+		if (!user) return res.status(400).json({ msg: 'Bad Request!' });
+
+		const follow = user?.films?.follow.filter((_filmId) => _filmId !== filmId) || [];
+
+		// update follow
+		await userModels.findOneAndUpdate({ username }, { 'films.follow': [filmId, ...follow] });
+		await filmModels.findByIdAndUpdate(filmId, { $addToSet: { followers: user._id } });
+
+		return res.status(200).json({ msg: 'Follow film success!' });
+	} catch (error) {
+		return res.status(500).json({ msg: error.message });
+	}
+};
+const unfollow = async (req, res) => {
+	const { filmId } = req.params;
+	const { username } = req.session.user || {};
+
+	if (!filmId) return res.status(400).json({ msg: 'Bad Request!' });
+	if (!username) return res.status(400).json({ msg: 'Bad request!' });
+
+	try {
+		// check film
+		const film = await filmModels.findById(filmId, { _id: 1 });
+		if (!film) return res.status(400).json({ msg: 'Bad Request!' });
+
+		// check user
+		const user = await userModels.findOne({ username }, { _id: 1 });
+		if (!user) return res.status(400).json({ msg: 'Bad Request!' });
+
+		// update follow
+		await userModels.findOneAndUpdate({ username }, { $pull: { 'films.follow': filmId } });
+		await filmModels.findByIdAndUpdate(filmId, { $push: { followers: user._id } });
+
+		return res.status(200).json({ msg: 'Unfollow film success!' });
+	} catch (error) {
+		return res.status(500).json({ msg: error.message });
+	}
+};
+
+module.exports = {
+	getHistory,
+	deleteFromHistory,
+	getCollection,
+	addIntoCollection,
+	deleteFromCollection,
+	getAllFollow,
+	follow,
+	unfollow,
+};

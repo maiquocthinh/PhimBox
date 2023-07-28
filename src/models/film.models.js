@@ -51,6 +51,7 @@ const Film = new Schema(
 		},
 		createdBy: { type: String },
 		updatedBy: { type: String },
+		followers: [String],
 	},
 	{
 		timestamps: true,

@@ -30,6 +30,7 @@ const User = new Schema(
 				},
 			],
 			collection: [String],
+			follow: [String],
 		},
 	},
 	{
