@@ -1,4 +1,5 @@
 const filmModels = require('../../models/film.models');
+const userModels = require('../../models/user.models');
 const { getIMDBScore, convertToYoutubeEmbed } = require('../../utils/site/filmInfo.util');
 const loadHeaderData = require('../../utils/site/loadHeaderData.utils');
 const loadRightSidebarData = require('../../utils/site/loadRightSidebarData.util');
@@ -73,6 +74,36 @@ module.exports = async (req, res) => {
 	film.imdb = await getIMDBScore(film.imdb);
 	film.trailer = convertToYoutubeEmbed(film.trailer);
 
+	// if user login, check is in collection?
+	const { isInCollection } = await (async () => {
+		// check user is login
+		const { username } = req.session.user || {};
+		if (!username) return { isInCollection: false };
+
+		const [{ isInCollection }] = await userModels.aggregate([
+			{
+				$match: { username },
+			},
+			{
+				$facet: {
+					isInCollection: [
+						{ $match: { 'films.collection': filmId } },
+						{ $limit: 1 },
+						{ $project: { _id: 0, exists: { $literal: true } } },
+					],
+				},
+			},
+			{
+				$project: {
+					_id: 0,
+					isInCollection: { $arrayElemAt: ['$isInCollection.exists', 0] },
+				},
+			},
+		]);
+
+		return { isInCollection: !!isInCollection };
+	})();
+
 	const [header, rightSidebar, relatedFilms] = await Promise.all([
 		loadHeaderData.load(),
 		loadRightSidebarData.load(),
@@ -83,7 +114,7 @@ module.exports = async (req, res) => {
 		header,
 		rightSidebar,
 		relatedFilms,
-		info: { film },
+		info: { film, isInCollection },
 		user: req.session.user,
 	});
 };

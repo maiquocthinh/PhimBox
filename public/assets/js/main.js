@@ -426,17 +426,37 @@ if (btnBookmarkFilm) {
 		const iconBookmarkFilm = btnBookmarkFilm.querySelector('.iconify');
 		const labelBookmarkFilm = btnBookmarkFilm.querySelector('.poster__bookmark-label');
 		if (iconBookmarkFilm.dataset.icon === iconBookmarkFilm.dataset.iconAdd) {
-			iconBookmarkFilm.dataset.icon = iconBookmarkFilm.dataset.iconRemove;
-			labelBookmarkFilm.textContent = labelBookmarkFilm.dataset.msgRemove;
-			btnBookmarkFilm.title = labelBookmarkFilm.dataset.msgRemove;
-
-			// make somthing when add film to bookmark....
+			// fetch api add to collection
+			fetch('/api/films/collection', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ filmId: app.filmId }),
+			}).then(async function (res) {
+				const data = await res.json();
+				if (!res.ok) notyf.error(data.msg);
+				else {
+					notyf.success(data.msg);
+					// change in view
+					iconBookmarkFilm.dataset.icon = iconBookmarkFilm.dataset.iconRemove;
+					labelBookmarkFilm.textContent = labelBookmarkFilm.dataset.msgRemove;
+					btnBookmarkFilm.title = labelBookmarkFilm.dataset.msgRemove;
+				}
+			});
 		} else if (iconBookmarkFilm.dataset.icon === iconBookmarkFilm.dataset.iconRemove) {
-			iconBookmarkFilm.dataset.icon = iconBookmarkFilm.dataset.iconAdd;
-			labelBookmarkFilm.textContent = labelBookmarkFilm.dataset.msgAdd;
-			btnBookmarkFilm.title = labelBookmarkFilm.dataset.msgAdd;
-
-			// make somthing when remove film form bookmark....
+			// fetch api remove from collection
+			fetch('/api/films/collection/' + app.filmId, {
+				method: 'DELETE',
+			}).then(async function (res) {
+				const data = await res.json();
+				if (!res.ok) notyf.error(data.msg);
+				else {
+					notyf.success(data.msg);
+					// change in view
+					iconBookmarkFilm.dataset.icon = iconBookmarkFilm.dataset.iconAdd;
+					labelBookmarkFilm.textContent = labelBookmarkFilm.dataset.msgAdd;
+					btnBookmarkFilm.title = labelBookmarkFilm.dataset.msgAdd;
+				}
+			});
 		}
 	};
 }
