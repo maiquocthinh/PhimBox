@@ -75,12 +75,12 @@ module.exports = async (req, res) => {
 	film.trailer = convertToYoutubeEmbed(film.trailer);
 
 	// if user login, check is in collection?
-	const { isInCollection } = await (async () => {
+	const { isInFollow, isInCollection } = await (async () => {
 		// check user is login
 		const { username } = req.session.user || {};
 		if (!username) return { isInCollection: false };
 
-		const [{ isInCollection }] = await userModels.aggregate([
+		const [{ isInFollow, isInCollection }] = await userModels.aggregate([
 			{
 				$match: { username },
 			},
@@ -91,17 +91,23 @@ module.exports = async (req, res) => {
 						{ $limit: 1 },
 						{ $project: { _id: 0, exists: { $literal: true } } },
 					],
+					isInFollow: [
+						{ $match: { 'films.follow': filmId } },
+						{ $limit: 1 },
+						{ $project: { _id: 0, exists: { $literal: true } } },
+					],
 				},
 			},
 			{
 				$project: {
 					_id: 0,
 					isInCollection: { $arrayElemAt: ['$isInCollection.exists', 0] },
+					isInFollow: { $arrayElemAt: ['$isInFollow.exists', 0] },
 				},
 			},
 		]);
 
-		return { isInCollection: !!isInCollection };
+		return { isInFollow: !!isInFollow, isInCollection: !!isInCollection };
 	})();
 
 	const [header, rightSidebar, relatedFilms] = await Promise.all([
@@ -114,7 +120,7 @@ module.exports = async (req, res) => {
 		header,
 		rightSidebar,
 		relatedFilms,
-		info: { film, isInCollection },
+		info: { film, isInFollow, isInCollection },
 		user: req.session.user,
 	});
 };

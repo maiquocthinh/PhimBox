@@ -40,8 +40,8 @@
               <div class="poster__thumb">
                 <img src="<%=info.film.poster%>" alt="<%=info.film.name%> (<%=info.film.year%>)">
                 <button title="Theo dõi phim" class="poster__follow">
-                  <i class="iconify" data-icon="mdi:movie-open-plus" data-icon-add="mdi:movie-open-plus" data-icon-remove="mdi:movie-open-remove"></i></i>
-                  <span class="poster__follow-label" data-msg-add="Theo dõi phim" data-msg-remove="Bỏ theo dõi phim">Theo dõi phim</span>
+                  <i class="iconify" data-icon="<%=info.isInFollow ? 'mdi:movie-open-remove' : 'mdi:movie-open-plus'%>" data-icon-add="mdi:movie-open-plus" data-icon-remove="mdi:movie-open-remove"></i></i>
+                  <span class="poster__follow-label" data-msg-add="Theo dõi phim" data-msg-remove="Bỏ theo dõi phim"><%=info.isInFollow ? 'Bỏ theo dõi phim' : 'Theo dõi phim'%></span>
                 </button>
                 <button title="Thêm vào tủ phim" class="poster__bookmark">
                   <i class="iconify" data-icon="<%=info.isInCollection ? 'fe:trash' : 'ic:baseline-bookmark-add'%>" data-icon-add="ic:baseline-bookmark-add" data-icon-remove="fe:trash"></i>

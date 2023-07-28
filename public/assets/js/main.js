@@ -407,17 +407,37 @@ if (btnFollowFilm) {
 		const iconFollowFilm = btnFollowFilm.querySelector('.iconify');
 		const labelFollowFilm = btnFollowFilm.querySelector('.poster__follow-label');
 		if (iconFollowFilm.dataset.icon === iconFollowFilm.dataset.iconAdd) {
-			iconFollowFilm.dataset.icon = iconFollowFilm.dataset.iconRemove;
-			labelFollowFilm.textContent = labelFollowFilm.dataset.msgRemove;
-			btnFollowFilm.title = labelFollowFilm.dataset.msgRemove;
-
-			// make somthing when follow film....
+			// fetch api to follow
+			fetch('/api/films/follow', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ filmId: app.filmId }),
+			}).then(async function (res) {
+				const data = await res.json();
+				if (!res.ok) notyf.error(data.msg);
+				else {
+					notyf.success(data.msg);
+					// change in view
+					iconFollowFilm.dataset.icon = iconFollowFilm.dataset.iconRemove;
+					labelFollowFilm.textContent = labelFollowFilm.dataset.msgRemove;
+					btnFollowFilm.title = labelFollowFilm.dataset.msgRemove;
+				}
+			});
 		} else if (iconFollowFilm.dataset.icon === iconFollowFilm.dataset.iconRemove) {
-			iconFollowFilm.dataset.icon = iconFollowFilm.dataset.iconAdd;
-			labelFollowFilm.textContent = labelFollowFilm.dataset.msgAdd;
-			btnFollowFilm.title = labelFollowFilm.dataset.msgAdd;
-
-			// make somthing when unfollow film....
+			// fetch api to unfollow
+			fetch('/api/films/follow/' + app.filmId, {
+				method: 'DELETE',
+			}).then(async function (res) {
+				const data = await res.json();
+				if (!res.ok) notyf.error(data.msg);
+				else {
+					notyf.success(data.msg);
+					// change in view
+					iconFollowFilm.dataset.icon = iconFollowFilm.dataset.iconAdd;
+					labelFollowFilm.textContent = labelFollowFilm.dataset.msgAdd;
+					btnFollowFilm.title = labelFollowFilm.dataset.msgAdd;
+				}
+			});
 		}
 	};
 }
