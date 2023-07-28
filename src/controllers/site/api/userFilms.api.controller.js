@@ -136,14 +136,7 @@ const addIntoCollection = async (req, res) => {
 		const collection = user?.films?.collection.filter((_filmId) => _filmId !== filmId) || [];
 
 		// update collection
-		await userModels.findOneAndUpdate(
-			{ username },
-			{
-				films: {
-					collection: [filmId, ...collection],
-				},
-			},
-		);
+		await userModels.findOneAndUpdate({ username }, { 'films.collection': [filmId, ...collection] });
 
 		return res.status(200).json({ msg: 'Add into collection success!' });
 	} catch (error) {

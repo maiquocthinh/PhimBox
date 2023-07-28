@@ -24,14 +24,7 @@ module.exports = async (req, res, next) => {
 	})();
 
 	// update view history
-	await userModels.findOneAndUpdate(
-		{ username },
-		{
-			films: {
-				history: [{ epId }, ...histories],
-			},
-		},
-	);
+	await userModels.findOneAndUpdate({ username }, { 'films.history': [{ epId }, ...histories] });
 
 	return next();
 };
