@@ -70,15 +70,15 @@
 									<li><a href="#" onclick="logout(event)"><i class="iconify user-box__icon" data-icon="wpf:shutdown"></i><span>Đăng xuất</span></a></li>
 								</ul>
 							</div>
-							<div class="header-user__btn-notify btn">
+							<div class="header-user__btn-notify btn <%=(header.notifications.some(({read})=>!read)) ? 'has-notification' : ''%>">
 								<i class="iconify" data-icon="fontisto:bell-alt"></i>
 								<div class="notify-box hidden">
 									<h3 class="notify-box__title">Thông báo</h3>
-									<a class="notify-box__view-more" href="#">Xem tất cả</a>
+									<a class="notify-box__view-more" href="#" onclick="markAsRead(event,'all')">Đánh dấu xem tất cả</a>
 									<ul class="notify-box__list">
-									<% header.notifications.forEach(({ title, image, url, createdAt, read }) => { %>
+									<% header.notifications.forEach(({ _id, title, image, url, createdAt, read }) => { %>
 										<li class="<%=read ? 'read' : ''%>">
-											<a class="content" href="<%=url%>">
+											<a class="content" href="<%=url%>" <%-read ? '' : `onclick="markAsRead(event,'${_id}')"`%>>
 												<img src="<%=image%>" />
 												<span><%=title%></span>
 											</a>

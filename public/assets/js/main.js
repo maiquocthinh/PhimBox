@@ -834,3 +834,24 @@ if (formForgotPassword) {
 		});
 	};
 }
+
+// mark as read notification
+function markAsRead(event, notifyId) {
+	event.preventDefault();
+
+	if (notifyId === 'all') {
+		// call api  mark as read all
+		fetch('/api/notification/read/all', { method: 'PATCH' });
+
+		// change in view
+		document.querySelectorAll('.notify-box__list li:not(.read)').forEach(function (li) {
+			li.classList.add('read');
+		});
+		document.querySelector('.header-user__btn-notify.has-notification').classList.remove('has-notification');
+	} else {
+		// call api  mark as read
+		fetch('/api/notification/read/' + notifyId, { method: 'PATCH' });
+	}
+
+	window.location.href = event.target.closest('a').href;
+}

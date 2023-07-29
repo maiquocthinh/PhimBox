@@ -334,6 +334,17 @@
 	min-width: 30px;
 	position: relative;
 }
+.header-user__btn-notify.has-notification::before {
+	content: '';
+	display: block;
+	width: 8px;
+	height: 8px;
+	background-color: #e0004f;
+	border-radius: 100%;
+	position: absolute;
+	top: 6px;
+	right: 6px;
+}
 
 .notify-box {
 	position: absolute;

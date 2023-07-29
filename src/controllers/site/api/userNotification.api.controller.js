@@ -21,7 +21,7 @@ const readNotification = async (req, res) => {
 
 	try {
 		// update notification
-		await notificationModels.findOneAndUpdate(notifyId, { read: true });
+		await notificationModels.findOneAndUpdate({ _id: notifyId }, { read: true });
 
 		return res.status(200).json({ msg: 'Read notification success!' });
 	} catch (error) {
