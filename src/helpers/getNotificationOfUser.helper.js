@@ -3,6 +3,7 @@ const notificationModels = require('../models/notification.models');
 module.exports = async (userId) =>
 	await notificationModels.aggregate([
 		{ $match: { userId } },
+		{ $sort: { createdAt: -1 } },
 		{
 			$project: {
 				_id: 1,
