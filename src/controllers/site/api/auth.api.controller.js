@@ -4,6 +4,7 @@ const userModels = require('../../../models/user.models');
 const { validateEmail, generateHashPassword } = require('../../../utils');
 const { sendMail } = require('../../../services/email.service');
 const { getTemplateWelcome, getTemplateNewPassword } = require('../../../helpers/emailTemplate.helper');
+const notificationModels = require('../../../models/notification.models');
 
 const registerController = async (req, res) => {
 	const { fullname, username, email, password } = req.body;
@@ -20,18 +21,25 @@ const registerController = async (req, res) => {
 		const hashPassword = await bcrypt.hash(password, salt);
 
 		// save new user
-		const newUser = new userModels({
+		const userInserted = await userModels.create({
 			fullname,
 			username,
 			email,
 			password: hashPassword,
 		});
-		await newUser.save();
 
 		// send email welcome
 		sendMail([email], 'Chào mừng đến với PhimBox', {
 			isHtml: true,
 			data: getTemplateWelcome({ username }),
+		});
+
+		// insert notification
+		await notificationModels.create({
+			userId: userInserted._id,
+			title: 'Chào mừng đến với PhimBox. Chúc bạn xem phim vui vẻ.',
+			image: '/assets/images/logonew-icon.png',
+			url: '/',
 		});
 
 		// register success
@@ -84,7 +92,7 @@ const forgotPasswordController = async (req, res) => {
 
 	try {
 		// check user
-		const user = await userModels.findOne({ email: email });
+		const user = await userModels.findOne({ email: email }, { _id: 1, username: 1 });
 		if (!user) return res.status(400).json({ msg: 'This email is not registered in the system.' });
 
 		// general new pass & save
@@ -99,6 +107,14 @@ const forgotPasswordController = async (req, res) => {
 		sendMail([email], 'Mật khẩu mới', {
 			isHtml: true,
 			data: getTemplateNewPassword({ username: user.username, newPassword }),
+		});
+
+		// insert notification
+		await notificationModels.create({
+			userId: user._id,
+			title: 'Mật khẩu mới đã được gửi đến email của bạn. Kiểm tra email để lấy mật khẩu.',
+			image: '/assets/images/logonew-icon.png',
+			url: '/profile',
 		});
 
 		// login success

@@ -3,6 +3,7 @@ const filmModels = require('../../models/film.models');
 const configurationModels = require('../../models/configuration.models');
 const { getTemplateNewEpUpdate } = require('../../helpers/emailTemplate.helper');
 const { sendMail } = require('../../services/email.service');
+const notificationModels = require('../../models/notification.models');
 
 // ###### API ######
 
@@ -116,6 +117,7 @@ const createEpisode = async (req, res) => {
 		if (data.some(({ notify }) => notify)) {
 			const BASE_URL = await configurationModels.findOne({}, { web_url: 1 }).then(({ web_url }) => web_url);
 			const promiseArray = [];
+			const listNotification = [];
 			const [film] = await filmModels.aggregate([
 				{ $match: { _id: filmId } },
 				{
@@ -131,8 +133,9 @@ const createEpisode = async (req, res) => {
 					$project: {
 						_id: 1,
 						name: 1,
+						poster: 1,
 						slug: 1,
-						followers: { username: 1, email: 1 },
+						followers: { _id: 1, username: 1, email: 1 },
 					},
 				},
 			]);
@@ -143,6 +146,7 @@ const createEpisode = async (req, res) => {
 				const epId = dataInserted[idx]._id;
 
 				film.followers.forEach((follower) => {
+					// send email
 					const htmlContent = getTemplateNewEpUpdate({
 						username: follower.username,
 						filmName: film.name,
@@ -156,8 +160,19 @@ const createEpisode = async (req, res) => {
 							data: htmlContent,
 						}),
 					);
+
+					// collect notification
+					listNotification.push({
+						userId: follower._id,
+						title: `${film.name} vừa cập nhật Tập ${epName}`,
+						image: film.poster,
+						url: `/watch/${film.slug}-${film._id}/${epId}`,
+					});
 				});
 			});
+
+			// insert notifications
+			promiseArray.push(notificationModels.insertMany(listNotification));
 
 			await Promise.all(promiseArray);
 
@@ -166,7 +181,7 @@ const createEpisode = async (req, res) => {
 
 		return res.status(200).json({ message: 'Create Episodes Success' });
 	} catch (error) {
-		return res.status(500).json({ message: error.message });
+		return res.status(500).json({ error: error.message });
 	}
 };
 
@@ -205,6 +220,7 @@ const updateEpisode = async (req, res) => {
 		if (notify) {
 			const BASE_URL = await configurationModels.findOne({}, { web_url: 1 }).then(({ web_url }) => web_url);
 			const promiseArray = [];
+			const listNotification = [];
 			const [film] = await filmModels.aggregate([
 				{ $match: { episodes: id } },
 				{
@@ -220,13 +236,15 @@ const updateEpisode = async (req, res) => {
 					$project: {
 						_id: 1,
 						name: 1,
+						poster: 1,
 						slug: 1,
-						followers: { username: 1, email: 1 },
+						followers: { _id: 1, username: 1, email: 1 },
 					},
 				},
 			]);
 
 			film.followers.forEach((follower) => {
+				// send email
 				const htmlContent = getTemplateNewEpUpdate({
 					username: follower.username,
 					filmName: film.name,
@@ -240,7 +258,18 @@ const updateEpisode = async (req, res) => {
 						data: htmlContent,
 					}),
 				);
+
+				// collect notification
+				listNotification.push({
+					userId: follower._id,
+					title: `${film.name} vừa cập nhật Tập ${name}`,
+					image: film.poster,
+					url: `/watch/${film.slug}-${film._id}/${id}`,
+				});
 			});
+
+			// insert notifications
+			promiseArray.push(notificationModels.insertMany(listNotification));
 
 			await Promise.all(promiseArray);
 
@@ -267,6 +296,7 @@ const updateManyEpisode = async (req, res) => {
 		if (data.some(({ notify }) => notify)) {
 			const BASE_URL = await configurationModels.findOne({}, { web_url: 1 }).then(({ web_url }) => web_url);
 			const promiseArray = [];
+			const listNotification = [];
 			const [film] = await filmModels.aggregate([
 				{ $match: { episodes: data[0].id } },
 				{
@@ -282,8 +312,9 @@ const updateManyEpisode = async (req, res) => {
 					$project: {
 						_id: 1,
 						name: 1,
+						poster: 1,
 						slug: 1,
-						followers: { username: 1, email: 1 },
+						followers: { _id: 1, username: 1, email: 1 },
 					},
 				},
 			]);
@@ -292,6 +323,7 @@ const updateManyEpisode = async (req, res) => {
 				if (!notify) return;
 
 				film.followers.forEach((follower) => {
+					// send email
 					const htmlContent = getTemplateNewEpUpdate({
 						username: follower.username,
 						filmName: film.name,
@@ -305,8 +337,19 @@ const updateManyEpisode = async (req, res) => {
 							data: htmlContent,
 						}),
 					);
+
+					// collect notification
+					listNotification.push({
+						userId: follower._id,
+						title: `${film.name} vừa cập nhật Tập ${epName}`,
+						image: film.poster,
+						url: `/watch/${film.slug}-${film._id}/${epId}`,
+					});
 				});
 			});
+
+			// insert notifications
+			promiseArray.push(notificationModels.insertMany(listNotification));
 
 			await Promise.all(promiseArray);
 
