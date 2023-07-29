@@ -1,6 +1,8 @@
 const episodeModels = require('../../models/episode.models');
 const filmModels = require('../../models/film.models');
 const configurationModels = require('../../models/configuration.models');
+const { getTemplateNewEpUpdate } = require('../../helpers/emailTemplate.helper');
+const { sendMail } = require('../../services/email.service');
 
 // ###### API ######
 
@@ -109,6 +111,59 @@ const createEpisode = async (req, res) => {
 		await filmModels.findByIdAndUpdate(filmId, {
 			$push: { episodes: { $each: dataInserted.map((d) => d._id) } },
 		});
+
+		// send email notification for followed user
+		if (data.some(({ notify }) => notify)) {
+			const BASE_URL = await configurationModels.findOne({}, { web_url: 1 }).then(({ web_url }) => web_url);
+			const promiseArray = [];
+			const [film] = await filmModels.aggregate([
+				{ $match: { _id: filmId } },
+				{
+					$lookup: {
+						from: 'users',
+						localField: 'followers',
+						foreignField: '_id',
+						as: 'followers',
+					},
+				},
+				{ $limit: 1 },
+				{
+					$project: {
+						_id: 1,
+						name: 1,
+						slug: 1,
+						followers: { username: 1, email: 1 },
+					},
+				},
+			]);
+
+			data.forEach(({ name: epName, notify }, idx) => {
+				if (!notify) return;
+
+				const epId = dataInserted[idx]._id;
+
+				film.followers.forEach((follower) => {
+					const htmlContent = getTemplateNewEpUpdate({
+						username: follower.username,
+						filmName: film.name,
+						epName,
+						url: `${BASE_URL}/watch/${film.slug}-${film._id}/${epId}`,
+					});
+
+					promiseArray.push(
+						sendMail([follower.email], `Thông báo ${film.name} vừa cập nhật Tập ${epName}`, {
+							isHtml: true,
+							data: htmlContent,
+						}),
+					);
+				});
+			});
+
+			await Promise.all(promiseArray);
+
+			return res.status(200).json({ message: 'Create Episodes & Send Email Success' });
+		}
+
 		return res.status(200).json({ message: 'Create Episodes Success' });
 	} catch (error) {
 		return res.status(500).json({ message: error.message });
@@ -140,42 +195,128 @@ const readManyEpisode = (req, res) => {
 };
 
 // [PATCH] admin/episodes/update/:id
-const updateEpisode = (req, res) => {
-	episodeModels
-		.updateOne(
-			{ _id: req.params.id },
-			{
-				name: req.body.name,
-				message: req.body.message,
-				subtitle: req.body.subtitle,
-				language: req.body.language,
-				links: req.body.links,
-				isError: req.body.isError,
-			},
-		)
-		.then(async () => {
-			res.status(200).json({ message: 'Update Episode Success' });
-		})
-		.catch((error) => {
-			res.status(500).json({ error: error.message });
-		});
+const updateEpisode = async (req, res) => {
+	try {
+		const { id } = req.params;
+		const { name, message, subtitle, language, links, isError, notify } = req.body;
+		await episodeModels.updateOne({ _id: id }, { name, message, subtitle, language, links, isError });
+
+		// send email notification for followed user
+		if (notify) {
+			const BASE_URL = await configurationModels.findOne({}, { web_url: 1 }).then(({ web_url }) => web_url);
+			const promiseArray = [];
+			const [film] = await filmModels.aggregate([
+				{ $match: { episodes: id } },
+				{
+					$lookup: {
+						from: 'users',
+						localField: 'followers',
+						foreignField: '_id',
+						as: 'followers',
+					},
+				},
+				{ $limit: 1 },
+				{
+					$project: {
+						_id: 1,
+						name: 1,
+						slug: 1,
+						followers: { username: 1, email: 1 },
+					},
+				},
+			]);
+
+			film.followers.forEach((follower) => {
+				const htmlContent = getTemplateNewEpUpdate({
+					username: follower.username,
+					filmName: film.name,
+					epName: name,
+					url: `${BASE_URL}/watch/${film.slug}-${film._id}/${id}`,
+				});
+
+				promiseArray.push(
+					sendMail([follower.email], `Thông báo ${film.name} vừa cập nhật Tập ${name}`, {
+						isHtml: true,
+						data: htmlContent,
+					}),
+				);
+			});
+
+			await Promise.all(promiseArray);
+
+			return res.status(200).json({ message: 'Update Episode & Send Email Success' });
+		}
+
+		return res.status(200).json({ message: 'Update Episode Success' });
+	} catch (error) {
+		return res.status(500).json({ error: error.message });
+	}
 };
 
 // [PATCH] admin/episodes/update/:id
-const updateManyEpisode = (req, res) => {
-	const { data } = req.body;
-	episodeModels
-		.bulkWrite(
+const updateManyEpisode = async (req, res) => {
+	try {
+		const { data } = req.body;
+		await episodeModels.bulkWrite(
 			data.map((dataEpisode) => ({
 				updateOne: { filter: { _id: dataEpisode.id }, update: dataEpisode },
 			})),
-		)
-		.then(async () => {
-			res.status(200).json({ message: 'Update Episodes Success' });
-		})
-		.catch((error) => {
-			res.status(500).json({ error: error.message });
-		});
+		);
+
+		// send email notification for followed user
+		if (data.some(({ notify }) => notify)) {
+			const BASE_URL = await configurationModels.findOne({}, { web_url: 1 }).then(({ web_url }) => web_url);
+			const promiseArray = [];
+			const [film] = await filmModels.aggregate([
+				{ $match: { episodes: data[0].id } },
+				{
+					$lookup: {
+						from: 'users',
+						localField: 'followers',
+						foreignField: '_id',
+						as: 'followers',
+					},
+				},
+				{ $limit: 1 },
+				{
+					$project: {
+						_id: 1,
+						name: 1,
+						slug: 1,
+						followers: { username: 1, email: 1 },
+					},
+				},
+			]);
+
+			data.forEach(({ id: epId, name: epName, notify }) => {
+				if (!notify) return;
+
+				film.followers.forEach((follower) => {
+					const htmlContent = getTemplateNewEpUpdate({
+						username: follower.username,
+						filmName: film.name,
+						epName,
+						url: `${BASE_URL}/watch/${film.slug}-${film._id}/${epId}`,
+					});
+
+					promiseArray.push(
+						sendMail([follower.email], `Thông báo ${film.name} vừa cập nhật Tập ${epName}`, {
+							isHtml: true,
+							data: htmlContent,
+						}),
+					);
+				});
+			});
+
+			await Promise.all(promiseArray);
+
+			return res.status(200).json({ message: 'Update Episodes & Send Email Success' });
+		}
+
+		return res.status(200).json({ message: 'Update Episodes Success' });
+	} catch (error) {
+		res.status(500).json({ error: error.message });
+	}
 };
 
 // [POST] admin/episodes/delete/:id

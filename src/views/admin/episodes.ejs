@@ -259,6 +259,13 @@
 												</div>
 												<div class="links-fields"></div>
 											</div>
+											<div class="col-md-12 mb-3 d-flex gap-2">
+												<label class="form-label">Notify:</label>
+												<div class="form-check form-switch">
+													<input class="form-check-input" type="checkbox" name="notify" id="notify">
+													<label class="form-check-label" for="notify">Notify followed users</label>
+												</div>
+											</div>
 											<input type="text" name="episode_id" class="d-none" />
 										</form>
 									</div>
@@ -451,6 +458,13 @@
 																			<i class="bx bx-x me-0"></i>
 																		</button>
 																	</div>
+																</div>
+															</div>
+															<div class="col-md-12 mb-3 d-flex gap-2">
+																<label class="form-label">Notify:</label>
+																<div class="form-check form-switch">
+																	<input class="form-check-input" type="checkbox" name="notify" id="notify">
+																	<label class="form-check-label" for="notify">Notify followed users</label>
 																</div>
 															</div>
 														</form>
@@ -657,6 +671,13 @@
 																	</div>
 																</div>
 															</div>
+															<div class="col-md-12 mb-3 d-flex gap-2">
+																<label class="form-label">Notify:</label>
+																<div class="form-check form-switch">
+																	<input class="form-check-input" type="checkbox" name="notify" id="notify_${this.currentId}">
+																	<label class="form-check-label" for="notify_${this.currentId}">Notify followed users</label>
+																</div>
+															</div>
 														</form>
 													</div>
 												</div>
@@ -756,6 +777,7 @@
 			const btnCreate = document.querySelector('#addModal .modal-footer .btn-create');
 			if (btnCreate)
 				btnCreate.onclick = function () {
+					let isNotify = false;
 					const forms = document.querySelectorAll('#addModal form');
 					const dataForms = Array.prototype.map.bind(forms)((form) => {
 						const linksFields = form.querySelectorAll('.links-fields input[name="links"]');
@@ -765,9 +787,19 @@
 							1: { value: message },
 							2: { value: name },
 							3: { value: subtitle },
+							8: { checked: notify},
 						} = form;
 
-						return { language, message, name, subtitle, links };
+						isNotify = isNotify || !!notify;
+
+						return { language, message, name, subtitle, links, notify: notify || undefined };
+					});
+
+					const notification = isNotify &&  notyf.open({
+						message: 'Creating & Sending Email',
+						background: '#9c9cff',
+						duration: 900000, // 30 minutes
+						icon: { className: 'gg-spinner-two', tagName: 'i', color: 'none' },
 					});
 
 					$.ajax({
@@ -784,8 +816,11 @@
 						.fail(({ responseJSON }) => {
 							episodeUiAction.clear();
 							$('#addModal').modal('hide');
-							notyf.error(responseJSON.message);
-						});
+							notyf.error(responseJSON.error);
+						})
+						.always(function () {
+							notyf.dismiss(notification);
+						})
 				};
 
 			// Handle create new Episodes quickly
@@ -869,12 +904,21 @@
 						message,
 						name,
 						subtitle,
+						notify
 					} = Object.fromEntries(new FormData(formEdit));
+
+
+					const notification = notify && notyf.open({
+						message: 'Updating & Sending Email',
+						background: '#9c9cff',
+						duration: 900000, // 30 minutes
+						icon: { className: 'gg-spinner-two', tagName: 'i', color: 'none' },
+					});
 
 					$.ajax({
 						type: 'PATCH',
 						url: '/admin/episodes/update/' + episodeId,
-						data: { language, message, name, subtitle, links },
+						data: { language, message, name, subtitle, links, notify: notify || undefined  },
 					})
 						.done((res) => {
 							$('#editModal').modal('hide');
@@ -883,8 +927,11 @@
 						})
 						.fail(({ responseJSON }) => {
 							$('#editModal').modal('hide');
-							notyf.error(responseJSON.message);
-						});
+							notyf.error(responseJSON.error);
+						})
+						.always(function () {
+							notyf.dismiss(notification);
+						})
 				};
 
 			// Fill data of episodes to delete form
@@ -992,6 +1039,13 @@
 																		.join('')}
 																</div>
 															</div>
+															<div class="col-md-12 mb-3 d-flex gap-2">
+																<label class="form-label">Notify:</label>
+																<div class="form-check form-switch">
+																	<input class="form-check-input" type="checkbox" name="notify" id="notify">
+																	<label class="form-check-label" for="notify">Notify followed users</label>
+																</div>
+															</div>
 														</form>
 													</div>
 												</div>
@@ -1000,6 +1054,7 @@
 
 					// Handle update submit
 					document.querySelector('#editManyModal .modal-footer .btn-save').onclick = function () {
+						let isNotify = false;
 						const forms = document.querySelectorAll('#editManyModal form');
 						const dataForms = Array.prototype.map.bind(forms)((form) => {
 							const linksFields = form.querySelectorAll('.links-fields input[name="links"]');
@@ -1010,9 +1065,19 @@
 								2: { value: name },
 								3: { value: subtitle },
 								5: { value: id },
+								9: { checked: notify},
 							} = form;
-							
-							return { language, message, name, subtitle, id, links };
+
+							isNotify = isNotify || !!notify;
+
+							return { language, message, name, subtitle, id, links, notify: notify || undefined };
+						});
+
+						const notification = isNotify &&  notyf.open({
+							message: 'Updating & Sending Email',
+							background: '#9c9cff',
+							duration: 900000, // 30 minutes
+							icon: { className: 'gg-spinner-two', tagName: 'i', color: 'none' },
 						});
 
 						$.ajax({
@@ -1028,9 +1093,12 @@
 							})
 							.fail(({ responseJSON }) => {
 								$('#editManyModal').modal('hide');
-								notyf.error(responseJSON.message);
+								notyf.error(responseJSON.error);
 								dataTable.columns().checkboxes.deselectAll();
-							});
+							})
+							.always(function(){
+								notyf.dismiss(notification);
+							})
 					};
 				};
 

@@ -1,12 +1,4 @@
-const minifyHTML = (html) =>
-	html
-		.replace(/[\t\r\n]| {2,}/g, '') // Loại bỏ các dấu xuống dòng và các khoảng trắng dư thừa
-		.replace(/\s*<\s*/g, '<') // Loại bỏ khoảng trắng trước ký tự "<"
-		.replace(/>\s*/g, '>') // Loại bỏ khoảng trắng sau ký tự ">"
-		.replace(/<!--[\s\S]*?-->/g, ''); // Loại bỏ các chú thích HTML
-
-const getTemplateWelcome = ({ username }) =>
-	minifyHTML(`<!DOCTYPE html>
+const getTemplateWelcome = ({ username }) => `<!DOCTYPE html>
     <html>
         <head>
             <title>Chào mừng gia nhập PhimBox</title>
@@ -26,10 +18,9 @@ const getTemplateWelcome = ({ username }) =>
                 </div>
             </div>
         </body>
-    </html>`);
+    </html>`;
 
-const getTemplateNewPassword = ({ username, newPassword }) =>
-	minifyHTML(`<!DOCTYPE html>
+const getTemplateNewPassword = ({ username, newPassword }) => `<!DOCTYPE html>
     <html>
         <head>
             <title>Thông báo mật khẩu mới</title>
@@ -52,10 +43,9 @@ const getTemplateNewPassword = ({ username, newPassword }) =>
                 </div>
             </div>
         </body>
-    </html>`);
+    </html>`;
 
-const getTemplateNewEpUpdate = ({ username, filmName, epName }) =>
-	minifyHTML(`<!DOCTYPE html>
+const getTemplateNewEpUpdate = ({ username, filmName, epName, url }) => `<!DOCTYPE html>
     <html>
         <head>
             <title>Thông báo ${filmName} cập nhật tập mới</title>
@@ -68,7 +58,7 @@ const getTemplateNewEpUpdate = ({ username, filmName, epName }) =>
                 <div class="content" style="margin-top: 20px;">
                     <h2 style="color: #333;">Xin chào ${username} 👋,</h2>
                     <p style="color: #444;">Bộ phim 🎬<strong>${filmName}</strong> vừa cập nhật tập 🎞<strong>${epName}</strong>.</p>
-                    <p style="color: #444;">Hãy truy cập và xem ngay nhá 👀.</p>
+                    <p style="color: #444;">Hãy truy cập và xem ngay nhá 👉 <a href="${url}">Link</a>.</p>
                     <p style="color: #444;">Chúc bạn xem phim vui vẻ ❤.</p>
                 </div>
                 <div class="footer" style="margin-top: 20px; text-align: center; font-size: 12px; color: #777;">
@@ -77,6 +67,6 @@ const getTemplateNewEpUpdate = ({ username, filmName, epName }) =>
                 </div>
             </div>
         </body>
-    </html>`);
+    </html>`;
 
 module.exports = { getTemplateNewPassword, getTemplateWelcome, getTemplateNewEpUpdate };
