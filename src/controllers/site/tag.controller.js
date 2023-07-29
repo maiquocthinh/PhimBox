@@ -4,8 +4,10 @@ const filterFilmUtils = require('../../utils/site/filterFilm.utils');
 const loadHeaderData = require('../../utils/site/loadHeaderData.utils');
 const loadRightSidebarData = require('../../utils/site/loadRightSidebarData.util');
 const { getPagination } = require('../../utils/site/pagination.util');
+const getNotificationOfUser = require('../../helpers/getNotificationOfUser.helper');
 
 module.exports = async (req, res) => {
+	const { _id: userId } = req.session.user || {};
 	let { tagAscii } = req.params;
 	let { page } = req.query;
 	const url = new URL(req.protocol + '://' + req.get('host') + req.originalUrl);
@@ -32,10 +34,14 @@ module.exports = async (req, res) => {
 		title: `Tag: ${tag} - Trang ${pageNumber}`,
 	};
 
-	const [header, rightSidebar] = await Promise.all([loadHeaderData.load(), loadRightSidebarData.load()]);
+	const [header, rightSidebar, notifications] = await Promise.all([
+		loadHeaderData.load(),
+		loadRightSidebarData.load(),
+		userId && getNotificationOfUser(userId),
+	]);
 
 	res.render('site/catalogue', {
-		header,
+		header: { ...header, notifications },
 		rightSidebar,
 		catalogue,
 		SEO,

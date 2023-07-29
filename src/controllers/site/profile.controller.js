@@ -1,17 +1,19 @@
 const userModels = require('../../models/user.models');
 const configurationModels = require('../../models/configuration.models');
 const loadHeaderData = require('../../utils/site/loadHeaderData.utils');
+const getNotificationOfUser = require('../../helpers/getNotificationOfUser.helper');
 
 const privateProfileController = async (req, res) => {
 	const BASE_URL = await configurationModels.findOne({}, { web_url: 1 }).then(({ web_url }) => web_url);
+	const { _id: userId } = req.session.user || {};
 
 	// check user
-	if (!req.session.user) return res.redirect('/');
+	if (!userId) return res.redirect('/');
 
-	const header = await loadHeaderData.load();
+	const [header, notifications] = await Promise.all([loadHeaderData.load(), userId && getNotificationOfUser(userId)]);
 
 	res.render('site/profile', {
-		header,
+		header: { ...header, notifications },
 		user: req.session.user,
 		profile: { ...req.session.user, isPrivate: true },
 		BASE_URL,
@@ -20,6 +22,7 @@ const privateProfileController = async (req, res) => {
 
 const publicProfileController = async (req, res) => {
 	const BASE_URL = await configurationModels.findOne({}, { web_url: 1 }).then(({ web_url }) => web_url);
+	const { _id: userId } = req.session.user || {};
 	const { username } = req.params;
 
 	if (!username) return res.status(404).json({ msg: 'Page not found!' });
@@ -28,10 +31,10 @@ const publicProfileController = async (req, res) => {
 	const user = await userModels.findOne({ username });
 	if (!user) return res.status(404).json({ msg: 'Page not found!' });
 
-	const header = await loadHeaderData.load();
+	const [header, notifications] = await Promise.all([loadHeaderData.load(), userId && getNotificationOfUser(userId)]);
 
 	res.render('site/profile', {
-		header,
+		header: { ...header, notifications },
 		user: req.session.user,
 		profile: { ...user._doc, isPrivate: false },
 		BASE_URL,

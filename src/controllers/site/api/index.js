@@ -4,6 +4,7 @@ const loadEpisodeApiController = require('./loadEpisode.api.controller');
 const authApiController = require('./auth.api.controller');
 const userInfoApiController = require('./userInfo.api.controller');
 const userFilmsApiControllers = require('./userFilms.api.controller');
+const userNotificationApiControllers = require('./userNotification.api.controller');
 
 module.exports = {
 	searchApiController,
@@ -12,4 +13,5 @@ module.exports = {
 	authApiController,
 	userInfoApiController,
 	userFilmsApiControllers,
+	userNotificationApiControllers,
 };

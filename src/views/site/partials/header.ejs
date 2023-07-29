@@ -76,34 +76,15 @@
 									<h3 class="notify-box__title">Thông báo</h3>
 									<a class="notify-box__view-more" href="#">Xem tất cả</a>
 									<ul class="notify-box__list">
-										<li>
-											<span>Bạn nhận được 100 XU từ nhiệm vụ đăng nhập điểm danh mỗi ngày</span>
-											<p><i class="iconify" data-icon="fa-regular:clock"></i>15/06/2023 00:28:32 </p>
+									<% header.notifications.forEach(({ title, image, url, createdAt, read }) => { %>
+										<li class="<%=read ? 'read' : ''%>">
+											<a class="content" href="<%=url%>">
+												<img src="<%=image%>" />
+												<span><%=title%></span>
+											</a>
+											<p><i class="iconify" data-icon="fa-regular:clock"></i><%=createdAt%></p>
 										</li>
-										<li class="read">
-											<span>Bạn nhận được 200 XU từ nhiệm vụ cập nhật Avatar</span>
-											<p><i class="iconify" data-icon="fa-regular:clock"></i>15/06/2023 00:28:32 </p>
-										</li>
-										<li class="read">
-											<span>Chào mừng bạn đã đến với BiluTV. Hãy nhớ tên tài khoản và mật khẩu của bạn để khi tên miền webiste bị chặn bạn có thể đăng nhập lại và không bị mất dữ liệu.</span>
-											<p><i class="iconify" data-icon="fa-regular:clock"></i>15/06/2023 00:28:32 </p>
-										</li>
-										<li class="read">
-											<span>Bạn nhận được 100 XU từ nhiệm vụ đăng nhập điểm danh mỗi ngày</span>
-											<p><i class="iconify" data-icon="fa-regular:clock"></i>15/06/2023 00:28:32 </p>
-										</li>
-										<li class="read">
-											<span>Bạn nhận được 200 XU từ nhiệm vụ cập nhật Avatar</span>
-											<p><i class="iconify" data-icon="fa-regular:clock"></i>15/06/2023 00:28:32 </p>
-										</li>
-										<li class="read">
-											<span>Chào mừng bạn đã đến với BiluTV. Hãy nhớ tên tài khoản và mật khẩu của bạn để khi tên miền webiste bị chặn bạn có thể đăng nhập lại và không bị mất dữ liệu.</span>
-											<p><i class="iconify" data-icon="fa-regular:clock"></i>15/06/2023 00:28:32 </p>
-										</li>
-										<li class="read">
-											<span>Bạn nhận được 100 XU từ nhiệm vụ đăng nhập điểm danh mỗi ngày</span>
-											<p><i class="iconify" data-icon="fa-regular:clock"></i>15/06/2023 00:28:32 </p>
-										</li>
+									<% }) %>
 									</ul>
 								</div>
 								<div class="notify-box-arrow-up hidden"></div>

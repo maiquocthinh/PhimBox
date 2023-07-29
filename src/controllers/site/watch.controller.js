@@ -2,9 +2,12 @@ const filmModels = require('../../models/film.models');
 const loadHeaderData = require('../../utils/site/loadHeaderData.utils');
 const loadRightSidebarData = require('../../utils/site/loadRightSidebarData.util');
 const loadRelatedFilms = require('../../utils/site/loadRelatedFilms.utils');
+const getNotificationOfUser = require('../../helpers/getNotificationOfUser.helper');
 
 module.exports = async (req, res, next) => {
 	const { filmSlug, filmId } = req.params;
+	const { _id: userId } = req.session.user || {};
+
 	const { episodes, ...film } = await filmModels
 		.aggregate([
 			{ $match: { _id: filmId, slug: filmSlug } },
@@ -55,14 +58,15 @@ module.exports = async (req, res, next) => {
 		_episodes[ep.language].push(ep);
 	}
 
-	const [header, rightSidebar, relatedFilms] = await Promise.all([
+	const [header, rightSidebar, relatedFilms, notifications] = await Promise.all([
 		loadHeaderData.load(),
 		loadRightSidebarData.load(),
 		loadRelatedFilms.load(film),
+		userId && getNotificationOfUser(userId),
 	]);
 
 	res.render('site/watch', {
-		header,
+		header: { ...header, notifications },
 		rightSidebar,
 		relatedFilms,
 		info: { film, episodes: _episodes, currentEpisode },

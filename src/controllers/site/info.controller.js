@@ -4,9 +4,12 @@ const { getIMDBScore, convertToYoutubeEmbed } = require('../../utils/site/filmIn
 const loadHeaderData = require('../../utils/site/loadHeaderData.utils');
 const loadRightSidebarData = require('../../utils/site/loadRightSidebarData.util');
 const loadRelatedFilms = require('../../utils/site/loadRelatedFilms.utils');
+const getNotificationOfUser = require('../../helpers/getNotificationOfUser.helper');
 
 module.exports = async (req, res) => {
 	const { filmSlug, filmId } = req.params;
+	const { _id: userId } = req.session.user || {};
+
 	const film = await filmModels
 		.aggregate([
 			{
@@ -110,14 +113,15 @@ module.exports = async (req, res) => {
 		return { isInFollow: !!isInFollow, isInCollection: !!isInCollection };
 	})();
 
-	const [header, rightSidebar, relatedFilms] = await Promise.all([
+	const [header, rightSidebar, relatedFilms, notifications] = await Promise.all([
 		loadHeaderData.load(),
 		loadRightSidebarData.load(),
 		loadRelatedFilms.load(film),
+		userId && getNotificationOfUser(userId),
 	]);
 
 	res.render('site/info', {
-		header,
+		header: { ...header, notifications },
 		rightSidebar,
 		relatedFilms,
 		info: { film, isInFollow, isInCollection },

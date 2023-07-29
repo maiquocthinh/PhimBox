@@ -10,6 +10,7 @@ const {
 const authRoutes = require('./auth.routes');
 const userInfoRoutes = require('./userInfo.routes');
 const userFilmsRoutes = require('./userFilms.routes');
+const userNotificationRoutes = require('./userNotification.routes');
 const updateViewHistoryMiddleware = require('../../../middlewares/updateViewHistory.middleware');
 
 // API
@@ -19,5 +20,6 @@ router.post('/loadEpisode', updateViewHistoryMiddleware, loadEpisodeApiControlle
 router.use('/auth', authRoutes);
 router.use('/info', userInfoRoutes);
 router.use('/films', userFilmsRoutes);
+router.use('/notification', userNotificationRoutes);
 
 module.exports = router;
