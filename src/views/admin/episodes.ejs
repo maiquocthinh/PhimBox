@@ -787,8 +787,9 @@
 							1: { value: message },
 							2: { value: name },
 							3: { value: subtitle },
-							8: { checked: notify},
 						} = form;
+
+						const notify = form.querySelector('input[type="checkbox"][name="notify"]').checked;
 
 						isNotify = isNotify || !!notify;
 
@@ -1065,8 +1066,9 @@
 								2: { value: name },
 								3: { value: subtitle },
 								5: { value: id },
-								9: { checked: notify},
 							} = form;
+
+							const notify = form.querySelector('input[type="checkbox"][name="notify"]').checked;
 
 							isNotify = isNotify || !!notify;
 

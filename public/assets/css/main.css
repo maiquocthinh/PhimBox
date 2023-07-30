@@ -450,7 +450,8 @@
 
 .header-user__btn-user-avatar {
 	width: 24px;
-	object-fit: contain;
+	height: 24px;
+	object-fit: cover;
 	border-radius: 50%;
 }
 
