@@ -4,7 +4,7 @@ const { getIMDBScore } = require('./filmInfo.util');
 module.exports = async ({ categoryId, countryId, year, sort, type, inCinema, keyWord, tag }, pageNumber) => {
 	const RECORD_PER_PAGE = 20;
 	const PAGE_NUMBER = pageNumber || 1;
-	let filter = {};
+	let filter = { viewable: true };
 
 	if (categoryId) {
 		filter = { ...filter, 'categoriesData._id': categoryId };

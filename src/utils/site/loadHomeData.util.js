@@ -40,20 +40,40 @@ const loadFromDatabase = async () => {
 		countriesData: { name: 1, slug: 1 },
 	};
 	const promiseArray = [
-		filmModels.aggregate([{ $match: { recommend: '1' } }, ...lookups, { $project: projection }, { $limit: 10 }]),
+		filmModels.aggregate([
+			{ $match: { recommend: '1', viewable: true } },
+			...lookups,
+			{ $project: projection },
+			{ $limit: 10 },
+		]),
 
 		filmModels.aggregate([
-			{ $match: { canonical: '1' } },
+			{ $match: { canonical: '1', viewable: true } },
 			...lookups,
 			{ $project: { ...projection, backdropsCanonical: 1 } },
 			{ $limit: 10 },
 		]),
 
-		filmModels.aggregate([{ $match: { type: 'movie' } }, ...lookups, { $project: projection }, { $limit: 18 }]),
+		filmModels.aggregate([
+			{ $match: { type: 'movie', viewable: true } },
+			...lookups,
+			{ $project: projection },
+			{ $limit: 18 },
+		]),
 
-		filmModels.aggregate([{ $match: { type: 'series' } }, ...lookups, { $project: projection }, { $limit: 18 }]),
+		filmModels.aggregate([
+			{ $match: { type: 'series', viewable: true } },
+			...lookups,
+			{ $project: projection },
+			{ $limit: 18 },
+		]),
 
-		filmModels.aggregate([{ $match: { category: 'jb9qn0B' } }, ...lookups, { $project: projection }, { $limit: 18 }]),
+		filmModels.aggregate([
+			{ $match: { category: 'jb9qn0B', viewable: true } },
+			...lookups,
+			{ $project: projection },
+			{ $limit: 18 },
+		]),
 	];
 
 	const [listFilmRecommend, listFilmCanonical, listFilmMovie, listFilmSeries, listFilmAnimation] = await Promise.all(

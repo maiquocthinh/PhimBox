@@ -13,7 +13,7 @@ module.exports = async (req, res) => {
 	const film = await filmModels
 		.aggregate([
 			{
-				$match: { _id: filmId, slug: filmSlug },
+				$match: { _id: filmId, slug: filmSlug, viewable: true },
 			},
 			{
 				$lookup: {

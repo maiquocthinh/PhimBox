@@ -43,6 +43,7 @@ const loadFromDatabase = async ({ filmId, name, originalName }) => {
 			$match: {
 				$text: { $search: `${name} ${originalName}` },
 				_id: { $ne: filmId },
+				viewable: true,
 				deleted: false,
 			},
 		},

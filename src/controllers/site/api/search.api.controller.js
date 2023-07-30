@@ -8,6 +8,7 @@ module.exports = async (req, res) => {
 
 		const films = await filmModels.find(
 			{
+				viewable: true,
 				$or: [{ name: { $regex: keyWord, $options: 'i' } }, { originalName: { $regex: keyWord, $options: 'i' } }],
 			},
 			{

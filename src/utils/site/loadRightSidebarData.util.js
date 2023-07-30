@@ -9,7 +9,7 @@ const loadFromDatabase = async () => {
 	const currentDate = new Date();
 	currentDate.setHours(0, 0, 0, 0);
 
-	const matchTrailer = { status: 'trailer' };
+	const matchTrailer = { status: 'trailer', viewable: true };
 	const lookups = [
 		{
 			$lookup: {
@@ -51,20 +51,19 @@ const loadFromDatabase = async () => {
 			{
 				$facet: {
 					topViewsOfDay: [
-						// { $match: { 'viewedDay.date': { $gte: getStartOfDay(), $lte: getEndOfDay() } } },
-						{ $match: { 'viewedDay.date': { $gte: getStartOfDay() } } },
+						{ $match: { 'viewedDay.date': { $gte: getStartOfDay() }, viewable: true } },
 						{ $sort: { 'viewedDay.viewed': -1 } },
 						{ $limit: 8 },
 						{ $project: projection },
 					],
 					topViewsOfWeek: [
-						{ $match: { 'viewedWeek.date': { $gte: getStartOfWeek(), $lte: getEndOfWeek() } } },
+						{ $match: { 'viewedWeek.date': { $gte: getStartOfWeek(), $lte: getEndOfWeek() }, viewable: true } },
 						{ $sort: { 'viewedWeek.viewed': -1 } },
 						{ $limit: 8 },
 						{ $project: projection },
 					],
 					topViewsOfMonth: [
-						{ $match: { 'viewedMonth.date': { $gte: getStartOfMonth(), $lte: getEndOfMonth() } } },
+						{ $match: { 'viewedMonth.date': { $gte: getStartOfMonth(), $lte: getEndOfMonth() }, viewable: true } },
 						{ $sort: { 'viewedMonth.viewed': -1 } },
 						{ $limit: 8 },
 						{ $project: projection },
