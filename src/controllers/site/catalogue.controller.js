@@ -45,8 +45,6 @@ module.exports = async (req, res) => {
 		pagination: getPagination(url, pageNumber, totalPage),
 	};
 
-	console.log(catalogue.pages);
-
 	// SEO
 	const SEO = {
 		title: `${typeName} - Trang ${pageNumber}`,

@@ -68,6 +68,7 @@ module.exports = async ({ categoryId, countryId, year, sort, type, inCinema, key
 		.then((res) => res[0]?.count || 0);
 
 	if (sort) pipelineOperators.push({ $sort: sort });
+	else pipelineOperators.push({ $sort: { createdAt: -1 } });
 
 	const films = await filmModels.aggregate([
 		...pipelineOperators,
