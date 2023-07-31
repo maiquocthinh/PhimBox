@@ -27,7 +27,7 @@ module.exports = async (req, res) => {
 			typeName = 'Phim Bộ';
 			break;
 		case 'rap':
-			type = '';
+			type = 'rap';
 			typeName = 'Phim Chiếu Rạp';
 			break;
 	}
@@ -64,7 +64,7 @@ module.exports = async (req, res) => {
 		data: films,
 		pageNumber,
 		totalPage,
-	} = await filterFilmUtils({ categoryId, countryId, year, sort, type, inCinema: !type }, page);
+	} = await filterFilmUtils({ categoryId, countryId, year, sort, type, inCinema: type === 'rap' }, page);
 
 	// catalogue data
 	const catalogue = {

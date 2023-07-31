@@ -21,10 +21,10 @@ module.exports = async ({ categoryId, countryId, year, sort, type, inCinema, key
 		};
 	}
 
-	if (type) {
-		filter = { ...filter, type };
-	} else if (inCinema) {
+	if (inCinema) {
 		filter = { ...filter, inCinema: '1' };
+	} else if (type) {
+		filter = { ...filter, type };
 	}
 
 	if (year) {
