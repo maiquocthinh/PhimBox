@@ -39,10 +39,12 @@
                 <div class="xpo-profile__overview-box">
                     <div class="avatar">
                         <img class="avatar__image" src="<%=profile.avatar%>" alt="<%=profile.username%>">
+                        <% if(profile.isPrivate) { %>
                         <label for="avatar_input"  class="avatar__upload">
-                        <i class="iconify" data-icon="uil:image-edit"></i>
-                        <input type="file" accept="image/jpg, image/jpeg, image/png, image/gif, image/webp" name="avatar_input" id="avatar_input" class="hidden">
+                            <i class="iconify" data-icon="uil:image-edit"></i>
+                            <input type="file" accept="image/jpg, image/jpeg, image/png, image/gif, image/webp" name="avatar_input" id="avatar_input" class="hidden">
                         </label>
+                        <% } %>
                     </div>
                     <h2 class="fullname"><%=profile.fullname%></h2>
                     <h4 class="idname">@<%=profile.username%></h4>

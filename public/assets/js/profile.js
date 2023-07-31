@@ -304,12 +304,14 @@ if (isLoadCollection) {
 											<span class="xpo-year">${film.year}</span>
 											<span class="xpo-language">${film.language}</span>
 											<div class="xpo-icon-overlay"></div>
-											<span class="xpo-remove" onclick="removeFilmCollection({event, filmId: '${film._id}'});">&times;</span>
+											${username ? '' : `<span class="xpo-remove" onclick="removeFilmCollection({event, filmId: '${film._id}'});">&times;</span>`}
 										</a>
 										<div class="xpo-content">
 											<div class="xpo-content__name">
 												<h3 class="xpo-vn-name">
-													<a href="./info.html" title="${film.name} - ${film.originalName} (${film.year})">${film.name} - ${film.originalName} (${film.year})</a>
+													<a href="./info.html" title="${
+														film.name
+													} - ${film.originalName} (${film.year})">${film.name} - ${film.originalName} (${film.year})</a>
 												</h3>
 												<p class="xpo-original-name">${film.originalName}</p>
 											</div>
