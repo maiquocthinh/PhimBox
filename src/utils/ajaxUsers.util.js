@@ -11,11 +11,11 @@ const getUserLevelHtml = (permissionsArray) => {
 
 const getUserStatusHtml = (status) => {
 	switch (status) {
-		case userStatus.ACTIVED:
+		case userStatus.ACTIVATED:
 			return `<div class="badge rounded-pill text-white bg-gradient-blues p-1 text-capitalize px-3">
 						<i class="bx bx-check-shield align-middle me-1"></i> Activated
 					</div>`;
-		case userStatus.BANED:
+		case userStatus.BANNED:
 			return `<div class="badge rounded-pill text-white bg-gradient-burning p-1 text-capitalize px-3">
 						<i class="bx bx-shield-x align-middle me-1"></i> Banned
 					</div>`;

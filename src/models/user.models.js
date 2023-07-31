@@ -13,7 +13,7 @@ const User = new Schema(
 		fullname: { type: String, required: true },
 		username: { type: String, required: true },
 		password: { type: String, required: true },
-		status: { type: Number, default: userStatus.ACTIVED },
+		status: { type: Number, default: userStatus.ACTIVATED },
 		avatar: { type: String, default: 'https://i.imgur.com/G5jDQjo.jpg' },
 		descript: { type: String, default: '' },
 		roleId: { type: String, default: '' },

@@ -1,8 +1,8 @@
 const bcrypt = require('bcryptjs');
 
 const userStatus = {
-	ACTIVED: 1,
-	BANED: 0,
+	ACTIVATED: 1,
+	BANNED: 0,
 };
 
 module.exports = { userStatus };

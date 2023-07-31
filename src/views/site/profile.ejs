@@ -45,6 +45,9 @@
                             <input type="file" accept="image/jpg, image/jpeg, image/png, image/gif, image/webp" name="avatar_input" id="avatar_input" class="hidden">
                         </label>
                         <% } %>
+                        <% if(profile.isBanned) { %>
+                        <label class="banned_label">Banned</label>
+                        <% } %>
                     </div>
                     <h2 class="fullname"><%=profile.fullname%></h2>
                     <h4 class="idname">@<%=profile.username%></h4>

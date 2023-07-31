@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const userModels = require('../../models/user.models');
 const { validateEmail } = require('../../utils');
+const { userStatus } = require('../../config/constants');
 
 // ###### API ######
 
@@ -13,14 +14,19 @@ const loginHandler = async (req, res) => {
 	if (!validateEmail(email)) return res.status(400).json({ message: 'The email is invalid.' });
 
 	try {
-		const user = await userModels.findOne({ email: email });
+		// check user
+		const user = await userModels.findOne({ email: email }, { limit: 0, films: 0 });
 		if (!user) return res.status(400).json({ message: 'The email is not registered in our system.' });
 
+		// check user status (is banned?)
+		if (user.status === userStatus.BANNED)
+			return res.status(403).json({ message: 'This account have been banned. Contact supper admin for help.' });
+
+		// check password
 		if (!bcrypt.compareSync(password, user.password)) return res.status(400).json({ message: 'The password is incorrect.' });
 
 		// set session
 		user.password = undefined;
-		user.limit = undefined;
 		req.session.user = user;
 		if (remember) req.session.cookie.maxAge = 1000 * 60 * 60 * 24 * 7;
 

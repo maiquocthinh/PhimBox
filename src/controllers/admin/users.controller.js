@@ -143,7 +143,7 @@ const updateUser = async (req, res) => {
 		// update user
 		await Users.updateOne(
 			{ _id: req.params.id },
-			{ fullname, username, email, password, status, avatar, roleId: !!roleId ? roleId : undefined },
+			{ fullname, username, email, password: hashPassword, status, avatar, roleId: !!roleId ? roleId : undefined },
 		);
 
 		// change user info in current session

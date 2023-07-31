@@ -1,5 +1,6 @@
 const userModels = require('../models/user.models');
 const PERMISSION = require('../config/permission.config');
+const { userStatus } = require('../config/constants');
 
 const auth = async (req, res, next) => {
 	const { user } = req.session;
@@ -28,20 +29,26 @@ const checkPermission = (permission) => {
 					},
 				},
 				{ $unwind: '$role' },
-				{ $project: { role: { permissions: 1 } } },
+				{ $project: { status: 1, role: { permissions: 1 } } },
 			]);
+
+			if (user.status === userStatus.BANNED) return res.status(403).json({ message: 'This account have been banned.' });
 
 			if (!user?.role) return res.status(403).json({ message: 'You have not permission' });
 
 			const role = user.role;
 
 			// check can user access into control panel admin
-			if (!role?.permissions?.includes(PERMISSION['view dashboard']))
+			if (!role?.permissions?.includes(PERMISSION['view dashboard'])) {
 				// logout & go to login page
-				req.session.destroy((err) => {
-					if (err) return res.status(500).json({ message: err.message });
-					res.redirect('/admin/login', 403);
+				await new Promise((resolve, reject) => {
+					req.session.destroy((err) => {
+						if (err) return reject(err);
+						return resolve();
+					});
 				});
+				return res.redirect('/admin/login');
+			}
 
 			// check user permission
 			if (!role?.permissions?.includes(permission)) return res.status(403).json({ message: 'You have not permission' });

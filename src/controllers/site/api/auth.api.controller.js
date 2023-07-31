@@ -5,6 +5,7 @@ const { validateEmail, generateHashPassword } = require('../../../utils');
 const { sendMail } = require('../../../services/email.service');
 const { getTemplateWelcome, getTemplateNewPassword } = require('../../../helpers/emailTemplate.helper');
 const notificationModels = require('../../../models/notification.models');
+const { userStatus } = require('../../../config/constants');
 
 const registerController = async (req, res) => {
 	const { fullname, username, email, password } = req.body;
@@ -58,16 +59,18 @@ const loginController = async (req, res) => {
 
 	try {
 		// check user
-		const user = await userModels.findOne({ email: email });
+		const user = await userModels.findOne({ email: email }, { limit: 0, films: 0 });
 		if (!user) return res.status(400).json({ msg: 'This email is not registered in the system.' });
 
+		// check user status (is banned?)
+		if (user.status === userStatus.BANNED)
+			return res.status(403).json({ msg: 'This account have been banned. Contact admin for help.' });
+
 		// check password
-		const isMatch = await bcrypt.compare(password, user.password);
-		if (!isMatch) return res.status(400).json({ msg: 'This password is incorrect.' });
+		if (!bcrypt.compareSync(password, user.password)) return res.status(400).json({ msg: 'The password is incorrect.' });
 
 		// set session
 		user.password = undefined;
-		user.limit = undefined;
 		req.session.user = user;
 		if (remember) req.session.cookie.maxAge = 1000 * 60 * 60 * 24 * 7; // a week
 
