@@ -2,7 +2,7 @@ const roleModels = require('../../models/role.models');
 const userModels = require('../../models/user.models');
 const { getUserLevelHtml } = require('../../utils/ajaxUsers.util');
 const { generateHashPassword } = require('../../utils');
-const PERMISSION = require('../../config/permission.config');
+const checkPermissionChangeRole = require('../../utils/checkPermissionChangeRole.util');
 
 // ###### API ######
 // [PATCH] admin/profile/update/:id
@@ -11,24 +11,8 @@ const update = async (req, res) => {
 	const { fullname, username, email, password, avatar, role: roleId } = req.body;
 
 	// check permission to change role
-	if (roleId) {
-		const [{ role }] = await userModels.aggregate([
-			{ $match: { _id: userId } },
-			{
-				$lookup: {
-					from: 'roles',
-					localField: 'roleId',
-					foreignField: '_id',
-					as: 'role',
-				},
-			},
-			{ $unwind: '$role' },
-			{ $project: { role: { permissions: 1 } } },
-		]);
-
-		if (!role?.permissions?.includes(PERMISSION['set user role']))
-			return res.status(500).json({ message: 'You have not permission.' });
-	}
+	if (roleId && !(await checkPermissionChangeRole(userId)))
+		return res.status(400).json({ message: 'You have not permission.' });
 
 	// allow to change information if it is owner account
 	if (userId !== req.params.id) return res.status(500).json({ message: 'You have not permission.' });

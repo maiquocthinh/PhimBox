@@ -167,7 +167,7 @@
   <%- include('./partials/javascript-import') %>
   <script>
     const USER_ID = "<%=user._id.toString()%>";
-    const USER_ROLE_ID = "<%=user.roleId.toString()%>";
+    let USER_ROLE_ID = "<%=user.roleId.toString()%>";
     
     const formInfo = document.querySelector('#form-info');
     const formPassword = document.querySelector('#form-password');
@@ -189,6 +189,7 @@
       })
         .done((res) => {
           notyf.success(res.message);
+          USER_ROLE_ID =  dataForm.role 
         })
         .fail(({ responseJSON }) => {
           notyf.error(responseJSON.message);

@@ -3,7 +3,7 @@ const roleModels = require('../../models/role.models');
 const { getUserLevelHtml, getUserStatusHtml } = require('../../utils/ajaxUsers.util');
 const { generateHashPassword } = require('../../utils');
 const { userStatus } = require('../../config/constants');
-const PERMISSION = require('../../config/permission.config');
+const checkPermissionChangeRole = require('../../utils/checkPermissionChangeRole.util');
 
 // ###### API ######
 
@@ -97,24 +97,8 @@ const createUser = async (req, res) => {
 
 	try {
 		// check permission to change role
-		if (roleId) {
-			const [{ role }] = await Users.aggregate([
-				{ $match: { _id: userId } },
-				{
-					$lookup: {
-						from: 'roles',
-						localField: 'roleId',
-						foreignField: '_id',
-						as: 'role',
-					},
-				},
-				{ $unwind: '$role' },
-				{ $project: { role: { permissions: 1 } } },
-			]);
-
-			if (!role?.permissions?.includes(PERMISSION['set user role']))
-				return res.status(500).json({ message: 'You have not permission.' });
-		}
+		if (roleId && !(await checkPermissionChangeRole(userId)))
+			return res.status(400).json({ message: 'You have not permission.' });
 
 		// create new user
 		await Users.create({
@@ -153,24 +137,8 @@ const updateUser = async (req, res) => {
 
 	try {
 		// check permission to change role
-		if (roleId) {
-			const [{ role }] = await Users.aggregate([
-				{ $match: { _id: userId } },
-				{
-					$lookup: {
-						from: 'roles',
-						localField: 'roleId',
-						foreignField: '_id',
-						as: 'role',
-					},
-				},
-				{ $unwind: '$role' },
-				{ $project: { role: { permissions: 1 } } },
-			]);
-
-			if (!role?.permissions?.includes(PERMISSION['set user role']))
-				return res.status(500).json({ message: 'You have not permission.' });
-		}
+		if (roleId && !(await checkPermissionChangeRole(userId)))
+			return res.status(400).json({ message: 'You have not permission.' });
 
 		// update user
 		await Users.updateOne(
