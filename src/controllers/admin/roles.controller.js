@@ -1,6 +1,5 @@
 const roleModels = require('../../models/role.models');
 const PERMISSION = require('../../config/permission.config');
-const userRoleModels = require('../../models/userRole.models');
 const { findOneAndUpdate } = require('../../models/user.models');
 
 // ###### API ######
@@ -20,7 +19,7 @@ const ajaxDatatablesRoles = async (req, res) => {
 		{ $match: queryToDB },
 		{
 			$lookup: {
-				from: 'user_role',
+				from: 'users',
 				localField: '_id',
 				foreignField: 'roleId',
 				as: 'toggleUser',
@@ -108,54 +107,6 @@ const deleteRole = (req, res) => {
 		});
 };
 
-// [POST] admin/roles/set-user-role
-const setUserRole = async (req, res) => {
-	const { userId, roleId } = req.body;
-	try {
-		const userRole = await userRoleModels.findOneAndUpdate({ userId }, { userId, roleId });
-		if (!userRole) {
-			const userRole = new userRoleModels({ userId, roleId });
-			await userRole.save();
-		}
-		return res.status(200).json({ message: 'Set User Role Success' });
-	} catch (error) {
-		console.log(error);
-		res.status(500).json({ message: error.message });
-	}
-};
-
-// [POST] admin/roles/get-user-role
-const getUserRole = async (req, res) => {
-	const { userId } = req.body;
-	try {
-		const userRole = await userRoleModels.aggregate([
-			{
-				$match: { userId: userId },
-			},
-			{
-				$limit: 1,
-			},
-			{
-				$lookup: {
-					from: 'roles',
-					localField: 'roleId',
-					foreignField: '_id',
-					as: 'role',
-				},
-			},
-			{
-				$unwind: '$role',
-			},
-		]);
-
-		if (userRole[0]) return res.status(200).json(userRole[0]);
-		return res.status(200).json({ message: 'User have not role.' });
-	} catch (error) {
-		console.log(error);
-		res.status(500).json({ message: error.message });
-	}
-};
-
 // ###### PAGE ######
 
 // [GET] admin/roles
@@ -173,6 +124,4 @@ module.exports = {
 	readRole,
 	updateRole,
 	deleteRole,
-	setUserRole,
-	getUserRole,
 };

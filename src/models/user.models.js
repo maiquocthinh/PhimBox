@@ -16,6 +16,7 @@ const User = new Schema(
 		status: { type: Number, default: userStatus.ACTIVED },
 		avatar: { type: String, default: 'https://i.imgur.com/G5jDQjo.jpg' },
 		descript: { type: String, default: '' },
+		roleId: { type: String, default: '' },
 		limit: {
 			timesResetPassword: { type: [Date], default: [] },
 			timesChangeInfo: { type: [Date], default: [] },

@@ -184,9 +184,10 @@
 													<% }}; %>
 												</select>
 											</div>
-											<div class="col-md-2 mb-3">
+											<div class="col-md-3 mb-3">
 												<label class="form-label">Role:</label>
 												<select class="form-select" name="role">
+													<option value="">--NONE--</option>
 													<% roles.forEach(role => { %>
 													<option value="<%=role._id%>"><%=role.name.toUpperCase()%></option>
 													<% }); %>
@@ -300,6 +301,7 @@
 											<div class="col-md-3 mb-3">
 												<label class="form-label">Role:</label>
 												<select class="form-select" name="role">
+													<option value="">--NONE--</option>
 													<% roles.forEach(role => { %>
 													<option value="<%=role._id%>"><%=role.name.toUpperCase()%></option>
 													<% }); %>
@@ -412,7 +414,7 @@
 			const btnCreate = document.querySelector('#addModal .modal-footer .btn-create');
 			btnCreate.onclick = function () {
 				const formCreate = document.querySelector('#addModal form');
-				const { role, ...dataForm } = Object.fromEntries(new FormData(formCreate));
+				const dataForm = Object.fromEntries(new FormData(formCreate));
 
 				// create new user
 				$.ajax({
@@ -421,27 +423,11 @@
 					data: dataForm,
 				})
 					.done(function(res) {
-						formCreate.reset();
 						$('#addModal').modal('hide');
 						notyf.success(res.message);
-						const newUserId = res._id;
-
-						// set role for new user
-						$.ajax({
-							type: 'POST',
-							url: '/admin/roles/set-user-role',
-							data: { userId: newUserId, roleId: role },
-						})
-							.done(function(res) {
-								notyf.success(res.message);
-								dataTable.ajax.reload(null, false);
-							})
-							.fail(function({ responseJSON }) {
-								notyf.error(responseJSON.message);
-							})
+						dataTable.ajax.reload(null, false);
 					})
 					.fail(function({ responseJSON }) {
-						formCreate.reset();
 						$('#addModal').modal('hide');
 						notyf.error(responseJSON.message);
 					})
@@ -507,47 +493,34 @@
 				formEdit.querySelector('select[name="role"]').value = dataUser.roleId;
 				formEdit.querySelector('input[name="user_id"]').value = dataUser._id;
 
-				// Handle submit update
-				const btnSaveUser = document.querySelector('#editModal .modal-footer .btn-save');
-				if (btnSaveUser)
-					btnSaveUser.onclick = function () {
-						const formEdit = document.querySelector('#editModal form');
-						const { user_id: userId, role, ...dataForm } = Object.fromEntries(new FormData(formEdit));
-
-						// update user info
-						$.ajax({
-							type: 'PATCH',
-							url: '/admin/users/update/' + userId,
-							data: dataForm,
-						})
-							.done(function(res) {
-								$('#editModal').modal('hide');
-								notyf.success(res.message);
-
-								// update role of user
-								if (dataUser.roleId !== role)
-									$.ajax({
-										type: 'POST',
-										url: '/admin/roles/set-user-role',
-										data: { userId, roleId: role },
-									})
-										.done(function(res) {
-											notyf.success(res.message);
-											dataTable.ajax.reload(null, false);
-										})
-										.fail(function({ responseJSON }) {
-											notyf.error(responseJSON.message);
-										});
-							})
-							.fail(function({ responseJSON }) {
-								$('#editModal').modal('hide');
-								notyf.error(responseJSON.message);
-							})
-							.always(function() {
-								formEdit.reset();
-							});
-					};
 			}
+			
+			// Handle submit update
+			const btnSaveUser = document.querySelector('#editModal .modal-footer .btn-save');
+			if (btnSaveUser)
+				btnSaveUser.onclick = function () {
+					const formEdit = document.querySelector('#editModal form');
+					const { user_id: userId, ...dataForm } = Object.fromEntries(new FormData(formEdit));
+
+					// update user info
+					$.ajax({
+						type: 'PATCH',
+						url: '/admin/users/update/' + userId,
+						data: dataForm,
+					})
+						.done(function(res) {
+							$('#editModal').modal('hide');
+							notyf.success(res.message);
+							dataTable.ajax.reload(null, false);
+						})
+						.fail(function({ responseJSON }) {
+							$('#editModal').modal('hide');
+							notyf.error(responseJSON.message);
+						})
+						.always(function() {
+							formEdit.reset();
+						});
+				};
 
 			// Hanlde resotre user
 			function restoreUser(id) {

@@ -54,8 +54,8 @@
                     <h4><%=user.fullname%></h4>
                     <h5>@<%=user.username%></h5>
                     <%-levelLabel%>
-                    <p class="font-size-sm mb-1">Created At: <%=user.createdAt.substring(0, 10)%></p>
-                    <p class="font-size-sm mb-4">Updated At: <%=user.updatedAt.substring(0, 10)%></p>
+                    <p class="font-size-sm mb-1">Created At: <%=user.createdAt%></p>
+                    <p class="font-size-sm mb-4">Updated At: <%=user.updatedAt%></p>
                     <button class="btn btn-light" style="font-size:0.8rem;"><i class="bx bx-box me-1"></i>Box
                       Film</button>
                     <button class="btn btn-light" style="font-size:0.8rem;"><i
@@ -113,7 +113,7 @@
                     <div class="col-sm-9">
                       <select class="form-select" name="role" required>
                         <% roles.forEach(role => { %>
-													<option value="<%=role._id%>"><%=role.name%></option>
+													<option value="<%=role._id%>" <%=role._id===user.roleId ? 'selected' : ''%>><%=role.name%></option>
 												<% }); %>
                       </select>
                     </div>
@@ -167,31 +167,10 @@
   <%- include('./partials/javascript-import') %>
   <script>
     const USER_ID = "<%=user._id.toString()%>";
-    let USER_ROLE_ID = '';
+    const USER_ROLE_ID = "<%=user.roleId.toString()%>";
     
-    const roleSelect = document.querySelector('#form-info select[name="role"]');
-
-    $(document).ready(function(){
-      $.ajax({
-        type: 'POST',
-        url: '/admin/roles/get-user-role',
-        data: {userId: USER_ID}
-      }).done(function (res) {
-        // chose role select
-        roleSelect.value = res.roleId;
-        // disabled/enabled role select
-        roleSelect.disabled = !res.role.permissions.includes('SR');
-        // set user role
-        USER_ROLE_ID = res.roleId;
-      }).fail(function ({ responseJSON }) {
-        notyf.error(responseJSON.message);
-      });
-    });
-
     const formInfo = document.querySelector('#form-info');
     const formPassword = document.querySelector('#form-password');
-    // const btnChangeInfo = document.querySelector('.btn-change-info');
-    const btnChangePassWord = document.querySelector('.btn-change-password');
 
     // Handle submit change info
     if (formInfo) formInfo.onsubmit = function (event) {
@@ -203,7 +182,10 @@
       $.ajax({
         type: 'PATCH',
         url: '/admin/profile/update/' + USER_ID,
-        data: dataForm,
+        data: {
+          ...dataForm, 
+          role: dataForm.role !== USER_ROLE_ID ? dataForm.role : undefined
+        },
       })
         .done((res) => {
           notyf.success(res.message);
@@ -212,19 +194,6 @@
           notyf.error(responseJSON.message);
         });
 
-      // set role
-      if (roleSelect.value !== USER_ROLE_ID)
-        $.ajax({
-          type: 'POST',
-          url: '/admin/roles/set-user-role',
-          data: { userId: USER_ID, roleId: role },
-        })
-          .done((res) => {
-            notyf.success(res.message);
-          })
-          .fail(({ responseJSON }) => {
-            notyf.error(responseJSON.message);
-          });
     }
 
     // Handle submit change password

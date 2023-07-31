@@ -1,9 +1,9 @@
 const Users = require('../../models/user.models');
 const roleModels = require('../../models/role.models');
-const userRoleModels = require('../../models/userRole.models');
 const { getUserLevelHtml, getUserStatusHtml } = require('../../utils/ajaxUsers.util');
 const { generateHashPassword } = require('../../utils');
 const { userStatus } = require('../../config/constants');
+const PERMISSION = require('../../config/permission.config');
 
 // ###### API ######
 
@@ -22,20 +22,11 @@ const ajaxDatatablesUsers = async (req, res) => {
 	const totalUser = deleted ? await Users.countDocumentsDeleted({}) : await Users.countDocuments({});
 	const dataUsers = await Users.aggregateWithDeleted([
 		{ $match: { ...queryToDB, deleted: !!deleted } },
-		{ $addFields: { _id: { $toString: '$_id' } } },
-		{
-			$lookup: {
-				from: 'user_role',
-				localField: '_id',
-				foreignField: 'userId',
-				as: 'userRole',
-			},
-		},
 		{
 			$lookup: {
 				from: 'roles',
-				let: { roleId: { $arrayElemAt: ['$userRole.roleId', 0] } },
-				pipeline: [{ $addFields: { _id: { $toString: '$_id' } } }, { $match: { $expr: { $eq: ['$_id', '$$roleId'] } } }],
+				localField: 'roleId',
+				foreignField: '_id',
 				as: 'role',
 			},
 		},
@@ -44,10 +35,19 @@ const ajaxDatatablesUsers = async (req, res) => {
 				from: 'films',
 				localField: '_id',
 				foreignField: 'createdBy',
-				as: 'updated',
+				as: 'uploaded',
 			},
 		},
-		{ $addFields: { updated: { $size: '$updated' } } },
+		{
+			$addFields: {
+				createdAt: { $dateToString: { format: '%d/%m/%Y', date: '$createdAt' } },
+				updatedAt: { $dateToString: { format: '%d/%m/%Y', date: '$createdAt' } },
+				uploaded: { $size: '$uploaded' },
+			},
+		},
+		{
+			$project: { password: 0, roleId: 0, limit: 0, films: 0 },
+		},
 		{ $skip: parseInt(start) },
 		{ $limit: parseInt(length) },
 		{ $sort: { [columnName]: columnSortOrder } },
@@ -63,17 +63,17 @@ const ajaxDatatablesUsers = async (req, res) => {
 		</div>`,
 		user.email,
 		getUserStatusHtml(user.status),
-		getUserLevelHtml(user.role[0]?.permissions),
-		user.updated,
-		user.createdAt.toISOString().substring(0, 10),
-		user.updatedAt.toISOString().substring(0, 10),
+		getUserLevelHtml(user?.role[0]?.permissions),
+		user.uploaded,
+		user.createdAt,
+		user.updatedAt,
 		deleted
 			? `<div class="d-flex order-actions">
 				<a href="javascript:;" class="ms-1 btn-restore" onclick="restoreUser('${user._id}')"><i class="bx bx-undo"></i></a>
 				<a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeletePermanentlyForm('${user.username}','${user._id}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>
 			</div>`
 			: `<div class="d-flex order-actions">
-				<a href="javascript:;" class="text-white"><i class="bx bx-detail"></i></a>
+				<a href="/profile/${user.username}" target="_blank" class="text-primary"><i class="bx bx-link-external"></i></a>
 				<a href="javascript:;" class="text-warning ms-1" onclick="fillDataToEditForm('${user._id}')" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bx bxs-edit"></i></a>
 				<a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeleteForm('${user.username}','${user._id}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>
 			</div>`,
@@ -88,69 +88,113 @@ const ajaxDatatablesUsers = async (req, res) => {
 };
 
 // [POST] admin/users/create
-const createUser = (req, res) => {
-	const { fullname, username, email, avatar, password, status } = req.body;
+const createUser = async (req, res) => {
+	const { _id: userId } = req.session.user || {};
+	const { fullname, username, email, avatar, password, status, role: roleId } = req.body;
 
 	// hash password
 	const hashPassword = req.body.password ? generateHashPassword(password) : undefined;
 
-	const user = new Users({
-		fullname,
-		username,
-		email,
-		password: hashPassword,
-		status,
-		avatar,
-	});
-	user.save()
-		.then((result) => {
-			res.status(200).json({ message: 'Create User Success', _id: result._id });
-		})
-		.catch((error) => {
-			res.status(500).json({ error: error.message });
+	try {
+		// check permission to change role
+		if (roleId) {
+			const [{ role }] = await Users.aggregate([
+				{ $match: { _id: userId } },
+				{
+					$lookup: {
+						from: 'roles',
+						localField: 'roleId',
+						foreignField: '_id',
+						as: 'role',
+					},
+				},
+				{ $unwind: '$role' },
+				{ $project: { role: { permissions: 1 } } },
+			]);
+
+			if (!role?.permissions?.includes(PERMISSION['set user role']))
+				return res.status(500).json({ message: 'You have not permission.' });
+		}
+
+		// create new user
+		await Users.create({
+			fullname,
+			username,
+			email,
+			password: hashPassword,
+			status,
+			avatar,
+			roleId: !!roleId ? roleId : undefined,
 		});
+
+		return res.status(200).json({ message: 'Create User Success' });
+	} catch (error) {
+		return res.status(500).json({ error: error.message });
+	}
 };
 
 // [GET] admin/users/read/:id
 const readUser = async (req, res) => {
 	try {
-		const user = await Users.findById(req.params.id, { password: 0 });
-		const userRole = await userRoleModels.findOne({ userId: user._id });
-		if (userRole) res.status(200).json({ ...user._doc, roleId: userRole.roleId });
-		else res.status(200).json(user);
+		const user = await Users.findById(req.params.id, { password: 0, films: 0, limit: 0 });
+		return res.status(200).json(user);
 	} catch (error) {
-		console.log(error);
 		res.status(500).json({ error: error.message });
 	}
 };
 
 // [PUT] admin/users/update/:id
-const updateUser = (req, res) => {
+const updateUser = async (req, res) => {
+	const { _id: userId } = req.session.user || {};
+	const { fullname, username, email, password, status, avatar, role: roleId } = req.body;
+
 	// hash password
 	const hashPassword = req.body.password ? generateHashPassword(req.body.password) : undefined;
 
-	Users.updateOne(
-		{ _id: req.params.id },
-		{
-			fullname: req.body.fullname,
-			username: req.body.username,
-			email: req.body.email,
-			password: hashPassword,
-			status: req.body.status,
-			avatar: req.body.avatar,
-		},
-	)
-		.then(async () => {
-			// change user info in current session
-			if (req.session.user._id === req.params.id) {
-				const user = await Users.findById(req.params.id, { password: 0 });
-				req.session.user = user;
-			}
-			res.status(200).json({ message: 'Update User Success' });
-		})
-		.catch((error) => {
-			res.status(500).json({ error: error.message });
-		});
+	try {
+		// check permission to change role
+		if (roleId) {
+			const [{ role }] = await Users.aggregate([
+				{ $match: { _id: userId } },
+				{
+					$lookup: {
+						from: 'roles',
+						localField: 'roleId',
+						foreignField: '_id',
+						as: 'role',
+					},
+				},
+				{ $unwind: '$role' },
+				{ $project: { role: { permissions: 1 } } },
+			]);
+
+			if (!role?.permissions?.includes(PERMISSION['set user role']))
+				return res.status(500).json({ message: 'You have not permission.' });
+		}
+
+		// update user
+		await Users.updateOne(
+			{ _id: req.params.id },
+			{ fullname, username, email, password, status, avatar, roleId: !!roleId ? roleId : undefined },
+		);
+
+		// change user info in current session
+		if (userId === req.params.id) {
+			const user = req.session.user;
+			req.session.user = {
+				...user,
+				fullname: fullname || user.fullname,
+				username: username || user.username,
+				email: email || user.email,
+				status: status || user.status,
+				avatar: avatar || user.avatar,
+			};
+		}
+
+		return res.status(200).json({ message: 'Update User Success' });
+	} catch (error) {
+		return res.status(500).json({ error: error.message });
+	}
 };
 
 // [DELETE] admin/users/delete/:id
@@ -177,7 +221,7 @@ const restoreUser = (req, res) => {
 
 // [DELETE] admin/users/destroy/:id
 const destroyUser = (req, res) => {
-	Promise.all([userRoleModels.findOneAndDelete({ userId: req.params.id }), Users.deleteOne({ _id: req.params.id })])
+	Users.deleteOne({ _id: req.params.id })
 		.then(() => {
 			res.status(200).json({ message: 'Delete Permanently User Success' });
 		})
@@ -199,7 +243,6 @@ const allUsers = async (req, res) => {
 			userStatus,
 		});
 	} catch (error) {
-		console.log(error);
 		return res.status(500).json({ message: error.message });
 	}
 };

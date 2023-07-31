@@ -35,20 +35,8 @@ router.delete(
 	authMiddleware.checkPermission(PERMISSION['delete roles']),
 	rolesController.deleteRole,
 );
-router.post(
-	'/set-user-role',
-	authMiddleware.auth,
-	authMiddleware.checkPermission(PERMISSION['set user role']),
-	rolesController.setUserRole,
-);
-router.post('/get-user-role', authMiddleware.auth, rolesController.getUserRole);
 
 // PAGE
-router.get(
-	'/',
-	authMiddleware.auth,
-	authMiddleware.checkPermission(PERMISSION['browse roles']),
-	rolesController.allRoles,
-);
+router.get('/', authMiddleware.auth, authMiddleware.checkPermission(PERMISSION['browse roles']), rolesController.allRoles);
 
 module.exports = router;

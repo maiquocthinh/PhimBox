@@ -1,6 +1,4 @@
 const userModels = require('../models/user.models');
-const roleModels = require('../models/role.models');
-const userRoleModels = require('../models/userRole.models');
 const PERMISSION = require('../config/permission.config');
 
 const auth = async (req, res, next) => {
@@ -16,16 +14,28 @@ const auth = async (req, res, next) => {
 const checkPermission = (permission) => {
 	return async (req, res, next) => {
 		try {
-			const { user } = req.session;
-
-			// get userRole
-			const userRole = await userRoleModels.findOne({ userId: user._id });
-			if (!userRole) return res.status(403).json({ message: 'You have not permission' });
+			const { _id: userId } = req.session.user || {};
 
 			// get role of user
-			const role = await roleModels.findById(userRole.roleId);
+			const [user] = await userModels.aggregate([
+				{ $match: { _id: userId } },
+				{
+					$lookup: {
+						from: 'roles',
+						localField: 'roleId',
+						foreignField: '_id',
+						as: 'role',
+					},
+				},
+				{ $unwind: '$role' },
+				{ $project: { role: { permissions: 1 } } },
+			]);
 
-			// check can user access into cpanel admin
+			if (!user?.role) return res.status(403).json({ message: 'You have not permission' });
+
+			const role = user.role;
+
+			// check can user access into control panel admin
 			if (!role?.permissions?.includes(PERMISSION['view dashboard']))
 				// logout & go to login page
 				req.session.destroy((err) => {
