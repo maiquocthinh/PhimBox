@@ -17,6 +17,7 @@ const router = Router();
 router.get('/history', getHistory);
 router.delete('/history/:epId', deleteFromHistory);
 router.get('/collection', getCollection);
+router.get('/collection/:username', getCollection);
 router.post('/collection', addIntoCollection);
 router.delete('/collection/:filmId', deleteFromCollection);
 router.get('/follow', getAllFollow);

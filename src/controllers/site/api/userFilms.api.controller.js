@@ -78,7 +78,7 @@ const deleteFromHistory = async (req, res) => {
 
 // Collection
 const getCollection = async (req, res) => {
-	const { username } = req.session.user || {};
+	const username = req.params.username || req.session.user?.username;
 	if (!username) return res.status(400).json({ msg: 'Bad Request!' });
 
 	try {

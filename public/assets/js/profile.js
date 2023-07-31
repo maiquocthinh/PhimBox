@@ -284,8 +284,10 @@ if (isLoadCollection) {
 	window.addEventListener('DOMContentLoaded', function () {
 		const collectionBox = document.getElementById('colection_box');
 
+		const username = location.href.match(/\/profile\/(.+)/)?.[1] || '';
+
 		// fetch api
-		fetch('/api/films/collection')
+		fetch('/api/films/collection/' + username)
 			.then(async function (res) {
 				return await res.json();
 			})
