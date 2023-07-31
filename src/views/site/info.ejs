@@ -49,7 +49,7 @@
                 </button>
               </div>
               <div class="btn-wrap">
-                <a class="btn" onclick="showTrailer();"><i class="iconify" data-icon="bi:camera-reels-fill"></i>Trailer</a>
+                <a class="btn" onclick="<%= info.film.trailer ? 'showTrailer();' : `alert('Film has not trailer');` %>"><i class="iconify" data-icon="bi:camera-reels-fill"></i>Trailer</a>
                 <a class="btn" href="<%= info.film.isHasEpisode ? '/watch/' + info.film.slug : '#'%>" onclick="<%= info.film.isHasEpisode ? '' : `alert('Film has not episode')` %>">
                   <i class="iconify" data-icon="fa6-solid:play"></i>Watch
                 </a>
