@@ -4,8 +4,8 @@
  
 ## Live demo 
  
--   Main site: https://localhost:8000 
--   Control panel: https://localhost:8000/admin 
+-   Main site: [https://phimbox.cyclic.cloud/](https://phimbox.cyclic.cloud/)
+-   Control panel: [https://phimbox.cyclic.cloud/admin](https://phimbox.cyclic.cloud/admin)
  
 ## Main technology used 
  
