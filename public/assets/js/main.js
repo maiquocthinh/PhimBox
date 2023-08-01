@@ -392,7 +392,21 @@ function scoreToText(score) {
 			},
 			callback: function (currentRating, ratingElement) {
 				const ratingPoint = currentRating * 2;
-				// do somthing with ratingPoint....
+				// fecth api rating
+				fetch('/api/films/rate', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ filmId: app.filmId, point: ratingPoint }),
+				}).then(async function (res) {
+					const data = await res.json();
+					if (!res.ok) notyf.error(data.msg);
+					else {
+						notyf.success(data.msg);
+						// change in view
+						$('#rating-info .rating-info__point').text(data.rate.point);
+						$('#rating-info .rating-info__times').text(`(${data.rate.times} lượt)`);
+					}
+				});
 			},
 		});
 	}

@@ -63,6 +63,7 @@ module.exports = async (req, res) => {
 					tagAscii: 1,
 					slug: { $concat: ['$slug', '-', '$_id'] },
 					isHasEpisode: 1,
+					rate: { point: { $avg: '$rated.point' }, times: { $size: { $ifNull: ['$rated', []] } } },
 				},
 			},
 			{ $limit: 1 },

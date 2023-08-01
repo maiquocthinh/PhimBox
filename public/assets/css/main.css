@@ -1426,6 +1426,12 @@
 	margin-right: 4px;
 }
 
+#rating-info {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+}
+
 .rating {
 	display: inline-block;
 	margin-left: 12px;

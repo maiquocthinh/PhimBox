@@ -115,7 +115,11 @@
                   <span class="item-title"><i class="iconify" data-icon="fa-solid:eye"></i>Lượt xem</span> : <%=info.film.viewed%>
                 </li>
                 <li class="info__list-info-group__item">
-                  <span class="item-title"><i class="iconify" data-icon="fluent:vote-24-filled"></i>Đánh giá</span> : <span class="label label-gradient-warning">9</span> (1 lượt)
+                  <span class="item-title"><i class="iconify" data-icon="fluent:vote-24-filled"></i>Đánh giá</span> : 
+                  <span id="rating-info">
+                    <span class="rating-info__point label label-gradient-warning"><%=info.film.rate.point || 0%></span>
+                    <span class="rating-info__times">(<%=info.film.rate.times%> lượt)</span> 
+                  </span>
                   <span class="rating">
                     <span id="film-rating"></span><span class="label label-info rating-label"></span>
                   </span>

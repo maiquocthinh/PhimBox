@@ -9,6 +9,7 @@ const {
 		getAllFollow,
 		follow,
 		unfollow,
+		rate,
 	},
 } = require('../../../controllers/site/api');
 const router = Router();
@@ -23,5 +24,6 @@ router.delete('/collection/:filmId', deleteFromCollection);
 router.get('/follow', getAllFollow);
 router.post('/follow', follow);
 router.delete('/follow/:filmId', unfollow);
+router.post('/rate', rate);
 
 module.exports = router;

@@ -30,6 +30,7 @@ const Film = new Schema(
 		recommend: { type: String },
 		canonical: { type: String },
 		type: { type: String },
+		rated: [{ _id: 0, userId: { type: String }, point: { type: Number, min: 0, max: 10 } }],
 		notify: { type: String },
 		description: { type: String },
 		info: { type: String },
