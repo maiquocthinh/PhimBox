@@ -12,7 +12,8 @@ document.addEventListener('DOMContentLoaded', async function () {
 	// report episode error
 	if (btnReportEpError)
 		btnReportEpError.onclick = function () {
-			if (!confirm('Are you sure this episode is error?')) return;
+			const describeOfError = prompt('Please describe the error of the episode!');
+			if (describeOfError?.length < 3) return;
 			fetch('/api/report-error-episode', {
 				method: 'POST',
 				headers: {
