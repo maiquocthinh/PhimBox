@@ -37,12 +37,17 @@ const dashboard = (req, res) => {
 			.sort({ _id: -1 })
 			.limit(10),
 		userModels.find({}, { password: 0 }).sort({ createdAt: -1 }).limit(10),
+		userModels.aggregate([
+			{ $project: { numOfFollow: { $size: '$films.follow' } } },
+			{ $group: { _id: null, totalFollow: { $sum: '$numOfFollow' } } },
+		]),
 	])
-		.then(([totalUser, totalFilm, totalEpisode, Films, Users]) => {
+		.then(([totalUser, totalFilm, totalEpisode, Films, Users, [{ totalFollow }]]) => {
 			const totalCount = {
 				user: totalUser,
 				film: totalFilm,
 				episode: totalEpisode,
+				follow: totalFollow,
 			};
 			const films = Films.map((film) => film);
 
