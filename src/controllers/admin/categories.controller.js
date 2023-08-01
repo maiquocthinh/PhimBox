@@ -13,9 +13,7 @@ const ajaxDatatablesCategories = async (req, res) => {
 
 	if (search.value) queryToDB.name = new RegExp(search.value, 'i');
 
-	const totalCategory = deleted
-		? await categoryModels.countDocumentsDeleted({})
-		: await categoryModels.countDocuments({});
+	const totalCategory = deleted ? await categoryModels.countDocumentsDeleted({}) : await categoryModels.countDocuments({});
 	const dataCategories = deleted
 		? await categoryModels
 				.findDeleted(queryToDB)
@@ -39,7 +37,7 @@ const ajaxDatatablesCategories = async (req, res) => {
 				<a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeletePermanentlyForm('${category.name}','${category._id}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>
 			</div>`
 			: `<div class="d-flex justify-content-center order-actions">
-				<a href="javascript:;" class="text-primary"><i class="bx bx-link-external"></i></a>
+				<a href="/category/${category.slug}" target="_blank" class="text-primary"><i class="bx bx-link-external"></i></a>
 				<a href="javascript:;" class="text-warning ms-1" onclick="fillDataToEditForm('${category._id}')" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bx bxs-edit"></i></a>
 				<a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeleteForm('${category.name}','${category._id}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>
 			</div>`,

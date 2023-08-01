@@ -14,9 +14,11 @@ module.exports = async (req, res) => {
 
 	if (page) page = parseInt(page);
 
-	const { name: countryName, _id: countryId } = await countryModels
-		.findOne({ slug: countrySlug }, { name: 1, _id: 1 })
-		.then(({ name, _id }) => ({ name, _id }));
+	const { name: countryName, _id: countryId } = (await countryModels.findOne({ slug: countrySlug }, { name: 1, _id: 1 })) || {};
+
+	// check exist country
+	if (!countryId || !countryName) return res.status(404).json({ msg: 'Page not found!' });
+
 	const { data: films, pageNumber, totalPage } = await filterFilmUtils({ countryId }, page);
 
 	// catalogue data

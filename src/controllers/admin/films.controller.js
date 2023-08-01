@@ -108,7 +108,7 @@ const ajaxDatatablesFilms = async (req, res) => {
 				<a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeletePermanentlyForm('${film.originalName} (${film.year})','${film._id}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>
 			</div>`
 			: `<div class="d-flex order-actions">
-				<a href="javascript:;" class="text-primary"><i class="bx bx-link-external"></i></a>
+				<a href="/info/${film.slug}-${film._id}" target="_blank" class="text-primary"><i class="bx bx-link-external"></i></a>
 				<a href="/admin/episodes/${film._id}" class="ms-1"><i class="bx bx-collection"></i></a>
 				<a href="javascript:;" class="text-warning ms-1" onclick="fillDataFilmToForm('${film._id}')" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bx bxs-edit"></i></a>
 				<a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeleteForm('${film.originalName} (${film.year})','${film._id}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>

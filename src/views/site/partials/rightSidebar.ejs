@@ -137,7 +137,7 @@
       <section class="tab-container">
         <div class="tabcloud-list">
             <% for (const tag of rightSidebar.webTags) { %>
-                <a href="/tag/<%=tag.toLowerCase().replace(' ', '-')%>" title="Phim <%=tag%>" class="tabcloud-item"><%=tag%></a>
+                <a href="/tag/<%=tag.toLowerCase().trim().replace(' ', '-')%>" title="Phim <%=tag%>" class="tabcloud-item"><%=tag%></a>
             <% } %>
         </div>
       </section>

@@ -29,6 +29,8 @@ module.exports = async (req, res) => {
 			type = '';
 			typeName = 'Phim Chiếu Rạp';
 			break;
+		default:
+			return res.status(404).json({ msg: 'Page not found!' });
 	}
 
 	const { data: films, pageNumber, totalPage } = await filterFilmUtils({ type, inCinema: !type }, page);

@@ -25,6 +25,8 @@ const ajaxDatatables = async (req, res) => {
 		.limit(length)
 		.sort({ [columnName]: columnSortOrder });
 
+	const film = await filmModels.findById(filmId, { _id: 1, slug: 1 });
+
 	const data = dataEpisodes.map((episode) => [
 		episode._id,
 		episode._id,
@@ -34,7 +36,7 @@ const ajaxDatatables = async (req, res) => {
 		episode.createdAt.toISOString().substring(0, 10),
 		episode.updatedAt.toISOString().substring(0, 10),
 		`<div class="d-flex order-actions">
-			<a href="javascript:;" class="text-primary"><i class="bx bx-link-external"></i></a>
+			<a href="/watch/${film.slug}-${film._id}/${episode._id}" target="_blank" class="text-primary"><i class="bx bx-link-external"></i></a>
 			<a href="javascript:;" class="text-warning ms-1" onclick="fillDataToEditForm('${episode._id}')" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bx bxs-edit"></i></a>
 			<a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeleteForm('${episode.name}','${episode._id}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>
 		</div>`,
@@ -74,9 +76,10 @@ const errorsAjaxDatatables = async (req, res) => {
 				id: 1,
 				name: 1,
 				updatedAt: 1,
-				film: { originalName: '$film.originalName', poster: '$film.poster', year: '$film.year' },
+				film: { _id: 1, originalName: 1, poster: 1, year: 1, slug: 1 },
 			},
 		},
+		{ $unwind: '$film' },
 		{ $skip: parseInt(start) },
 		{ $limit: parseInt(length) },
 		{ $sort: { [columnName]: columnSortOrder } },
@@ -86,12 +89,12 @@ const errorsAjaxDatatables = async (req, res) => {
 		episode._id,
 		episode.name,
 		`<div class="d-flex align-items-center">
-				<div class="recent-product-img"><img src="${episode.film[0].poster[0]}" alt="" /></div>
-				<div class="ms-2"><h6 class="mb-1 font-14">${episode.film[0].originalName[0]} (${episode.film[0].year[0]})</h6></div>
+				<div class="recent-product-img"><img src="${episode.film.poster}" alt="" /></div>
+				<div class="ms-2"><h6 class="mb-1 font-14">${episode.film.originalName} (${episode.film.year})</h6></div>
 			</div>`,
 		episode.updatedAt.toISOString().substring(0, 10),
 		`<div class="d-flex justify-content-center order-actions">
-			<a href="javascript:;" class="text-primary"><i class="bx bx-link-external"></i></a>
+			<a href="/watch/${episode.film.slug}-${episode.film._id}/${episode._id}" target="_blank" class="text-primary"><i class="bx bx-link-external"></i></a>
 			<a href="javascript:;" class="text-warning ms-1" onclick="fillDataToEditForm('${episode._id}')" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bx bxs-edit"></i></a>
 		</div>`,
 	]);

@@ -14,9 +14,12 @@ module.exports = async (req, res) => {
 
 	if (page) page = parseInt(page);
 
-	const { name: categoryName, _id: categoryId } = await categoryModels
-		.findOne({ slug: categorySlug }, { name: 1, _id: 1 })
-		.then(({ name, _id }) => ({ name, _id }));
+	const { name: categoryName, _id: categoryId } =
+		(await categoryModels.findOne({ slug: categorySlug }, { name: 1, _id: 1 })) || {};
+
+	// check exist category
+	if (!categoryId || !categoryName) return res.status(404).json({ msg: 'Page not found!' });
+
 	const { data: films, pageNumber, totalPage } = await filterFilmUtils({ categoryId }, page);
 
 	// catalogue data

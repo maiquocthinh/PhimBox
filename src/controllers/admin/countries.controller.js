@@ -13,9 +13,7 @@ const ajaxDatatablesCountries = async (req, res) => {
 
 	if (search.value) queryToDB.name = new RegExp(search.value, 'i');
 
-	const totalCountry = deleted
-		? await countryModels.countDocumentsDeleted({})
-		: await countryModels.countDocuments({});
+	const totalCountry = deleted ? await countryModels.countDocumentsDeleted({}) : await countryModels.countDocuments({});
 	const dataCountries = deleted
 		? await countryModels
 				.findDeleted(queryToDB)
@@ -39,7 +37,7 @@ const ajaxDatatablesCountries = async (req, res) => {
 				<a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeletePermanentlyForm('${country.name}','${country._id}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>
 			</div>`
 			: `<div class="d-flex justify-content-center order-actions">
-				<a href="javascript:;" class="text-primary"><i class="bx bx-link-external"></i></a>
+				<a href="/country/${country.slug}" target="_blank" class="text-primary"><i class="bx bx-link-external"></i></a>
 				<a href="javascript:;" class="text-warning ms-1" onclick="fillDataToEditForm('${country._id}')" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bx bxs-edit"></i></a>
 				<a href="javascript:;" class="text-danger ms-1" onclick="fillDataToDeleteForm('${country.name}','${country._id}')" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bx bxs-trash"></i></a>
 			</div>`,
